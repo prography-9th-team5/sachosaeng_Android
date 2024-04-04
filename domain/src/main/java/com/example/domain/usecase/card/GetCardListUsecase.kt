@@ -1,0 +1,9 @@
+package com.example.domain.usecase.card
+
+import com.example.domain.usecase.Usecase
+
+class GetCardListUsecase : Usecase {
+    override fun invoke() {
+        TODO("Not yet implemented")
+    }
+}
