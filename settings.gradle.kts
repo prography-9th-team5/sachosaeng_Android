@@ -15,4 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "sachosaeng"
 include(":app")
- 
+include(":domain")
