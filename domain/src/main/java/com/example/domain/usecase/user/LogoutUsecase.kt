@@ -1,9 +1,8 @@
 package com.example.domain.usecase.user
 
+import com.example.domain.repository.UserRepository
 import com.example.domain.usecase.Usecase
 
-class LogoutUsecase : Usecase {
-    override fun invoke() {
-        TODO("Not yet implemented")
-    }
+class LogoutUsecase(private val repository: UserRepository) : Usecase<Unit> {
+    override suspend fun invoke() = repository.logout()
 }

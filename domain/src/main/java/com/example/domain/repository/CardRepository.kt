@@ -1,5 +1,9 @@
 package com.example.domain.repository
 
-interface CardRepository {
+import Card
 
+interface CardRepository {
+    suspend fun getCardList(): List<Card>
+    suspend fun getMyCardList(): List<Card>
+    suspend fun bookmarkCard(card: Card)
 }

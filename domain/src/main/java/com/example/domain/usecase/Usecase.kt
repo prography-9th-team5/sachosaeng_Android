@@ -1,5 +1,7 @@
 package com.example.domain.usecase
 
-interface Usecase {
-    fun invoke()
+import java.util.Optional
+
+interface Usecase<RESULT> {
+    operator suspend fun invoke(): RESULT
 }
