@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,14 +15,24 @@
         android:theme="@style/Theme.Sachosaeng"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".App"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.Sachosaeng">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="auth"
+                    android:scheme="kakao${KAKAO_NATIVE_KEY}" />
             </intent-filter>
         </activity>
     </application>
