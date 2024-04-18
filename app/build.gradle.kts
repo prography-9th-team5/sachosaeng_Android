@@ -1,6 +1,12 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+}
+
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey, "")
 }
 
 android {
@@ -18,6 +24,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        manifestPlaceholders["KAKAO_NATIVE_KEY"] = getApiKey("kakao.key.native")
+        manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("kakao.key.api")
+        manifestPlaceholders["KAKAO_ADMIN_KEY"] = getApiKey("kakao.key.admin")
+        buildConfigField("String", "APP_HASH", getApiKey("app.hash"))
     }
 
     buildTypes {
@@ -50,7 +61,7 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.kakao.sdk)
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")

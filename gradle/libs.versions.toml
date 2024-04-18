@@ -1,0 +1,7 @@
+[versions]
+kakao_sdk = "2.20.1"
+
+[libraries]
+kakao_sdk = { module = "com.kakao.sdk:v2-user", version.ref = "kakao_sdk" }
+
+[plugins]
