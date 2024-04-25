@@ -28,7 +28,7 @@ android {
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = getApiKey("kakao.key.native")
         manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("kakao.key.api")
         manifestPlaceholders["KAKAO_ADMIN_KEY"] = getApiKey("kakao.key.admin")
-        buildConfigField("String", "APP_HASH", getApiKey("app.hash"))
+        buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("kakao.key.native"))
     }
 
     buildTypes {
@@ -49,6 +49,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
