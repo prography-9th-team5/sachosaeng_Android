@@ -11,7 +11,7 @@ import com.example.sachosaeng.feature.auth.AuthActivitiy
 fun NavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.LOGIN.route
+        startDestination = Screen.HOME.route
     ) {
         composable(Screen.HOME.route) {
             HomeScreen()
