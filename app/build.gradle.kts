@@ -1,6 +1,14 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.dagger.hilt.android")
+    kotlin("kapt")
+}
+
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey, "")
 }
 
 android {
@@ -18,6 +26,11 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        manifestPlaceholders["KAKAO_NATIVE_KEY"] = getApiKey("kakao.key.native")
+        manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("kakao.key.api")
+        manifestPlaceholders["KAKAO_ADMIN_KEY"] = getApiKey("kakao.key.admin")
+        buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("kakao.key.native"))
     }
 
     buildTypes {
@@ -38,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -50,7 +64,14 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.kakao.sdk)
+    implementation(libs.navigation.compose)
+    implementation(libs.orbit.compose)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.core)
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+    kapt (libs.hilt.compiler)
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.8.2")
