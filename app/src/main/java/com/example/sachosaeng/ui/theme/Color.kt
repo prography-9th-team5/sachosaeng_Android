@@ -2,14 +2,6 @@ package com.example.sachosaeng.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
-
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
-
 //GrayScale
 
 val Gs_White = Color(0xFFFFFFFF)
@@ -40,8 +32,8 @@ val Pc_11_Pink = Color(0xFFEE4697)
 val Tc_1_Red =  Color(0x1FF04438)
 val Tc_2_Orange = Color(0x1FFB6514)
 val Tc_3_Amber = Color(0x1FF79009)
-val Tc_4_Yellow = Color(0x1FF1B708)
-val Tc_5_Olive = Color(0x1F9FAF00)
+val Tc_4_Yellow = Color(0x33F1B708)
+val Tc_5_Olive = Color(0x339FAF00)
 val Tc_6_Green = Color(0x1F12B74A)
 val Tc_7_Mint = Color(0x1F2BCBBA)
 val Tc_8_Blue = Color(0x1F0BA5EC)
@@ -53,4 +45,6 @@ val Tc_11_Pink = Color(0x1FEE4697)
 
 val ActiveTextColor = Color(0xFF0C111D)
 val InactiveTextColor = Color(0xFF98A2B3)
+
+
 
