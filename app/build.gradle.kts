@@ -31,6 +31,7 @@ android {
         manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("kakao.key.api")
         manifestPlaceholders["KAKAO_ADMIN_KEY"] = getApiKey("kakao.key.admin")
         buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("kakao.key.native"))
+        buildConfigField("String", "GOOGLE_OAUTH_KEY", getApiKey("google.key"))
     }
 
     buildTypes {
@@ -71,6 +72,10 @@ dependencies {
     implementation(libs.orbit.core)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
+    implementation(libs.google.gms)
+    implementation(libs.firebase.auth)
+    implementation(libs.gms.auth)
+    implementation(platform(libs.firebase.bom))
     kapt (libs.hilt.compiler)
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
