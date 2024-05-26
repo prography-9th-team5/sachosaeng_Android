@@ -10,9 +10,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -42,42 +46,15 @@ class AuthActivitiy : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val launcher = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.StartActivityForResult()
-            ) {
-                authViewModel.requestGoogleLogin(activityResult = it) {
-                    authViewModel.loginSuccess()
-                }
-            }
-            val googleSignInClient = GoogleSignIn.getClient(this@AuthActivitiy, googleSignInOptions)
-
             SachosaengTheme {
                 Surface {
-                    Column {
-                        Image(
-                            alignment = Alignment.BottomCenter,
-                            contentScale = ContentScale.Crop,
-                            painter = painterResource(id = R.drawable.kakao_login_medium_wide),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .clickable {
-                                    authViewModel.handleKakaoLogin(
-                                        activity = this@AuthActivitiy,
-                                        onSuccess = { authViewModel.loginSuccess() },
-                                        onFailure = { authViewModel.loginFail() }
-                                    )
-                                }
-                                .width(200.dp),
-                        )
-                        Image(
-                            alignment = Alignment.BottomCenter,
-                            contentScale = ContentScale.Crop,
-                            painter = painterResource(id = R.drawable.web_light_sq),
-                            contentDescription = "",
-                            modifier = Modifier
-                                .clickable { launcher.launch(googleSignInClient.signInIntent) }
-                                .width(200.dp),
-                        )
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        kakaoLoginButton()
+                        googleLoginButton()
                     }
                 }
             }
@@ -97,6 +74,49 @@ class AuthActivitiy : ComponentActivity() {
                 }
             }
         }
+    }
+
+    @Composable
+    fun kakaoLoginButton() {
+        return Image(
+            alignment = Alignment.BottomCenter,
+            contentScale = ContentScale.Fit,
+            painter = painterResource(id = R.drawable.kakao_login_medium_wide),
+            contentDescription = "",
+            modifier = Modifier
+                .clickable {
+                    authViewModel.handleKakaoLogin(
+                        activity = this@AuthActivitiy,
+                        onSuccess = { authViewModel.loginSuccess() },
+                        onFailure = { authViewModel.loginFail() }
+                    )
+                }
+                .width(200.dp)
+                .height(50.dp),
+        )
+    }
+
+    @Composable
+    fun googleLoginButton() {
+        val launcher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.StartActivityForResult()
+        ) {
+            authViewModel.requestGoogleLogin(activityResult = it) {
+                authViewModel.loginSuccess()
+            }
+        }
+        val googleSignInClient = GoogleSignIn.getClient(this@AuthActivitiy, googleSignInOptions)
+
+        return Image(
+            alignment = Alignment.BottomCenter,
+            contentScale = ContentScale.Fit,
+            painter = painterResource(id = R.drawable.web_light_sq),
+            contentDescription = "",
+            modifier = Modifier
+                .clickable { launcher.launch(googleSignInClient.signInIntent) }
+                .width(200.dp)
+                .height(50.dp)
+        )
     }
 
     private fun navigateToMainActivity() {

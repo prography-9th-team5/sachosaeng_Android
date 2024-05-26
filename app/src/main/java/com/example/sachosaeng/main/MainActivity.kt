@@ -14,11 +14,9 @@ import com.example.sachosaeng.ui.theme.SachosaengTheme
 class MainActivity : ComponentActivity() {
     private lateinit var navController: NavHostController
     override fun onCreate(savedInstanceState: Bundle?) {
-        Log.e(ContentValues.TAG, "Main onCreate")
         super.onCreate(savedInstanceState)
         setContent {
             SachosaengTheme {
-                Text(text = "Hello, main!")
                 navController = rememberNavController()
                 NavGraph(navController = navController)
             }
