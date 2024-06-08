@@ -1,4 +1,4 @@
-package com.example.sachosaeng.ui.theme
+package com.example.sachosaeng.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

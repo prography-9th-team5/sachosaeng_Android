@@ -1,4 +1,4 @@
-package com.example.sachosaeng.ui.theme
+package com.example.sachosaeng.core.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.R
+import com.example.sachosaeng.core.ui.R
 
 val fontFamily = FontFamily(
     Font(R.font.pretendard_black, FontWeight.Black),
