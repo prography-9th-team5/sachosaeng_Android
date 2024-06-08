@@ -1,9 +1,9 @@
-package com.example.data.repository
+package com.example.sachosaeng.data.repository
 
 import User
-import com.example.domain.repository.UserRepository
+import com.example.sachosaeng.domain.repository.UserRepository
 
-class UserRepositoryImpl : UserRepository{
+class UserRepositoryImpl : com.example.sachosaeng.domain.repository.UserRepository {
     override suspend fun getMyInfo(): User {
         TODO("Not yet implemented")
     }

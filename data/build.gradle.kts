@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.data"
+    namespace = "com.example.sachosaeng.data"
     compileSdk = 34
 
     defaultConfig {
@@ -36,11 +36,9 @@ android {
 dependencies {
     implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
+    implementation(project(":core:domain"))
     kapt(libs.hilt.compiler)
     implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.10.0")
-    implementation(project(":domain"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

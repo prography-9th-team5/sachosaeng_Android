@@ -1,9 +1,9 @@
-package com.example.data.repository
+package com.example.sachosaeng.data.repository
 
 import Category
-import com.example.domain.repository.CategoryRepository
+import com.example.sachosaeng.domain.repository.CategoryRepository
 
-class CategoryRepositoryImpl: CategoryRepository {
+class CategoryRepositoryImpl: com.example.sachosaeng.domain.repository.CategoryRepository {
     override suspend fun getCategoryList(): List<Category> {
         TODO("Not yet implemented")
     }
