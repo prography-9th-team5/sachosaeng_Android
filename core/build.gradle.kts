@@ -1,11 +1,10 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
 android {
-    namespace = "com.example.sachosaeng.data"
+    namespace = "com.example.sachosaeng.core"
     compileSdk = 34
 
     defaultConfig {
@@ -34,12 +33,11 @@ android {
 }
 
 dependencies {
-    implementation(libs.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    implementation(project(":core:domain"))
-    kapt(libs.hilt.compiler)
-    implementation("androidx.core:core-ktx:1.10.1")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }

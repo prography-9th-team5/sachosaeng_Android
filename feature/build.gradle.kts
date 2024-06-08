@@ -1,11 +1,8 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    id("com.google.gms.google-services")
-    kotlin("kapt")
+    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
 fun getApiKey(propertyKey: String): String {
@@ -13,20 +10,14 @@ fun getApiKey(propertyKey: String): String {
 }
 
 android {
-    namespace = "com.example.sachosaeng"
+    namespace = "com.example.sachosaeng.feature"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.sachosaeng"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
+        consumerProguardFiles("consumer-rules.pro")
 
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = getApiKey("kakao.key.native")
         manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("kakao.key.api")
@@ -44,6 +35,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -66,8 +58,16 @@ android {
 }
 
 dependencies {
+
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(project(":core:ui"))
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+
     //compose
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.1")
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation(platform("androidx.compose:compose-bom:2024.05.00"))
     implementation("androidx.compose.ui:ui")
@@ -75,20 +75,9 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
 
-    implementation(libs.core.ktx.v1120)
-
-    //orbit
-    implementation(libs.orbit.compose)
-    implementation(libs.orbit.viewmodel)
-    implementation(libs.orbit.core)
-
-    //navigation
-    implementation(libs.navigation.compose)
-    implementation(libs.hilt.navigation.compose)
-
     //hilt
+    implementation(libs.hilt.navigation.compose)
     implementation(libs.hilt.android)
-    kapt (libs.hilt.compiler)
 
     //auth
     implementation(libs.kakao.sdk)
@@ -97,16 +86,4 @@ dependencies {
     implementation(libs.gms.auth)
     implementation(platform(libs.firebase.bom))
 
-    //test
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.05.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
-
-    //module
-    implementation(project(":feature"))
-    implementation(project(":core:ui"))
 }
