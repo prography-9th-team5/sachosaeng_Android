@@ -66,31 +66,47 @@ android {
 }
 
 dependencies {
-    implementation(libs.kakao.sdk)
-    implementation(libs.navigation.compose)
-    implementation(libs.orbit.compose)
-    implementation(libs.orbit.viewmodel)
-    implementation(libs.orbit.core)
-    implementation(libs.hilt.navigation.compose)
-    implementation(libs.hilt.android)
-    implementation(libs.google.gms)
-    implementation(libs.firebase.auth)
-    implementation(libs.gms.auth)
-    implementation(platform(libs.firebase.bom))
-    kapt (libs.hilt.compiler)
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
+    //compose
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.1")
+    implementation("androidx.activity:activity-compose:1.9.0")
+    implementation(platform("androidx.compose:compose-bom:2024.05.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
+
+    implementation(libs.core.ktx.v1120)
+
+    //orbit
+    implementation(libs.orbit.compose)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.core)
+
+    //navigation
+    implementation(libs.navigation.compose)
+    implementation(libs.hilt.navigation.compose)
+
+    //hilt
+    implementation(libs.hilt.android)
+    kapt (libs.hilt.compiler)
+
+    //auth
+    implementation(libs.kakao.sdk)
+    implementation(libs.google.gms)
+    implementation(libs.firebase.auth)
+    implementation(libs.gms.auth)
+    implementation(platform(libs.firebase.bom))
+
+    //test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.05.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    //module
+    implementation(project(":feature"))
+    implementation(project(":core:ui"))
 }
