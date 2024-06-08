@@ -1,6 +1,5 @@
 package com.example.sachosaeng.feature.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -25,10 +24,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.sachosaeng.BuildConfig
-import com.example.sachosaeng.R
-import com.example.sachosaeng.main.MainActivity
-import com.example.sachosaeng.ui.theme.SachosaengTheme
+import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.core.ui.theme.SachosaengTheme
+import com.example.sachosaeng.feature.BuildConfig
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -119,7 +117,5 @@ class AuthActivitiy : ComponentActivity() {
         )
     }
 
-    private fun navigateToMainActivity() {
-        startActivity(Intent(this, MainActivity::class.java))
-    }
+    private fun navigateToMainActivity() {}
 }
