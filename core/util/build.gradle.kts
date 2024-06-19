@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.core"
+    namespace = "com.example.sachosaeng.core.util"
     compileSdk = 34
 
     defaultConfig {
@@ -33,8 +33,7 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.core.ktx)
+    implementation(libs.core.ktx.v1120)
     implementation(libs.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit)
