@@ -1,21 +1,41 @@
 package com.example.sachosaeng.feature.home
 
-import java.util.Locale.Category
+import com.example.sachosaeng.core.domain.model.Category
 
 data class HomeScreenUiState(
     val profileImageUrl: String = "",
-    val categoryList: List<String> = emptyList(),
-    val voteList: List<VoteList>
+    val voteList: List<VoteList>,
+    val allCategory: List<Category>,
+    val myCategory: List<Category>,
+    val selectedCategory: Category? = null
 ) {
     companion object {
         fun createDefault(): HomeScreenUiState {
             return HomeScreenUiState(
                 profileImageUrl = "",
-                categoryList = listOf(
-                    "default category",
-                    "default category2",
-                    "default category3"
+                allCategory = listOf(
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
                 ),
+                myCategory = listOf(
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                    Category(),
+                ),
+                selectedCategory = Category(),
                 voteList = listOf(
                     VoteList(
                         category = "category1",

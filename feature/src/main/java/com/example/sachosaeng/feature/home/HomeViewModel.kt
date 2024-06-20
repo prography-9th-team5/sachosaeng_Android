@@ -2,6 +2,7 @@ package com.example.sachosaeng.feature.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.sachosaeng.core.domain.model.Category
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
@@ -18,6 +19,12 @@ class HomeViewModel @Inject constructor() : ViewModel(), ContainerHost<HomeScree
     fun initHomeScreen() = intent {
         viewModelScope.launch {
             reduce { state }
+        }
+    }
+
+    fun onSelectCategory(category: Category) = intent {
+        viewModelScope.launch {
+            reduce { state.copy(selectedCategory = category) }
         }
     }
 }
