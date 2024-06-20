@@ -21,7 +21,7 @@ fun CategoryChip(containerColor: Color, textColor: Color, text: String) {
     ) {
         Column {
             Text(
-                text = text,
+                text = "#$text",
                 color = textColor,
                 fontSize = 14.sp,
                 modifier = Modifier.padding(12.dp)

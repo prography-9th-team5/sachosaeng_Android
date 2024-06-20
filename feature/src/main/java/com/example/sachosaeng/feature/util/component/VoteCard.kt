@@ -1,9 +1,11 @@
 package com.example.sachosaeng.feature.util.component
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -12,9 +14,11 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -36,9 +40,11 @@ fun VoteCard(modifier: Modifier = Modifier, voteList: List<VoteInfo>, category: 
             .padding(top = 10.dp, start = 20.dp, end = 20.dp),
         border = BorderStroke(1.dp, Gs_G3),
     ) {
-        Column(modifier = Modifier.padding(20.dp)) {
+        Column(
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(32.dp)
+        ) {
             CategoryChip(Gs_G3, Gs_Black, category)
-            Spacer(modifier = Modifier.size(24.dp))
             voteList.forEachIndexed { index, vote ->
                 VoteText(vote.title, vote.imageUrl, vote.voteCount, index + 1)
             }
@@ -48,7 +54,7 @@ fun VoteCard(modifier: Modifier = Modifier, voteList: List<VoteInfo>, category: 
 
 @Composable
 fun VoteText(text: String, iconUrl: String, voteCount: Int, ranking: Int) {
-    Row {
+    Row(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = ranking.toString(),
             fontSize = 20.sp,
@@ -58,6 +64,7 @@ fun VoteText(text: String, iconUrl: String, voteCount: Int, ranking: Int) {
         Spacer(modifier = Modifier.width(8.dp))
         Column {
             Text(
+                modifier = Modifier.fillMaxWidth(0.8f),
                 text = text,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -71,9 +78,11 @@ fun VoteText(text: String, iconUrl: String, voteCount: Int, ranking: Int) {
             )
         }
         AsyncImage(
+            alignment = Alignment.CenterEnd,
             contentDescription = "", model = iconUrl,
             modifier = Modifier
                 .size(36.dp)
+                .weight(1f)
         )
     }
 }
