@@ -62,7 +62,7 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(project(":core:ui"))
+    implementation(project(":core:domain"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
@@ -91,4 +91,11 @@ dependencies {
     implementation(libs.orbit.compose)
     implementation(libs.orbit.viewmodel)
     implementation(libs.orbit.core)
+
+    //coil
+    implementation(libs.coil)
+
+    implementation(project(":core:ui"))
+    implementation(project(":core:util"))
+    implementation(project(":core:domain"))
 }
