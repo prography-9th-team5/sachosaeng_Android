@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="dropdown_default">카테고리</string>
+    <string name="category">카테고리</string>
+    <string name="change">변경</string>
 </resources>

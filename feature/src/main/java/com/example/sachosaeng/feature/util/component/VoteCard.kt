@@ -49,23 +49,20 @@ fun VoteCard(modifier: Modifier = Modifier, voteList: List<VoteInfo>, category: 
 @Composable
 fun VoteText(text: String, iconUrl: String, voteCount: Int, ranking: Int) {
     Row {
+        Text(
+            text = ranking.toString(),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.W600,
+            color = Gs_Black
+        )
+        Spacer(modifier = Modifier.width(8.dp))
         Column {
-            Row {
-                Text(
-                    text = ranking.toString(),
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.W600,
-                    color = Gs_Black
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    modifier = Modifier.weight(0.5f),
-                    text = text,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis,
-                    fontSize = 20.sp, fontWeight = FontWeight.W600, color = Gs_Black
-                )
-            }
+            Text(
+                text = text,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                fontSize = 20.sp, fontWeight = FontWeight.W600, color = Gs_Black
+            )
             Text(
                 text = voteCount.toNumberOfPeople(),
                 color = Gs_G6,
@@ -73,6 +70,10 @@ fun VoteText(text: String, iconUrl: String, voteCount: Int, ranking: Int) {
                 fontWeight = FontWeight.W500
             )
         }
-        AsyncImage(modifier = Modifier.size(36.dp), model = iconUrl, contentDescription = "")
+        AsyncImage(
+            contentDescription = "", model = iconUrl,
+            modifier = Modifier
+                .size(36.dp)
+        )
     }
 }
