@@ -20,6 +20,7 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -51,6 +52,11 @@ fun HomeScreen(
 ) {
     val state = viewModel.container.stateFlow.collectAsState()
     val isSelectCategoryModalOpen = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.initHomeScreen()
+    }
+
     Column(
         modifier = Modifier
             .background(Gs_G2)
