@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -18,7 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -44,7 +43,7 @@ fun VoteCard(modifier: Modifier = Modifier, voteList: List<VoteInfo>, category: 
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(32.dp)
         ) {
-            CategoryChip(Gs_G3, Gs_Black, category)
+            CategoryTitleText(Gs_G3, Gs_Black, category)
             voteList.forEachIndexed { index, vote ->
                 VoteText(vote.title, vote.imageUrl, vote.voteCount, index + 1)
             }

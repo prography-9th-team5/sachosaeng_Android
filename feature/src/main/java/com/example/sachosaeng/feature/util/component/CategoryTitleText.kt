@@ -1,6 +1,5 @@
 package com.example.sachosaeng.feature.util.component
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -14,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun CategoryChip(containerColor: Color, textColor: Color, text: String) {
+fun CategoryTitleText(containerColor: Color, textColor: Color, text: String) {
     Surface(
         modifier = Modifier.clip(RoundedCornerShape(4.dp)),
         color = containerColor,
