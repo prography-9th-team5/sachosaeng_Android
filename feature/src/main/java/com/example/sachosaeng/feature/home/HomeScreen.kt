@@ -1,5 +1,6 @@
 package com.example.sachosaeng.feature.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -35,6 +36,8 @@ import com.example.sachosaeng.core.domain.model.Category
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G3
+import com.example.sachosaeng.core.ui.theme.Gs_G4
+import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.R
 import com.example.sachosaeng.feature.util.component.CircleCategoryButton
@@ -98,6 +101,7 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
             fontWeight = FontWeight.W700
         )
         Card(
+            border = BorderStroke(1.dp, Gs_G4),
             colors = CardDefaults.cardColors().copy(
                 containerColor = Gs_G3,
                 contentColor = Gs_Black
@@ -105,10 +109,11 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
         )
         {
             Text(
-                text = stringResource(id = R.string.change),
+                color = Gs_G6,
+                text = stringResource(id = R.string.category_change),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W600,
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp)
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
             )
         }
     }
@@ -153,39 +158,31 @@ fun SelectCategoryBottomSheet(
         TabRowComponent(
             tabs = listOf(
                 stringResource(id = R.string.my_category),
-                stringResource(id = R.string.all_category)
+                stringResource(id = R.string.all_category),
             ),
             contentScreens = listOf(
-                {
-                    FlowRow(
-                        modifier = Modifier.padding(top = 32.dp),
-                        horizontalArrangement = Arrangement.spacedBy(32.dp),
-                        verticalArrangement = Arrangement.spacedBy(32.dp)
-                    ) {
-                        myCategoryList.forEach {
-                            CircleCategoryButton(
-                                category = it,
-                                onClickCategory = { onSelectCategory(it) })
-                        }
-                    }
-                },
-                {
-                    FlowRow(
-                        modifier = Modifier.padding(top = 32.dp),
-                        horizontalArrangement = Arrangement.spacedBy(32.dp),
-                        verticalArrangement = Arrangement.spacedBy(32.dp)
-                    ) {
-                        allCategoryList.forEach {
-                            CircleCategoryButton(
-                                category = it,
-                                onClickCategory = { onSelectCategory(it) })
-                        }
-                    }
-                }
+                { CategoryListFlowRow(myCategoryList, onSelectCategory) },
+                { CategoryListFlowRow(allCategoryList, onSelectCategory) }
             )
         )
     }
 }
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+fun CategoryListFlowRow(list: List<Category>, onSelectCategory: (Category) -> Unit) =
+    FlowRow(
+        modifier = Modifier.padding(top = 32.dp),
+        horizontalArrangement = Arrangement.spacedBy(32.dp),
+        verticalArrangement = Arrangement.spacedBy(32.dp)
+    ) {
+        list.forEach {
+            CircleCategoryButton(
+                category = it,
+                onClickCategory = { onSelectCategory(it) })
+        }
+    }
+
 
 @Preview
 @Composable
