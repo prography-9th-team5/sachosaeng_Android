@@ -40,9 +40,10 @@ import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.feature.util.component.CategoryTitleText
 import com.example.sachosaeng.feature.util.component.CircleCategoryButton
 import com.example.sachosaeng.feature.util.component.TabRowComponent
-import com.example.sachosaeng.feature.util.component.VoteCard
+import com.example.sachosaeng.feature.util.component.VoteColumnByCategory
 
 @Composable
 fun HomeScreen(
@@ -58,7 +59,7 @@ fun HomeScreen(
             onCategorySelectButtonClicked = { isSelectCategoryModalOpen.value = true },
             profileImageUrl = state.value.profileImageUrl
         )
-        VoteCardList(state.value.voteList)
+        VoteColumnListByCategory(state.value.voteList)
         if (isSelectCategoryModalOpen.value) {
             SelectCategoryBottomSheet(
                 allCategoryList = state.value.allCategory,
@@ -129,13 +130,15 @@ fun ProfileImage(profileImageUrl: String) {
 }
 
 @Composable
-fun VoteCardList(voteCardList: List<VoteList>) {
+fun VoteColumnListByCategory(voteCardList: List<VoteList>) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp),
+        ) {
         items(voteCardList.size) {
-            VoteCard(
-                category = voteCardList[it].category,
+            CategoryTitleText(category = voteCardList[it].category)
+            VoteColumnByCategory(
                 voteList = voteCardList[it].voteInfo
             )
         }
