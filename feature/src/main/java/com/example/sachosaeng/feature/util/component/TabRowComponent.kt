@@ -15,12 +15,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabPosition
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.SecondaryIndicator
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -32,21 +26,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.debugInspectorInfo
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.ui.theme.Gs_Black
+import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
 
 @Composable
 fun TabRowComponent(
     screenColor: Color = Gs_White,
     tabs: List<String>,
+    tabTitleColor: Color = Gs_Black,
     contentScreens: List<@Composable () -> Unit>,
     modifier: Modifier = Modifier,
-    indicatorColor: Color = Gs_Black
+    indicatorColor: Color = Gs_Black,
 ) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     Row(
@@ -56,20 +50,24 @@ fun TabRowComponent(
         horizontalArrangement = Arrangement.Start
     ) {
         tabs.forEachIndexed { index, tabTitle ->
-            Column(modifier = modifier.width(IntrinsicSize.Max).padding(10.dp)) {
+            val isSelected = selectedTabIndex == index
+            Column(modifier = modifier
+                .width(IntrinsicSize.Max)
+                .padding(10.dp)) {
                 Text(
                     text = tabTitle,
                     fontSize = 20.sp,
+                    color = if(isSelected) tabTitleColor else Gs_G5,
                     fontWeight = FontWeight.W700,
                     modifier = Modifier
                         .padding(bottom = 10.dp)
                         .clickable {
                             selectedTabIndex = index
                         }
-                    )
+                )
                 Spacer(
                     modifier = Modifier
-                        .height(if (selectedTabIndex == index) 2.dp else 0.dp)
+                        .height(if(isSelected) 2.dp else 0.dp)
                         .fillMaxWidth()
                         .background(Gs_Black)
                         .background(color = indicatorColor)
