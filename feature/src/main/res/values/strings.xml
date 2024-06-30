@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="home_all_category">전체</string>
     <string name="category">카테고리</string>
     <string name="my_category">내 카테고리</string>
     <string name="all_category">전체 카테고리</string>

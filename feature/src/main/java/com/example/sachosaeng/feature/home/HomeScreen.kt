@@ -5,8 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,10 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -33,17 +28,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.domain.model.Category
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.ui.theme.Gs_G6
-import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.R
 import com.example.sachosaeng.feature.util.component.CategoryTitleText
-import com.example.sachosaeng.feature.util.component.CircleCategoryButton
-import com.example.sachosaeng.feature.util.component.TabRowComponent
 import com.example.sachosaeng.feature.util.component.VoteColumnByCategory
 
 @Composable
@@ -103,7 +94,7 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
         modifier = Modifier.clickable { onSelectCategory() }
     ) {
         Text(
-            text = stringResource(id = R.string.category),
+            text = stringResource(id = R.string.home_all_category),
             fontSize = 26.sp,
             fontWeight = FontWeight.W700
         )
@@ -150,48 +141,6 @@ fun VoteColumnListByCategory(voteCardList: List<VoteList>) {
         }
     }
 }
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-fun SelectCategoryBottomSheet(
-    allCategoryList: List<Category>,
-    myCategoryList: List<Category>,
-    onDismissRequest: () -> Unit = { },
-    onSelectCategory: (Category) -> Unit
-) {
-    val sheetState = rememberModalBottomSheetState()
-    ModalBottomSheet(
-        containerColor = Gs_White,
-        sheetState = sheetState,
-        onDismissRequest = { onDismissRequest() }) {
-        TabRowComponent(
-            tabs = listOf(
-                stringResource(id = R.string.my_category),
-                stringResource(id = R.string.all_category),
-            ),
-            contentScreens = listOf(
-                { CategoryListFlowRow(myCategoryList, onSelectCategory) },
-                { CategoryListFlowRow(allCategoryList, onSelectCategory) }
-            )
-        )
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-fun CategoryListFlowRow(list: List<Category>, onSelectCategory: (Category) -> Unit) =
-    FlowRow(
-        modifier = Modifier.padding(top = 32.dp),
-        horizontalArrangement = Arrangement.spacedBy(32.dp),
-        verticalArrangement = Arrangement.spacedBy(32.dp)
-    ) {
-        list.forEach {
-            CircleCategoryButton(
-                category = it,
-                onClickCategory = { onSelectCategory(it) })
-        }
-    }
-
 
 @Preview
 @Composable
