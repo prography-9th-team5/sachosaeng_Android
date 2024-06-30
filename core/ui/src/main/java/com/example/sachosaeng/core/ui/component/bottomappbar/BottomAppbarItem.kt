@@ -1,6 +1,6 @@
 package com.example.sachosaeng.core.ui.component.bottomappbar
 
-interface BottomAppbarItem {
-    val route: String
+data class BottomAppbarItem (
+    val route: String,
     val icon: Int
-}
+)
