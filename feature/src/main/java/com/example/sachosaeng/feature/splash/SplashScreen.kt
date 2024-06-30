@@ -17,12 +17,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.R
-import com.example.sachosaeng.feature.navigation.Screen
 
 
 @Composable
 fun SplashScreen(
-    navigator: NavHostController,
+    navigateToMain: () -> Unit,
     viewModel: SplashViewModel = hiltViewModel()
 ) {
     val showSplashScreen = viewModel.container.stateFlow.collectAsState()
@@ -57,6 +56,6 @@ fun SplashScreen(
             )
         }
     } else {
-        navigator.navigate(Screen.HOME.route)
+        navigateToMain()
     }
 }

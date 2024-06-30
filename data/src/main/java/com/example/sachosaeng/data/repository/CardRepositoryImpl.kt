@@ -1,7 +1,8 @@
 package com.example.sachosaeng.data.repository
 
-import Card
-import com.example.sachosaeng.domain.repository.CardRepository
+import com.example.sachosaeng.core.domain.model.Card
+import com.example.sachosaeng.core.domain.repository.CardRepository
+
 
 class CardRepositoryImpl: CardRepository {
     override suspend fun getCardList(): List<Card> {
