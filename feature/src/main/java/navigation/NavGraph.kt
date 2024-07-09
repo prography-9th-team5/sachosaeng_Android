@@ -1,4 +1,4 @@
-package com.example.sachosaeng.navigation
+package navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
@@ -17,7 +17,7 @@ fun addNavGraph(navController: NavHostController) {
 fun BottomNavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = Screen.HOME.route
+        startDestination = Screen.SPLASH.route
     ) {
         composable(Screen.SPLASH.route) {
             SplashScreen(navigateToMain = { navController.navigate(Screen.HOME.route) })
