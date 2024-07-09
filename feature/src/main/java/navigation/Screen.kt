@@ -1,4 +1,4 @@
-package com.example.sachosaeng.navigation
+package navigation
 
 enum class Screen(val route: String) {
     SPLASH(route = "splash_screen"),

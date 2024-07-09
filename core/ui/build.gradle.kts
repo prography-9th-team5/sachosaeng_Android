@@ -45,6 +45,8 @@ android {
 }
 
 dependencies {
+    //coil
+    implementation(libs.coil)
 
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
@@ -55,6 +57,8 @@ dependencies {
 
     implementation(libs.navigation.compose)
     implementation(libs.hilt.navigation.compose)
+
+    debugImplementation(libs.ui.tooling)
 
     implementation("androidx.compose.material3:material3")
     implementation(platform("androidx.compose:compose-bom:2024.05.00"))

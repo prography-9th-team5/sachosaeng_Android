@@ -121,7 +121,7 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
 fun ProfileImage(profileImageUrl: String) {
     AsyncImage(
         modifier = Modifier.size(40.dp),
-        model = if (profileImageUrl != "") profileImageUrl else R.drawable.ic_home_default_profile,
+        model = if (profileImageUrl != "") profileImageUrl else R.drawable.splash_image,
         contentDescription = "",
     )
 }
@@ -132,7 +132,7 @@ fun VoteColumnListByCategory(voteCardList: List<VoteList>) {
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 20.dp),
-        ) {
+    ) {
         items(voteCardList.size) {
             CategoryTitleText(category = voteCardList[it].category)
             VoteColumnByCategory(
