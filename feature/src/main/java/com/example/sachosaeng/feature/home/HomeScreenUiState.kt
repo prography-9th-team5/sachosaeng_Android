@@ -38,7 +38,7 @@ data class HomeScreenUiState(
                 selectedCategory = Category(),
                 voteList = listOf(
                     VoteList(
-                        category = "category1",
+                        category = Category(),
                         voteInfo = listOf(
                             VoteInfo(
                                 title = "첫 출근 날 팀원들에게 어떻게 인사하는게 좋을까요",
@@ -58,7 +58,7 @@ data class HomeScreenUiState(
                         ),
                     ),
                     VoteList(
-                        category = "category2",
+                        category = Category(),
                         voteInfo = listOf(
                             VoteInfo(
                                 title = "첫 출근 날 팀원들에게 어떻게 인사하는게 좋을까요",
@@ -78,7 +78,7 @@ data class HomeScreenUiState(
                         ),
                     ),
                     VoteList(
-                        category = "category3",
+                        category = Category(),
                         voteInfo = listOf(
                             VoteInfo(
                                 title = "첫 출근 날 팀원들에게 어떻게 인사하는게 좋을까요",
@@ -104,7 +104,7 @@ data class HomeScreenUiState(
 }
 
 data class VoteList(
-    val category: String,
+    val category: Category,
     val voteInfo: List<VoteInfo>
 )
 

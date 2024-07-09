@@ -1,11 +1,10 @@
 package com.example.sachosaeng.feature.home
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,11 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,15 +28,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.domain.model.Category
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.core.ui.theme.Gs_White
+import com.example.sachosaeng.core.ui.theme.Gs_G4
+import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.feature.R
-import com.example.sachosaeng.feature.util.component.CircleCategoryButton
-import com.example.sachosaeng.feature.util.component.TabRowComponent
-import com.example.sachosaeng.feature.util.component.VoteCard
+import com.example.sachosaeng.feature.util.component.CategoryTitleText
+import com.example.sachosaeng.feature.util.component.VoteColumnByCategory
 
 @Composable
 fun HomeScreen(
@@ -47,6 +43,11 @@ fun HomeScreen(
 ) {
     val state = viewModel.container.stateFlow.collectAsState()
     val isSelectCategoryModalOpen = remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.initHomeScreen()
+    }
+
     Column(
         modifier = Modifier
             .background(Gs_G2)
@@ -55,7 +56,7 @@ fun HomeScreen(
             onCategorySelectButtonClicked = { isSelectCategoryModalOpen.value = true },
             profileImageUrl = state.value.profileImageUrl
         )
-        VoteCardList(state.value.voteList)
+        VoteColumnListByCategory(state.value.voteList)
         if (isSelectCategoryModalOpen.value) {
             SelectCategoryBottomSheet(
                 allCategoryList = state.value.allCategory,
@@ -93,11 +94,12 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
         modifier = Modifier.clickable { onSelectCategory() }
     ) {
         Text(
-            text = stringResource(id = R.string.category),
+            text = stringResource(id = R.string.home_all_category),
             fontSize = 26.sp,
             fontWeight = FontWeight.W700
         )
         Card(
+            border = BorderStroke(1.dp, Gs_G4),
             colors = CardDefaults.cardColors().copy(
                 containerColor = Gs_G3,
                 contentColor = Gs_Black
@@ -105,10 +107,11 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
         )
         {
             Text(
-                text = stringResource(id = R.string.change),
+                color = Gs_G6,
+                text = stringResource(id = R.string.category_change),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W600,
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 7.dp)
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
             )
         }
     }
@@ -124,66 +127,18 @@ fun ProfileImage(profileImageUrl: String) {
 }
 
 @Composable
-fun VoteCardList(voteCardList: List<VoteList>) {
+fun VoteColumnListByCategory(voteCardList: List<VoteList>) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
-    ) {
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 20.dp),
+        ) {
         items(voteCardList.size) {
-            VoteCard(
-                category = voteCardList[it].category,
+            CategoryTitleText(category = voteCardList[it].category)
+            VoteColumnByCategory(
                 voteList = voteCardList[it].voteInfo
             )
         }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
-@Composable
-fun SelectCategoryBottomSheet(
-    allCategoryList: List<Category>,
-    myCategoryList: List<Category>,
-    onDismissRequest: () -> Unit = { },
-    onSelectCategory: (Category) -> Unit
-) {
-    val sheetState = rememberModalBottomSheetState()
-    ModalBottomSheet(
-        containerColor = Gs_White,
-        sheetState = sheetState,
-        onDismissRequest = { onDismissRequest() }) {
-        TabRowComponent(
-            tabs = listOf(
-                stringResource(id = R.string.my_category),
-                stringResource(id = R.string.all_category)
-            ),
-            contentScreens = listOf(
-                {
-                    FlowRow(
-                        modifier = Modifier.padding(top = 32.dp),
-                        horizontalArrangement = Arrangement.spacedBy(32.dp),
-                        verticalArrangement = Arrangement.spacedBy(32.dp)
-                    ) {
-                        myCategoryList.forEach {
-                            CircleCategoryButton(
-                                category = it,
-                                onClickCategory = { onSelectCategory(it) })
-                        }
-                    }
-                },
-                {
-                    FlowRow(
-                        modifier = Modifier.padding(top = 32.dp),
-                        horizontalArrangement = Arrangement.spacedBy(32.dp),
-                        verticalArrangement = Arrangement.spacedBy(32.dp)
-                    ) {
-                        allCategoryList.forEach {
-                            CircleCategoryButton(
-                                category = it,
-                                onClickCategory = { onSelectCategory(it) })
-                        }
-                    }
-                }
-            )
-        )
     }
 }
 

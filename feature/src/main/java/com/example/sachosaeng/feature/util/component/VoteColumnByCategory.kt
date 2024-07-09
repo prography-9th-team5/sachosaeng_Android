@@ -4,12 +4,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -18,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -30,41 +26,51 @@ import com.example.sachosaeng.core.util.extension.IntExtension.toNumberOfPeople
 import com.example.sachosaeng.feature.home.VoteInfo
 
 @Composable
-fun VoteCard(modifier: Modifier = Modifier, voteList: List<VoteInfo>, category: String) {
-    Card(
-        colors = CardDefaults.cardColors().copy(
-            containerColor = Gs_White
-        ),
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(top = 10.dp, start = 20.dp, end = 20.dp),
-        border = BorderStroke(1.dp, Gs_G3),
+fun VoteColumnByCategory(modifier: Modifier = Modifier, voteList: List<VoteInfo>) {
+    Column(
+        modifier = Modifier.padding(top = 14.dp, bottom = 36.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(20.dp),
-            verticalArrangement = Arrangement.spacedBy(32.dp)
-        ) {
-            CategoryChip(Gs_G3, Gs_Black, category)
-            voteList.forEachIndexed { index, vote ->
-                VoteText(vote.title, vote.imageUrl, vote.voteCount, index + 1)
+        voteList.forEachIndexed { index, vote ->
+            Card(
+                colors = CardDefaults.cardColors().copy(
+                    containerColor = Gs_White
+                ),
+                border = BorderStroke(1.dp, Gs_G3),
+            ) {
+                VoteCard(
+                    modifier = modifier.padding(16.dp),
+                    vote.title,
+                    vote.imageUrl,
+                    vote.voteCount,
+                    index + 1
+                )
             }
         }
     }
 }
 
 @Composable
-fun VoteText(text: String, iconUrl: String, voteCount: Int, ranking: Int) {
-    Row(modifier = Modifier.fillMaxWidth()) {
+fun VoteCard(
+    modifier: Modifier = Modifier,
+    text: String,
+    iconUrl: String,
+    voteCount: Int,
+    ranking: Int
+) {
+    Row(modifier = modifier.fillMaxWidth()) {
         Text(
             text = ranking.toString(),
             fontSize = 20.sp,
             fontWeight = FontWeight.W600,
-            color = Gs_Black
+            color = Gs_Black,
+            modifier = Modifier.padding(end = 8.dp)
         )
-        Spacer(modifier = Modifier.width(8.dp))
         Column {
             Text(
-                modifier = Modifier.fillMaxWidth(0.8f),
+                modifier = Modifier
+                    .fillMaxWidth(0.8f)
+                    .padding(bottom = 6.dp),
                 text = text,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
