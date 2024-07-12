@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G4
@@ -26,7 +27,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_G5
 fun SachoSaengBottomAppBar(
     items: () -> List<BottomAppbarItem>,
     modifier: Modifier = Modifier,
-    navigateToRoute: (String) -> Unit = {},
+    navController: NavController,
 ) {
     val isSelectedIndex = remember { mutableStateOf(0) }
 
@@ -41,7 +42,7 @@ fun SachoSaengBottomAppBar(
             items.invoke().forEachIndexed { index, it ->
                 IconButton(onClick = {
                     isSelectedIndex.value = index
-                    navigateToRoute(it.route)
+                    navController.navigate(it.route)
                 }) {
                     Icon(
                         painter = painterResource(id = it.icon),

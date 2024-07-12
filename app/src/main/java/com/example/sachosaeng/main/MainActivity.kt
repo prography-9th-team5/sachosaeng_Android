@@ -44,9 +44,7 @@ class MainActivity : ComponentActivity() {
                                 BottomAppbarItem(Screen.BOOKMARK.route, R.drawable.ic_bookmark)
                             )
                         },
-                        navigateToRoute = { route ->
-                            navController.navigate(route)
-                        }
+                        navController = navController
                     )
                 }
             )
