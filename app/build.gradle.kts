@@ -1,4 +1,5 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -8,8 +9,18 @@ plugins {
     kotlin("kapt")
 }
 
-fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey, "")
+fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
+    val properties = Properties()
+    val localPropertiesFile = File(rootDir, "local.properties")
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    }
+    return properties
+}
+
+fun Project.getApiKey(propertyKey: String): String {
+    val localProperties = gradleLocalProperties(providers, rootDir)
+    return localProperties.getProperty(propertyKey, "")
 }
 
 android {
@@ -66,7 +77,6 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.core.ktx.v1120)
 
     //compose
