@@ -1,12 +1,23 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.util.Properties
 
 plugins {
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrainsKotlinAndroid)
 }
 
-fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey, "")
+fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
+    val properties = Properties()
+    val localPropertiesFile = File(rootDir, "local.properties")
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    }
+    return properties
+}
+
+fun Project.getApiKey(propertyKey: String): String {
+    val localProperties = gradleLocalProperties(providers, rootDir)
+    return localProperties.getProperty(propertyKey, "")
 }
 
 android {
@@ -58,23 +69,25 @@ android {
 }
 
 dependencies {
-
+    //android core
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(project(":core:domain"))
+
+    //test
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    debugImplementation(libs.ui.tooling)
 
     //compose
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation(platform("androidx.compose:compose-bom:2024.05.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    implementation ("androidx.constraintlayout:constraintlayout-compose:1.0.1")
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.constraintlayout)
 
     //hilt
     implementation(libs.hilt.navigation.compose)
@@ -98,5 +111,4 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:util"))
     implementation(project(":core:domain"))
-    debugImplementation(libs.ui.tooling)
 }

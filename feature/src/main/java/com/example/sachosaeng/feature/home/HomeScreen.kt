@@ -39,6 +39,7 @@ import com.example.sachosaeng.feature.util.component.VoteColumnByCategory
 
 @Composable
 fun HomeScreen(
+    moveToMyPage: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.container.stateFlow.collectAsState()
@@ -54,7 +55,10 @@ fun HomeScreen(
     ) {
         Topbar(
             onCategorySelectButtonClicked = { isSelectCategoryModalOpen.value = true },
-            profileImageUrl = state.value.profileImageUrl
+            profileImageUrl = state.value.profileImageUrl,
+            onProfileImageClicked = {
+                moveToMyPage()
+            }
         )
         VoteColumnListByCategory(state.value.voteList)
         if (isSelectCategoryModalOpen.value) {
@@ -73,7 +77,11 @@ fun HomeScreen(
 }
 
 @Composable
-fun Topbar(onCategorySelectButtonClicked: () -> Unit, profileImageUrl: String) {
+fun Topbar(
+    onCategorySelectButtonClicked: () -> Unit,
+    profileImageUrl: String,
+    onProfileImageClicked: () -> Unit = {}
+) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
@@ -82,7 +90,9 @@ fun Topbar(onCategorySelectButtonClicked: () -> Unit, profileImageUrl: String) {
             .padding(20.dp)
     ) {
         CategorySelectButton(onSelectCategory = { onCategorySelectButtonClicked() })
-        ProfileImage(profileImageUrl)
+        ProfileImage(profileImageUrl, onClick = {
+            onProfileImageClicked()
+        })
     }
 }
 
@@ -118,9 +128,11 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
 }
 
 @Composable
-fun ProfileImage(profileImageUrl: String) {
+fun ProfileImage(profileImageUrl: String, onClick: () -> Unit = {}) {
     AsyncImage(
-        modifier = Modifier.size(40.dp),
+        modifier = Modifier
+            .size(40.dp)
+            .clickable { onClick() },
         model = if (profileImageUrl != "") profileImageUrl else R.drawable.splash_image,
         contentDescription = "",
     )
