@@ -6,11 +6,13 @@ import androidx.navigation.compose.composable
 const val ROUTE_SPLASH = "splash"
 
 fun NavGraphBuilder.addSplashNavGraph(
-    navigateToMain: () -> Unit
+    navigateToMain: () -> Unit,
+    navigateToSignUp: () -> Unit
 ) {
     composable(ROUTE_SPLASH) {
         SplashScreen(
-            navigateToMain = navigateToMain
+            navigateToMain = navigateToMain,
+            navigateToSignUp = navigateToSignUp
         )
     }
 }

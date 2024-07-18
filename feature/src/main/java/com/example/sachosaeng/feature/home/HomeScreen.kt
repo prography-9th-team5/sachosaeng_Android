@@ -36,13 +36,14 @@ import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.feature.R
 import com.example.sachosaeng.feature.util.component.CategoryTitleText
 import com.example.sachosaeng.feature.util.component.VoteColumnByCategory
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HomeScreen(
     moveToMyPage: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    val state = viewModel.container.stateFlow.collectAsState()
+    val state = viewModel.collectAsState()
     val isSelectCategoryModalOpen = remember { mutableStateOf(false) }
 
     LaunchedEffect(Unit) {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="next">다음</string>
+
     <string name="home_all_category">전체</string>
     <string name="category">카테고리</string>
     <string name="my_category">내 카테고리</string>
@@ -21,4 +23,12 @@
     <string name="mypage_menu_privacy_policy">개인정보 처리방침</string>
     <string name="mypage_menu_terms_of_service">서비스 이용약관</string>
     <string name="mypage_menu_faq">FAQ</string>
+
+    <!-- signup -->
+    <string name="select_user_type_label">어떤 사회초년생에\n해당하나요?</string>
+    <string name="select_user_type_desc">*선택한 유형에 맞는 정보를 제공해 드려요</string>
+    <string name="user_type_student">학생</string>
+    <string name="user_type_jobseeker">취업준비생</string>
+    <string name="user_type_newcomer">1~3년차 직장인</string>
+    <string name="user_type_etc">기타</string>
 </resources>
