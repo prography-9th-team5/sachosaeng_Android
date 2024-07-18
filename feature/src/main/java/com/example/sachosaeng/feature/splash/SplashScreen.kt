@@ -17,14 +17,16 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.R
+import org.orbitmvi.orbit.compose.collectAsState
 
 
 @Composable
 fun SplashScreen(
     navigateToMain: () -> Unit,
+    navigateToSignUp: () -> Unit,
     viewModel: SplashViewModel = hiltViewModel()
 ) {
-    val showSplashScreen = viewModel.container.stateFlow.collectAsState()
+    val showSplashScreen = viewModel.collectAsState()
 
     if (showSplashScreen.value) {
         ConstraintLayout(
@@ -56,6 +58,8 @@ fun SplashScreen(
             )
         }
     } else {
-        navigateToMain()
+        //todo: 가입여부 확인 추가
+//        navigateToMain()
+        navigateToSignUp()
     }
 }

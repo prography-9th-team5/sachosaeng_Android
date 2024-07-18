@@ -8,11 +8,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.sachosaeng.feature.home.HomeScreen
 import com.example.sachosaeng.feature.mypage.GRAPH_MY_PAGE
-import com.example.sachosaeng.feature.mypage.MyPageScreen
-import com.example.sachosaeng.feature.mypage.ROUTE_MY_PAGE
 import com.example.sachosaeng.feature.mypage.addMyPageNavGraph
+import com.example.sachosaeng.feature.signup.GRAPH_SIGNUP
+import com.example.sachosaeng.feature.signup.addSignUpNavGraph
 import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
-import com.example.sachosaeng.feature.splash.SplashScreen
 import com.example.sachosaeng.feature.splash.addSplashNavGraph
 import com.example.sachosaeng.feature.vote.VoteScreen
 
@@ -22,7 +21,11 @@ internal fun addNavGraph(navController: NavHostController) {
         navController = navController,
         startDestination = ROUTE_SPLASH,
     ) {
-        addSplashNavGraph(navigateToMain = { navController.navigate(GRAPH_MAIN) })
+        addSplashNavGraph(
+            navigateToMain = { navController.navigate(GRAPH_MAIN) },
+            navigateToSignUp = { navController.navigate(GRAPH_SIGNUP) }
+        )
+        addSignUpNavGraph(navController = navController)
         addBottomNavGraph(navController = navController)
         addMyPageNavGraph(navController = navController)
     }
