@@ -59,7 +59,7 @@ fun SplashScreen(
         }
     } else {
         //todo: 가입여부 확인 추가
-//        navigateToMain()
+       // navigateToMain()
         navigateToSignUp()
     }
 }

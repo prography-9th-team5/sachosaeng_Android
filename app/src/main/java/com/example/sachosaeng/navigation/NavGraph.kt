@@ -25,20 +25,23 @@ internal fun addNavGraph(navController: NavHostController) {
             navigateToMain = { navController.navigate(GRAPH_MAIN) },
             navigateToSignUp = { navController.navigate(GRAPH_SIGNUP) }
         )
-        addSignUpNavGraph(navController = navController)
+        addSignUpNavGraph(
+            navController = navController,
+            navigateToMain = { navController.navigate(GRAPH_MAIN) })
         addBottomNavGraph(navController = navController)
         addMyPageNavGraph(navController = navController)
     }
 }
 
-private const val GRAPH_MAIN = "main"
+private const val GRAPH_MAIN = "mainGraph"
+private const val ROUTE_MAIN = "main"
 
 fun NavGraphBuilder.addBottomNavGraph(navController: NavHostController) {
     navigation(
-        startDestination = Screen.HOME.route,
+        startDestination = ROUTE_MAIN,
         route = GRAPH_MAIN
     ) {
-        composable(Screen.HOME.route) {
+        composable(ROUTE_MAIN) {
             HomeScreen(moveToMyPage = { navController.navigate(GRAPH_MY_PAGE) })
         }
         composable(Screen.VOTE.route) {
