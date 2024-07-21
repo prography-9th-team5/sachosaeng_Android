@@ -9,8 +9,8 @@ import androidx.navigation.navigation
 import com.example.sachosaeng.feature.home.HomeScreen
 import com.example.sachosaeng.feature.mypage.GRAPH_MY_PAGE
 import com.example.sachosaeng.feature.mypage.addMyPageNavGraph
-import com.example.sachosaeng.feature.signup.GRAPH_SIGNUP
-import com.example.sachosaeng.feature.signup.addSignUpNavGraph
+import com.example.sachosaeng.feature.signup.navigation.GRAPH_SIGNUP
+import com.example.sachosaeng.feature.signup.navigation.addSignUpNavGraph
 import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
 import com.example.sachosaeng.feature.splash.addSplashNavGraph
 import com.example.sachosaeng.feature.vote.VoteScreen

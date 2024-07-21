@@ -20,7 +20,7 @@ import com.example.sachosaeng.feature.R
 import com.example.sachosaeng.feature.util.component.CircleCategoryButton
 import com.example.sachosaeng.feature.util.component.TabRowComponent
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectCategoryBottomSheet(
     allCategoryList: List<Category>,

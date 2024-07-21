@@ -24,16 +24,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.sachosaeng.core.ui.theme.Gs_Black
+import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.feature.R
 import kotlinx.coroutines.launch
 
-
 @Composable
-fun SignUpProgressBar() {
+fun SignUpProgressBar(modifier: Modifier = Modifier) {
     val boxWidthPx = remember { mutableStateOf(0f) }
     val animateFloat = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
-    val progressWidthPercent =  2.4
 
     LaunchedEffect(boxWidthPx.value) {
         if (boxWidthPx.value > 0) {
@@ -48,10 +47,8 @@ fun SignUpProgressBar() {
             }
         }
     }
-
     Box(
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
             .height(60.dp)
             .onSizeChanged { size ->
                 boxWidthPx.value = size.width.toFloat()
@@ -62,13 +59,20 @@ fun SignUpProgressBar() {
                 .fillMaxWidth()
                 .height(30.dp)
         ) {
-            val lineEndPx = animateFloat.value * boxWidthPx.value / progressWidthPercent
+            val lineEndPx = animateFloat.value * boxWidthPx.value
+            drawLine(
+                color = Gs_G3,
+                start = Offset(0f, size.height),
+                end = Offset(size.width, size.height),
+                strokeWidth = 4.dp.toPx(),
+                cap = StrokeCap.Round
+            )
             drawLine(
                 color = Gs_Black,
                 start = Offset(0f, size.height),
-                end = Offset(lineEndPx.toFloat(), size.height),
+                end = Offset(lineEndPx, size.height),
                 strokeWidth = 4.dp.toPx(),
-                cap = StrokeCap.Butt
+                cap = StrokeCap.Round
             )
         }
         Image(
@@ -78,7 +82,7 @@ fun SignUpProgressBar() {
                 .size(28.dp)
                 .offset {
                     IntOffset(
-                        x = ((animateFloat.value * boxWidthPx.value / progressWidthPercent).toInt()),
+                        x = ((animateFloat.value * boxWidthPx.value - 75).toInt()),
                         y = 0
                     )
                 }
