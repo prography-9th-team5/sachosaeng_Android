@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage
+package com.example.sachosaeng.feature.mypage.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -37,6 +37,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun MyPageScreen(
+    navigateToWithDraw: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
@@ -45,10 +46,18 @@ fun MyPageScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.getUserInfo()
     }
-
+    if (state.withdrawDialogState) {
+        WithdrawDialog(
+            onWithdraw = {
+                viewModel.hideWithdrawDialog()
+                navigateToWithDraw()
+            },
+            onCancel = { viewModel.hideWithdrawDialog() }
+        )
+    }
     MyPageScreen(
         state,
-        onWithdraw = { viewModel.withdraw() },
+        onWithdraw = { viewModel.showWithdrawDialog() },
         navigateToBackStack = { navigateToBackStack() })
 }
 
