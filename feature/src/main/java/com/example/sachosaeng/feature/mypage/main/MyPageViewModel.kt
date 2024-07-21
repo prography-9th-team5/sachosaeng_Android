@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage
+package com.example.sachosaeng.feature.mypage.main
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,11 +22,18 @@ class MyPageViewModel @Inject constructor(): ViewModel(), ContainerHost <MyPageU
         }
     }
 
-    fun withdraw() = intent {
+    fun showWithdrawDialog() = intent {
         reduce {
             state.copy(
-                levelText = "",
-                userName = ""
+                withdrawDialogState = true
+            )
+        }
+    }
+
+    fun hideWithdrawDialog() = intent {
+        reduce {
+            state.copy(
+                withdrawDialogState = false
             )
         }
     }

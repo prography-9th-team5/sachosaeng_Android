@@ -9,6 +9,7 @@
     <string name="category_change">카테고리 변경</string>
     <string name="change">변경</string>
     <string name="confirm_label">확인</string>
+    <string name="cancel_label">취소</string>
 
     <!-- mypage-->
     <string name="mypage_top_bar_label">마이페이지</string>
@@ -37,4 +38,7 @@
     <string name="skip_button">SKIP</string>
     <string name="welcome_text">%s 님!\n사초생에 오신 걸 환영해요</string>
     <string name="signup_complete_text">회원가입 완료</string>
+
+    <!--withdraw-->
+    <string name="withdraw_dialog_content">탈퇴 시 동일한 계정으로\n재가입이 불가능해요\n그래도 탈퇴할까요?</string>
 </resources>
