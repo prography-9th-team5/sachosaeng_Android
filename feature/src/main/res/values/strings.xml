@@ -41,4 +41,14 @@
 
     <!--withdraw-->
     <string name="withdraw_dialog_content">탈퇴 시 동일한 계정으로\n재가입이 불가능해요\n그래도 탈퇴할까요?</string>
+    <string name="withdraw_screen_title">%s님\n떠난다니 아쉬워요..</string>
+    <string name="withdraw_screen_description">사초생 탈퇴 사유를 알려주세요</string>
+    <string name="withdraw_reason_hint">사유를 작성해주세요</string>
+    <string name="reason_for_withdraw_1">서비스 불만족</string>
+    <string name="reason_for_withdraw_2">콘텐츠 부족</string>
+    <string name="reason_for_withdraw_3">더 이상 사용하지 않음</string>
+    <string name="reason_for_withdraw_4">기타 (직접 입력)</string>
+    <string name="withdraw_complete_toast_message">탈퇴가 완료되었어요</string>
+    <string name="withdraw_reason_required">사유를 선택해주세요</string>
+    <string name="withdraw_reason_detail_required">사유를 작성해주세요</string>
 </resources>
