@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -23,9 +25,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G5
@@ -39,6 +43,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun MyPageScreen(
     navigateToWithDraw: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
+    navigateToUserInfoModify: () -> Unit = {},
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
@@ -58,13 +63,16 @@ fun MyPageScreen(
     MyPageScreen(
         state,
         onWithdraw = { viewModel.showWithdrawDialog() },
-        navigateToBackStack = { navigateToBackStack() })
+        navigateToBackStack = { navigateToBackStack() },
+        onModifyUserInfo = { navigateToUserInfoModify() }
+    )
 }
 
 @Composable
 internal fun MyPageScreen(
     myPageUiState: MyPageUiState,
     onWithdraw: () -> Unit = {},
+    onModifyUserInfo: () -> Unit = {},
     navigateToBackStack: () -> Unit = {}
 ) {
     LazyColumn(
@@ -77,7 +85,11 @@ internal fun MyPageScreen(
             DetailScreenTopbar(
                 pageLabel = stringResource(id = R.string.mypage_top_bar_label),
                 navigateToBackStack = { navigateToBackStack() })
-            UserInfoCard(levelText = myPageUiState.levelText, userName = myPageUiState.userName)
+            UserInfoCard(
+                levelText = myPageUiState.levelText,
+                userName = myPageUiState.userName,
+                userInfoModifyButtonClick = onModifyUserInfo
+            )
             MyPageMenuList(
                 modifier = Modifier.padding(vertical = 28.dp),
                 menuCard = listOf(
@@ -114,17 +126,20 @@ internal fun MyPageScreen(
 }
 
 @Composable
-fun UserInfoCard(levelText: String, userName: String) {
-    Card(
-        colors = CardDefaults.cardColors().copy(containerColor = Gs_G6),
+fun UserInfoCard(levelText: String, userName: String, userInfoModifyButtonClick: () -> Unit = {}) {
+    Box(
+        modifier = Modifier
+            .padding(vertical = 20.dp)
+            .fillMaxWidth()
+            .background(color = Gs_G6, shape = RoundedCornerShape(8.dp))
     ) {
         Row(
-            horizontalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier.align(Alignment.Center),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                modifier = Modifier.padding(end = 20.dp),
+                modifier = Modifier
+                    .padding(end = 20.dp),
                 contentDescription = "",
                 painter = painterResource(id = R.drawable.ic_level_newcomer),
             )
@@ -146,6 +161,14 @@ fun UserInfoCard(levelText: String, userName: String) {
                 )
             }
         }
+        Image(
+            modifier = Modifier
+                .noRippleClickable { userInfoModifyButtonClick() }
+                .align(Alignment.TopEnd)
+                .padding(top = 12.dp, end = 12.dp),
+            painter = painterResource(id = R.drawable.ic_modify),
+            contentDescription = null
+        )
     }
 }
 
@@ -237,5 +260,18 @@ fun WithdrawButton(onClick: () -> Unit = {}) {
                 onClick()
             }
             .padding(vertical = 20.dp)
+    )
+}
+
+@Preview
+@Composable
+fun MyPageScreenPreview() {
+    MyPageScreen(
+        MyPageUiState(
+            levelText = "Newcomer",
+            userName = "김철수",
+            versionInfo = "1.0.0",
+            withdrawDialogState = false
+        )
     )
 }
