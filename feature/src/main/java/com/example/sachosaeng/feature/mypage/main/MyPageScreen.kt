@@ -51,9 +51,9 @@ fun MyPageScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.getUserInfo()
     }
-    if (state.withdrawDialogState) {
-        WithdrawDialog(
-            onWithdraw = {
+    if (state.logoutDialogState) {
+        LogoutDialog(
+            onLogout = {
                 viewModel.hideWithdrawDialog()
                 navigateToWithDraw()
             },
@@ -62,7 +62,7 @@ fun MyPageScreen(
     }
     MyPageScreen(
         state,
-        onWithdraw = { viewModel.showWithdrawDialog() },
+        onLogout = { viewModel.showLogoutDialog() },
         navigateToBackStack = { navigateToBackStack() },
         onModifyUserInfo = { navigateToUserInfoModify() }
     )
@@ -71,7 +71,7 @@ fun MyPageScreen(
 @Composable
 internal fun MyPageScreen(
     myPageUiState: MyPageUiState,
-    onWithdraw: () -> Unit = {},
+    onLogout: () -> Unit = {},
     onModifyUserInfo: () -> Unit = {},
     navigateToBackStack: () -> Unit = {}
 ) {
@@ -120,7 +120,7 @@ internal fun MyPageScreen(
                     { MyPageMenuCard(menuName = stringResource(id = R.string.mypage_menu_faq)) }
                 )
             )
-            WithdrawButton(onClick = { onWithdraw() })
+            LogoutButton(onClick = { onLogout() })
         }
     }
 }
@@ -250,10 +250,10 @@ fun VersionInfoCard(versionInfo: String) {
 }
 
 @Composable
-fun WithdrawButton(onClick: () -> Unit = {}) {
+fun LogoutButton(onClick: () -> Unit = {}) {
     Text(
         color = Gs_G5,
-        text = stringResource(id = R.string.mypage_withdraw_label),
+        text = stringResource(id = R.string.mypage_logout_label),
         textDecoration = TextDecoration.Underline,
         modifier = Modifier
             .clickable {
@@ -271,7 +271,7 @@ fun MyPageScreenPreview() {
             levelText = "Newcomer",
             userName = "김철수",
             versionInfo = "1.0.0",
-            withdrawDialogState = false
+            logoutDialogState = true
         )
     )
 }

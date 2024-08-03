@@ -22,10 +22,10 @@ class MyPageViewModel @Inject constructor(): ViewModel(), ContainerHost <MyPageU
         }
     }
 
-    fun showWithdrawDialog() = intent {
+    fun showLogoutDialog() = intent {
         reduce {
             state.copy(
-                withdrawDialogState = true
+                logoutDialogState = true
             )
         }
     }
@@ -33,7 +33,7 @@ class MyPageViewModel @Inject constructor(): ViewModel(), ContainerHost <MyPageU
     fun hideWithdrawDialog() = intent {
         reduce {
             state.copy(
-                withdrawDialogState = false
+                logoutDialogState = false
             )
         }
     }

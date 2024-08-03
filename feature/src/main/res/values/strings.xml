@@ -15,6 +15,7 @@
     <string name="mypage_top_bar_label">마이페이지</string>
     <string name="mypage_menu_change_nickname">닉네임 변경</string>
     <string name="mypage_withdraw_label">탈퇴하기</string>
+    <string name="mypage_logout_label">로그아웃</string>
     <string name="mypage_menu_change_category">관심사 설정</string>
     <string name="mypage_menu_suggest_vote">고민 문의</string>
     <string name="mypage_menu_setting">설정</string>
@@ -41,4 +42,6 @@
 
     <!--withdraw-->
     <string name="withdraw_dialog_content">탈퇴 시 동일한 계정으로\n재가입이 불가능해요\n그래도 탈퇴할까요?</string>
+
+    <string name="logout_dialog_content">정말 로그아웃하시겠습니까?</string>
 </resources>
