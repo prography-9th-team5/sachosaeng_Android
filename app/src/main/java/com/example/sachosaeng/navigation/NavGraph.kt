@@ -14,6 +14,8 @@ import com.example.sachosaeng.feature.signup.navigation.addSignUpNavGraph
 import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
 import com.example.sachosaeng.feature.splash.addSplashNavGraph
 import com.example.sachosaeng.feature.vote.VoteScreen
+import com.example.sachosaeng.feature.webview.addWebViewScreen
+import com.example.sachosaeng.feature.webview.navigateToWebView
 
 @Composable
 internal fun addNavGraph(navController: NavHostController) {
@@ -25,11 +27,15 @@ internal fun addNavGraph(navController: NavHostController) {
             navigateToMain = { navController.navigate(GRAPH_MAIN) },
             navigateToSignUp = { navController.navigate(GRAPH_SIGNUP) }
         )
+        addWebViewScreen()
         addSignUpNavGraph(
             navController = navController,
             navigateToMain = { navController.navigate(GRAPH_MAIN) })
         addBottomNavGraph(navController = navController)
-        addMyPageNavGraph(navController = navController)
+        addMyPageNavGraph(
+            navController = navController,
+            navigateToWebView = { url -> navController.navigateToWebView(url) }
+        )
     }
 }
 
