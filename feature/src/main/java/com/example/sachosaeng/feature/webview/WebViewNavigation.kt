@@ -1,6 +1,5 @@
 package com.example.sachosaeng.feature.webview
 
-import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -13,13 +12,21 @@ const val ARG_URL = "url"
 
 fun NavController.navigateToWebView(url: String) {
     val encodedUrl = URLEncoder.encode(url, StandardCharsets.UTF_8.toString())
-    navigate("${ROUTE_WEBVIEW}?$ARG_URL=$encodedUrl")
+    navigate("$ROUTE_WEBVIEW?$ARG_URL=$encodedUrl")
 }
-fun NavGraphBuilder.addWebViewScreen() {
-    composable(route = "${ROUTE_WEBVIEW}?$ARG_URL={$ARG_URL}") { backStackEntry ->
+
+fun NavGraphBuilder.addWebViewScreen(
+    navController: NavController
+) {
+    composable(
+        route = "${ROUTE_WEBVIEW}?$ARG_URL={$ARG_URL}"
+    ) { backStackEntry ->
         val url = backStackEntry.arguments?.getString("$ARG_URL")?.let {
             URLDecoder.decode(it, StandardCharsets.UTF_8.toString())
         } ?: ""
-        WebViewScreen(url = url)
+        WebViewScreen(
+            url = url,
+            onCloseClick = { navController.popBackStack() },
+        )
     }
 }
