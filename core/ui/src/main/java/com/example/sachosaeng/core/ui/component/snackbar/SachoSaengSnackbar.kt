@@ -10,6 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -36,6 +37,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SachoSaengSnackbar(
+    modifier: Modifier = Modifier,
     message: String,
     icon: @Composable () -> Unit = { },
     onDismiss: () -> Unit
@@ -57,13 +59,12 @@ fun SachoSaengSnackbar(
         }
     }
     Box(
-        contentAlignment = Alignment.BottomCenter,
-        modifier = Modifier
-            .fillMaxWidth()
+        modifier = modifier
+            .fillMaxSize()
             .background(Color.Transparent)
-            .padding(bottom = 16.dp)
-    )
-    {
+            .padding(16.dp),
+        contentAlignment = Alignment.BottomCenter
+    ) {
         AnimatedVisibility(
             visibleState = transition,
             enter = fadeIn() + scaleIn(),

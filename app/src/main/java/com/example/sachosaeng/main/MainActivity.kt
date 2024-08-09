@@ -3,7 +3,7 @@ package com.example.sachosaeng.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
             //todo: 더 다듬을 수 있는지 생각해보기
             Scaffold(
                 content = {
-                    Column(
+                    Box(
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(it)

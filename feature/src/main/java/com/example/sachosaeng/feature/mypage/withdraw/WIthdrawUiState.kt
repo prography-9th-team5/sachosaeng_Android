@@ -6,7 +6,6 @@ data class WIthdrawUiState(
     val reasonForWithdrawDetail: String = "",
     val reasonForWithdrawDetailFieldIsOpened: Boolean = false,
     val selectedReason: ReasonForWithdraw = ReasonForWithdraw.NONE,
-    val snackBarMessage: String = ""
 )
 
 enum class ReasonForWithdraw {

@@ -1,7 +1,6 @@
 package com.example.sachosaeng.feature.mypage.withdraw
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.domain.usecase.user.WithdrawUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost

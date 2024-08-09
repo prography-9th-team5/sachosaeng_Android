@@ -19,7 +19,7 @@ import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 
 @Composable
-fun DetailScreenTopbar(pageLabel: String, navigateToBackStack: () -> Unit) {
+fun DetailScreenTopbar(pageLabel: String? = null, navigateToBackStack: () -> Unit) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -36,7 +36,7 @@ fun DetailScreenTopbar(pageLabel: String, navigateToBackStack: () -> Unit) {
         Text(
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
-            text = pageLabel,
+            text = pageLabel ?: "",
             fontSize = 18.sp,
             color = Gs_Black,
             fontWeight = FontWeight.W700,
