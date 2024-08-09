@@ -1,8 +1,8 @@
 package com.example.sachosaeng.data.repository
 
-import com.example.sachosaeng.domain.repository.SettingRepository
+import com.example.sachosaeng.core.domain.repository.SettingRepository
 
-class SettingRepositoryImpl : com.example.sachosaeng.domain.repository.SettingRepository {
+class SettingRepositoryImpl : SettingRepository {
     override suspend fun getPrivacyPolicyUrl(): String {
         TODO("Not yet implemented")
     }

@@ -7,13 +7,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.sachosaeng.feature.home.HomeScreen
-import com.example.sachosaeng.feature.mypage.GRAPH_MY_PAGE
-import com.example.sachosaeng.feature.mypage.addMyPageNavGraph
+import com.example.sachosaeng.feature.mypage.navigation.GRAPH_MY_PAGE
+import com.example.sachosaeng.feature.mypage.navigation.addMyPageNavGraph
 import com.example.sachosaeng.feature.signup.navigation.GRAPH_SIGNUP
 import com.example.sachosaeng.feature.signup.navigation.addSignUpNavGraph
 import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
 import com.example.sachosaeng.feature.splash.addSplashNavGraph
 import com.example.sachosaeng.feature.vote.VoteScreen
+import com.example.sachosaeng.feature.webview.addWebViewScreen
+import com.example.sachosaeng.feature.webview.navigateToWebView
 
 @Composable
 internal fun addNavGraph(navController: NavHostController) {
@@ -25,11 +27,15 @@ internal fun addNavGraph(navController: NavHostController) {
             navigateToMain = { navController.navigate(GRAPH_MAIN) },
             navigateToSignUp = { navController.navigate(GRAPH_SIGNUP) }
         )
+        addWebViewScreen(navController = navController)
         addSignUpNavGraph(
             navController = navController,
             navigateToMain = { navController.navigate(GRAPH_MAIN) })
         addBottomNavGraph(navController = navController)
-        addMyPageNavGraph(navController = navController)
+        addMyPageNavGraph(
+            navController = navController,
+            navigateToWebView = { url -> navController.navigateToWebView(url) }
+        )
     }
 }
 
