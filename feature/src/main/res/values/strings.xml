@@ -42,6 +42,5 @@
 
     <!--withdraw-->
     <string name="withdraw_dialog_content">탈퇴 시 동일한 계정으로\n재가입이 불가능해요\n그래도 탈퇴할까요?</string>
-
     <string name="logout_dialog_content">정말 로그아웃하시겠습니까?</string>
 </resources>

@@ -44,6 +44,8 @@ fun MyPageScreen(
     navigateToWithDraw: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     navigateToUserInfoModify: () -> Unit = {},
+    navigateToPrivacyPolicy: () -> Unit = {},
+    navigateToTermsOfService: () -> Unit = {},
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
@@ -64,7 +66,9 @@ fun MyPageScreen(
         state,
         onLogout = { viewModel.showLogoutDialog() },
         navigateToBackStack = { navigateToBackStack() },
-        onModifyUserInfo = { navigateToUserInfoModify() }
+        onModifyUserInfo = { navigateToUserInfoModify() },
+        navigateToPrivacyPolicy = { navigateToPrivacyPolicy() },
+        navigateToTermsOfService = { navigateToTermsOfService() }
     )
 }
 
@@ -73,7 +77,9 @@ internal fun MyPageScreen(
     myPageUiState: MyPageUiState,
     onLogout: () -> Unit = {},
     onModifyUserInfo: () -> Unit = {},
-    navigateToBackStack: () -> Unit = {}
+    navigateToBackStack: () -> Unit = {},
+    navigateToPrivacyPolicy: () -> Unit = {},
+    navigateToTermsOfService: () -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -115,8 +121,16 @@ internal fun MyPageScreen(
                 menuCard = listOf(
                     { VersionInfoCard(versionInfo = myPageUiState.versionInfo) },
                     { MyPageMenuCard(menuName = stringResource(id = R.string.mypage_menu_open_source)) },
-                    { MyPageMenuCard(menuName = stringResource(id = R.string.mypage_menu_privacy_policy)) },
-                    { MyPageMenuCard(menuName = stringResource(id = R.string.mypage_menu_terms_of_service)) },
+                    {
+                        MyPageMenuCard(
+                            menuName = stringResource(id = R.string.mypage_menu_privacy_policy),
+                            onClick = { navigateToPrivacyPolicy() })
+                    },
+                    {
+                        MyPageMenuCard(
+                            menuName = stringResource(id = R.string.mypage_menu_terms_of_service),
+                            onClick = { navigateToTermsOfService() })
+                    },
                     { MyPageMenuCard(menuName = stringResource(id = R.string.mypage_menu_faq)) }
                 )
             )
@@ -193,15 +207,17 @@ fun MyPageMenuList(modifier: Modifier = Modifier, menuCard: List<@Composable () 
 }
 
 @Composable
-fun MyPageMenuCard(menuName: String) {
+fun MyPageMenuCard(menuName: String, onClick: () -> Unit = {}) {
     Card(
         colors = CardDefaults.cardColors().copy(
             containerColor = Gs_White
         ),
     ) {
         Row(
+            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
+                .clickable { onClick() }
                 .padding(16.dp)
                 .fillMaxWidth(),
         ) {
