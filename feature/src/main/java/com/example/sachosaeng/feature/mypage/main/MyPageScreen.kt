@@ -101,11 +101,6 @@ internal fun MyPageScreen(
                 menuCard = listOf(
                     {
                         MyPageMenuCard(
-                            menuName = stringResource(id = R.string.mypage_menu_change_nickname)
-                        )
-                    },
-                    {
-                        MyPageMenuCard(
                             menuName = stringResource(id = R.string.mypage_menu_change_category)
                         )
                     },

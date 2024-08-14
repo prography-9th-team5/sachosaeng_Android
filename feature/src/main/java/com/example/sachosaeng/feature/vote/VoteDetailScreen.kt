@@ -34,6 +34,7 @@ import com.example.sachosaeng.core.ui.component.topappbar.SachosaengTopAppBar
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.feature.R.string
 import com.example.sachosaeng.core.ui.R.drawable
+import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 
 @Composable
 fun VoteScreen(
@@ -71,24 +72,9 @@ internal fun VoteScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     )
     {
-        SachosaengTopAppBar(
-            componentRow = {
-                Row(
-                    modifier = Modifier.fillMaxWidth(0.55f),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Image(
-                        modifier = Modifier.clickable { navigateToBackStack() },
-                        painter = painterResource(id = drawable.ic_go_back),
-                        contentDescription = null
-                    )
-                    Text(
-                        text = vote.category.name,
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.W700,
-                    )
-                }
-            }, profileImageUrl = null
+        SachosaengDetailTopAppBar(
+            title = vote.category.name,
+            navigateToBackStack = navigateToBackStack
         )
         Column(
             modifier = Modifier

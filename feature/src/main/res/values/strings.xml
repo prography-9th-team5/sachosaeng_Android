@@ -13,11 +13,14 @@
 
     <!-- mypage-->
     <string name="mypage_top_bar_label">마이페이지</string>
+    <string name="mypage_nickname_field_label">닉네임</string>
+    <string name="mypage_usertype_field_label">사초생 유형 변경</string>
     <string name="mypage_menu_change_nickname">닉네임 변경</string>
+    <string name="mypage_modify_userinfo">내 정보 수정</string>
     <string name="mypage_withdraw_label">탈퇴하기</string>
     <string name="mypage_logout_label">로그아웃</string>
     <string name="mypage_menu_change_category">관심사 설정</string>
-    <string name="mypage_menu_suggest_vote">고민 문의</string>
+    <string name="mypage_menu_suggest_vote">1:1 문의</string>
     <string name="mypage_menu_setting">설정</string>
     <string name="mypage_menu_version_info">버전안내</string>
     <string name="mypage_latest_version">최신버전</string>
