@@ -4,7 +4,7 @@ import android.app.Activity
 import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.feature.BuildConfig
+import com.example.sachosaeng.feature.auth.BuildConfig
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException

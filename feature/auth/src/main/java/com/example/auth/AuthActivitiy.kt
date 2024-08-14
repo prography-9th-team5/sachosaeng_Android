@@ -24,9 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.example.sachosaeng.feature.R
 import com.example.sachosaeng.core.ui.theme.SachosaengTheme
-import com.example.sachosaeng.feature.BuildConfig
+import com.example.sachosaeng.feature.auth.BuildConfig
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import dagger.hilt.android.AndroidEntryPoint
