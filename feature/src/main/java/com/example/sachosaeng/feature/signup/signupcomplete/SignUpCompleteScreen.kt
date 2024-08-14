@@ -2,16 +2,11 @@ package com.example.sachosaeng.feature.signup.signupcomplete
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -24,6 +19,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.core.ui.R.string
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -56,7 +52,7 @@ internal fun SignUpCompleteScreen(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            text = stringResource(id = R.string.welcome_text, state.userName),
+            text = stringResource(id = string.welcome_text, state.userName),
             textAlign = TextAlign.Center,
             fontSize = 26.sp,
             fontWeight = FontWeight.W700
@@ -71,7 +67,7 @@ internal fun SignUpCompleteScreen(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-            text = stringResource(id = R.string.signup_complete_text, state.userName),
+            text = stringResource(id = string.signup_complete_text, state.userName),
             textAlign = TextAlign.Center,
             fontSize = 16.sp
         )

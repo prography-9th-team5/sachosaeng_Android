@@ -32,8 +32,7 @@ import com.example.sachosaeng.core.domain.model.Vote
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.topappbar.SachosaengTopAppBar
 import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.feature.R.string
-import com.example.sachosaeng.core.ui.R.drawable
+import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 
 @Composable

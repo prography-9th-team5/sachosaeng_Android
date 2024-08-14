@@ -17,7 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.ui.component.dialog.SachosaengTwoButtonDialog
 import com.example.sachosaeng.core.ui.theme.SachosaengTheme
-import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.core.ui.R
+import com.example.sachosaeng.feature.R.drawable
 
 @Composable
 fun WithdrawDialog(
@@ -39,7 +40,7 @@ fun WithdrawDialog(
                 .fillMaxWidth(0.8f)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.ic_warning),
+                painter = painterResource(id = drawable.ic_warning),
                 contentDescription = null
             )
             Text(

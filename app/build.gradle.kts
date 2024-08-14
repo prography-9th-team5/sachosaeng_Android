@@ -99,6 +99,7 @@ dependencies {
 
     //hilt
     implementation(libs.hilt.android)
+    implementation(project(":feature:home"))
     kapt (libs.hilt.compiler)
 
     //auth

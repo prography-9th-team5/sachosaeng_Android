@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.snackbar.SachoSaengSnackbar
 import com.example.sachosaeng.core.ui.noRippleClickable
@@ -44,11 +45,11 @@ import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.feature.R.drawable
 import com.example.sachosaeng.feature.signup.selectusertype.UserType
-import com.example.sachosaeng.feature.util.component.DetailScreenTopbar
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import com.example.sachosaeng.core.ui.R.string
 
 @Composable
 fun ModifyUserInfoScreen(
@@ -81,7 +82,7 @@ fun ModifyUserInfoScreen(
         SachoSaengSnackbar(
             icon = {
                 Image(
-                    painter = painterResource(id = R.drawable.ic_warning_black_small),
+                    painter = painterResource(id = drawable.ic_warning_black_small),
                     contentDescription = null
                 )
             }, message = it, onDismiss = {
@@ -108,7 +109,7 @@ internal fun ModifyUserInfoScreen(
             .padding(horizontal = 20.dp)
     ) {
         DetailScreenTopbar(
-            pageLabel = stringResource(id = R.string.mypage_modify_userinfo),
+            pageLabel = stringResource(id = string.mypage_modify_userinfo),
             navigateToBackStack = { navigateToBackStack() }
         )
         ProfileImage(userType = state.userType)
@@ -122,7 +123,7 @@ internal fun ModifyUserInfoScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 16.dp),
-            text = stringResource(id = R.string.save_label),
+            text = stringResource(id = string.save_label),
             onClick = { saveUserInfo() }
         )
     }
@@ -166,7 +167,7 @@ private fun FieldTitle(title: String) {
 @Composable
 private fun NickNameField(nickName: String, onNicknameChange: (String) -> Unit) {
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start) {
-        FieldTitle(stringResource(id = R.string.mypage_nickname_field_label))
+        FieldTitle(stringResource(id = string.mypage_nickname_field_label))
         BasicTextField(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
@@ -186,7 +187,7 @@ private fun UserTypeField(
     onUserTypeSelect: (UserType) -> Unit
 ) {
     Column {
-        FieldTitle(stringResource(id = R.string.mypage_usertype_field_label))
+        FieldTitle(stringResource(id = string.mypage_usertype_field_label))
         Row(
             modifier = modifier
                 .fillMaxWidth()
@@ -257,7 +258,7 @@ private fun UserTypeCard(
                 text = stringResource(id = userType.userTypeLabelRes),
             )
             Image(
-                painter = painterResource(id = R.drawable.ic_unchecked),
+                painter = painterResource(id = drawable.ic_unchecked),
                 contentDescription = null,
                 colorFilter = ColorFilter.tint(if (isSelected) Gs_Black else Gs_G3)
             )
@@ -269,7 +270,7 @@ private fun UserTypeCard(
 fun WithdrawButton(onClick: () -> Unit = {}) {
     Text(
         color = Gs_G5,
-        text = stringResource(id = R.string.mypage_withdraw_label),
+        text = stringResource(id = string.mypage_withdraw_label),
         textDecoration = TextDecoration.Underline,
         modifier = Modifier
             .noRippleClickable {

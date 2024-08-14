@@ -16,7 +16,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,14 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.example.sachosaeng.core.ui.R.string
+import com.example.sachosaeng.core.ui.component.CategoryTitleText
+import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.ui.theme.Gs_G6
-import com.example.sachosaeng.feature.R
-import com.example.sachosaeng.feature.util.component.CategoryTitleText
-import com.example.sachosaeng.feature.util.component.VoteColumnByCategory
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -105,7 +104,7 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
         modifier = Modifier.clickable { onSelectCategory() }
     ) {
         Text(
-            text = stringResource(id = R.string.home_all_category),
+            text = stringResource(id = string.home_all_category),
             fontSize = 26.sp,
             fontWeight = FontWeight.W700
         )
@@ -119,7 +118,7 @@ fun CategorySelectButton(onSelectCategory: () -> Unit) {
         {
             Text(
                 color = Gs_G6,
-                text = stringResource(id = R.string.category_change),
+                text = stringResource(id = string.category_change),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W600,
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)

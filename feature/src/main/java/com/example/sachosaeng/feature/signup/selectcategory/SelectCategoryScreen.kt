@@ -20,15 +20,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.feature.R
-import com.example.sachosaeng.feature.home.CategoryListFlowRow
+import com.example.sachosaeng.feature.R.drawable
 import com.example.sachosaeng.feature.signup.SelectScreenDescription
 import com.example.sachosaeng.feature.signup.SignUpProgressBar
 import org.orbitmvi.orbit.compose.collectAsState
+import com.example.sachosaeng.core.ui.R.string
 
 @Composable
 fun SelectCategoryScreen(
@@ -63,19 +64,21 @@ internal fun SelectCategoryScreen(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             SelectScreenDescription(
-                title = stringResource(id = R.string.select_initial_category_label),
+                title = stringResource(id = string.select_initial_category_label),
                 subText = stringResource(
-                    id = R.string.select_initial_category_desc
+                    id = string.select_initial_category_desc
                 )
             )
             SkipButton(onSkip)
         }
-        CategoryListFlowRow(state.categoryList, onSelectCategory = { onSelectCategory(it) })
+        CategoryListFlowRow(
+            state.categoryList,
+            onSelectCategory = { onSelectCategory(it) })
         SachoSaengButton(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.End),
-            text = stringResource(id = R.string.start_button),
+            text = stringResource(id = string.start_button),
             onClick = { moveToNextStep() }
         )
     }
@@ -89,7 +92,7 @@ fun SkipButton(onSkip: () -> Unit = {}) {
                 onSkip()
             }
             .padding(top = 6.dp),
-        text = stringResource(id = R.string.skip_button),
+        text = stringResource(id = string.skip_button),
         fontSize = 16.sp,
         color = Gs_G5
     )

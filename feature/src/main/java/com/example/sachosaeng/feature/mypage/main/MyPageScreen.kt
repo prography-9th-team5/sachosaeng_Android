@@ -29,14 +29,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.R
-import com.example.sachosaeng.feature.util.component.DetailScreenTopbar
+import com.example.sachosaeng.core.ui.R.string
+import com.example.sachosaeng.feature.R.drawable
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -89,7 +90,7 @@ internal fun MyPageScreen(
     ) {
         item {
             DetailScreenTopbar(
-                pageLabel = stringResource(id = R.string.mypage_top_bar_label),
+                pageLabel = stringResource(id = string.mypage_top_bar_label),
                 navigateToBackStack = { navigateToBackStack() })
             UserInfoCard(
                 levelText = myPageUiState.levelText,
@@ -101,32 +102,32 @@ internal fun MyPageScreen(
                 menuCard = listOf(
                     {
                         MyPageMenuCard(
-                            menuName = stringResource(id = R.string.mypage_menu_change_category)
+                            menuName = stringResource(id = string.mypage_menu_change_category)
                         )
                     },
                     {
                         MyPageMenuCard(
-                            menuName = stringResource(id = R.string.mypage_menu_suggest_vote)
+                            menuName = stringResource(id = string.mypage_menu_suggest_vote)
                         )
                     }
                 )
             )
-            MenuTitle(title = stringResource(id = R.string.mypage_menu_setting))
+            MenuTitle(title = stringResource(id = string.mypage_menu_setting))
             MyPageMenuList(
                 menuCard = listOf(
                     { VersionInfoCard(versionInfo = myPageUiState.versionInfo) },
-                    { MyPageMenuCard(menuName = stringResource(id = R.string.mypage_menu_open_source)) },
+                    { MyPageMenuCard(menuName = stringResource(id = string.mypage_menu_open_source)) },
                     {
                         MyPageMenuCard(
-                            menuName = stringResource(id = R.string.mypage_menu_privacy_policy),
+                            menuName = stringResource(id = string.mypage_menu_privacy_policy),
                             onClick = { navigateToPrivacyPolicy() })
                     },
                     {
                         MyPageMenuCard(
-                            menuName = stringResource(id = R.string.mypage_menu_terms_of_service),
+                            menuName = stringResource(id = string.mypage_menu_terms_of_service),
                             onClick = { navigateToTermsOfService() })
                     },
-                    { MyPageMenuCard(menuName = stringResource(id = R.string.mypage_menu_faq)) }
+                    { MyPageMenuCard(menuName = stringResource(id = string.mypage_menu_faq)) }
                 )
             )
             LogoutButton(onClick = { onLogout() })
@@ -150,7 +151,7 @@ fun UserInfoCard(levelText: String, userName: String, userInfoModifyButtonClick:
                 modifier = Modifier
                     .padding(end = 20.dp),
                 contentDescription = "",
-                painter = painterResource(id = R.drawable.ic_level_newcomer),
+                painter = painterResource(id = drawable.ic_level_newcomer),
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -175,7 +176,7 @@ fun UserInfoCard(levelText: String, userName: String, userInfoModifyButtonClick:
                 .noRippleClickable { userInfoModifyButtonClick() }
                 .align(Alignment.TopEnd)
                 .padding(top = 12.dp, end = 12.dp),
-            painter = painterResource(id = R.drawable.ic_modify),
+            painter = painterResource(id = drawable.ic_modify),
             contentDescription = null
         )
     }
@@ -218,7 +219,7 @@ fun MyPageMenuCard(menuName: String, onClick: () -> Unit = {}) {
         ) {
             Text(text = menuName)
             Image(
-                painter = painterResource(id = R.drawable.ic_arrow_right),
+                painter = painterResource(id = drawable.ic_arrow_right),
                 contentDescription = null
             )
         }
@@ -241,11 +242,11 @@ fun VersionInfoCard(versionInfo: String) {
         ) {
             Text(
                 modifier = Modifier.weight(1f),
-                text = stringResource(id = R.string.mypage_menu_version_info)
+                text = stringResource(id = string.mypage_menu_version_info)
             )
             Text(
                 modifier = Modifier.padding(end = 8.dp),
-                text = stringResource(id = R.string.mypage_latest_version),
+                text = stringResource(id = string.mypage_latest_version),
                 color = Gs_G5,
                 fontSize = 15.sp
             )
@@ -264,7 +265,7 @@ fun VersionInfoCard(versionInfo: String) {
 fun LogoutButton(onClick: () -> Unit = {}) {
     Text(
         color = Gs_G5,
-        text = stringResource(id = R.string.mypage_logout_label),
+        text = stringResource(id = string.mypage_logout_label),
         textDecoration = TextDecoration.Underline,
         modifier = Modifier
             .clickable {

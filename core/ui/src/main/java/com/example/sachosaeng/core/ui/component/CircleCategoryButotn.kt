@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.util.component
+package com.example.sachosaeng.core.ui.component
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.sachosaeng.core.domain.model.Category
-import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.core.ui.R
 
 @Composable
 fun CircleCategoryButton(category: Category, onClickCategory: (Category) -> Unit) {

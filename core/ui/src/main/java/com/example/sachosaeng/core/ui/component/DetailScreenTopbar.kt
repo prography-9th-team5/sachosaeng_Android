@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.util.component
+package com.example.sachosaeng.core.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable

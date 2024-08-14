@@ -48,7 +48,11 @@ fun NavGraphBuilder.addBottomNavGraph(navController: NavHostController) {
         route = GRAPH_MAIN
     ) {
         composable(ROUTE_MAIN) {
-            HomeScreen(moveToMyPage = { navController.navigate(GRAPH_MY_PAGE) })
+            HomeScreen(moveToMyPage = {
+                navController.navigate(
+                    GRAPH_MY_PAGE
+                )
+            })
         }
         composable(Screen.VOTE.route) {
             VoteScreen(navigateToBackStack = { navController.popBackStack() })

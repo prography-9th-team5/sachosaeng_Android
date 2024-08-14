@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.ui.component.dialog.SachosaengTwoButtonDialog
 import com.example.sachosaeng.core.ui.theme.SachosaengTheme
-import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.core.ui.R
 
 @Composable
 fun LogoutDialog(

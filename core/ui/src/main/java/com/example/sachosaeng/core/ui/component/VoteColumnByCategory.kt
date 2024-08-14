@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.util.component
+package com.example.sachosaeng.core.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.sachosaeng.feature.home.VoteInfo
+import com.example.sachosaeng.core.domain.model.VoteInfo
 
 @Composable
 fun VoteColumnByCategory(modifier: Modifier = Modifier, voteList: List<VoteInfo>) {

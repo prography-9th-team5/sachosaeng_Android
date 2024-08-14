@@ -23,7 +23,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.noRippleClickable
-import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.feature.R.drawable
+import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.feature.signup.SignUpProgressBar
 import com.example.sachosaeng.feature.signup.SelectScreenDescription
 import org.orbitmvi.orbit.compose.collectAsState
@@ -59,8 +60,8 @@ internal fun SelectUserTypeScreen(
             .fillMaxWidth(.5f)
             .padding(end = 10.dp))
         SelectScreenDescription(
-            title = stringResource(id = R.string.select_user_type_label),
-            subText = stringResource(id = R.string.select_user_type_desc)
+            title = stringResource(id = string.select_user_type_label),
+            subText = stringResource(id = string.select_user_type_desc)
         )
         Spacer(modifier = Modifier.height(45.dp))
         UserTypeList(
@@ -74,7 +75,7 @@ internal fun SelectUserTypeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.End),
-            text = stringResource(id = R.string.next),
+            text = stringResource(id = string.next),
             onClick = { moveToNextStep() }
         )
     }
@@ -92,33 +93,33 @@ fun UserTypeList(modifier: Modifier, selectedType: UserType, onSelect: (UserType
             onSelect = { onSelect(UserType.STUDENT) },
             isSelected = selectedType == UserType.STUDENT,
             userType = UserType.STUDENT,
-            offImageResource = R.drawable.ic_user_type_student_off,
-            onImageResource = R.drawable.ic_user_type_student_on,
-            userTypeLabel = R.string.user_type_student
+            offImageResource = drawable.ic_user_type_student_off,
+            onImageResource = drawable.ic_user_type_student_on,
+            userTypeLabel = string.user_type_student
         )
         UserTypeCard(
             onSelect = { onSelect(UserType.JOBSEEKER) },
             isSelected = selectedType == UserType.JOBSEEKER,
             userType = UserType.JOBSEEKER,
-            offImageResource = R.drawable.ic_user_type_jobseeker_off,
-            onImageResource = R.drawable.ic_user_type_jobseeker_on,
-            userTypeLabel = R.string.user_type_jobseeker
+            offImageResource = drawable.ic_user_type_jobseeker_off,
+            onImageResource = drawable.ic_user_type_jobseeker_on,
+            userTypeLabel = string.user_type_jobseeker
         )
         UserTypeCard(
             onSelect = { onSelect(UserType.NEWCOMER) },
             isSelected = selectedType == UserType.NEWCOMER,
             userType = UserType.NEWCOMER,
-            offImageResource = R.drawable.ic_user_type_newcomer_off,
-            onImageResource = R.drawable.ic_user_type_newcomer_on,
-            userTypeLabel = R.string.user_type_newcomer
+            offImageResource = drawable.ic_user_type_newcomer_off,
+            onImageResource = drawable.ic_user_type_newcomer_on,
+            userTypeLabel = string.user_type_newcomer
         )
         UserTypeCard(
             onSelect = { onSelect(UserType.ETC) },
             isSelected = selectedType == UserType.ETC,
             userType = UserType.ETC,
-            offImageResource = R.drawable.ic_user_type_etc_off,
-            onImageResource = R.drawable.ic_user_type_etc_on,
-            userTypeLabel = R.string.user_type_etc
+            offImageResource = drawable.ic_user_type_etc_off,
+            onImageResource = drawable.ic_user_type_etc_on,
+            userTypeLabel = string.user_type_etc
         )
     }
 }

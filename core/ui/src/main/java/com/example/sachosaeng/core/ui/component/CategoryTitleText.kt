@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.util.component
+package com.example.sachosaeng.core.ui.component
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

@@ -1,6 +1,7 @@
 package com.example.sachosaeng.feature.home
 
 import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.domain.model.VoteInfo
 
 data class HomeScreenUiState(
     val profileImageUrl: String = "",
@@ -106,10 +107,4 @@ data class HomeScreenUiState(
 data class VoteList(
     val category: Category,
     val voteInfo: List<VoteInfo>
-)
-
-data class VoteInfo(
-    val title: String,
-    val imageUrl: String,
-    val voteCount: Int,
 )

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.core.ui"
+    namespace = "com.example.sachosaeng.feature.home"
     compileSdk = 34
 
     defaultConfig {
@@ -23,6 +23,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -45,25 +46,46 @@ android {
 }
 
 dependencies {
-    //coil
-    implementation(libs.coil)
-
+    //android core
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
+
+    //test
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
-    implementation(libs.navigation.compose)
-    implementation(libs.hilt.navigation.compose)
-
     debugImplementation(libs.ui.tooling)
 
-    implementation(project(":core:util"))
-    //todo: domain을 바라봐도 되는건가..?
-    implementation(project(":core:domain"))
+    //compose
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.constraintlayout)
 
-    implementation("androidx.compose.material3:material3")
-    implementation(platform("androidx.compose:compose-bom:2024.05.00"))
+    //hilt
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+
+    //auth
+    implementation(libs.kakao.sdk)
+    implementation(libs.google.gms)
+    implementation(libs.firebase.auth)
+    implementation(libs.gms.auth)
+    implementation(platform(libs.firebase.bom))
+
+    //orbit
+    implementation(libs.orbit.compose)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.core)
+
+    //coil
+    implementation(libs.coil)
+
+    implementation(project(":core:ui"))
+    implementation(project(":core:util"))
+    implementation(project(":core:domain"))
 }

@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.snackbar.SachoSaengSnackbar
 import com.example.sachosaeng.core.ui.noRippleClickable
@@ -44,9 +45,9 @@ import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.R
-import com.example.sachosaeng.feature.util.component.DetailScreenTopbar
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import com.example.sachosaeng.core.ui.R.string
 
 @Composable
 fun WithdrawScreen(
@@ -99,7 +100,7 @@ fun WithdrawScreen(
                     .fillMaxWidth()
                     .imePadding()
                     .padding(vertical = 16.dp),
-                text = stringResource(id = R.string.confirm_label),
+                text = stringResource(id = string.confirm_label),
                 onClick = { viewModel.withdraw() }
             )
         }
@@ -110,12 +111,12 @@ fun WithdrawScreen(
 fun WithdrawScreenTitleAndDescription(modifier: Modifier = Modifier, userName: String) {
     Column(modifier = modifier.padding(bottom = 45.dp)) {
         Text(
-            text = stringResource(id = R.string.withdraw_screen_title, userName),
+            text = stringResource(id = string.withdraw_screen_title, userName),
             fontSize = 26.sp,
             fontWeight = FontWeight.W700,
         )
         Text(
-            text = stringResource(id = R.string.withdraw_screen_description),
+            text = stringResource(id = string.withdraw_screen_description),
             fontSize = 16.sp,
             fontWeight = FontWeight.W500
         )
@@ -163,7 +164,7 @@ fun DetailReasonForWithdraw(reasonForWithdrawDetail: String, onValueChanged: (St
             .heightIn(min = 75.dp),
         placeholder = {
             Text(
-                text = stringResource(id = R.string.withdraw_reason_hint),
+                text = stringResource(id = string.withdraw_reason_hint),
                 fontSize = 16.sp,
                 color = Gs_G5
             )
@@ -223,10 +224,10 @@ fun MultiSelectBox(
 
 @Composable
 private fun labelFromReason(reason: ReasonForWithdraw) = when (reason) {
-    ReasonForWithdraw.DISSATISFACTION -> stringResource(id = R.string.reason_for_withdraw_1)
-    ReasonForWithdraw.LACK_OF_CONTENT -> stringResource(id = R.string.reason_for_withdraw_2)
-    ReasonForWithdraw.NO_LONGER_USE -> stringResource(id = R.string.reason_for_withdraw_3)
-    ReasonForWithdraw.ETC -> stringResource(id = R.string.reason_for_withdraw_4)
+    ReasonForWithdraw.DISSATISFACTION -> stringResource(id = string.reason_for_withdraw_1)
+    ReasonForWithdraw.LACK_OF_CONTENT -> stringResource(id = string.reason_for_withdraw_2)
+    ReasonForWithdraw.NO_LONGER_USE -> stringResource(id = string.reason_for_withdraw_3)
+    ReasonForWithdraw.ETC -> stringResource(id = string.reason_for_withdraw_4)
     else -> ""
 }
 
