@@ -39,7 +39,10 @@ fun NavGraphBuilder.addMyPageNavGraph(
             WithdrawScreen()
         }
         composable(MODIFY_USER_INFO) {
-            ModifyUserInfoScreen()
+            ModifyUserInfoScreen(
+                navigateToBackStack = { navController.popBackStack() },
+                navigateToWithdrawScreen = { navController.navigate(WITHDRAW) }
+            )
         }
     }
 }
