@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.feature.home"
+    namespace = "com.example.sachosaeng.feature.mypage"
     compileSdk = 34
 
     defaultConfig {
@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(project(":feature:webview"))
 
     //test
     testImplementation(libs.junit)

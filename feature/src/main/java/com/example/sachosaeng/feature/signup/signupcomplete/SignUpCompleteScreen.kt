@@ -20,6 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.R
 import com.example.sachosaeng.core.ui.R.string
+import com.example.sachosaeng.core.ui.UserType
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -79,7 +80,7 @@ internal fun SignUpCompleteScreen(
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
                 },
-            painter = painterResource(id = R.drawable.ic_signup_complete_newcomer),
+            painter = painterResource(id = UserType.NEWCOMER.userTypeImageRes),
             contentDescription = null
         )
     }

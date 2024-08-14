@@ -100,6 +100,8 @@ dependencies {
     //hilt
     implementation(libs.hilt.android)
     implementation(project(":feature:home"))
+    implementation(project(":feature:mypage"))
+    implementation(project(":feature:webview"))
     kapt (libs.hilt.compiler)
 
     //auth
