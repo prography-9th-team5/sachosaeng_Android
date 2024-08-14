@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.feature.R
+import com.example.sachosaeng.feature.signup.R.drawable
 import kotlinx.coroutines.launch
 
 @Composable
@@ -76,7 +76,7 @@ fun SignUpProgressBar(modifier: Modifier = Modifier) {
             )
         }
         Image(
-            painter = painterResource(id = R.drawable.ic_progressbar),
+            painter = painterResource(id = drawable.ic_progressbar),
             contentDescription = null,
             modifier = Modifier
                 .size(28.dp)

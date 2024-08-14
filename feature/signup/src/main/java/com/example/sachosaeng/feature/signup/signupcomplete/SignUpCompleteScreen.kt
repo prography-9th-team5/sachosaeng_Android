@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.R
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.UserType
 import org.orbitmvi.orbit.compose.collectAsState

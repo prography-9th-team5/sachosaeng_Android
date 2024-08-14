@@ -102,6 +102,7 @@ dependencies {
     implementation(project(":feature:home"))
     implementation(project(":feature:mypage"))
     implementation(project(":feature:webview"))
+    implementation(project(":feature:signup"))
     kapt (libs.hilt.compiler)
 
     //auth

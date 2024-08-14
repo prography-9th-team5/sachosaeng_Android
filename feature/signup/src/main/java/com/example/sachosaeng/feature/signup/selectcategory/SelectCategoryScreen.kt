@@ -25,7 +25,6 @@ import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.feature.R.drawable
 import com.example.sachosaeng.feature.signup.SelectScreenDescription
 import com.example.sachosaeng.feature.signup.SignUpProgressBar
 import org.orbitmvi.orbit.compose.collectAsState
