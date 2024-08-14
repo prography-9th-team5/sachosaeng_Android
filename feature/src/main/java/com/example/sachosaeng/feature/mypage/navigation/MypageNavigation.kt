@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.sachosaeng.feature.mypage.main.MyPageScreen
+import com.example.sachosaeng.feature.mypage.modify.ModifyUserInfoScreen
 import com.example.sachosaeng.feature.mypage.withdraw.WithdrawScreen
 import com.example.sachosaeng.feature.webview.WebViewUrl.PRIVACY_POLICY
 import com.example.sachosaeng.feature.webview.WebViewUrl.TERMS_OF_SERVICE
@@ -37,6 +38,11 @@ fun NavGraphBuilder.addMyPageNavGraph(
         composable(WITHDRAW) {
             WithdrawScreen()
         }
-        composable(MODIFY_USER_INFO) {}
+        composable(MODIFY_USER_INFO) {
+            ModifyUserInfoScreen(
+                navigateToBackStack = { navController.popBackStack() },
+                navigateToWithdrawScreen = { navController.navigate(WITHDRAW) }
+            )
+        }
     }
 }
