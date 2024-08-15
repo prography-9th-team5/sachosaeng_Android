@@ -60,6 +60,10 @@ dependencies {
 
     debugImplementation(libs.ui.tooling)
 
+    implementation(project(":core:util"))
+    //todo: domain을 바라봐도 되는건가..?
+    implementation(project(":core:domain"))
+
     implementation("androidx.compose.material3:material3")
     implementation(platform("androidx.compose:compose-bom:2024.05.00"))
 }

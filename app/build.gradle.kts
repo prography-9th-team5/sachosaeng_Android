@@ -99,6 +99,12 @@ dependencies {
 
     //hilt
     implementation(libs.hilt.android)
+    implementation(project(":feature:home"))
+    implementation(project(":feature:mypage"))
+    implementation(project(":feature:webview"))
+    implementation(project(":feature:signup"))
+    implementation(project(":feature:splash"))
+    implementation(project(":feature:vote"))
     kapt (libs.hilt.compiler)
 
     //auth
@@ -115,6 +121,5 @@ dependencies {
     debugImplementation(libs.ui.tooling)
 
     //module
-    implementation(project(":feature"))
     implementation(project(":core:ui"))
 }
