@@ -1,25 +1,22 @@
 package com.example.sachosaeng.feature.signup.selectcategory
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.noRippleClickable
@@ -27,8 +24,8 @@ import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.feature.signup.SelectScreenDescription
 import com.example.sachosaeng.feature.signup.SignUpProgressBar
+import com.example.sachosaeng.feature.signup.SignUpProgressbarWithColor
 import org.orbitmvi.orbit.compose.collectAsState
-import com.example.sachosaeng.core.ui.R.string
 
 @Composable
 fun SelectCategoryScreen(
@@ -100,26 +97,10 @@ fun SkipButton(onSkip: () -> Unit = {}) {
 @Composable
 fun SelectCategoryProgressBar() {
     Row(modifier = Modifier.fillMaxWidth()) {
-        DoneProgressbar()
-        SignUpProgressBar()
-    }
-}
-
-@Composable
-fun DoneProgressbar() {
-    Canvas(
-        modifier = Modifier
-            .fillMaxWidth(0.5f)
-            .height(30.dp)
-            .padding(end = 10.dp)
-    ) {
-        drawLine(
-            color = Gs_Black,
-            start = Offset(0f, size.height),
-            end = Offset(size.width, size.height),
-            strokeWidth = 4.dp.toPx(),
-            cap = StrokeCap.Round
+        SignUpProgressbarWithColor(
+            color = Gs_Black
         )
+        SignUpProgressBar()
     }
 }
 
