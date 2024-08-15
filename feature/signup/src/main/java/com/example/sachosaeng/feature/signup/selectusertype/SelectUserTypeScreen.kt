@@ -30,6 +30,7 @@ import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G3
+import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.signup.R.drawable
 import com.example.sachosaeng.feature.signup.SelectScreenDescription
@@ -49,36 +50,47 @@ fun SelectUserTypeScreen(
         moveToNextStep = { moveToNextStep() },
         changeSelectUserType = {
             viewModel::changeSelectUserType.invoke(it)
-        })
+        }
+    )
 }
 
 @Composable
 internal fun SelectUserTypeScreen(
+    modifier: Modifier = Modifier,
     uiState: SelectUserTypeUiState,
     moveToNextStep: () -> Unit = {},
     changeSelectUserType: (UserType) -> Unit = {}
 ) {
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier
+        modifier = modifier
             .padding(horizontal = 16.dp)
             .fillMaxSize(),
     ) {
+        Text(
+            modifier = modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 27.dp),
+            text = stringResource(id = string.select_user_type_screen_title),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W500,
+            color = Gs_G6
+        )
         SelectUserTypeProgressbar()
         SelectScreenDescription(
             title = stringResource(id = string.select_user_type_label),
             subText = stringResource(id = string.select_user_type_desc)
         )
-        Spacer(modifier = Modifier.height(45.dp))
+        Spacer(modifier = modifier.height(45.dp))
         UserTypeList(
-            modifier = Modifier.weight(1f),
+            modifier = modifier.weight(1f),
             onSelect = {
                 changeSelectUserType(it)
             },
             selectedType = uiState.selectedType
         )
         SachoSaengButton(
-            modifier = Modifier
+            modifier = modifier
                 .fillMaxWidth()
                 .align(Alignment.End),
             text = stringResource(id = string.next),
