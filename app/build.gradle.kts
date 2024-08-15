@@ -104,6 +104,7 @@ dependencies {
     implementation(project(":feature:webview"))
     implementation(project(":feature:signup"))
     implementation(project(":feature:splash"))
+    implementation(project(":feature:vote"))
     kapt (libs.hilt.compiler)
 
     //auth
@@ -120,6 +121,5 @@ dependencies {
     debugImplementation(libs.ui.tooling)
 
     //module
-    implementation(project(":feature"))
     implementation(project(":core:ui"))
 }
