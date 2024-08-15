@@ -23,6 +23,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -30,14 +31,62 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
 }
 
 dependencies {
-
-    implementation(libs.core.ktx.v1120)
+    //android core
+    implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(project(":feature:webview"))
+
+    //test
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    debugImplementation(libs.ui.tooling)
+
+    //compose
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.constraintlayout)
+
+    //hilt
+    implementation(libs.hilt.navigation.compose)
+    implementation(libs.hilt.android)
+
+    //auth
+    implementation(libs.kakao.sdk)
+    implementation(libs.google.gms)
+    implementation(libs.firebase.auth)
+    implementation(libs.gms.auth)
+    implementation(platform(libs.firebase.bom))
+
+    //orbit
+    implementation(libs.orbit.compose)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.core)
+
+    //coil
+    implementation(libs.coil)
+
+    implementation(project(":core:ui"))
+    implementation(project(":core:util"))
+    implementation(project(":core:domain"))
 }

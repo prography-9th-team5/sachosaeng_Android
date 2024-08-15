@@ -9,7 +9,7 @@ fun NavGraphBuilder.addSplashNavGraph(
     navigateToMain: () -> Unit,
     navigateToSignUp: () -> Unit
 ) {
-    composable(ROUTE_SPLASH) {
+    composable(com.example.sachosaeng.feature.splash.ROUTE_SPLASH) {
         SplashScreen(
             navigateToMain = navigateToMain,
             navigateToSignUp = navigateToSignUp
