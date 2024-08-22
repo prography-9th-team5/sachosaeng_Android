@@ -1,16 +1,16 @@
 [versions]
 coreKtxVersion = "1.12.0"
 kakao_sdk = "2.20.1"
-google_gms = "4.3.0"
+google_gms = "4.4.1"
 firebase_auth = "22.0.0"
 firebase_bom = "32.0.0"
 gms_auth = "20.5.0"
 navigationCompose = "2.7.7"
 orbit = "8.0.0"
-hilt = "2.50"
-hilt-navigation-compose = "1.0.0"
+hilt = "2.51.1"
+hiltCompiler = "1.2.0"
 agp = "8.3.1"
-kotlin = "1.9.0"
+kotlin = "1.9.23"
 coroutine = "1.9.0-RC"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -24,8 +24,16 @@ uiTooling = "1.6.8"
 activity = "1.9.0"
 composeBom = "2024.05.00"
 composeConstraintlayout = "1.0.1"
+coroutineAdapter = "0.9.2"
 retrofit = "2.11.0"
-serialization = "1.0.0"
+retrofit2ConverterKotlinxSerialization = "2.11.0"
+okhttp3LoggingInterceptor = "4.12.0"
+kotlinxSerializationJson = "1.6.0"
+ksp = "1.9.23-1.0.20"
+annotationJvm = "1.8.0"
+
+kotlinComposeCompiler = "1.5.13"
+
 
 [libraries]
 core-ktx-v1120 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
@@ -38,9 +46,15 @@ navigation-compose = { group = "androidx.navigation", name = "navigation-compose
 orbit-core = {  group = "org.orbit-mvi", name = "orbit-core", version.ref = "orbit"}
 orbit-viewmodel = { group = "org.orbit-mvi", name = "orbit-viewmodel", version.ref = "orbit" }
 orbit-compose = { group = "org.orbit-mvi", name = "orbit-compose", version.ref = "orbit" }
+
+javax-inject = { module = "javax.inject:javax.inject", version = "1" }
+
+androidx-annotation-jvm = { group = "androidx.annotation", name = "annotation-jvm", version.ref = "annotationJvm" }
+
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+androidx-hilt-complier = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hiltCompiler" }
+androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltCompiler" }
 
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -59,15 +73,23 @@ coil = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "uiTooling" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
-serialization = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "serialization" }
+retrofit-converter-kotlinx-serialization = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit2ConverterKotlinxSerialization" }
+retrofit-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp3LoggingInterceptor" }
+
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
+coroutine-retrofit = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-retrofit", version.ref = "coroutine" }
+coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
+coroutine-retrofit-adapter = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-coroutines-adapter2", version.ref = "coroutineAdapter" }
 
 
 [plugins]
-
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+google-gms = { id = "com.google.gms.google-services", version.ref = "google_gms" }
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

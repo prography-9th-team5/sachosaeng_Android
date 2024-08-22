@@ -26,7 +26,9 @@ fun NavGraphBuilder.addSignUpNavGraph(
             SelectUserTypeScreen(moveToNextStep = { navController.navigate(SELECT_CATEGORY) })
         }
         composable(SELECT_CATEGORY) {
-            SelectCategoryScreen(moveToNextStep = { navController.navigate(SIGNUP_COMPLETE) })
+            SelectCategoryScreen(moveToNextStep = {
+                navController.navigate(SIGNUP_COMPLETE)
+            }, navigateToBackStack = { navController.popBackStack() })
         }
         composable(SIGNUP_COMPLETE) {
             SignUpCompleteScreen(navigateToMain = { navigateToMain() })

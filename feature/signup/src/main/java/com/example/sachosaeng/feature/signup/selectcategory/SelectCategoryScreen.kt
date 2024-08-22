@@ -1,5 +1,7 @@
 package com.example.sachosaeng.feature.signup.selectcategory
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,6 +22,7 @@ import com.example.sachosaeng.core.domain.model.Category
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
+import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G5
@@ -30,6 +34,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun SelectCategoryScreen(
     moveToNextStep: () -> Unit,
+    navigateToBackStack: () -> Unit = {},
     viewModel: SelectCategoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
@@ -38,7 +43,8 @@ fun SelectCategoryScreen(
         state = state,
         onSelectCategory = { viewModel::selectCategory.invoke(it) },
         onSkip = { viewModel::skipSelectCategory.invoke() },
-        moveToNextStep = moveToNextStep
+        moveToNextStep = moveToNextStep,
+        navigateToBackStack = navigateToBackStack
     )
 }
 
@@ -47,12 +53,19 @@ internal fun SelectCategoryScreen(
     state: SelectCategoryUiState,
     onSkip: () -> Unit,
     onSelectCategory: (Category) -> Unit,
-    moveToNextStep: () -> Unit = {}
+    moveToNextStep: () -> Unit = {},
+    navigateToBackStack: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier.run { padding(horizontal = 20.dp) },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        SachosaengDetailTopAppBar(
+            navigateToBackStack = navigateToBackStack,
+            title = stringResource(id = string.select_category_screen_top_bar),
+            fontWeight = FontWeight.W500,
+            fontSize = 16
+        )
         SelectCategoryProgressBar()
         Row(
             modifier = Modifier.fillMaxWidth(),
