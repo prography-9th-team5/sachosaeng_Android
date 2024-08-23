@@ -1,6 +1,7 @@
 package com.example.sachosaeng.core.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -21,7 +22,11 @@ import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
 
 @Composable
-fun CircleCategoryButton(category: Category, onClickCategory: (Category) -> Unit) {
+fun CircleCategoryButton(
+    isSelected: Boolean = false,
+    category: Category,
+    onClickCategory: (Category) -> Unit
+) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         AsyncImage(
             contentDescription = "",
@@ -31,6 +36,11 @@ fun CircleCategoryButton(category: Category, onClickCategory: (Category) -> Unit
                 .clickable { onClickCategory(category) }
                 .size(72.dp)
                 .background(color = Color(category.color.toColorResource()))
+                .border(
+                    width = 1.dp,
+                    color = if (isSelected) Color.Black else Color.Transparent,
+                    shape = CircleShape
+                )
                 .padding(20.dp)
         )
         Text(

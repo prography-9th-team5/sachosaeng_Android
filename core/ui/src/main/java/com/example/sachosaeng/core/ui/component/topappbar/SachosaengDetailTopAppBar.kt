@@ -12,12 +12,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.ui.R
+import com.example.sachosaeng.core.ui.noRippleClickable
 
 @Composable
 fun SachosaengDetailTopAppBar(
     modifier: Modifier = Modifier,
     title: String,
-    fontSize : Int = 18,
+    fontSize: Int = 18,
     fontWeight: FontWeight = FontWeight.W700,
     navigateToBackStack: () -> Unit = {}
 ) {
@@ -27,7 +28,7 @@ fun SachosaengDetailTopAppBar(
                 modifier = modifier
             ) {
                 Image(
-                    modifier = modifier.clickable { navigateToBackStack() },
+                    modifier = modifier.noRippleClickable { navigateToBackStack() },
                     painter = painterResource(id = R.drawable.ic_go_back),
                     contentDescription = null
                 )

@@ -36,7 +36,7 @@ fun SelectCategoryBottomSheet(
             contentScreens = listOf(
                 {
                     Column {
-                        CategoryListFlowRow(myCategoryList, onSelectCategory)
+                        CategoryListFlowRow(allCategoryList, myCategoryList, onSelectCategory)
                         SachoSaengButton(
                             modifier = Modifier.fillMaxWidth(),
                             text = stringResource(id = R.string.confirm_label),
@@ -44,7 +44,7 @@ fun SelectCategoryBottomSheet(
                         )
                     }
                 },
-                { CategoryListFlowRow(allCategoryList, onSelectCategory) }
+                { CategoryListFlowRow(allCategoryList, myCategoryList, onSelectCategory) }
             )
         )
     }

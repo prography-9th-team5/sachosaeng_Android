@@ -11,7 +11,11 @@ import com.example.sachosaeng.core.domain.model.Category
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun CategoryListFlowRow(list: List<Category>, onSelectCategory: (Category) -> Unit) =
+fun CategoryListFlowRow(
+    list: List<Category>,
+    selectedCategoryList: List<Category>,
+    onClickCategory: (Category) -> Unit
+) =
     FlowRow(
         modifier = Modifier.padding(top = 32.dp),
         horizontalArrangement = Arrangement.spacedBy(32.dp),
@@ -19,7 +23,8 @@ fun CategoryListFlowRow(list: List<Category>, onSelectCategory: (Category) -> Un
     ) {
         list.forEach {
             CircleCategoryButton(
+                isSelected = selectedCategoryList.contains(it),
                 category = it,
-                onClickCategory = { onSelectCategory(it) })
+                onClickCategory = { onClickCategory(it) })
         }
     }

@@ -31,8 +31,19 @@ class SelectCategoryViewModel @Inject constructor(
         }
     }
 
-    fun selectCategory(category: Category) = intent {
+    fun onClickCategory(category: Category) = intent {
+        when (state.selectedCategoryList.contains(category)) {
+            true -> unselectCategory(category)
+            false -> selectCategory(category)
+        }
+    }
+
+    private fun selectCategory(category: Category) = intent {
         reduce { state.copy(selectedCategoryList = state.selectedCategoryList + category) }
+    }
+
+    private fun unselectCategory(category: Category) = intent {
+        reduce { state.copy(selectedCategoryList = state.selectedCategoryList - category) }
     }
 
     fun skipSelectCategory() = intent {
