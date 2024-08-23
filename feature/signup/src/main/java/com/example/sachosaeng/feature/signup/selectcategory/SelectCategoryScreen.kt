@@ -1,7 +1,5 @@
 package com.example.sachosaeng.feature.signup.selectcategory
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +28,7 @@ import com.example.sachosaeng.feature.signup.SelectScreenDescription
 import com.example.sachosaeng.feature.signup.SignUpProgressBar
 import com.example.sachosaeng.feature.signup.SignUpProgressbarWithColor
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SelectCategoryScreen(
@@ -39,10 +38,16 @@ fun SelectCategoryScreen(
 ) {
     val state by viewModel.collectAsState()
 
+    viewModel.collectSideEffect {
+        when (it) {
+            is SelectCategorySideEffect.NavigateToNextStep -> moveToNextStep()
+        }
+    }
+
     SelectCategoryScreen(
         state = state,
-        onSelectCategory = { viewModel::selectCategory.invoke(it) },
-        onSkip = { viewModel::skipSelectCategory.invoke() },
+        onSelectCategory = viewModel::selectCategory,
+        onSkip = viewModel::skipSelectCategory,
         moveToNextStep = moveToNextStep,
         navigateToBackStack = navigateToBackStack
     )

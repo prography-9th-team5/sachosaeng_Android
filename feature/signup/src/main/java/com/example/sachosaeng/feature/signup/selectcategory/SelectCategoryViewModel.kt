@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -16,8 +17,8 @@ import javax.inject.Inject
 class SelectCategoryViewModel @Inject constructor(
     val getAllCategoryListUsecase: GetCategoryListUsecase
 ) : ViewModel(),
-    ContainerHost<SelectCategoryUiState, Unit> {
-    override val container: Container<SelectCategoryUiState, Unit> =
+    ContainerHost<SelectCategoryUiState, SelectCategorySideEffect> {
+    override val container: Container<SelectCategoryUiState, SelectCategorySideEffect> =
         container(SelectCategoryUiState())
 
     init {
@@ -36,5 +37,10 @@ class SelectCategoryViewModel @Inject constructor(
 
     fun skipSelectCategory() = intent {
         reduce { state.copy(selectedCategoryList = emptyList()) }
+        postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
     }
+}
+
+sealed class SelectCategorySideEffect {
+    object NavigateToNextStep : SelectCategorySideEffect()
 }

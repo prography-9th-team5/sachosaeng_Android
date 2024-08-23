@@ -11,7 +11,7 @@ class CategoryRepositoryImpl @Inject constructor(
     val categoryService: CategoryService,
 ) : CategoryRepository {
     override fun getCategoryList(): Flow<List<Category>> =
-        flow { categoryService.getAllCategoryList().getOrThrow().data.toDomain() }
+        flow { emit(categoryService.getAllCategoryList().getOrThrow().data.toDomain()) }
 
     override fun getMyCategoryList(): List<Category> {
         TODO("Not yet implemented")
