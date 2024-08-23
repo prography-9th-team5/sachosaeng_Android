@@ -4,7 +4,7 @@ import android.content.Context
 import com.example.sachosaeng.data.BuildConfig
 import com.example.sachosaeng.data.remote.oauth.OAuthHeaderInterceptor
 import com.example.sachosaeng.data.remote.oauth.OAuthenticator
-import com.example.sachosaeng.data.remote.util.CallAdapterFactory
+import com.example.sachosaeng.data.remote.util.ResultCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -74,7 +74,7 @@ internal object NetworkModule {
                     .build()
             )
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            .addCallAdapterFactory(CallAdapterFactory())
+            .addCallAdapterFactory(ResultCallAdapterFactory())
             .build()
     }
 }

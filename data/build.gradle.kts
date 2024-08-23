@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.google.dagger.hilt.android)
     alias(libs.plugins.google.ksp)
+    alias(libs.plugins.serialization)
 }
 
 fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
@@ -60,8 +61,6 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
 
     //coroutine
-    implementation(libs.coroutine.retrofit)
-    implementation(libs.coroutine.retrofit.adapter)
     implementation(libs.coroutine.android)
     implementation(libs.coroutine)
 
