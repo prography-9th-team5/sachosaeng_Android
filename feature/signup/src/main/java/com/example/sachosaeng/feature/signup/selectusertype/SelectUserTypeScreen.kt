@@ -27,10 +27,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
+import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.signup.R.drawable
 import com.example.sachosaeng.feature.signup.SelectScreenDescription
@@ -67,14 +67,11 @@ internal fun SelectUserTypeScreen(
             .padding(horizontal = 16.dp)
             .fillMaxSize(),
     ) {
-        Text(
-            modifier = modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(top = 27.dp),
-            text = stringResource(id = string.select_user_type_screen_title),
-            fontSize = 16.sp,
+        SachosaengDetailTopAppBar(
+            modifier = modifier,
+            title = stringResource(id = string.select_user_type_screen_title),
             fontWeight = FontWeight.W500,
-            color = Gs_G6
+            fontSize = 16
         )
         SelectUserTypeProgressbar()
         SelectScreenDescription(
@@ -105,7 +102,7 @@ private fun SelectUserTypeProgressbar() {
         SignUpProgressBar(
             modifier = Modifier.weight(0.5f)
         )
-        SignUpProgressbarWithColor(color = Gs_G3, modifier = Modifier.padding(start = 10.dp))
+        SignUpProgressbarWithColor(color = Gs_G3, modifier = Modifier.padding(start = 20.dp))
     }
 }
 

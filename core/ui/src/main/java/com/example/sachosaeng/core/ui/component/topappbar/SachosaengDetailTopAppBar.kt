@@ -1,9 +1,7 @@
 package com.example.sachosaeng.core.ui.component.topappbar
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,18 +18,20 @@ fun SachosaengDetailTopAppBar(
     title: String,
     fontSize: Int = 18,
     fontWeight: FontWeight = FontWeight.W700,
-    navigateToBackStack: () -> Unit = {}
+    navigateToBackStack: (() -> Unit)? = null
 ) {
     SachosaengTopAppBar(
         componentRow = {
             Row(
                 modifier = modifier
             ) {
-                Image(
-                    modifier = modifier.noRippleClickable { navigateToBackStack() },
-                    painter = painterResource(id = R.drawable.ic_go_back),
-                    contentDescription = null
-                )
+                navigateToBackStack?.let {
+                    Image(
+                        modifier = modifier.noRippleClickable { navigateToBackStack() },
+                        painter = painterResource(id = R.drawable.ic_go_back),
+                        contentDescription = null
+                    )
+                }
                 Text(
                     modifier = modifier.weight(1f),
                     text = title,

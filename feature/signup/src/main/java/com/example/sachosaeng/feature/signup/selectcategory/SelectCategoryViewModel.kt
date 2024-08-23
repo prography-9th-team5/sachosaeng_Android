@@ -36,6 +36,12 @@ class SelectCategoryViewModel @Inject constructor(
             true -> unselectCategory(category)
             false -> selectCategory(category)
         }
+        checkIsAnyCategorySelected()
+    }
+
+    private fun checkIsAnyCategorySelected() = intent {
+            reduce { state.copy(isAnyCategorySelected = state.selectedCategoryList.isNotEmpty())
+        }
     }
 
     private fun selectCategory(category: Category) = intent {

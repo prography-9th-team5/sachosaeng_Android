@@ -97,7 +97,8 @@ internal fun SelectCategoryScreen(
                     .fillMaxWidth()
                     .padding(top = 20.dp),
                 text = stringResource(id = string.start_button),
-                onClick = { moveToNextStep() }
+                onClick = { moveToNextStep() },
+                enabled = state.isAnyCategorySelected
             )
         }
     }
@@ -118,10 +119,11 @@ fun SkipButton(onSkip: () -> Unit = {}) {
 }
 
 @Composable
-fun SelectCategoryProgressBar() {
-    Row(modifier = Modifier.fillMaxWidth()) {
+fun SelectCategoryProgressBar(modifier: Modifier = Modifier) {
+    Row(modifier = modifier.fillMaxWidth()) {
         SignUpProgressbarWithColor(
-            color = Gs_Black
+            color = Gs_Black,
+            modifier = modifier.padding(end = 10.dp)
         )
         SignUpProgressBar()
     }

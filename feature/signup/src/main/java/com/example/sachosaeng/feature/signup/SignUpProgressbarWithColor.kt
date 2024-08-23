@@ -26,7 +26,7 @@ fun SignUpProgressbarWithColor(
             color = color,
             start = Offset(0f, size.height),
             end = Offset(size.width, size.height),
-            strokeWidth = 4.dp.toPx(),
+            strokeWidth = 8.dp.toPx(),
             cap = StrokeCap.Round
         )
     }
