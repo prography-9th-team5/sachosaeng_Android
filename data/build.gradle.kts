@@ -1,8 +1,27 @@
+import java.util.Properties
+
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    kotlin("kapt")
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.google.dagger.hilt.android)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.serialization)
 }
+
+fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
+    val properties = Properties()
+    val localPropertiesFile = File(rootDir, "local.properties")
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    }
+    return properties
+}
+
+fun Project.getRemoteInfo(propertyKey: String): String {
+    val localProperties = gradleLocalProperties(providers, rootDir)
+    return localProperties.getProperty(propertyKey, "")
+}
+
 
 android {
     namespace = "com.example.sachosaeng.data"
@@ -13,6 +32,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "BASE_URL", getRemoteInfo("base.url"))
     }
 
     buildTypes {
@@ -35,17 +56,26 @@ android {
 
 dependencies {
     implementation(libs.retrofit)
-    implementation(libs.serialization)
+    implementation(libs.retrofit.logging.interceptor)
+    implementation(libs.retrofit.converter.kotlinx.serialization)
+    implementation(libs.kotlinx.serialization.json)
 
-    implementation(libs.hilt.navigation.compose)
+    //coroutine
+    implementation(libs.coroutine.android)
+    implementation(libs.coroutine)
+
+    implementation(libs.javax.inject)
+
+    // Hilt
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.complier)
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     //test
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
 
     implementation(project(":core:domain"))
 }

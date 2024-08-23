@@ -32,6 +32,8 @@
     <string name="start_button">시작</string>
 
     <!-- signup -->
+    <string name="select_user_type_screen_title">사초생 유형 선택</string>
+    <string name="select_category_screen_top_bar">카테고리 선택</string>
     <string name="select_user_type_label">어떤 사회초년생에\n해당하나요?</string>
     <string name="select_user_type_desc">*선택한 유형에 맞는 정보를 제공해 드려요</string>
     <string name="user_type_student">학생</string>

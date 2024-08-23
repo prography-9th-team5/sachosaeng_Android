@@ -2,25 +2,62 @@ package com.example.sachosaeng.feature.signup.selectcategory
 
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.usecase.category.GetCategoryListUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class SelectCategoryViewModel @Inject constructor() : ViewModel(),
-    ContainerHost<SelectCategoryUiState, Unit> {
-    override val container: Container<SelectCategoryUiState, Unit> =
+class SelectCategoryViewModel @Inject constructor(
+    val getAllCategoryListUsecase: GetCategoryListUsecase
+) : ViewModel(),
+    ContainerHost<SelectCategoryUiState, SelectCategorySideEffect> {
+    override val container: Container<SelectCategoryUiState, SelectCategorySideEffect> =
         container(SelectCategoryUiState())
 
-    fun selectCategory(category: Category) = intent {
+    init {
+        getAllCategories()
+    }
+
+    private fun getAllCategories() = intent {
+        getAllCategoryListUsecase().collectLatest {
+            reduce { state.copy(categoryList = it) }
+        }
+    }
+
+    fun onClickCategory(category: Category) = intent {
+        when (state.selectedCategoryList.contains(category)) {
+            true -> unselectCategory(category)
+            false -> selectCategory(category)
+        }
+        checkIsAnyCategorySelected()
+    }
+
+    private fun checkIsAnyCategorySelected() = intent {
+            reduce { state.copy(isAnyCategorySelected = state.selectedCategoryList.isNotEmpty())
+        }
+    }
+
+    private fun selectCategory(category: Category) = intent {
         reduce { state.copy(selectedCategoryList = state.selectedCategoryList + category) }
+    }
+
+    private fun unselectCategory(category: Category) = intent {
+        reduce { state.copy(selectedCategoryList = state.selectedCategoryList - category) }
     }
 
     fun skipSelectCategory() = intent {
         reduce { state.copy(selectedCategoryList = emptyList()) }
+        postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
     }
+}
+
+sealed class SelectCategorySideEffect {
+    object NavigateToNextStep : SelectCategorySideEffect()
 }

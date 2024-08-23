@@ -1,85 +1,106 @@
 package com.example.sachosaeng.feature.signup.selectcategory
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
+import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.feature.signup.SelectScreenDescription
 import com.example.sachosaeng.feature.signup.SignUpProgressBar
+import com.example.sachosaeng.feature.signup.SignUpProgressbarWithColor
 import org.orbitmvi.orbit.compose.collectAsState
-import com.example.sachosaeng.core.ui.R.string
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SelectCategoryScreen(
     moveToNextStep: () -> Unit,
+    navigateToBackStack: () -> Unit = {},
     viewModel: SelectCategoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
 
+    viewModel.collectSideEffect {
+        when (it) {
+            is SelectCategorySideEffect.NavigateToNextStep -> moveToNextStep()
+        }
+    }
+
     SelectCategoryScreen(
         state = state,
-        onSelectCategory = { viewModel::selectCategory.invoke(it) },
-        onSkip = { viewModel::skipSelectCategory.invoke() },
-        moveToNextStep = moveToNextStep
+        onClickCategory = viewModel::onClickCategory,
+        onSkip = viewModel::skipSelectCategory,
+        moveToNextStep = moveToNextStep,
+        navigateToBackStack = navigateToBackStack
     )
 }
 
 @Composable
 internal fun SelectCategoryScreen(
+    modifier: Modifier = Modifier,
     state: SelectCategoryUiState,
     onSkip: () -> Unit,
-    onSelectCategory: (Category) -> Unit,
-    moveToNextStep: () -> Unit = {}
+    onClickCategory: (Category) -> Unit,
+    moveToNextStep: () -> Unit = {},
+    navigateToBackStack: () -> Unit = {}
 ) {
-    Column(
-        modifier = Modifier.run { padding(horizontal = 20.dp) },
+    LazyColumn(
+        modifier = modifier.run { padding(horizontal = 20.dp) },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SelectCategoryProgressBar()
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            SelectScreenDescription(
-                title = stringResource(id = string.select_initial_category_label),
-                subText = stringResource(
-                    id = string.select_initial_category_desc
-                )
+        item {
+            SachosaengDetailTopAppBar(
+                navigateToBackStack = navigateToBackStack,
+                title = stringResource(id = string.select_category_screen_top_bar),
+                fontWeight = FontWeight.W500,
+                fontSize = 16
             )
-            SkipButton(onSkip)
+            SelectCategoryProgressBar()
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.Top,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                SelectScreenDescription(
+                    title = stringResource(id = string.select_initial_category_label),
+                    subText = stringResource(
+                        id = string.select_initial_category_desc
+                    )
+                )
+                SkipButton(onSkip)
+            }
+            CategoryListFlowRow(
+                state.categoryList,
+                state.selectedCategoryList,
+                onClickCategory = { onClickCategory(it) }
+            )
+            SachoSaengButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                text = stringResource(id = string.start_button),
+                onClick = { moveToNextStep() },
+                enabled = state.isAnyCategorySelected
+            )
         }
-        CategoryListFlowRow(
-            state.categoryList,
-            onSelectCategory = { onSelectCategory(it) })
-        SachoSaengButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.End),
-            text = stringResource(id = string.start_button),
-            onClick = { moveToNextStep() }
-        )
     }
 }
 
@@ -98,28 +119,13 @@ fun SkipButton(onSkip: () -> Unit = {}) {
 }
 
 @Composable
-fun SelectCategoryProgressBar() {
-    Row(modifier = Modifier.fillMaxWidth()) {
-        DoneProgressbar()
-        SignUpProgressBar()
-    }
-}
-
-@Composable
-fun DoneProgressbar() {
-    Canvas(
-        modifier = Modifier
-            .fillMaxWidth(0.5f)
-            .height(30.dp)
-            .padding(end = 10.dp)
-    ) {
-        drawLine(
+fun SelectCategoryProgressBar(modifier: Modifier = Modifier) {
+    Row(modifier = modifier.fillMaxWidth()) {
+        SignUpProgressbarWithColor(
             color = Gs_Black,
-            start = Offset(0f, size.height),
-            end = Offset(size.width, size.height),
-            strokeWidth = 4.dp.toPx(),
-            cap = StrokeCap.Round
+            modifier = modifier.padding(end = 10.dp)
         )
+        SignUpProgressBar()
     }
 }
 
@@ -127,6 +133,7 @@ fun DoneProgressbar() {
 @Preview
 fun SelectCategoryScreenPreview() {
     SelectCategoryScreen(
+        modifier = Modifier,
         state = SelectCategoryUiState(
             categoryList = listOf(
                 Category(
@@ -198,10 +205,33 @@ fun SelectCategoryScreenPreview() {
                     imageUrl = "https://example.com/image10",
                     color = "#000000",
                     textColor = "#FFFFFF"
+                ),
+                Category(
+                    id = 10,
+                    name = "Category 10",
+                    imageUrl = "https://example.com/image10",
+                    color = "#000000",
+                    textColor = "#FFFFFF"
+                ),
+                Category(
+                    id = 10,
+                    name = "Category 10",
+                    imageUrl = "https://example.com/image10",
+                    color = "#000000",
+                    textColor = "#FFFFFF"
+                ),
+                Category(
+                    id = 10,
+                    name = "Category 10",
+                    imageUrl = "https://example.com/image10",
+                    color = "#000000",
+                    textColor = "#FFFFFF"
                 )
             )
         ),
-        onSelectCategory = {},
-        onSkip = {}
+        onClickCategory = {},
+        onSkip = {},
+        moveToNextStep = {},
+        navigateToBackStack = {}
     )
 }

@@ -35,8 +35,9 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinComposeCompiler.get()
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -56,12 +57,11 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(libs.navigation.compose)
-    implementation(libs.hilt.navigation.compose)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     debugImplementation(libs.ui.tooling)
 
     implementation(project(":core:util"))
-    //todo: domain을 바라봐도 되는건가..?
     implementation(project(":core:domain"))
 
     implementation("androidx.compose.material3:material3")

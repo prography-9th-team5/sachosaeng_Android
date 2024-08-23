@@ -2,11 +2,11 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.util.Properties
 
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.dagger.hilt.android")
-    id("com.google.gms.google-services")
-    kotlin("kapt")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.google.dagger.hilt.android)
+    alias(libs.plugins.google.gms)
+    alias(libs.plugins.google.ksp)
 }
 
 fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
@@ -56,19 +56,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinComposeCompiler.get()
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -95,17 +96,14 @@ dependencies {
 
     //navigation
     implementation(libs.navigation.compose)
-    implementation(libs.hilt.navigation.compose)
 
-    //hilt
+    implementation(libs.javax.inject)
+
+    // Hilt
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.complier)
     implementation(libs.hilt.android)
-    implementation(project(":feature:home"))
-    implementation(project(":feature:mypage"))
-    implementation(project(":feature:webview"))
-    implementation(project(":feature:signup"))
-    implementation(project(":feature:splash"))
-    implementation(project(":feature:vote"))
-    kapt (libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     //auth
     implementation(libs.kakao.sdk)
@@ -122,4 +120,10 @@ dependencies {
 
     //module
     implementation(project(":core:ui"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:mypage"))
+    implementation(project(":feature:webview"))
+    implementation(project(":feature:signup"))
+    implementation(project(":feature:splash"))
+    implementation(project(":feature:vote"))
 }

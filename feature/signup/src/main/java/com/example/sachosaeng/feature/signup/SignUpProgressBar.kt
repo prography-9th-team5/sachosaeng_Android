@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -30,7 +31,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpProgressBar(modifier: Modifier = Modifier) {
-    val boxWidthPx = remember { mutableStateOf(0f) }
+    val boxWidthPx = remember { mutableFloatStateOf(0f) }
     val animateFloat = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
 
@@ -64,14 +65,14 @@ fun SignUpProgressBar(modifier: Modifier = Modifier) {
                 color = Gs_G3,
                 start = Offset(0f, size.height),
                 end = Offset(size.width, size.height),
-                strokeWidth = 4.dp.toPx(),
+                strokeWidth = 8.dp.toPx(),
                 cap = StrokeCap.Round
             )
             drawLine(
                 color = Gs_Black,
                 start = Offset(0f, size.height),
                 end = Offset(lineEndPx, size.height),
-                strokeWidth = 4.dp.toPx(),
+                strokeWidth = 8.dp.toPx(),
                 cap = StrokeCap.Round
             )
         }
@@ -82,7 +83,7 @@ fun SignUpProgressBar(modifier: Modifier = Modifier) {
                 .size(28.dp)
                 .offset {
                     IntOffset(
-                        x = ((animateFloat.value * boxWidthPx.value - 75).toInt()),
+                        x = ((animateFloat.value * boxWidthPx.value - 70).toInt()),
                         y = 0
                     )
                 }

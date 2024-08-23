@@ -1,40 +1,45 @@
 package com.example.sachosaeng.core.ui.component.topappbar
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.ui.R
+import com.example.sachosaeng.core.ui.noRippleClickable
 
 @Composable
 fun SachosaengDetailTopAppBar(
+    modifier: Modifier = Modifier,
     title: String,
-    navigateToBackStack: () -> Unit = {}
+    fontSize: Int = 18,
+    fontWeight: FontWeight = FontWeight.W700,
+    navigateToBackStack: (() -> Unit)? = null
 ) {
     SachosaengTopAppBar(
         componentRow = {
             Row(
-                modifier = Modifier.fillMaxWidth(0.55f),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = modifier
             ) {
-                Image(
-                    modifier = Modifier.clickable { navigateToBackStack() },
-                    painter = painterResource(id = R.drawable.ic_go_back),
-                    contentDescription = null
-                )
+                navigateToBackStack?.let {
+                    Image(
+                        modifier = modifier.noRippleClickable { navigateToBackStack() },
+                        painter = painterResource(id = R.drawable.ic_go_back),
+                        contentDescription = null
+                    )
+                }
                 Text(
+                    modifier = modifier.weight(1f),
                     text = title,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.W700,
+                    fontSize = fontSize.sp,
+                    fontWeight = fontWeight,
+                    textAlign = TextAlign.Center
                 )
             }
-        }, profileImageUrl = null
+        }
     )
 }
