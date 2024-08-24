@@ -26,8 +26,9 @@ class AuthDataStoreImpl @Inject constructor(
         }.run { return true }
     }
 
+    //todo: default 값 지우기
     override suspend fun getEmail() = context.authDataStore.data.map { preferences ->
-        preferences[stringPreferencesKey(USER_EMAIL)] ?: ""
+        preferences[stringPreferencesKey(USER_EMAIL)] ?: "test1@test"
     }.catch {
         it.printStackTrace()
         emit("")

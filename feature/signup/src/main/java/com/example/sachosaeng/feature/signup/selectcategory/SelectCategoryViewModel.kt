@@ -1,10 +1,15 @@
 package com.example.sachosaeng.feature.signup.selectcategory
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Category
+import com.example.sachosaeng.core.usecase.auth.GetEmailUsecase
+import com.example.sachosaeng.core.usecase.auth.JoinUseCase
 import com.example.sachosaeng.core.usecase.category.GetCategoryListUsecase
+import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -15,7 +20,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
-    val getAllCategoryListUsecase: GetCategoryListUsecase
+    val getEmailUseCase: GetEmailUsecase,
+    val getAllCategoryListUsecase: GetCategoryListUsecase,
+    val setMyCategoryListUseCase: SetMyCategoryListUseCase,
+    val joinUseCase: JoinUseCase
 ) : ViewModel(),
     ContainerHost<SelectCategoryUiState, SelectCategorySideEffect> {
     override val container: Container<SelectCategoryUiState, SelectCategorySideEffect> =
@@ -40,12 +48,16 @@ class SelectCategoryViewModel @Inject constructor(
     }
 
     private fun checkIsAnyCategorySelected() = intent {
-            reduce { state.copy(isAnyCategorySelected = state.selectedCategoryList.isNotEmpty())
+        reduce {
+            state.copy(isAnyCategorySelected = state.selectedCategoryList.isNotEmpty())
         }
     }
 
     private fun selectCategory(category: Category) = intent {
-        reduce { state.copy(selectedCategoryList = state.selectedCategoryList + category) }
+        val newSelectecCategoryList = state.selectedCategoryList + category
+        setMyCategoryListUseCase(newSelectecCategoryList).collectLatest {
+            reduce { state.copy(selectedCategoryList = newSelectecCategoryList) }
+        }
     }
 
     private fun unselectCategory(category: Category) = intent {
@@ -53,8 +65,16 @@ class SelectCategoryViewModel @Inject constructor(
     }
 
     fun skipSelectCategory() = intent {
-        reduce { state.copy(selectedCategoryList = emptyList()) }
-        postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
+        setMyCategoryListUseCase(emptyList()).collectLatest {
+            postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
+        }
+    }
+
+    fun join() = intent {
+        val email = getEmailUseCase().first()
+        joinUseCase(email = email).collectLatest {
+            postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
+        }
     }
 }
 

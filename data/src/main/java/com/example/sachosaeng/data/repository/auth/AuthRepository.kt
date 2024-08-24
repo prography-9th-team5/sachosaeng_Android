@@ -6,5 +6,6 @@ interface AuthRepository {
     fun login(id: String, password: String)
     fun logout()
     fun join(email: String): Flow<Unit>
+    fun getEmail(): Flow<String>
     suspend fun withdraw()
 }

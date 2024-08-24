@@ -18,10 +18,6 @@ class HomeViewModel @Inject constructor() : ViewModel(), ContainerHost<HomeScree
     override val container: Container<HomeScreenUiState, Unit> =
         container(HomeScreenUiState.createDefault())
 
-    init {
-        Log.e("1111111", "오는거 맞나..")
-    }
-
     fun initHomeScreen() = intent {
         viewModelScope.launch {
             reduce { state }

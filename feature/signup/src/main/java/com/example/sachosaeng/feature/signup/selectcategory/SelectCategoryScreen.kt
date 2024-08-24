@@ -48,7 +48,7 @@ fun SelectCategoryScreen(
         state = state,
         onClickCategory = viewModel::onClickCategory,
         onSkip = viewModel::skipSelectCategory,
-        moveToNextStep = moveToNextStep,
+        moveToNextStep = viewModel::join,
         navigateToBackStack = navigateToBackStack
     )
 }
