@@ -8,6 +8,6 @@ import javax.inject.Inject
 class JoinUseCase @Inject constructor(
     private val repository: AuthRepository
 ) {
-    operator fun invoke(email: String, userType: String): Flow<Unit> =
+    operator fun invoke(email: String, userType: String): Flow<Boolean> =
         repository.join(email = email, userType = userType)
 }

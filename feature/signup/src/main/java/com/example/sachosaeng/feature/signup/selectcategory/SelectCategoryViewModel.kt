@@ -76,7 +76,9 @@ class SelectCategoryViewModel @Inject constructor(
         val email = getEmailUseCase().first()
         val userType = getLocalUserTypeUseCase().first()
         runCatching {
-            joinUseCase(email = email, userType = userType).collectLatest {}
+            joinUseCase(email = email, userType = userType).collectLatest {
+                //todo: error handling 추가하기?
+            }
         }.onFailure {
             postSideEffect(SelectCategorySideEffect.ShowError(it.message ?: "unknown"))
         }.onSuccess {
