@@ -7,6 +7,7 @@ import javax.inject.Inject
 
 class JoinUseCase @Inject constructor(
     private val repository: AuthRepository
-) : Usecase<String, Flow<Unit>> {
-    override fun invoke(email: String): Flow<Unit> = repository.join(email = email)
+) {
+    operator fun invoke(email: String, userType: String): Flow<Unit> =
+        repository.join(email = email, userType = userType)
 }
