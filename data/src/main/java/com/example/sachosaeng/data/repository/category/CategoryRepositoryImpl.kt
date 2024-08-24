@@ -1,6 +1,7 @@
 package com.example.sachosaeng.data.repository.category
 
-import com.example.sachosaeng.core.domain.model.Category
+import android.util.Log
+import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.data.api.CategoryService
 import com.example.sachosaeng.data.repository.category.CategoryMapper.toDomain
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +18,7 @@ class CategoryRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun setCategoryList(categoryList: List<Category>) {
-        TODO("Not yet implemented")
+    override fun setCategoryList(categoryList: List<Category>) : Flow<Unit> = flow {
+        emit(Unit)
     }
 }

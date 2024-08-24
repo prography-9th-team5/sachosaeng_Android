@@ -87,6 +87,6 @@ dependencies {
     implementation(libs.coil)
 
     implementation(project(":core:ui"))
+    implementation(project(":core:model"))
     implementation(project(":core:util"))
-    implementation(project(":core:domain"))
 }

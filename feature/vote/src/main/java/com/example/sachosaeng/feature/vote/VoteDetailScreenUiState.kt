@@ -1,6 +1,6 @@
 package com.example.sachosaeng.feature.vote
 
-import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.model.Category
 
 data class VoteDetailScreenUiState(
     val category: Category = Category(),

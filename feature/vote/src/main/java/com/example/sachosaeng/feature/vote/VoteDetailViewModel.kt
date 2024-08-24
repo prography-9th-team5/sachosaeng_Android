@@ -2,7 +2,7 @@ package com.example.sachosaeng.feature.vote
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.domain.model.Vote
+import com.example.sachosaeng.core.model.Vote
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost

@@ -17,7 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
 

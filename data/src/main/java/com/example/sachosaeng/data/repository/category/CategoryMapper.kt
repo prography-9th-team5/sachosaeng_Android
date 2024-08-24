@@ -1,6 +1,6 @@
 package com.example.sachosaeng.data.repository.category
 
-import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.data.model.category.CategoryResponse
 
 object CategoryMapper {

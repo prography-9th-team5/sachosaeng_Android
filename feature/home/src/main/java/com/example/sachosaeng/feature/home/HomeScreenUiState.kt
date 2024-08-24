@@ -1,7 +1,7 @@
 package com.example.sachosaeng.feature.home
 
-import com.example.sachosaeng.core.domain.model.Category
-import com.example.sachosaeng.core.domain.model.VoteInfo
+import com.example.sachosaeng.core.model.Category
+import com.example.sachosaeng.core.model.VoteInfo
 
 data class HomeScreenUiState(
     val profileImageUrl: String = "",

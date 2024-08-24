@@ -1,8 +1,8 @@
 package com.example.sachosaeng.core.usecase.vote
 
-import com.example.sachosaeng.core.domain.model.Vote
-import com.example.sachosaeng.core.usecase.Usecase
+import com.example.sachosaeng.core.model.Vote
+import com.example.sachosaeng.core.usecase.NoParameterUseCase
 
-class GetSingleVoteUsecase : Usecase<Vote> {
-    override suspend fun invoke() = Vote()
+class GetSingleVoteUsecase : NoParameterUseCase<Vote> {
+    override operator fun invoke() = Vote()
 }

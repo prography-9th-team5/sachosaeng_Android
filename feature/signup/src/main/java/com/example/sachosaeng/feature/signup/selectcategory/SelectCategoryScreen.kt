@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
@@ -48,7 +48,7 @@ fun SelectCategoryScreen(
         state = state,
         onClickCategory = viewModel::onClickCategory,
         onSkip = viewModel::skipSelectCategory,
-        moveToNextStep = moveToNextStep,
+        moveToNextStep = viewModel::join,
         navigateToBackStack = navigateToBackStack
     )
 }
