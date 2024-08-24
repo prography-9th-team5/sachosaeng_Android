@@ -1,7 +1,11 @@
 package com.example.sachosaeng.data.di
 
+import com.example.sachosaeng.data.repository.auth.AuthRepository
+import com.example.sachosaeng.data.repository.auth.AuthRepositoryImpl
 import com.example.sachosaeng.data.repository.category.CategoryRepository
 import com.example.sachosaeng.data.repository.category.CategoryRepositoryImpl
+import com.example.sachosaeng.data.repository.user.UserRepository
+import com.example.sachosaeng.data.repository.user.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -16,4 +20,16 @@ internal abstract class RepositoryModule {
     abstract fun bindCategoryRepository(
         categoryRepositoryImpl: CategoryRepositoryImpl
     ): CategoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAuthRepository(
+        authRepositoryImpl: AuthRepositoryImpl
+    ): AuthRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository
 }
