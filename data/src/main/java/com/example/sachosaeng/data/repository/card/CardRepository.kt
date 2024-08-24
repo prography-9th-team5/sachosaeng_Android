@@ -1,10 +1,10 @@
 package com.example.sachosaeng.data.repository.card
 
-import com.example.sachosaeng.core.domain.model.Vote
+import com.example.sachosaeng.core.model.Vote
 
 
 interface CardRepository {
-    suspend fun getCardList(): List<Vote>
-    suspend fun getMyCardList(): List<Vote>
-    suspend fun bookmarkCard(vote: Vote)
+    fun getCardList(): List<Vote>
+    fun getMyCardList(): List<Vote>
+    fun bookmarkCard(vote: Vote)
 }

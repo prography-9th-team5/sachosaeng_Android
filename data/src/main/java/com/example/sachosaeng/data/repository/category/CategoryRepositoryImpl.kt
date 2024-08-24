@@ -1,6 +1,6 @@
 package com.example.sachosaeng.data.repository.category
 
-import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.data.api.CategoryService
 import com.example.sachosaeng.data.repository.category.CategoryMapper.toDomain
 import kotlinx.coroutines.flow.Flow
