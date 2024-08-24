@@ -1,12 +1,16 @@
 package com.example.sachosaeng.data.repository.user
 
-import com.example.sachosaeng.core.domain.model.User
+import com.example.sachosaeng.core.model.User
+import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    suspend fun getMyInfo(): User
-    fun login(id: String, password: String)
+    fun setUserType(type: String): Flow<Boolean>
+    fun getUserType(): Flow<String>
+
+    fun getMyInfo(): User
+    fun login(token: String)
     fun logout()
     fun signIn(user: User)
     fun updateMyInfo(user: User)
-    suspend fun withdraw()
+    fun withdraw()
 }

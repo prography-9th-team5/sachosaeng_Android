@@ -1,13 +1,22 @@
 package com.example.sachosaeng.data.repository.user
 
-import com.example.sachosaeng.core.domain.model.User
+import com.example.sachosaeng.core.model.User
+import com.example.sachosaeng.data.datasource.datastore.UserDataStore
+import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class UserRepositoryImpl : UserRepository {
-    override suspend fun getMyInfo(): User {
+class UserRepositoryImpl @Inject constructor(
+    private val userDataStore: UserDataStore
+) : UserRepository {
+    override fun setUserType(type: String) = flow { emit(userDataStore.setUserType(type)) }
+
+    override fun getUserType() = flow { emit(userDataStore.getUserType()) }
+
+    override fun getMyInfo(): User {
         TODO("Not yet implemented")
     }
 
-    override fun login(id: String, password: String) {
+    override fun login(token: String) {
         TODO("Not yet implemented")
     }
 
@@ -23,7 +32,7 @@ class UserRepositoryImpl : UserRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun withdraw() {
+    override fun withdraw() {
         TODO("Not yet implemented")
     }
 }
