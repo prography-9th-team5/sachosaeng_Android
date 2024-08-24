@@ -64,7 +64,13 @@ dependencies {
     implementation(libs.coroutine.android)
     implementation(libs.coroutine)
 
+    //iavax
     implementation(libs.javax.inject)
+
+    // DataStore
+    implementation(libs.androidx.datastore.core.android)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.core.jvm)
 
     // Hilt
     ksp(libs.hilt.compiler)
