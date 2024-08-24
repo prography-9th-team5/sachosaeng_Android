@@ -1,5 +1,6 @@
 package com.example.sachosaeng.feature.signup.selectcategory
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -8,8 +9,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +25,7 @@ import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
+import com.example.sachosaeng.core.ui.component.snackbar.SachoSaengSnackbar
 import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
@@ -29,6 +35,7 @@ import com.example.sachosaeng.feature.signup.SignUpProgressBar
 import com.example.sachosaeng.feature.signup.SignUpProgressbarWithColor
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
+import com.example.sachosaeng.core.ui.R.drawable
 
 @Composable
 fun SelectCategoryScreen(
@@ -37,11 +44,26 @@ fun SelectCategoryScreen(
     viewModel: SelectCategoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
+    var snackbarMessage by remember { mutableStateOf<String?>(null) }
 
     viewModel.collectSideEffect {
         when (it) {
             is SelectCategorySideEffect.NavigateToNextStep -> moveToNextStep()
+            is SelectCategorySideEffect.ShowError -> {
+                snackbarMessage = it.message
+            }
         }
+    }
+
+    snackbarMessage?.let {
+        SachoSaengSnackbar(
+            Modifier.padding(bottom = 60.dp),
+            icon = {
+                Image(
+                    painter = painterResource(id = drawable.ic_warning_black_small),
+                    contentDescription = null
+                )
+            }, message = it, onDismiss = { snackbarMessage = null })
     }
 
     SelectCategoryScreen(
