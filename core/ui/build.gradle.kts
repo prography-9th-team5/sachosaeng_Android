@@ -62,8 +62,9 @@ dependencies {
     debugImplementation(libs.ui.tooling)
 
     implementation(project(":core:util"))
-    implementation(project(":core:domain"))
+    implementation(project(":core:model"))
 
+    //todo : 제거
     implementation("androidx.compose.material3:material3")
     implementation(platform("androidx.compose:compose-bom:2024.05.00"))
 }

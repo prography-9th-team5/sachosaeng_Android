@@ -19,7 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.domain.model.Vote
+import com.example.sachosaeng.core.model.Category
+import com.example.sachosaeng.core.model.Vote
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
@@ -96,7 +97,7 @@ fun VoteScreenPreview() {
         title = "친한 사수분 결혼식 축의금 얼마가 좋을까요?",
         count = 1000,
         option = listOf("옵션1", "옵션2", "옵션3"),
-        category = com.example.sachosaeng.core.domain.model.Category(
+        category = Category(
             name = "카테고리",
             imageUrl = ""
         )

@@ -36,8 +36,6 @@ android {
 dependencies {
     implementation(libs.androidx.annotation.jvm)
     implementation(libs.javax.inject)
-    implementation(project(":data"))
-    implementation(project(":core:domain"))
 
     // Hilt
     ksp(libs.hilt.compiler)
@@ -51,4 +49,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    implementation(project(":data"))
+    implementation(project(":core:model"))
 }

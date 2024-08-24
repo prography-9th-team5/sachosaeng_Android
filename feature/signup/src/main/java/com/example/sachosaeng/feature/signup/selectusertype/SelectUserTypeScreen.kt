@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -37,6 +38,7 @@ import com.example.sachosaeng.feature.signup.SelectScreenDescription
 import com.example.sachosaeng.feature.signup.SignUpProgressBar
 import com.example.sachosaeng.feature.signup.SignUpProgressbarWithColor
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SelectUserTypeScreen(
@@ -45,12 +47,16 @@ fun SelectUserTypeScreen(
 ) {
     val state = viewModel.collectAsState()
 
+    viewModel.collectSideEffect { sideEffect ->
+        when(sideEffect) {
+            is SelectUserTypeSideEffect.MoveToSelectCategoryScreen -> { moveToNextStep() }
+        }
+    }
+
     SelectUserTypeScreen(
         uiState = state.value,
-        moveToNextStep = { moveToNextStep() },
-        changeSelectUserType = {
-            viewModel::changeSelectUserType.invoke(it)
-        }
+        moveToNextStep = viewModel::saveSelectedUserTypeAndMoveToNext,
+        changeSelectUserType = viewModel::changeSelectUserType
     )
 }
 

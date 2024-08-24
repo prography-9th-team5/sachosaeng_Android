@@ -8,7 +8,7 @@ import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
 import com.example.sachosaeng.core.ui.component.TabRowComponent
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton

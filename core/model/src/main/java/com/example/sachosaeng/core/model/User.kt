@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.domain.model
+package com.example.sachosaeng.core.model
 
 import com.example.sachosaeng.core.domain.constant.OAuthType
 

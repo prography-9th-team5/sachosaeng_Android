@@ -1,7 +1,7 @@
 package com.example.sachosaeng.feature.signup.selectcategory
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.domain.model.Category
+import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.usecase.category.GetCategoryListUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest

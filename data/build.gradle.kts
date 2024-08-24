@@ -83,5 +83,5 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    implementation(project(":core:domain"))
+    implementation(project(":core:model"))
 }
