@@ -79,7 +79,7 @@ internal fun SignUpCompleteScreen(
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
                 },
-            painter = painterResource(id = UserType.NEWCOMER.userTypeImageRes),
+            painter = painterResource(id = UserType.NEW_EMPLOYEE.userTypeImageRes),
             contentDescription = null
         )
     }

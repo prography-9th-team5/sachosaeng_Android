@@ -127,23 +127,23 @@ fun UserTypeList(modifier: Modifier, selectedType: UserType, onSelect: (UserType
             userTypeLabel = string.user_type_student
         )
         UserTypeCard(
-            onSelect = { onSelect(UserType.JOBSEEKER) },
-            isSelected = selectedType == UserType.JOBSEEKER,
-            userType = UserType.JOBSEEKER,
+            onSelect = { onSelect(UserType.JOB_SEEKER) },
+            isSelected = selectedType == UserType.JOB_SEEKER,
+            userType = UserType.JOB_SEEKER,
             imageResource = drawable.ic_user_type_jobseeker_on,
             userTypeLabel = string.user_type_jobseeker
         )
         UserTypeCard(
-            onSelect = { onSelect(UserType.NEWCOMER) },
-            isSelected = selectedType == UserType.NEWCOMER,
-            userType = UserType.NEWCOMER,
+            onSelect = { onSelect(UserType.NEW_EMPLOYEE) },
+            isSelected = selectedType == UserType.NEW_EMPLOYEE,
+            userType = UserType.NEW_EMPLOYEE,
             imageResource = drawable.ic_user_type_newcomer_on,
             userTypeLabel = string.user_type_newcomer
         )
         UserTypeCard(
-            onSelect = { onSelect(UserType.ETC) },
-            isSelected = selectedType == UserType.ETC,
-            userType = UserType.ETC,
+            onSelect = { onSelect(UserType.OTHER) },
+            isSelected = selectedType == UserType.OTHER,
+            userType = UserType.OTHER,
             imageResource = drawable.ic_user_type_etc_on,
             userTypeLabel = string.user_type_etc
         )

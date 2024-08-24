@@ -79,12 +79,7 @@ fun ModifyUserInfoScreen(
 
     snackbarMessage?.let {
         SachoSaengSnackbar(
-            icon = {
-                Image(
-                    painter = painterResource(id = drawable.ic_warning_black_small),
-                    contentDescription = null
-                )
-            }, message = it, onDismiss = {
+            message = it, onDismiss = {
                 snackbarMessage = null
                 navigateToBackStack()
             })
@@ -201,8 +196,8 @@ private fun UserTypeField(
             )
             UserTypeCard(
                 modifier = modifier.weight(1f),
-                isSelected = selectecUserType == UserType.JOBSEEKER,
-                userType = UserType.JOBSEEKER,
+                isSelected = selectecUserType == UserType.JOB_SEEKER,
+                userType = UserType.JOB_SEEKER,
                 onUserTypeSelect = onUserTypeSelect
             )
         }
@@ -213,14 +208,14 @@ private fun UserTypeField(
         ) {
             UserTypeCard(
                 modifier = modifier.weight(1f),
-                isSelected = selectecUserType == UserType.NEWCOMER,
-                userType = UserType.NEWCOMER,
+                isSelected = selectecUserType == UserType.NEW_EMPLOYEE,
+                userType = UserType.NEW_EMPLOYEE,
                 onUserTypeSelect = onUserTypeSelect
             )
             UserTypeCard(
                 modifier = modifier.weight(1f),
-                isSelected = selectecUserType == UserType.ETC,
-                userType = UserType.ETC,
+                isSelected = selectecUserType == UserType.OTHER,
+                userType = UserType.OTHER,
                 onUserTypeSelect = onUserTypeSelect
             )
         }
@@ -285,7 +280,7 @@ fun ModifyUserInfoScreenPreview() {
     ModifyUserInfoScreen(
         state = ModifiyUserInfoUiState(
             userName = "",
-            userType = UserType.JOBSEEKER,
+            userType = UserType.JOB_SEEKER,
             canSave = false
         ),
         onNicknameChange = {},
