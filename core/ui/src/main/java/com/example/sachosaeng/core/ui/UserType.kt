@@ -8,15 +8,15 @@ enum class UserType(val userTypeImageRes: Int, val userTypeLabelRes: Int) {
         userTypeImageRes = drawable.ic_signup_complete_student,
         userTypeLabelRes = string.user_type_student,
     ),
-    NEWCOMER(
+    NEW_EMPLOYEE(
         userTypeImageRes = drawable.ic_signup_complete_newcomer,
         userTypeLabelRes = string.user_type_newcomer
     ),
-    JOBSEEKER(
+    JOB_SEEKER(
         userTypeImageRes = drawable.ic_signup_jobseeker,
         userTypeLabelRes = string.user_type_jobseeker
     ),
-    ETC(
+    OTHER(
         userTypeImageRes = drawable.ic_signup_complete_etc,
         userTypeLabelRes = string.user_type_etc
     );

@@ -15,7 +15,7 @@ class ModifyUserInfoViewModel : ViewModel(),
     ContainerHost<ModifiyUserInfoUiState, ModifyUserInfoSideEffect> {
     override val container: Container<ModifiyUserInfoUiState, ModifyUserInfoSideEffect> = container(
         ModifiyUserInfoUiState(
-            userType = UserType.JOBSEEKER,
+            userType = UserType.JOB_SEEKER,
             userName = "사초생",
             canSave = false
         )

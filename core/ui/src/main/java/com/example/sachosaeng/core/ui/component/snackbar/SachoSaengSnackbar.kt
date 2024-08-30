@@ -6,6 +6,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -26,11 +27,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.ui.theme.Gs_G6
+import com.example.sachosaeng.core.ui.R.drawable
+import com.example.sachosaeng.core.ui.theme.Gs_White
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -39,7 +43,12 @@ import kotlinx.coroutines.launch
 fun SachoSaengSnackbar(
     modifier: Modifier = Modifier,
     message: String,
-    icon: @Composable () -> Unit = { },
+    icon: @Composable () -> Unit = {
+        Image(
+            painter = painterResource(id = drawable.ic_warning_black_small),
+            contentDescription = null
+        )
+    },
     onDismiss: () -> Unit
 ) {
     var action by remember { mutableStateOf<Job?>(null) }

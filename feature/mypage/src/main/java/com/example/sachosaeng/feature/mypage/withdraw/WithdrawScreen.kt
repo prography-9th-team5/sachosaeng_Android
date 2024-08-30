@@ -71,12 +71,8 @@ fun WithdrawScreen(
     snackbarMessage?.let {
         SachoSaengSnackbar(
             modifier.padding(bottom = 60.dp),
-            icon = {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_warning_black_small),
-                    contentDescription = null
-                )
-            }, message = it, onDismiss = { snackbarMessage = null })
+            message = it, onDismiss = { snackbarMessage = null }
+        )
     }
     LazyColumn(modifier.padding(16.dp)) {
         item {

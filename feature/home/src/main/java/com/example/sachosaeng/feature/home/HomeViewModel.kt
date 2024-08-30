@@ -1,11 +1,8 @@
 package com.example.sachosaeng.feature.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.sachosaeng.core.model.Category
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -18,15 +15,7 @@ class HomeViewModel @Inject constructor() : ViewModel(), ContainerHost<HomeScree
     override val container: Container<HomeScreenUiState, Unit> =
         container(HomeScreenUiState.createDefault())
 
-    fun initHomeScreen() = intent {
-        viewModelScope.launch {
-            reduce { state }
-        }
-    }
-
     fun onSelectCategory(category: Category) = intent {
-        viewModelScope.launch {
-            reduce { state.copy(selectedCategory = category) }
-        }
+        reduce { state.copy(selectedCategory = category) }
     }
 }

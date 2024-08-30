@@ -1,6 +1,5 @@
 package com.example.sachosaeng.data.repository.category
 
-import android.util.Log
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.data.api.CategoryService
 import com.example.sachosaeng.data.repository.category.CategoryMapper.toDomain
@@ -12,7 +11,7 @@ class CategoryRepositoryImpl @Inject constructor(
     val categoryService: CategoryService,
 ) : CategoryRepository {
     override fun getCategoryList(): Flow<List<Category>> =
-        flow { emit(categoryService.getAllCategoryList().getOrThrow().data.toDomain()) }
+        flow { categoryService.getAllCategoryList().getOrThrow().data?.let { emit(it.toDomain()) } }
 
     override fun getMyCategoryList(): List<Category> {
         TODO("Not yet implemented")

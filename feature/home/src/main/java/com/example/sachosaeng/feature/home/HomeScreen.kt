@@ -45,10 +45,6 @@ fun HomeScreen(
     val state = viewModel.collectAsState()
     val isSelectCategoryModalOpen = remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        viewModel.initHomeScreen()
-    }
-
     Column(
         modifier = Modifier
             .background(Gs_G2)

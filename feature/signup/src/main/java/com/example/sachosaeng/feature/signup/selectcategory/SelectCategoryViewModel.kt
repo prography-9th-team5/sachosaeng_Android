@@ -7,6 +7,7 @@ import com.example.sachosaeng.core.usecase.auth.GetEmailUsecase
 import com.example.sachosaeng.core.usecase.auth.JoinUseCase
 import com.example.sachosaeng.core.usecase.category.GetCategoryListUsecase
 import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
+import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
     val getEmailUseCase: GetEmailUsecase,
+    val getLocalUserTypeUseCase: GetUserTypeUseCase,
     val getAllCategoryListUsecase: GetCategoryListUsecase,
     val setMyCategoryListUseCase: SetMyCategoryListUseCase,
     val joinUseCase: JoinUseCase
@@ -72,7 +74,14 @@ class SelectCategoryViewModel @Inject constructor(
 
     fun join() = intent {
         val email = getEmailUseCase().first()
-        joinUseCase(email = email).collectLatest {
+        val userType = getLocalUserTypeUseCase().first()
+        runCatching {
+            joinUseCase(email = email, userType = userType).collectLatest {
+                //todo: error handling 추가하기?
+            }
+        }.onFailure {
+            postSideEffect(SelectCategorySideEffect.ShowError(it.message ?: "unknown"))
+        }.onSuccess {
             postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
         }
     }
@@ -80,4 +89,5 @@ class SelectCategoryViewModel @Inject constructor(
 
 sealed class SelectCategorySideEffect {
     object NavigateToNextStep : SelectCategorySideEffect()
+    data class ShowError(val message: String) : SelectCategorySideEffect()
 }
