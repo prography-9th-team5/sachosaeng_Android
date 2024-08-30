@@ -12,6 +12,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 
 @Composable
@@ -20,40 +21,39 @@ fun SplashScreen(
     navigateToSignUp: () -> Unit,
     viewModel: SplashViewModel = hiltViewModel()
 ) {
-    val showSplashScreen = viewModel.collectAsState()
+    viewModel.collectSideEffect {
+        when (it) {
+            is SplashSideEffect.NavigateToSignUp -> navigateToSignUp()
+            is SplashSideEffect.NavigateToHome -> navigateToMain()
+        }
+    }
 
-    if (showSplashScreen.value) {
-        ConstraintLayout(
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Gs_White),
+    ) {
+        val (title, image) = createRefs()
+        Image(
+            modifier = Modifier.constrainAs(title) {
+                top.linkTo(parent.top)
+                bottom.linkTo(image.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            painter = painterResource(id = R.drawable.ic_title),
+            contentDescription = null
+        )
+        Image(
             modifier = Modifier
-                .fillMaxSize()
-                .background(Gs_White),
-        ) {
-            val (title, image) = createRefs()
-            Image(
-                modifier = Modifier.constrainAs(title) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(image.top)
+                .fillMaxWidth()
+                .constrainAs(image) {
+                    bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-                painter = painterResource(id = R.drawable.ic_title),
-                contentDescription = null
-            )
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .constrainAs(image) {
-                        bottom.linkTo(parent.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                    },
-                painter = painterResource(id = R.drawable.splash_image),
-                contentDescription = null
-            )
-        }
-    } else {
-        //todo: 가입여부 확인 추가
-       // navigateToMain()
-        navigateToSignUp()
+            painter = painterResource(id = R.drawable.splash_image),
+            contentDescription = null
+        )
     }
 }

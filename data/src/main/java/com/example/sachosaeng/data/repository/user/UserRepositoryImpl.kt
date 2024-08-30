@@ -2,6 +2,7 @@ package com.example.sachosaeng.data.repository.user
 
 import com.example.sachosaeng.core.model.User
 import com.example.sachosaeng.data.datasource.datastore.UserDataStore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
@@ -13,10 +14,6 @@ class UserRepositoryImpl @Inject constructor(
     override fun getUserType() = flow { emit(userDataStore.getUserType()) }
 
     override fun getMyInfo(): User {
-        TODO("Not yet implemented")
-    }
-
-    override fun login(token: String) {
         TODO("Not yet implemented")
     }
 

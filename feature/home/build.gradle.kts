@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.google.ksp)
 }
 
 android {
@@ -51,6 +52,7 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(project(":core:usecase"))
 
     //test
     testImplementation(libs.junit)
@@ -67,9 +69,11 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.constraintlayout)
 
-    //hilt
-    implementation(libs.androidx.hilt.navigation.compose)
+    // Hilt
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.complier)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     //auth
     implementation(libs.kakao.sdk)

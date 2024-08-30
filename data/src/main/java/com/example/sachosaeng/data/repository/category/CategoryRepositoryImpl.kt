@@ -1,6 +1,5 @@
 package com.example.sachosaeng.data.repository.category
 
-import android.util.Log
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.data.api.CategoryService
 import com.example.sachosaeng.data.repository.category.CategoryMapper.toDomain

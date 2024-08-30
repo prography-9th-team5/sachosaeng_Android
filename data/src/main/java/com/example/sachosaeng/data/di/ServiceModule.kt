@@ -2,6 +2,7 @@ package com.example.sachosaeng.data.di
 
 import com.example.sachosaeng.data.api.AuthService
 import com.example.sachosaeng.data.api.CategoryService
+import com.example.sachosaeng.data.api.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,4 +21,9 @@ internal class ServiceModule {
     internal fun provideAuthService(
         @NetworkModule.SachoSaeng retrofit: Retrofit
     ): AuthService = retrofit.create(AuthService::class.java)
+
+    @Provides
+    internal fun provideUserService(
+        @NetworkModule.SachoSaeng retrofit: Retrofit
+    ): UserService = retrofit.create(UserService::class.java)
 }

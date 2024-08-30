@@ -8,7 +8,6 @@ interface UserRepository {
     fun getUserType(): Flow<String>
 
     fun getMyInfo(): User
-    fun login(token: String)
     fun logout()
     fun signIn(user: User)
     fun updateMyInfo(user: User)
