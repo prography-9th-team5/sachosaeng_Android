@@ -1,7 +1,9 @@
 package com.example.sachosaeng.core.model
 
 data class VoteInfo(
+    val id: Int,
     val title: String,
-    val imageUrl: String,
-    val voteCount: Int,
+    val category: Category,
+    val voteCount: Int? = null,
+    val isClosed: Boolean,
 )

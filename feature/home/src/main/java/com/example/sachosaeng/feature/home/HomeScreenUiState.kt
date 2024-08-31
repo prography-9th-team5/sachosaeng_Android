@@ -2,10 +2,14 @@ package com.example.sachosaeng.feature.home
 
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.model.VoteInfo
+import com.example.sachosaeng.core.model.VoteList
+import com.example.sachosaeng.core.ui.UserType
 
 data class HomeScreenUiState(
-    val profileImageUrl: String = "",
+    val userType: UserType,
     val voteList: List<VoteList>,
+    val hotVotes: List<VoteList>,
+    val dailyVote: VoteInfo? = null,
     val allCategory: List<Category>,
     val myCategory: List<Category>,
     val selectedCategory: Category? = null
@@ -13,98 +17,18 @@ data class HomeScreenUiState(
     companion object {
         fun createDefault(): HomeScreenUiState {
             return HomeScreenUiState(
-                profileImageUrl = "",
-                allCategory = listOf(
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                ),
-                myCategory = listOf(
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                    Category(),
-                ),
-                selectedCategory = Category(),
-                voteList = listOf(
+                userType = UserType.NEW_EMPLOYEE,
+                dailyVote = null,
+                hotVotes = listOf(
                     VoteList(
-                        category = Category(),
-                        voteInfo = listOf(
-                            VoteInfo(
-                                title = "첫 출근 날 팀원들에게 어떻게 인사하는게 좋을까요",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            ),
-                            VoteInfo(
-                                title = "상사와의 전화에서 마무리 말을 어떻게 하는게 좋을까용?",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            ),
-                            VoteInfo(
-                                title = "신입사원 첫 회식 추천해 주세요",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            )
-                        ),
-                    ),
-                    VoteList(
-                        category = Category(),
-                        voteInfo = listOf(
-                            VoteInfo(
-                                title = "첫 출근 날 팀원들에게 어떻게 인사하는게 좋을까요",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            ),
-                            VoteInfo(
-                                title = "상사와의 전화에서 마무리 말을 어떻게 하는게 좋을까용?",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            ),
-                            VoteInfo(
-                                title = "신입사원 첫 회식 추천해 주세요",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            )
-                        ),
-                    ),
-                    VoteList(
-                        category = Category(),
-                        voteInfo = listOf(
-                            VoteInfo(
-                                title = "첫 출근 날 팀원들에게 어떻게 인사하는게 좋을까요",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            ),
-                            VoteInfo(
-                                title = "상사와의 전화에서 마무리 말을 어떻게 하는게 좋을까용?",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            ),
-                            VoteInfo(
-                                title = "신입사원 첫 회식 추천해 주세요",
-                                imageUrl = "https://picsum.photos/200/200",
-                                voteCount = 0,
-                            )
-                        ),
+                        category = Category(0, "#000000", "hot"),
+                        voteInfo = emptyList()
                     )
-                )
+                ),
+                voteList = emptyList(),
+                allCategory = emptyList(),
+                myCategory = emptyList(),
             )
         }
     }
 }
-
-data class VoteList(
-    val category: Category,
-    val voteInfo: List<VoteInfo>
-)

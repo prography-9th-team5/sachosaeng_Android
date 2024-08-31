@@ -17,10 +17,11 @@ fun VoteColumnByCategory(modifier: Modifier = Modifier, voteList: List<VoteInfo>
         voteList.forEachIndexed { index, vote ->
             VoteCard(
                 modifier = modifier.padding(16.dp),
-                vote.title,
-                vote.imageUrl,
-                vote.voteCount,
-                index + 1
+                text = vote.title,
+                backgroundColorCode = vote.category.color,
+                iconUrl = vote.category.imageUrl,
+                voteCount = vote.voteCount,
+                ranking = index + 1
             )
         }
     }

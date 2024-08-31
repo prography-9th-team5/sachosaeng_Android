@@ -12,6 +12,9 @@
     <string name="cancel_label">취소</string>
     <string name="save_label">저장</string>
 
+    <!-- home -->
+    <string name="daily_vote">오늘의 투표</string>
+
     <!-- mypage-->
     <string name="mypage_top_bar_label">마이페이지</string>
     <string name="mypage_nickname_field_label">닉네임</string>
