@@ -6,10 +6,10 @@ import com.example.sachosaeng.data.model.category.CategoryResponse
 object CategoryMapper {
     fun List<CategoryResponse>.toDomain() : List<Category> = this.map {
         Category(
-            id = it.categoryId,
+            id = it.categoryId ?: 0,
             name = it.name,
             imageUrl = it.iconUrl,
-            color = it.backgroundColor,
+            color = it.backgroundColor ?: "",
             textColor = it.textColor
         )
     }

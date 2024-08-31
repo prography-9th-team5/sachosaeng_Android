@@ -1,18 +1,38 @@
 package com.example.sachosaeng.core.ui.component
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.sachosaeng.core.model.Category
+import com.example.sachosaeng.core.ui.R
+import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
 
 @Composable
-fun CategoryTitleText(category: Category) {
-    Text(
-        text = "#${category.name}",
-        color = Color(category.color.toLong(16).toInt()),
-        fontSize = 18.sp,
-        fontWeight = FontWeight.W700
-    )
+fun CategoryTitleText(modifier: Modifier = Modifier, category: Category) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        AsyncImage(
+            modifier = Modifier.size(18.dp),
+            model = if (category.imageUrl.isNullOrEmpty()) R.drawable.ic_hot_vote else category.imageUrl,
+            contentDescription = "",
+        )
+        Text(
+            text = category.name,
+            color = Color(category.color.toColorResource()),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W700
+        )
+    }
 }

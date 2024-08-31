@@ -6,6 +6,8 @@ import com.example.sachosaeng.data.repository.category.CategoryRepository
 import com.example.sachosaeng.data.repository.category.CategoryRepositoryImpl
 import com.example.sachosaeng.data.repository.user.UserRepository
 import com.example.sachosaeng.data.repository.user.UserRepositoryImpl
+import com.example.sachosaeng.data.repository.vote.VoteRepository
+import com.example.sachosaeng.data.repository.vote.VoteRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -20,6 +22,12 @@ internal abstract class RepositoryModule {
     abstract fun bindCategoryRepository(
         categoryRepositoryImpl: CategoryRepositoryImpl
     ): CategoryRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindVoteRepository(
+        voteRepositoryImpl: VoteRepositoryImpl
+    ): VoteRepository
 
     @Binds
     @Singleton
