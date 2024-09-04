@@ -26,10 +26,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import com.example.sachosaeng.core.model.VoteList
 import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.R.drawable
 import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.ui.component.CategoryTitleText
 import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
@@ -40,6 +38,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun HomeScreen(
     moveToMyPage: () -> Unit = {},
+    navigateToVoteCard: (Int) -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
@@ -56,7 +55,12 @@ fun HomeScreen(
                 moveToMyPage()
             }
         )
-        state.value.dailyVote?.title?.let { TodaysVoteCard(state.value.dailyVote!!.title) }
+        state.value.dailyVote?.title?.let {
+            TodaysVoteCard(
+                voteTitle = state.value.dailyVote!!.title,
+                onClick = { state.value.dailyVote?.id?.let { navigateToVoteCard(it) } }
+            )
+        }
         VoteColumnListByCategory(state.value.hotVotes)
         VoteColumnListByCategory(state.value.voteList)
         if (isSelectCategoryModalOpen.value) {
