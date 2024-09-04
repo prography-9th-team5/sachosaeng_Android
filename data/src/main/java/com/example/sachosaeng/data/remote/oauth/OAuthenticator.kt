@@ -1,31 +1,40 @@
 package com.example.sachosaeng.data.remote.oauth
 
+import com.example.sachosaeng.data.repository.auth.AuthRepository
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.Route
+import java.net.HttpURLConnection.HTTP_UNAUTHORIZED
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class OAuthenticator @Inject constructor() : Authenticator {
+class OAuthenticator @Inject constructor(
+    private val oAuthRepository: OAuthRepository
+) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        val newToken = try {
-           //토큰 새로 얻기
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return null
+        if (response.code == HTTP_UNAUTHORIZED) {
+            synchronized(this) {
+                return runBlocking {
+                    val newToken = oAuthRepository.getNewAccessToken().first()
+                    return@runBlocking response.request.newBuilder()
+                        .putTokenHeader(newToken)
+                        .build()
+                }
+            }
         }
-
-        return response.request.newBuilder()
-            .header(OAuthConstants.AUTHORIZATION, "${OAuthConstants.AUTHORIZATION_BEARER} $newToken")
-            .build()
+        return response.request
     }
-}
 
-private object OAuthConstants {
-    const val AUTHORIZATION = "Authorization"
-    const val AUTHORIZATION_BEARER = "Bearer"
+    private fun Request.Builder.putTokenHeader(accessToken: String): Request.Builder {
+        return this.header(AUTHORIZATION, "Bearer $accessToken")
+    }
+
+    companion object {
+        private const val AUTHORIZATION = "authorization"
+    }
 }

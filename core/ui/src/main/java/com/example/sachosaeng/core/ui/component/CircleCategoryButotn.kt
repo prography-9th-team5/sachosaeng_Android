@@ -25,9 +25,10 @@ import com.example.sachosaeng.core.util.extension.StringExtension.toColorResourc
 fun CircleCategoryButton(
     isSelected: Boolean = false,
     category: Category,
-    onClickCategory: (Category) -> Unit
+    onClickCategory: (Category) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         AsyncImage(
             contentDescription = "",
             model = category.imageUrl ?: R.drawable.if_default_category_circle,

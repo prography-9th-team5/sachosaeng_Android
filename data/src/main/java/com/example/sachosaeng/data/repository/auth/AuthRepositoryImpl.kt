@@ -5,6 +5,7 @@ import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
 import com.example.sachosaeng.data.model.auth.JoinRequest
 import com.example.sachosaeng.data.model.auth.LoginRequest
 import com.example.sachosaeng.data.model.auth.LoginResponse
+import com.example.sachosaeng.data.model.auth.TokenResponse
 import com.example.sachosaeng.data.remote.util.onFailure
 import com.example.sachosaeng.data.remote.util.onSuccess
 import com.example.sachosaeng.data.util.ERROR_CODE.SUCCESS
@@ -42,6 +43,9 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun getAccessToken(): Flow<String> =
         flow { emit(authLocalDataSource.getAccessToken()) }
+
+    override fun getRefreshToken(): Flow<String> =
+        flow { emit(authLocalDataSource.getRefreshToken()) }
 
     override fun join(email: String, userType: String): Flow<Boolean> =
         flow {

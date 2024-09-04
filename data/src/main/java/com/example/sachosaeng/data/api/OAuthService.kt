@@ -9,17 +9,7 @@ import com.example.sachosaeng.data.remote.util.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface AuthService {
-    @POST("/api/v1/auth/join")
-    suspend fun join(
-        @Body joinRequest: JoinRequest
-    ): ApiResult<BaseResponse<Unit>>
-
-    @POST("/api/v1/auth/login")
-    suspend fun login(
-        @Body loginRequest: LoginRequest
-    ): ApiResult<BaseResponse<LoginResponse>>
-
+interface OAuthService {
     @POST("/api/v1/auth/refresh")
     suspend fun getNewAccessToken(): ApiResult<BaseResponse<TokenResponse>>
 }

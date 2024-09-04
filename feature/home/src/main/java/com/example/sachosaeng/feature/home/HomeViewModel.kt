@@ -2,8 +2,8 @@ package com.example.sachosaeng.feature.home
 
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.model.VoteList
 import com.example.sachosaeng.core.ui.UserType
+import com.example.sachosaeng.core.usecase.category.GetCategoryListWithAllIconUseCase
 import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
 import com.example.sachosaeng.core.usecase.vote.GetDailyVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.GetHotVoteUsecase
@@ -22,7 +22,8 @@ class HomeViewModel @Inject constructor(
     private val getDailyVoteUsecase: GetDailyVoteUsecase,
     private val getHotVoteUsecase: GetHotVoteUsecase,
     private val getVoteByCategoryUsecase: GetVoteByCategoryUsecase,
-    private val getUserTypeUseCase: GetUserTypeUseCase
+    private val getUserTypeUseCase: GetUserTypeUseCase,
+    private val getCategoryListWithAllIconUseCase: GetCategoryListWithAllIconUseCase
 ) : ViewModel(), ContainerHost<HomeScreenUiState, Unit> {
     override val container: Container<HomeScreenUiState, Unit> =
         container(HomeScreenUiState.createDefault())
@@ -32,6 +33,7 @@ class HomeViewModel @Inject constructor(
         getHotVotes()
         getVoteByCategory(0)
         getUserInfo()
+        getCategoryList()
     }
 
     fun getUserInfo() = intent {
@@ -59,6 +61,12 @@ class HomeViewModel @Inject constructor(
     private fun getVoteByCategory(categoryId: Int) = intent {
         getVoteByCategoryUsecase(id = categoryId).collectLatest { list ->
             list?.let { reduce { state.copy(voteList = listOf(it)) } }
+        }
+    }
+
+    private fun getCategoryList() = intent {
+        getCategoryListWithAllIconUseCase().collectLatest {
+            reduce { state.copy(allCategory = it) }
         }
     }
 }

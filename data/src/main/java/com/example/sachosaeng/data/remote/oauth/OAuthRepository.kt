@@ -1,7 +1,8 @@
 package com.example.sachosaeng.data.remote.oauth
 
-class OAuthRepository {
-    suspend fun refresh(): String {
-        return "newToken"
-    }
+import kotlinx.coroutines.flow.Flow
+
+interface OAuthRepository {
+    fun getNewAccessToken(): Flow<String>
+    fun getAccessToken(): Flow<String>
 }

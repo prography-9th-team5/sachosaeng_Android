@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.usecase.auth.GetEmailUsecase
 import com.example.sachosaeng.core.usecase.auth.JoinUseCase
-import com.example.sachosaeng.core.usecase.category.GetCategoryListUsecase
+import com.example.sachosaeng.core.usecase.category.GetCategoryListUseCase
 import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
 import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +23,7 @@ import javax.inject.Inject
 class SelectCategoryViewModel @Inject constructor(
     val getEmailUseCase: GetEmailUsecase,
     val getLocalUserTypeUseCase: GetUserTypeUseCase,
-    val getAllCategoryListUsecase: GetCategoryListUsecase,
+    val getAllCategoryListUsecase: GetCategoryListUseCase,
     val setMyCategoryListUseCase: SetMyCategoryListUseCase,
     val joinUseCase: JoinUseCase
 ) : ViewModel(),

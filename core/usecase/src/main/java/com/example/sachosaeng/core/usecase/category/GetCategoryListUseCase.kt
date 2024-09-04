@@ -6,7 +6,7 @@ import com.example.sachosaeng.data.repository.category.CategoryRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetCategoryListUsecase @Inject constructor(private val repository: CategoryRepository) :
+class GetCategoryListUseCase @Inject constructor(private val repository: CategoryRepository) :
     NoParameterUseCase<Flow<List<Category>>> {
     override operator fun invoke() = repository.getCategoryList()
 }

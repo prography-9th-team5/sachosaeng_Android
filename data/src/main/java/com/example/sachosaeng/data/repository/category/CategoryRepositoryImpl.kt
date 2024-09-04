@@ -13,11 +13,15 @@ class CategoryRepositoryImpl @Inject constructor(
     override fun getCategoryList(): Flow<List<Category>> =
         flow { categoryService.getAllCategoryList().getOrThrow().data?.let { emit(it.toDomain()) } }
 
+    override fun getAllCategoryIcon(): Flow<Category> = flow {
+        categoryService.getAllCategoryIcon().getOrThrow().data?.let { emit(it.toDomain()) }
+    }
+
     override fun getMyCategoryList(): List<Category> {
         TODO("Not yet implemented")
     }
 
-    override fun setCategoryList(categoryList: List<Category>) : Flow<Unit> = flow {
+    override fun setCategoryList(categoryList: List<Category>): Flow<Unit> = flow {
         emit(Unit)
     }
 }
