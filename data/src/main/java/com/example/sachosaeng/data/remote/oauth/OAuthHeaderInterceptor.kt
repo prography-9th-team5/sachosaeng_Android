@@ -11,11 +11,11 @@ import javax.inject.Singleton
 
 @Singleton
 internal class OAuthHeaderInterceptor @Inject constructor(
-    private val oAuthRepository: OAuthRepository
+//    private val oAuthRepository: OAuthRepository
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         return runBlocking {
-            val accessToken = oAuthRepository.getAccessToken().first()
+            val accessToken = "token"
             val request = if (accessToken.isNotEmpty()) {
                 chain.request().putTokenHeader(accessToken)
             } else {

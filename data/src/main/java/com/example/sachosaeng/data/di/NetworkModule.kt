@@ -24,6 +24,19 @@ import javax.inject.Singleton
 internal object NetworkModule {
 
     @Provides
+    fun provideOkHttpClientBuilder(): OkHttpClient.Builder {
+        return OkHttpClient.Builder()
+            .addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            })
+    }
+
+    @Provides
+    fun provideOkHttpClient(okhttpClientBuilder: OkHttpClient.Builder): OkHttpClient {
+        return okhttpClientBuilder.build()
+    }
+
+    @Provides
     @Singleton
     fun provideJson(): Json {
         return Json {
@@ -36,18 +49,7 @@ internal object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(
-        oAuthenticator: OAuthenticator,
-        oAuthHeaderInterceptor: OAuthHeaderInterceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .authenticator(oAuthenticator)
-            .addInterceptor(oAuthHeaderInterceptor)
-            .addInterceptor(HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
-            })
-            .build()
-    }
+    fun provideAuthHeaderInterceptor(): OAuthHeaderInterceptor = OAuthHeaderInterceptor()
 
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
@@ -56,33 +58,21 @@ internal object NetworkModule {
     @Provides
     @Singleton
     @SachoSaeng
-    fun provideSachoSaengRetrofit(
+    fun provideRetrofit(
         @ApplicationContext context: Context,
-        okHttpClient: OkHttpClient,
-        json: Json
+        okhttpClientBuilder: OkHttpClient.Builder,
+        json: Json,
+        oAuthenticator: OAuthenticator,
+//        oAuthHeaderInterceptor: OAuthHeaderInterceptor,
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            .addCallAdapterFactory(ResultCallAdapterFactory())
-            .build()
-    }
-
-    @Qualifier
-    @Retention(AnnotationRetention.BINARY)
-    annotation class OAuth
-
-    @Provides
-    @Singleton
-    @OAuth
-    fun provideOAuthRetrofit(
-        okHttpClient: OkHttpClient,
-        json: Json
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
-            .client(okHttpClient)
+            .client(
+                okhttpClientBuilder
+                    .authenticator(oAuthenticator)
+//                    .addInterceptor(oAuthHeaderInterceptor)
+                    .build()
+            )
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
             .addCallAdapterFactory(ResultCallAdapterFactory())
             .build()

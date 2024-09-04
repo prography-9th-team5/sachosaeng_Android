@@ -9,6 +9,6 @@ data class VoteInfoResponse(
     val title: String,
     val participantCount: Int? = null,
     val isVoted: Boolean,
-    val category: CategoryResponse,
+    val category: CategoryResponse? = null,
     val isClosed: Boolean,
 )
