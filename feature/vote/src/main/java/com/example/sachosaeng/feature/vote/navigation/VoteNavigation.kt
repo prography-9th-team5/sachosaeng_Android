@@ -1,6 +1,5 @@
 package com.example.sachosaeng.feature.vote.navigation
 
-import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -30,9 +29,9 @@ fun NavGraphBuilder.addVoteGraph(
             route = "$ROUTE_VOTE_DETAIL?$VOTE_DETAIL_ID={$VOTE_DETAIL_ID}",
             arguments = listOf(
                 navArgument(VOTE_DETAIL_ID) {
-                    type = NavType.StringType
-                    nullable = true
-                    defaultValue = null
+                    type = NavType.IntType
+                    nullable = false
+                    defaultValue = 1
                 },
             )
         ) { backStackEntry ->

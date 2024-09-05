@@ -1,8 +1,11 @@
 package com.example.sachosaeng.feature.vote
 
 import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Vote
+import com.example.sachosaeng.core.usecase.vote.GetSingleVoteUsecase
+import com.example.sachosaeng.feature.vote.navigation.VOTE_DETAIL_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -13,10 +16,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class VoteDetailViewModel @Inject constructor(
-//    private val getSingleVoteUsecase: GetSingleVoteUsecase
+    savedStateHandle: SavedStateHandle,
+    private val getSingleVoteUsecase: GetSingleVoteUsecase
 ): ViewModel(), ContainerHost<Vote, Unit> {
+    private val voteDetailId = savedStateHandle.get<Int>(VOTE_DETAIL_ID)
     override val container : Container<Vote, Unit> = container(Vote())
-    suspend fun getVoteContent() = intent {
+    fun getVoteContent() = intent {
+        voteDetailId?.let { getSingleVoteUsecase(voteDetailId) }
     }
 
     fun bookmarkVote() = intent {
