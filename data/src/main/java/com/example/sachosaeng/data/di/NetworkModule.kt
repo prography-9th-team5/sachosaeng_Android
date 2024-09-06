@@ -47,10 +47,6 @@ internal object NetworkModule {
         }
     }
 
-    @Provides
-    @Singleton
-    fun provideAuthHeaderInterceptor(): OAuthHeaderInterceptor = OAuthHeaderInterceptor()
-
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class SachoSaeng
@@ -63,14 +59,14 @@ internal object NetworkModule {
         okhttpClientBuilder: OkHttpClient.Builder,
         json: Json,
         oAuthenticator: OAuthenticator,
-//        oAuthHeaderInterceptor: OAuthHeaderInterceptor,
+        oAuthHeaderInterceptor: OAuthHeaderInterceptor,
     ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .client(
                 okhttpClientBuilder
                     .authenticator(oAuthenticator)
-//                    .addInterceptor(oAuthHeaderInterceptor)
+                    .addInterceptor(oAuthHeaderInterceptor)
                     .build()
             )
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))

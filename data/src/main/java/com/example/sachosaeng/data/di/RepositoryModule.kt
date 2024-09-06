@@ -1,5 +1,7 @@
 package com.example.sachosaeng.data.di
 
+import com.example.sachosaeng.data.remote.oauth.OAuthRepository
+import com.example.sachosaeng.data.remote.oauth.OAuthRepositoryImpl
 import com.example.sachosaeng.data.repository.auth.AuthRepository
 import com.example.sachosaeng.data.repository.auth.AuthRepositoryImpl
 import com.example.sachosaeng.data.repository.category.CategoryRepository
@@ -35,11 +37,11 @@ internal abstract class RepositoryModule {
         authRepositoryImpl: AuthRepositoryImpl
     ): AuthRepository
 
-//    @Binds
-//    @Singleton
-//    abstract fun bindOAuthRepository(
-//        oAuthRepositoryImpl: OAuthRepositoryImpl
-//    ): OAuthRepository
+    @Binds
+    @Singleton
+    abstract fun bindOAuthRepository(
+        oAuthRepositoryImpl: OAuthRepositoryImpl
+    ): OAuthRepository
 
     @Binds
     @Singleton

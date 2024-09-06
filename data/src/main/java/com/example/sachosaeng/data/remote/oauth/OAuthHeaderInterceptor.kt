@@ -1,5 +1,6 @@
 package com.example.sachosaeng.data.remote.oauth
 
+import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
 import com.example.sachosaeng.data.repository.auth.AuthRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -11,11 +12,11 @@ import javax.inject.Singleton
 
 @Singleton
 internal class OAuthHeaderInterceptor @Inject constructor(
-//    private val oAuthRepository: OAuthRepository
+    private val dataStore: AuthDataStore
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         return runBlocking {
-            val accessToken = "token"
+            val accessToken = dataStore.getAccessToken()
             val request = if (accessToken.isNotEmpty()) {
                 chain.request().putTokenHeader(accessToken)
             } else {
