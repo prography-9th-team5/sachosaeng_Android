@@ -15,7 +15,6 @@ object CategoryMapper {
         )
     }
 
-    //todo: 이걸 어디다 둔다..
     fun AllCategoryIconResponse.toDomain(): Category = Category(
         id = ALL_CATEGORY_ID,
         name = ALL_CATEGORY_NAME,
@@ -23,6 +22,8 @@ object CategoryMapper {
         color = this.backgroundColor ?: "",
         textColor = ""
     )
+
+    fun List<Category>.toRequest(): List<Int> = this.map { it.id }
 }
 
 const val ALL_CATEGORY_ID = 1

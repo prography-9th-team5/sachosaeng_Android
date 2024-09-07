@@ -14,7 +14,7 @@ import com.example.sachosaeng.core.model.Category
 @Composable
 fun CategoryListFlowRow(
     list: List<Category>,
-    selectedCategoryList: List<Category>,
+    selectedCategoryList: List<Category>? = null,
     onClickCategory: (Category) -> Unit,
     modifier: Modifier = Modifier,
 ) =
@@ -26,7 +26,7 @@ fun CategoryListFlowRow(
     ) {
         list.forEach {
             CircleCategoryButton(
-                isSelected = selectedCategoryList.contains(it),
+                isSelected = selectedCategoryList?.contains(it) ?: false,
                 category = it,
                 onClickCategory = { onClickCategory(it) },
                 modifier = Modifier.padding(horizontal = 23.dp)

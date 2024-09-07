@@ -13,7 +13,7 @@ object VoteMapper {
         id = voteId,
         title = title,
         category = Category(
-            id = category?.categoryId,
+            id = category?.categoryId?: 0,
             color = category?.backgroundColor ?: "#000000",
             name = category?.name ?: "",
             imageUrl = category?.iconUrl,
@@ -26,7 +26,7 @@ object VoteMapper {
         return this.let {
             VoteList(
                 category = Category(
-                    id = it.category.categoryId,
+                    id = it.category.categoryId ?: 0,
                     color = it.category.backgroundColor ?: "#000000",
                     name = it.category.name,
                     imageUrl = it.category.iconUrl,
@@ -41,7 +41,7 @@ object VoteMapper {
             id = voteId,
             title = title,
             category = Category(
-                id = category?.categoryId,
+                id = category?.categoryId ?: 0,
                 color = category?.backgroundColor ?: "#000000",
                 name = category?.name ?: "",
                 imageUrl = category?.iconUrl,
