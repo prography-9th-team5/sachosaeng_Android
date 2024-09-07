@@ -2,9 +2,9 @@ package com.example.sachosaeng.core.model
 
 
 data class Category(
-    val id: Int? = null,
-    val color: String = "#000000",
+    val id: Int = 0,
+    var color: String = "#000000",
     val name: String = "",
     val textColor: String = "#000000",
-    val imageUrl: String? = null,
+    val imageUrl: String? = null
 )

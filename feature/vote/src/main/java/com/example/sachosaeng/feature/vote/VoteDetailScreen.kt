@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -25,6 +24,7 @@ import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.theme.Gs_G2
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun VoteScreen(
@@ -32,7 +32,7 @@ fun VoteScreen(
     viewModel: VoteDetailViewModel = hiltViewModel()
 ) {
     //todo: viewModel.container.stateFlow.collectAsState() -> viewModel.collectAsState()
-    val state = viewModel.container.stateFlow.collectAsState()
+    val state = viewModel.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getVoteContent()

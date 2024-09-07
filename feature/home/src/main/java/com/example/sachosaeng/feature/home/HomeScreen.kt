@@ -14,8 +14,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,10 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import com.example.sachosaeng.core.model.VoteList
 import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.R.drawable
 import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.ui.component.CategoryTitleText
 import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
@@ -40,35 +36,46 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun HomeScreen(
     moveToMyPage: () -> Unit = {},
+    navigateToVoteCard: (Int) -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
-    val isSelectCategoryModalOpen = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
             .background(Gs_G2)
     ) {
         Topbar(
-            onCategorySelectButtonClicked = { isSelectCategoryModalOpen.value = true },
+            onCategorySelectButtonClicked = viewModel::bottomSheetOpen,
             userType = state.value.userType,
             onProfileImageClicked = {
                 moveToMyPage()
             }
         )
-        state.value.dailyVote?.title?.let { TodaysVoteCard(state.value.dailyVote!!.title) }
+        state.value.dailyVote?.title?.let {
+            TodaysVoteCard(
+                voteTitle = state.value.dailyVote!!.title,
+                onClick = { state.value.dailyVote?.id?.let { navigateToVoteCard(it) } }
+            )
+        }
         VoteColumnListByCategory(state.value.hotVotes)
         VoteColumnListByCategory(state.value.voteList)
-        if (isSelectCategoryModalOpen.value) {
+        if (state.value.isSelectCategoryModalOpen) {
             SelectCategoryBottomSheet(
                 allCategoryList = state.value.allCategory,
                 myCategoryList = state.value.myCategory,
-                onDismissRequest = {
-                    isSelectCategoryModalOpen.value = false
-                }, onSelectCategory = {
-                    isSelectCategoryModalOpen.value = false
+                onModifyMyCategoryButtonClicked = viewModel::onModifyMyCategory,
+                onModifyComplete = {
+                    viewModel.onModifyComplete()
+                    viewModel.bottomSheetClose()
+                },
+                onDismissRequest = viewModel::bottomSheetClose,
+                onSelectCategory = {
                     viewModel.onSelectCategory(it)
-                }
+                    viewModel.bottomSheetClose()
+                },
+                onSelectFavoriteCategory = viewModel::onSelectFavoriteCategory,
+                modifyListVisible = state.value.modifyMyCategoryListVisibility
             )
         }
     }

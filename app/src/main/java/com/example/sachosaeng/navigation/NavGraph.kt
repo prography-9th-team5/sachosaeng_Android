@@ -14,6 +14,8 @@ import com.example.sachosaeng.feature.signup.navigation.addSignUpNavGraph
 import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
 import com.example.sachosaeng.feature.splash.addSplashNavGraph
 import com.example.sachosaeng.feature.vote.VoteScreen
+import com.example.sachosaeng.feature.vote.navigation.addVoteGraph
+import com.example.sachosaeng.feature.vote.navigation.navigateToVoteDetail
 import com.example.sachosaeng.feature.webview.addWebViewScreen
 import com.example.sachosaeng.feature.webview.navigateToWebView
 
@@ -36,6 +38,7 @@ internal fun addNavGraph(navController: NavHostController) {
             navController = navController,
             navigateToWebView = { url -> navController.navigateToWebView(url) }
         )
+        addVoteGraph(navController = navController)
     }
 }
 
@@ -48,11 +51,16 @@ fun NavGraphBuilder.addBottomNavGraph(navController: NavHostController) {
         route = GRAPH_MAIN
     ) {
         composable(ROUTE_MAIN) {
-            HomeScreen(moveToMyPage = {
-                navController.navigate(
-                    GRAPH_MY_PAGE
-                )
-            })
+            HomeScreen(
+                moveToMyPage = {
+                    navController.navigate(
+                        GRAPH_MY_PAGE
+                    )
+                },
+                navigateToVoteCard = {
+                    navController.navigateToVoteDetail(voteId = it)
+                }
+            )
         }
         composable(Screen.VOTE.route) {
             VoteScreen(navigateToBackStack = { navController.popBackStack() })

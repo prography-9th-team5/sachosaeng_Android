@@ -7,4 +7,5 @@ data class Vote(
     val option: List<String> = listOf("option1", "option2"),
     val selectedOption: String = "",
     val isBookmarked: Boolean = false,
+    val isClosed : Boolean = false,
 )

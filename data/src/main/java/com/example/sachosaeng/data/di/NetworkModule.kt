@@ -47,10 +47,6 @@ internal object NetworkModule {
         }
     }
 
-    @Provides
-    @Singleton
-    fun provideAuthHeaderInterceptor(): OAuthHeaderInterceptor = OAuthHeaderInterceptor()
-
     @Qualifier
     @Retention(AnnotationRetention.BINARY)
     annotation class SachoSaeng

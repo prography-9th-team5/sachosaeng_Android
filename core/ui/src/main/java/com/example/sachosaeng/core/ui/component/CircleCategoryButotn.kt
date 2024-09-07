@@ -13,34 +13,34 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R
+import com.example.sachosaeng.core.ui.theme.Gs_G2
+import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
 
 @Composable
 fun CircleCategoryButton(
     isSelected: Boolean = false,
     category: Category,
-    onClickCategory: (Category) -> Unit
+    onClickCategory: (Category) -> Unit,
+    modifier: Modifier = Modifier
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         AsyncImage(
             contentDescription = "",
+            colorFilter = if (!isSelected) ColorFilter.tint(Gs_G4) else null,
             model = category.imageUrl ?: R.drawable.if_default_category_circle,
             modifier = Modifier
                 .clip(CircleShape)
                 .clickable { onClickCategory(category) }
                 .size(72.dp)
-                .background(color = Color(category.color.toColorResource()))
-                .border(
-                    width = 1.dp,
-                    color = if (isSelected) Color.Black else Color.Transparent,
-                    shape = CircleShape
-                )
+                .background(color = if (!isSelected) Gs_G2 else Color(category.color.toColorResource()))
                 .padding(20.dp)
         )
         Text(
