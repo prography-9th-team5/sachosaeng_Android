@@ -3,6 +3,7 @@ package com.example.sachosaeng.data.repository.category
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.data.model.category.AllCategoryIconResponse
 import com.example.sachosaeng.data.model.category.CategoryResponse
+import com.example.sachosaeng.data.model.category.SetCategoryRequest
 
 object CategoryMapper {
     fun List<CategoryResponse>.toDomain(): List<Category> = this.map {
@@ -23,7 +24,8 @@ object CategoryMapper {
         textColor = ""
     )
 
-    fun List<Category>.toRequest(): List<Int> = this.map { it.id }
+    fun List<Category>.toRequest(): SetCategoryRequest =
+        this.map { it.id }.let { SetCategoryRequest(it) }
 }
 
 const val ALL_CATEGORY_ID = 1

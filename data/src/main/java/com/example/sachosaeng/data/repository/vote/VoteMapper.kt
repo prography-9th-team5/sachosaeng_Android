@@ -28,6 +28,7 @@ object VoteMapper {
                 category = Category(
                     id = it.category.categoryId ?: 0,
                     color = it.category.backgroundColor ?: "#000000",
+                    textColor = it.category.textColor,
                     name = it.category.name,
                     imageUrl = it.category.iconUrl,
                 ),

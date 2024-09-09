@@ -3,6 +3,7 @@ package com.example.sachosaeng.data.api
 import com.example.sachosaeng.data.model.BaseResponse
 import com.example.sachosaeng.data.model.category.AllCategoryIconResponse
 import com.example.sachosaeng.data.model.category.CategoryResponse
+import com.example.sachosaeng.data.model.category.SetCategoryRequest
 import com.example.sachosaeng.data.remote.util.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -17,6 +18,6 @@ interface CategoryService {
     suspend fun getMyCategoryList(): ApiResult<BaseResponse<List<CategoryResponse>>>
     @PUT("/api/v1/my-categories")
     suspend fun setMyCategoryList(
-        @Body categoryIds: List<Int>
-    ): ApiResult<BaseResponse<Unit>>
+        @Body categoryIds: SetCategoryRequest
+    ): ApiResult<BaseResponse<String>>
 }
