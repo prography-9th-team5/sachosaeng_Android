@@ -9,7 +9,7 @@ import androidx.compose.ui.unit.dp
 import com.example.sachosaeng.core.model.VoteInfo
 
 @Composable
-fun VoteColumnByCategory(modifier: Modifier = Modifier, voteList: List<VoteInfo>) {
+fun VoteColumnByCategory(modifier: Modifier = Modifier, voteList: List<VoteInfo>, rankinTextVisibility: Boolean = false) {
     Column(
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
@@ -20,7 +20,8 @@ fun VoteColumnByCategory(modifier: Modifier = Modifier, voteList: List<VoteInfo>
                 backgroundColorCode = vote.category.color,
                 iconUrl = vote.category.imageUrl,
                 voteCount = vote.voteCount,
-                ranking = index + 1
+                ranking = index + 1,
+                rankingTextVisibility = rankinTextVisibility
             )
         }
     }

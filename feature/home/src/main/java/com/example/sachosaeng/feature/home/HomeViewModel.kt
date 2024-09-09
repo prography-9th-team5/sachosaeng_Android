@@ -37,9 +37,7 @@ class HomeViewModel @Inject constructor(
         getHotVotes()
         getUserInfo()
         getCategoryList()
-        getMyCategoryList().also {
-            getVoteByMyCategory()
-        }
+        getMyCategoryListAndVoteList()
     }
 
     fun getUserInfo() = intent {
@@ -82,7 +80,7 @@ class HomeViewModel @Inject constructor(
 
     fun onModifyComplete() = intent {
         setMyCategoryListUseCase(state.myCategory).collectLatest {
-            getMyCategoryList()
+            getMyCategoryListAndVoteList()
         }
     }
 
@@ -104,9 +102,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getMyCategoryList() = intent {
+    private fun getMyCategoryListAndVoteList() = intent {
         getMyCategoryListUsecase().collectLatest {
             reduce { state.copy(myCategory = it) }
+        }.also {
+            getVoteByMyCategory()
         }
     }
 }

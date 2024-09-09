@@ -1,15 +1,13 @@
 package com.example.sachosaeng.core.ui.component
 
-import androidx.compose.foundation.BorderStroke
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -27,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.core.util.extension.IntExtension.toNumberOfPeople
@@ -40,7 +37,8 @@ fun VoteCard(
     backgroundColorCode: String,
     iconUrl: String? = null,
     voteCount: Int? = null,
-    ranking: Int
+    ranking: Int,
+    rankingTextVisibility: Boolean = false
 ) {
     Card(
         colors = CardDefaults.cardColors().copy(
@@ -54,7 +52,7 @@ fun VoteCard(
         ) {
             Column {
                 Row {
-                    Text(
+                    if (rankingTextVisibility) Text(
                         modifier = Modifier
                             .padding(end = 8.dp, bottom = 6.dp),
                         textAlign = TextAlign.Center,

@@ -82,11 +82,16 @@ fun HomeScreen(
                 }
                 item {
                     CategoryTitleText(category = state.value.hotVotes.category)
-                    VoteColumnByCategory(voteList = state.value.hotVotes.voteInfo)
+                    VoteColumnByCategory(
+                        rankinTextVisibility = true,
+                        voteList = state.value.hotVotes.voteInfo
+                    )
                 }
                 items(state.value.voteListWithCategory.size) {
                     CategoryTitleText(category = state.value.voteListWithCategory[it]!!.category)
-                    VoteColumnByCategory(voteList = state.value.voteListWithCategory[it]!!.voteInfo)
+                    VoteColumnByCategory(
+                        voteList = state.value.voteListWithCategory[it]!!.voteInfo
+                    )
                 }
             }
         }
