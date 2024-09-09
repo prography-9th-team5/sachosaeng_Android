@@ -27,7 +27,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_White
 fun TodaysVoteCard(voteTitle: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     Row(
         modifier = modifier
-            .padding(start = 16.dp, end = 16.dp, top = 9.dp)
+            .padding(top = 9.dp)
             .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .background(Gs_Black)

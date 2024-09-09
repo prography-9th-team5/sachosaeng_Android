@@ -1,10 +1,8 @@
 package com.example.sachosaeng.feature.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.usecase.category.GetCategoryListWithAllIconUseCase
 import com.example.sachosaeng.core.usecase.category.GetMyCategoryListUsecase
 import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
@@ -37,10 +35,11 @@ class HomeViewModel @Inject constructor(
     init {
         getDailyVote()
         getHotVotes()
-        getVoteByCategory(0)
         getUserInfo()
         getCategoryList()
-        getMyCategoryList()
+        getMyCategoryList().also {
+            getVoteByMyCategory()
+        }
     }
 
     fun getUserInfo() = intent {
@@ -49,16 +48,27 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun bottomSheetClose() = intent {
-        reduce { state.copy(isSelectCategoryModalOpen = false) }
-    }
-
-    fun bottomSheetOpen() = intent {
-        reduce { state.copy(isSelectCategoryModalOpen = true) }
+    fun getVoteByMyCategory() = intent {
+        state.myCategory.forEach {
+            getVoteByCategoryUsecase(it.id).collectLatest {
+                reduce {
+                    state.copy(
+                        voteListWithCategory = state.voteListWithCategory.plus(it)
+                    )
+                }
+            }
+        }
     }
 
     fun onSelectCategory(category: Category) = intent {
-        reduce { state.copy(selectedCategory = category) }
+        getVoteByCategoryUsecase(category.id).collectLatest {
+            reduce {
+                state.copy(
+                    selectedCategory = category,
+                    voteListWithCategory = listOf(it)
+                )
+            }
+        }
     }
 
     fun onSelectFavoriteCategory(category: Category) = intent {
@@ -71,7 +81,9 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onModifyComplete() = intent {
-        setMyCategoryListUseCase(state.myCategory)
+        setMyCategoryListUseCase(state.myCategory).collectLatest {
+            getMyCategoryList()
+        }
     }
 
     private fun getDailyVote() = intent {
@@ -82,13 +94,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getHotVotes() = intent {
         getHotVoteUsecase().collectLatest { list ->
-            list?.let { reduce { state.copy(hotVotes = listOf(it)) } }
-        }
-    }
-
-    private fun getVoteByCategory(categoryId: Int) = intent {
-        getVoteByCategoryUsecase(id = categoryId).collectLatest { list ->
-            list?.let { reduce { state.copy(voteList = listOf(it)) } }
+            list?.let { reduce { state.copy(hotVotes = it) } }
         }
     }
 

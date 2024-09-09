@@ -11,7 +11,6 @@ import com.example.sachosaeng.core.model.VoteInfo
 @Composable
 fun VoteColumnByCategory(modifier: Modifier = Modifier, voteList: List<VoteInfo>) {
     Column(
-        modifier = Modifier.padding(top = 14.dp, bottom = 36.dp),
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         voteList.forEachIndexed { index, vote ->

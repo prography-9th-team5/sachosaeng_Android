@@ -1,8 +1,8 @@
 package com.example.sachosaeng.core.ui.component
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,17 +20,18 @@ import com.example.sachosaeng.core.util.extension.StringExtension.toColorResourc
 @Composable
 fun CategoryTitleText(modifier: Modifier = Modifier, category: Category) {
     Row(
+        modifier = modifier.padding(bottom = 12.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
         AsyncImage(
-            modifier = Modifier.size(18.dp),
+            modifier = modifier.size(18.dp),
             model = if (category.imageUrl.isNullOrEmpty()) R.drawable.ic_hot_vote else category.imageUrl,
             contentDescription = "",
         )
         Text(
             text = category.name,
-            color = Color(category.color.toColorResource()),
+            color = Color(category.textColor.toColorResource()),
             fontSize = 16.sp,
             fontWeight = FontWeight.W700
         )
