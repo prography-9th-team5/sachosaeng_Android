@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,38 +36,24 @@ fun SachosaengTopAppBar(
         componentRow()
     }
 }
-
 @Composable
-fun SachosaengTopAppBarWithProfile(
-    title: String,
-    navigateToBackStack: () -> Unit = {},
+fun TopBarWithProfileImage(
+    topBarContent: @Composable () -> Unit,
     userType: UserType,
+    onProfileImageClicked: () -> Unit = {}
 ) {
-    SachosaengTopAppBar(
-        componentRow = {
-            Row(
-                modifier = Modifier.fillMaxWidth(0.55f),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(0.55f),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                ) {
-                    Image(
-                        modifier = Modifier.clickable { navigateToBackStack() },
-                        painter = painterResource(id = R.drawable.ic_go_back),
-                        contentDescription = null
-                    )
-                    Text(
-                        text = title,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.W500,
-                    )
-                    ProfileImage(userType = userType)
-                }
-            }
-        }
-    )
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(20.dp)
+    ) {
+        topBarContent()
+        ProfileImage(userType, onClick = {
+            onProfileImageClicked()
+        })
+    }
 }
 
 @Composable

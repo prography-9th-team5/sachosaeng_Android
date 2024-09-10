@@ -37,6 +37,7 @@ import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.ui.component.CategoryTitleText
 import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
+import com.example.sachosaeng.core.ui.component.topappbar.TopBarWithProfileImage
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import kotlinx.coroutines.launch
@@ -59,9 +60,13 @@ fun HomeScreen(
                 .fillMaxSize()
                 .background(Gs_G2)
         ) {
-            Topbar(
-                selectedCategory = state.value.selectedCategory,
-                onCategorySelectButtonClicked = { isBottomSheetOpen = true },
+            TopBarWithProfileImage(
+                topBarContent = {
+                    CategorySelectButton(
+                        selectedCategory = state.value.selectedCategory,
+                        onSelectCategory = { isBottomSheetOpen = true }
+                    )
+                },
                 userType = state.value.userType,
                 onProfileImageClicked = {
                     moveToMyPage()
@@ -128,29 +133,6 @@ fun HomeScreen(
 }
 
 @Composable
-fun Topbar(
-    selectedCategory: Category?,
-    onCategorySelectButtonClicked: () -> Unit,
-    userType: UserType,
-    onProfileImageClicked: () -> Unit = {}
-) {
-    Row(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(20.dp)
-    ) {
-        CategorySelectButton(
-            selectedCategory = selectedCategory,
-            onSelectCategory = { onCategorySelectButtonClicked() })
-        ProfileImage(userType, onClick = {
-            onProfileImageClicked()
-        })
-    }
-}
-
-@Composable
 fun CategorySelectButton(
     modifier: Modifier = Modifier,
     selectedCategory: Category?,
@@ -170,17 +152,6 @@ fun CategorySelectButton(
     }
 }
 
-@Composable
-fun ProfileImage(userType: UserType, onClick: () -> Unit = {}) {
-    Image(
-        modifier = Modifier
-            .size(40.dp)
-            .clickable { onClick() }
-            .clip(CircleShape),
-        painter = painterResource(id = userType.userTypeImageRes),
-        contentDescription = "",
-    )
-}
 
 @Preview
 @Composable

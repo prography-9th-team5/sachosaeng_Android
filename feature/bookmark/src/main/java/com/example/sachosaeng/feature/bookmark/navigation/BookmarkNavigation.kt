@@ -11,7 +11,7 @@ import com.example.sachosaeng.feature.bookmark.BookmarkScreen
 const val ROUTE_BOOKMARK = "bookmark"
 const val GRAPH_BOOKMARK = "bookmark_graph"
 
-fun NavGraphBuilder.addVoteGraph(
+fun NavGraphBuilder.addBookmarkGraph(
     navController: NavHostController
 ) {
     navigation(
