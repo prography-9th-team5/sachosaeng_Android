@@ -20,10 +20,23 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class BookmarkViewModel @Inject constructor() : ViewModel(), ContainerHost<BookmarkScreenUiState, Unit> {
+class BookmarkViewModel @Inject constructor(
+    private val getMyCategoryListUseCase: GetMyCategoryListUsecase,
+) : ViewModel(), ContainerHost<BookmarkScreenUiState, Unit> {
     override val container: Container<BookmarkScreenUiState, Unit> =
         container(BookmarkScreenUiState())
 
     init {
+        getMyCategoryList()
+    }
+
+    private fun getMyCategoryList() = intent {
+        getMyCategoryListUseCase().collectLatest { myCategoryList ->
+            reduce {
+                state.copy(
+                    myCategory = myCategoryList
+                )
+            }
+        }
     }
 }

@@ -86,3 +86,58 @@ fun TabRowComponent(
         contentScreens.getOrNull(selectedTabIndex)?.invoke()
     }
 }
+
+
+@Composable
+fun TabRowComponentWithBottomLine(
+    screenColor: Color = Gs_White,
+    tabs: List<String>,
+    tabTitleColor: Color = Gs_Black,
+    contentScreens: List<@Composable () -> Unit>,
+    modifier: Modifier = Modifier,
+    indicatorColor: Color = Gs_Black,
+) {
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        tabs.forEachIndexed { index, tabTitle ->
+            val isSelected = selectedTabIndex == index
+            Column(
+                modifier = modifier
+                    .width(IntrinsicSize.Max)
+                    .padding(10.dp)
+            ) {
+                Text(
+                    text = tabTitle,
+                    fontSize = 20.sp,
+                    color = if (isSelected) tabTitleColor else Gs_G5,
+                    fontWeight = FontWeight.W700,
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .clickable {
+                            selectedTabIndex = index
+                        }
+                )
+                Spacer(
+                    modifier = Modifier
+                        .height(if (isSelected) 2.dp else 0.dp)
+                        .fillMaxWidth()
+                        .background(Gs_Black)
+                        .background(color = indicatorColor)
+                )
+            }
+        }
+    }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(screenColor),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        contentScreens.getOrNull(selectedTabIndex)?.invoke()
+    }
+}
