@@ -107,11 +107,6 @@ fun CategoryCard(
             modifier = modifier.padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(
-                text = category.name,
-                fontSize = 15.sp,
-                fontWeight = FontWeight.W600
-            )
             category.imageUrl?.let {
                 AsyncImage(
                     alignment = Alignment.CenterEnd,
@@ -120,6 +115,12 @@ fun CategoryCard(
                         .size(18.dp)
                 )
             }
+            Text(
+                modifier = modifier.padding(end = 8.dp),
+                text = category.name,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.W600
+            )
         }
     }
 }
