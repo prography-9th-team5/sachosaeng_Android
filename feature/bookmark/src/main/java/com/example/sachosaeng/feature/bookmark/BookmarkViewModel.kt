@@ -21,13 +21,25 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
-    private val getMyCategoryListUseCase: GetMyCategoryListUsecase,
+    private val getCategoryListWithAllIconUseCase: GetCategoryListWithAllIconUseCase,
+    private val getMyCategoryListUseCase: GetMyCategoryListUsecase
 ) : ViewModel(), ContainerHost<BookmarkScreenUiState, Unit> {
     override val container: Container<BookmarkScreenUiState, Unit> =
         container(BookmarkScreenUiState())
 
     init {
+        getAllCategoryList()
         getMyCategoryList()
+    }
+
+    private fun getAllCategoryList() = intent {
+        getCategoryListWithAllIconUseCase().collectLatest { allCategoryList ->
+            reduce {
+                state.copy(
+                    allCategory = allCategoryList
+                )
+            }
+        }
     }
 
     private fun getMyCategoryList() = intent {

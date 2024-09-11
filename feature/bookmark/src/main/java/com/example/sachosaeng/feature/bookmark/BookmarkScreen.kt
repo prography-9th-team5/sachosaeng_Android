@@ -1,6 +1,7 @@
 package com.example.sachosaeng.feature.bookmark
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -67,8 +68,18 @@ internal fun BookmarkScreen(
         TabRowComponentWithBottomLine(
             tabs = tabList,
             contentScreens = listOf(
-                { VoteColumnByCategory(categories = state.myCategory) },
-                { VoteColumnByCategory(categories = state.myCategory) },
+                {
+                    VoteColumnByCategory(
+                        selectedCategories = state.myCategory,
+                        categories = state.allCategory
+                    )
+                },
+                {
+                    VoteColumnByCategory(
+                        selectedCategories = state.myCategory,
+                        categories = state.allCategory
+                    )
+                },
             )
         )
     }
@@ -76,6 +87,7 @@ internal fun BookmarkScreen(
 
 @Composable
 fun VoteColumnByCategory(
+    selectedCategories: List<Category>,
     categories: List<Category>,
     modifier: Modifier = Modifier
 ) {
@@ -84,15 +96,19 @@ fun VoteColumnByCategory(
             .padding(10.dp)
     ) {
         items(categories.size) {
-            CategoryCard(category = categories[it])
+            CategoryCard(
+                isSelected = selectedCategories.contains(categories[it]),
+                category = categories[it]
+            )
         }
     }
 }
 
 @Composable
 fun CategoryCard(
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = true,
     category: Category,
-    modifier: Modifier = Modifier
 ) {
     Card(
         colors = CardDefaults.cardColors().copy(
@@ -102,9 +118,15 @@ fun CategoryCard(
         shape = RoundedCornerShape(4.dp),
         modifier = modifier
             .padding(10.dp)
+            .border(
+                1.dp,
+                if (isSelected) Color(category.textColor.toColorResource()) else Color.Transparent,
+                RoundedCornerShape(4.dp)
+            ),
     ) {
         Row(
-            modifier = modifier.padding(10.dp),
+            modifier = modifier
+                .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             category.imageUrl?.let {
@@ -116,7 +138,7 @@ fun CategoryCard(
                 )
             }
             Text(
-                modifier = modifier.padding(end = 8.dp),
+                modifier = modifier.padding(start = 8.dp),
                 text = category.name,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.W600
@@ -127,7 +149,7 @@ fun CategoryCard(
 
 @Preview
 @Composable
-fun HomeScreenPreview() {
+fun BookmarkScreenPreview() {
     BookmarkScreen(
         modifier = Modifier
             .fillMaxWidth()

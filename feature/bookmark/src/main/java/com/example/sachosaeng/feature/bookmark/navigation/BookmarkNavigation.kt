@@ -2,9 +2,7 @@ package com.example.sachosaeng.feature.bookmark.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.sachosaeng.feature.bookmark.BookmarkScreen
 
