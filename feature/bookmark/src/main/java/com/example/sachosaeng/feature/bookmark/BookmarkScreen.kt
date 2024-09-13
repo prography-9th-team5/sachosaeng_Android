@@ -1,7 +1,9 @@
 package com.example.sachosaeng.feature.bookmark
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,18 +31,22 @@ import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.ui.component.TabRowComponentWithBottomLine
 import com.example.sachosaeng.core.ui.component.topappbar.TopBarWithProfileImage
+import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
+import com.example.sachosaeng.core.util.constant.ColorConstant.GS_BLACK_CODE
 import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun BookmarkScreen(
     modifier: Modifier = Modifier,
+    moveToMyPage: () -> Unit = {},
     viewModel: BookmarkViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
     BookmarkScreen(
-        state = state.value
+        state = state.value,
+        onProfileImageClicked = moveToMyPage
     )
 }
 
@@ -48,6 +54,7 @@ fun BookmarkScreen(
 internal fun BookmarkScreen(
     state: BookmarkScreenUiState,
     modifier: Modifier = Modifier,
+    onProfileImageClicked: () -> Unit = {}
 ) {
     val myCategoryTabTitle = stringResource(id = R.string.bookmark_tab_vote)
     val allCategoryTabTitle = stringResource(id = R.string.bookmark_tab_article)
@@ -63,7 +70,7 @@ internal fun BookmarkScreen(
                 )
             },
             userType = state.userType,
-            onProfileImageClicked = {}
+            onProfileImageClicked = onProfileImageClicked
         )
         TabRowComponentWithBottomLine(
             tabs = tabList,
@@ -91,21 +98,37 @@ fun VoteColumnByCategory(
     categories: List<Category>,
     modifier: Modifier = Modifier
 ) {
-    LazyRow(
-        modifier = modifier
-            .padding(10.dp)
-    ) {
-        items(categories.size) {
-            CategoryCard(
-                isSelected = selectedCategories.contains(categories[it]),
-                category = categories[it]
+    Box {
+        LazyRow(
+            modifier = modifier
+                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            items(categories.size) {
+                CategoryCard(
+                    isSelected = selectedCategories.contains(categories[it]),
+                    category = categories[it]
+                )
+            }
+        }
+        Row(
+            modifier = Modifier
+                .background(Color.White)
+                .padding(20.dp)
+                .align(Alignment.CenterEnd)
+        ) {
+            Text(
+                color = Gs_G5,
+                text = stringResource(id = R.string.modify_label),
+                fontSize = 14.sp,
+                fontWeight = FontWeight.W500
             )
         }
     }
 }
 
 @Composable
-fun CategoryCard(
+private fun CategoryCard(
     modifier: Modifier = Modifier,
     isSelected: Boolean = true,
     category: Category,
@@ -129,10 +152,10 @@ fun CategoryCard(
                 .padding(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            category.imageUrl?.let {
+            if (category.imageUrl?.isNotEmpty() == true) {
                 AsyncImage(
                     alignment = Alignment.CenterEnd,
-                    contentDescription = "", model = it,
+                    contentDescription = "", model = category.imageUrl,
                     modifier = Modifier
                         .size(18.dp)
                 )
@@ -156,6 +179,46 @@ fun BookmarkScreenPreview() {
             .background(Gs_White),
         state = BookmarkScreenUiState(
             userType = UserType.NEW_EMPLOYEE,
+            myCategory = listOf(
+                Category(
+                    id = 1,
+                    name = "Category1",
+                    color = "#FF0000",
+                    textColor = "#FFFFFF"
+                ),
+                Category(
+                    id = 2,
+                    name = "Category2",
+                    color = "#00FF00",
+                    textColor = "#FFFFFF"
+                ),
+                Category(
+                    id = 3,
+                    name = "Category3",
+                    color = "#0000FF",
+                    textColor = "#FFFFFF"
+                ),
+            ),
+            allCategory = listOf(
+                Category(
+                    id = 1,
+                    name = "Category1",
+                    color = "#FF0000",
+                    textColor = "#FFFFFF"
+                ),
+                Category(
+                    id = 2,
+                    name = "Category2",
+                    color = "#00FF00",
+                    textColor = "#FFFFFF"
+                ),
+                Category(
+                    id = 3,
+                    name = "Category3",
+                    color = "#0000FF",
+                    textColor = "#FFFFFF"
+                ),
+            )
         )
     )
 }

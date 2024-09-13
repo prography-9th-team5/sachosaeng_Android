@@ -10,7 +10,7 @@ const val ROUTE_BOOKMARK = "bookmark"
 const val GRAPH_BOOKMARK = "bookmark_graph"
 
 fun NavGraphBuilder.addBookmarkGraph(
-    navController: NavHostController
+    navigateToMyPage: () -> Unit
 ) {
     navigation(
         startDestination = ROUTE_BOOKMARK,
@@ -19,7 +19,9 @@ fun NavGraphBuilder.addBookmarkGraph(
         composable(
             route = ROUTE_BOOKMARK,
         ) {
-            BookmarkScreen()
+            BookmarkScreen(
+                moveToMyPage = navigateToMyPage
+            )
         }
     }
 }

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.ui.theme.Gs_Black
+import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
 
@@ -75,7 +76,7 @@ fun TabRowComponent(
             }
         }
         Spacer(modifier = Modifier.weight(1f))
-        if(selectedTabIndex == tabTrailingButtonComposition) tabTrailingButton()
+        if (selectedTabIndex == tabTrailingButtonComposition) tabTrailingButton()
     }
     Column(
         modifier = modifier
@@ -108,14 +109,14 @@ fun TabRowComponentWithBottomLine(
             val isSelected = selectedTabIndex == index
             Column(
                 modifier = modifier
-                    .width(IntrinsicSize.Max)
-                    .padding(10.dp)
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
                     text = tabTitle,
-                    fontSize = 20.sp,
+                    fontSize = 18.sp,
                     color = if (isSelected) tabTitleColor else Gs_G5,
-                    fontWeight = FontWeight.W700,
+                    fontWeight = if (isSelected) FontWeight.W700 else FontWeight.W500,
                     modifier = Modifier
                         .padding(bottom = 10.dp)
                         .clickable {
@@ -124,10 +125,9 @@ fun TabRowComponentWithBottomLine(
                 )
                 Spacer(
                     modifier = Modifier
-                        .height(if (isSelected) 2.dp else 0.dp)
+                        .height(2.dp)
                         .fillMaxWidth()
-                        .background(Gs_Black)
-                        .background(color = indicatorColor)
+                        .background(color = if (isSelected) indicatorColor else Gs_G3)
                 )
             }
         }
