@@ -19,7 +19,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -83,7 +82,8 @@ fun HomeScreen(
                     CategoryTitleText(category = state.value.hotVotes.category)
                     VoteColumnByCategory(
                         rankinTextVisibility = true,
-                        voteList = state.value.hotVotes.voteInfo
+                        voteList = state.value.hotVotes.voteInfo,
+                        onVoteClick = { navigateToVoteCard(it) }
                     )
                 }
                 items(state.value.voteListWithCategory.size) {
@@ -92,7 +92,8 @@ fun HomeScreen(
                             category = state.value.voteListWithCategory[it]!!.category
                         )
                         VoteColumnByCategory(
-                            voteList = state.value.voteListWithCategory[it]!!.voteInfo
+                            voteList = state.value.voteListWithCategory[it]!!.voteInfo,
+                            onVoteClick = { navigateToVoteCard(it) }
                         )
                     }
                 }
