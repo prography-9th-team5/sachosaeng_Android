@@ -2,18 +2,14 @@ package com.example.sachosaeng.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -23,7 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,7 +30,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R.drawable
 import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.ui.component.CategoryTitleText
 import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
 import com.example.sachosaeng.core.ui.component.topappbar.TopBarWithProfileImage
@@ -74,8 +69,7 @@ fun HomeScreen(
             )
             LazyColumn(
                 state = listState,
-                modifier = modifier.padding(horizontal = 20.dp),
-                verticalArrangement = Arrangement.spacedBy(32.dp)
+                modifier = modifier.padding(horizontal = 20.dp)
             ) {
                 item {
                     state.value.dailyVote?.title?.let {
@@ -93,10 +87,14 @@ fun HomeScreen(
                     )
                 }
                 items(state.value.voteListWithCategory.size) {
-                    CategoryTitleText(category = state.value.voteListWithCategory[it]!!.category)
-                    VoteColumnByCategory(
-                        voteList = state.value.voteListWithCategory[it]!!.voteInfo
-                    )
+                    if (state.value.voteListWithCategory[it]?.voteInfo?.isNotEmpty() == true) {
+                        CategoryTitleText(
+                            category = state.value.voteListWithCategory[it]!!.category
+                        )
+                        VoteColumnByCategory(
+                            voteList = state.value.voteListWithCategory[it]!!.voteInfo
+                        )
+                    }
                 }
             }
         }
