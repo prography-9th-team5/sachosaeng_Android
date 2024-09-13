@@ -14,20 +14,19 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import com.example.sachosaeng.core.ui.R.string.all_category_icon_text
 import com.example.sachosaeng.core.ui.theme.Gs_G5
+import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarkListUseCase
 import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
     private val stringResourceProvider: StringResourceProvider,
     private val getCategoryListUseCase: GetCategoryListUseCase,
-    private val getMyCategoryListUseCase: GetMyCategoryListUsecase
 ) : ViewModel(), ContainerHost<BookmarkScreenUiState, Unit> {
     override val container: Container<BookmarkScreenUiState, Unit> =
         container(BookmarkScreenUiState())
 
     init {
         getAllCategoryList()
-        getMyCategoryList()
     }
 
     private fun getAllCategoryList() = intent {
@@ -41,13 +40,7 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-    private fun getMyCategoryList() = intent {
-        getMyCategoryListUseCase().collectLatest { myCategoryList ->
-            reduce {
-                state.copy(
-                    myCategory = myCategoryList
-                )
-            }
-        }
+    fun modifyBookmark() = intent {
+
     }
 }

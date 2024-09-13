@@ -4,6 +4,8 @@ import com.example.sachosaeng.data.remote.oauth.OAuthRepository
 import com.example.sachosaeng.data.remote.oauth.OAuthRepositoryImpl
 import com.example.sachosaeng.data.repository.auth.AuthRepository
 import com.example.sachosaeng.data.repository.auth.AuthRepositoryImpl
+import com.example.sachosaeng.data.repository.bookmark.BookmarkRepository
+import com.example.sachosaeng.data.repository.bookmark.BookmarkRepositoryImpl
 import com.example.sachosaeng.data.repository.category.CategoryRepository
 import com.example.sachosaeng.data.repository.category.CategoryRepositoryImpl
 import com.example.sachosaeng.data.repository.user.UserRepository
@@ -48,4 +50,10 @@ internal abstract class RepositoryModule {
     abstract fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindBookmarkRepository(
+        bookmarkRepositoryImpl: BookmarkRepositoryImpl
+    ): BookmarkRepository
 }

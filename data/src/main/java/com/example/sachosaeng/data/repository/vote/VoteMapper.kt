@@ -43,11 +43,12 @@ object VoteMapper {
             id = voteId,
             title = title,
             category = Category(
-                id = category?.categoryId ?: 0,
-                color = category?.backgroundColor ?: GS_BLACK_CODE,
-                name = category?.name ?: "",
-                imageUrl = category?.iconUrl,
+                id = category.categoryId ?: 0,
+                color = category.backgroundColor ?: GS_BLACK_CODE,
+                name = category.name,
+                imageUrl = category.iconUrl,
             ),
+            isBookmarked = isBookmarked,
             isClosed = isClosed,
             count = participantCount ?: 0,
             option = voteOptions.map { voteOptionResponse ->

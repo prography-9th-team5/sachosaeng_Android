@@ -5,6 +5,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.model.Vote
+import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarkUseCase
+import com.example.sachosaeng.core.usecase.vote.BookmarkVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.GetSingleVoteUsecase
 import com.example.sachosaeng.feature.vote.navigation.VOTE_DETAIL_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +21,8 @@ import javax.inject.Inject
 @HiltViewModel
 class VoteDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val deleteBookmarkUsecase: DeleteBookmarkUseCase,
+    private val bookmarkVoteUsecase: BookmarkVoteUsecase,
     private val getSingleVoteUsecase: GetSingleVoteUsecase
 ) : ViewModel(), ContainerHost<Vote, Unit> {
     private val voteDetailId = savedStateHandle.get<Int>(VOTE_DETAIL_ID)
@@ -45,10 +49,26 @@ class VoteDetailViewModel @Inject constructor(
         }
     }
 
-    fun bookmarkVote() = intent {
-        Log.e("VoteDetailViewModel", "bookmarkVote")
-        reduce {
-            state.copy(isBookmarked = !state.isBookmarked)
+    fun bookmarkButtonClick() = intent {
+        when (state.isBookmarked) {
+            true -> deleteBookmark()
+            false -> bookmarkVote()
+        }
+    }
+
+    private fun deleteBookmark() = intent {
+        deleteBookmarkUsecase(state).collectLatest {
+            reduce {
+                state.copy(isBookmarked = false)
+            }
+        }
+    }
+
+    private fun bookmarkVote() = intent {
+        bookmarkVoteUsecase(state).collectLatest {
+            reduce {
+                state.copy(isBookmarked = true)
+            }
         }
     }
 

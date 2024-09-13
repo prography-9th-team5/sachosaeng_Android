@@ -20,7 +20,7 @@ import com.example.sachosaeng.core.util.extension.StringExtension.toColorResourc
 @Composable
 fun CategoryTitleText(modifier: Modifier = Modifier, category: Category) {
     Row(
-        modifier = modifier.padding(bottom = 12.dp),
+        modifier = modifier.padding(bottom = 12.dp, top = 32.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {

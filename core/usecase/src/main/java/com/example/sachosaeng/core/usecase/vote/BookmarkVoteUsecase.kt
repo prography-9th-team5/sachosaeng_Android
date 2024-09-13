@@ -1,9 +1,11 @@
 package com.example.sachosaeng.core.usecase.vote
 
 import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.core.usecase.NoParameterUseCase
-import com.example.sachosaeng.data.repository.card.CardRepository
+import com.example.sachosaeng.data.repository.bookmark.BookmarkRepository
+import javax.inject.Inject
 
-class BookmarkVoteUsecase(private val repository: CardRepository, val vote: Vote) : NoParameterUseCase<Unit> {
-    override operator fun invoke() = repository.bookmarkCard(vote = vote)
+class BookmarkVoteUsecase @Inject constructor(
+    private val repository: BookmarkRepository
+) {
+    operator fun invoke(vote: Vote) = repository.bookmarkVote(voteId = vote.id)
 }
