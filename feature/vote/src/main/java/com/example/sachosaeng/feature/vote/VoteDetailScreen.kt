@@ -40,7 +40,7 @@ fun VoteScreen(
     VoteScreen(
         vote = state.value,
         navigateToBackStack = navigateToBackStack,
-        onBookmarkVote = { viewModel.bookmarkVote() },
+        onBookmarkVote = viewModel::bookmarkButtonClick,
         onVoteComplete = { selectedOption -> viewModel.vote(selectedOption) }
     )
 }

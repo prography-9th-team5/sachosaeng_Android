@@ -84,4 +84,5 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     implementation(project(":core:model"))
+    implementation(project(":core:util"))
 }

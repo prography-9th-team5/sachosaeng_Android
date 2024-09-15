@@ -98,6 +98,7 @@ dependencies {
     implementation(libs.navigation.compose)
 
     implementation(libs.javax.inject)
+    implementation(project(":feature:bookmark"))
 
     // Hilt
     ksp(libs.hilt.compiler)

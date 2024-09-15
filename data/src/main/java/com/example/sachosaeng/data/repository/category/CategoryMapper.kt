@@ -1,18 +1,20 @@
 package com.example.sachosaeng.data.repository.category
 
 import com.example.sachosaeng.core.model.Category
+import com.example.sachosaeng.core.util.constant.ColorConstant.GS_BLACK_CODE
 import com.example.sachosaeng.data.model.category.AllCategoryIconResponse
+import com.example.sachosaeng.data.model.category.CategoriesResponse
 import com.example.sachosaeng.data.model.category.CategoryResponse
 import com.example.sachosaeng.data.model.category.SetCategoryRequest
 
 object CategoryMapper {
-    fun List<CategoryResponse>.toDomain(): List<Category> = this.map {
+    fun CategoriesResponse.toDomain(): List<Category> = this.categories.map {
         Category(
             id = it.categoryId ?: 0,
             name = it.name,
             imageUrl = it.iconUrl,
-            color = it.backgroundColor ?: "",
-            textColor = it.textColor
+            color = it.backgroundColor ?: GS_BLACK_CODE,
+            textColor = it.textColor ?: GS_BLACK_CODE
         )
     }
 

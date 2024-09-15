@@ -5,5 +5,5 @@ data class VoteInfo(
     val title: String,
     val category: Category,
     val voteCount: Int? = null,
-    val isClosed: Boolean,
+    val isClosed: Boolean
 )

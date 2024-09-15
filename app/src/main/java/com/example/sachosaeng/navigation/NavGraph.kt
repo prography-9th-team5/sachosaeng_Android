@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.example.sachosaeng.feature.bookmark.navigation.addBookmarkGraph
 import com.example.sachosaeng.feature.home.HomeScreen
 import com.example.sachosaeng.feature.mypage.navigation.GRAPH_MY_PAGE
 import com.example.sachosaeng.feature.mypage.navigation.addMyPageNavGraph
@@ -13,7 +14,6 @@ import com.example.sachosaeng.feature.signup.navigation.GRAPH_SIGNUP
 import com.example.sachosaeng.feature.signup.navigation.addSignUpNavGraph
 import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
 import com.example.sachosaeng.feature.splash.addSplashNavGraph
-import com.example.sachosaeng.feature.vote.VoteScreen
 import com.example.sachosaeng.feature.vote.navigation.addVoteGraph
 import com.example.sachosaeng.feature.vote.navigation.navigateToVoteDetail
 import com.example.sachosaeng.feature.webview.addWebViewScreen
@@ -33,19 +33,23 @@ internal fun addNavGraph(navController: NavHostController) {
         addSignUpNavGraph(
             navController = navController,
             navigateToMain = { navController.navigate(GRAPH_MAIN) })
-        addBottomNavGraph(navController = navController)
+        addMainGraph(navController = navController)
         addMyPageNavGraph(
             navController = navController,
             navigateToWebView = { url -> navController.navigateToWebView(url) }
         )
         addVoteGraph(navController = navController)
+        addBookmarkGraph(
+            navigateToVote = { id -> navController.navigateToVoteDetail(voteId = id) },
+            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) })
     }
 }
 
 private const val GRAPH_MAIN = "mainGraph"
 private const val ROUTE_MAIN = "main"
 
-fun NavGraphBuilder.addBottomNavGraph(navController: NavHostController) {
+
+fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
     navigation(
         startDestination = ROUTE_MAIN,
         route = GRAPH_MAIN
@@ -62,8 +66,6 @@ fun NavGraphBuilder.addBottomNavGraph(navController: NavHostController) {
                 }
             )
         }
-        composable(Screen.VOTE.route) {
-            VoteScreen(navigateToBackStack = { navController.popBackStack() })
-        }
     }
 }
+

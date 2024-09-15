@@ -1,6 +1,7 @@
 package com.example.sachosaeng.data.di
 
 import com.example.sachosaeng.data.api.AuthService
+import com.example.sachosaeng.data.api.BookmarkService
 import com.example.sachosaeng.data.api.CategoryService
 import com.example.sachosaeng.data.api.OAuthService
 import com.example.sachosaeng.data.api.UserService
@@ -38,4 +39,9 @@ internal class ServiceModule {
     internal fun provideUserService(
         @NetworkModule.SachoSaeng retrofit: Retrofit
     ): UserService = retrofit.create(UserService::class.java)
+
+    @Provides
+    internal fun provideBookmarkService(
+        @NetworkModule.SachoSaeng retrofit: Retrofit
+    ): BookmarkService = retrofit.create(BookmarkService::class.java)
 }

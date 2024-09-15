@@ -54,7 +54,7 @@ fun VoteDetailCard(
             modifier = modifier
                 .fillMaxWidth()
                 .height(68.dp)
-                .background(color = Color(vote.category.textColor.toColorResource()))
+                .background(color = Color(vote.category.color.toColorResource()))
         ) {
             CategoryIcon(imageUrl = vote.category.imageUrl)
             BookmarkButton(

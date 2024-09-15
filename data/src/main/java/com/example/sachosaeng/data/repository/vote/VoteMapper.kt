@@ -7,6 +7,7 @@ import com.example.sachosaeng.core.model.VoteList
 import com.example.sachosaeng.data.model.vote.VoteDetailInfoResponse
 import com.example.sachosaeng.data.model.vote.VoteInfoResponse
 import com.example.sachosaeng.data.model.vote.VoteListInfoResponse
+import com.example.sachosaeng.core.util.constant.ColorConstant.GS_BLACK_CODE
 
 object VoteMapper {
     fun VoteInfoResponse.toDomain() = VoteInfo(
@@ -14,7 +15,7 @@ object VoteMapper {
         title = title,
         category = Category(
             id = category?.categoryId?: 0,
-            color = category?.backgroundColor ?: "#000000",
+            color = category?.backgroundColor ?: GS_BLACK_CODE,
             name = category?.name ?: "",
             imageUrl = category?.iconUrl,
         ),
@@ -26,9 +27,9 @@ object VoteMapper {
         return this.let {
             VoteList(
                 category = Category(
-                    id = it.category.categoryId ?: 0,
-                    color = it.category.backgroundColor ?: "#000000",
-                    textColor = it.category.textColor,
+                    id = it.category.categoryId ?: 2,
+                    color = it.category.backgroundColor ?: GS_BLACK_CODE,
+                    textColor = it.category.textColor ?: GS_BLACK_CODE,
                     name = it.category.name,
                     imageUrl = it.category.iconUrl,
                 ),
@@ -42,11 +43,12 @@ object VoteMapper {
             id = voteId,
             title = title,
             category = Category(
-                id = category?.categoryId ?: 0,
-                color = category?.backgroundColor ?: "#000000",
-                name = category?.name ?: "",
-                imageUrl = category?.iconUrl,
+                id = category.categoryId ?: 0,
+                color = category.backgroundColor ?: GS_BLACK_CODE,
+                name = category.name,
+                imageUrl = category.iconUrl,
             ),
+            isBookmarked = isBookmarked,
             isClosed = isClosed,
             count = participantCount ?: 0,
             option = voteOptions.map { voteOptionResponse ->

@@ -26,6 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.ui.theme.Gs_Black
+import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
 
@@ -75,7 +76,60 @@ fun TabRowComponent(
             }
         }
         Spacer(modifier = Modifier.weight(1f))
-        if(selectedTabIndex == tabTrailingButtonComposition) tabTrailingButton()
+        if (selectedTabIndex == tabTrailingButtonComposition) tabTrailingButton()
+    }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(screenColor),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        contentScreens.getOrNull(selectedTabIndex)?.invoke()
+    }
+}
+
+
+@Composable
+fun TabRowComponentWithBottomLine(
+    screenColor: Color = Gs_White,
+    tabs: List<String>,
+    tabTitleColor: Color = Gs_Black,
+    contentScreens: List<@Composable () -> Unit>,
+    modifier: Modifier = Modifier,
+    indicatorColor: Color = Gs_Black,
+) {
+    var selectedTabIndex by remember { mutableIntStateOf(0) }
+    Row(
+        modifier = modifier
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        tabs.forEachIndexed { index, tabTitle ->
+            val isSelected = selectedTabIndex == index
+            Column(
+                modifier = modifier
+                    .weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = tabTitle,
+                    fontSize = 18.sp,
+                    color = if (isSelected) tabTitleColor else Gs_G5,
+                    fontWeight = if (isSelected) FontWeight.W700 else FontWeight.W500,
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                        .clickable {
+                            selectedTabIndex = index
+                        }
+                )
+                Spacer(
+                    modifier = Modifier
+                        .height(2.dp)
+                        .fillMaxWidth()
+                        .background(color = if (isSelected) indicatorColor else Gs_G3)
+                )
+            }
+        }
     }
     Column(
         modifier = modifier

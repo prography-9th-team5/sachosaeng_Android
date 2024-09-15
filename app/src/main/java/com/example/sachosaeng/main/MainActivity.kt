@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.component.bottomappbar.BottomAppbarItem
 import com.example.sachosaeng.core.ui.component.bottomappbar.SachoSaengBottomAppBar
+import com.example.sachosaeng.feature.bookmark.navigation.ROUTE_BOOKMARK
 import com.example.sachosaeng.navigation.Screen
 import com.example.sachosaeng.navigation.addNavGraph
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,7 +42,7 @@ class MainActivity : ComponentActivity() {
                         items = {
                             listOf(
                                 BottomAppbarItem(Screen.HOME.route, R.drawable.ic_home),
-                                BottomAppbarItem(Screen.BOOKMARK.route, R.drawable.ic_bookmark)
+                                BottomAppbarItem(ROUTE_BOOKMARK, R.drawable.ic_bookmark)
                             )
                         },
                         navController = navController

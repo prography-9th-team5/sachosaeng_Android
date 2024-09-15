@@ -13,7 +13,8 @@ data class VoteDetailInfoResponse(
     val isClosed: Boolean,
     val voteOptions: List<VoteOptionResponse>,
     val chosenVoteOptionId: List<Int?> = emptyList(),
-    val description: String
+    val description: String,
+    val isBookmarked: Boolean,
 )
 
 @Serializable
