@@ -39,7 +39,9 @@ internal fun addNavGraph(navController: NavHostController) {
             navigateToWebView = { url -> navController.navigateToWebView(url) }
         )
         addVoteGraph(navController = navController)
-        addBookmarkGraph(navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) })
+        addBookmarkGraph(
+            navigateToVote = { id -> navController.navigateToVoteDetail(voteId = id) },
+            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) })
     }
 }
 

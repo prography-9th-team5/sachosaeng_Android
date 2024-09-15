@@ -10,6 +10,7 @@ const val ROUTE_BOOKMARK = "bookmark"
 const val GRAPH_BOOKMARK = "bookmark_graph"
 
 fun NavGraphBuilder.addBookmarkGraph(
+    navigateToVote: (Int) -> Unit,
     navigateToMyPage: () -> Unit
 ) {
     navigation(
@@ -20,6 +21,7 @@ fun NavGraphBuilder.addBookmarkGraph(
             route = ROUTE_BOOKMARK,
         ) {
             BookmarkScreen(
+                moveToVote = navigateToVote,
                 moveToMyPage = navigateToMyPage
             )
         }

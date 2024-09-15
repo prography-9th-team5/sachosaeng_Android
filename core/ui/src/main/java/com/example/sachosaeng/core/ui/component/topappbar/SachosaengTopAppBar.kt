@@ -38,6 +38,7 @@ fun SachosaengTopAppBar(
 }
 @Composable
 fun TopBarWithProfileImage(
+    modifier: Modifier = Modifier,
     topBarContent: @Composable () -> Unit,
     userType: UserType,
     onProfileImageClicked: () -> Unit = {}
@@ -45,9 +46,9 @@ fun TopBarWithProfileImage(
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(20.dp)
+            .padding(bottom = 20.dp),
     ) {
         topBarContent()
         ProfileImage(userType, onClick = {

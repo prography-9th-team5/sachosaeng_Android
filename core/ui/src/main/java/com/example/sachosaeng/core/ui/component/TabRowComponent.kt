@@ -101,8 +101,7 @@ fun TabRowComponentWithBottomLine(
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     Row(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp),
+            .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center
     ) {
         tabs.forEachIndexed { index, tabTitle ->

@@ -47,14 +47,16 @@ fun HomeScreen(
     val listState = rememberLazyListState()
     val state = viewModel.collectAsState()
     var isBottomSheetOpen by remember { mutableStateOf(false) }
-    Box {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Gs_G2)
+            .padding(20.dp)
+    ) {
         val scope = rememberCoroutineScope()
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .background(Gs_G2)
-        ) {
+        Column {
             TopBarWithProfileImage(
+                modifier = modifier,
                 topBarContent = {
                     CategorySelectButton(
                         selectedCategory = state.value.selectedCategory,
@@ -67,8 +69,7 @@ fun HomeScreen(
                 }
             )
             LazyColumn(
-                state = listState,
-                modifier = modifier.padding(horizontal = 20.dp)
+                state = listState
             ) {
                 item {
                     state.value.dailyVote?.title?.let {
