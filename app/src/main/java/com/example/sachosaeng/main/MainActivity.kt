@@ -7,13 +7,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.component.bottomappbar.BottomAppbarItem
 import com.example.sachosaeng.core.ui.component.bottomappbar.SachoSaengBottomAppBar
 import com.example.sachosaeng.feature.bookmark.navigation.ROUTE_BOOKMARK
+import com.example.sachosaeng.navigation.ROUTE_MAIN
 import com.example.sachosaeng.navigation.Screen
 import com.example.sachosaeng.navigation.addNavGraph
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,10 +26,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            lateinit var navController: NavHostController
-            navController = rememberNavController()
-
-            //todo: 더 다듬을 수 있는지 생각해보기
+            val navController: NavHostController = rememberNavController()
+            val currentBackStackEntry by navController.currentBackStackEntryAsState()
+            val isBottomBarNeeded =
+                currentBackStackEntry?.destination?.route == ROUTE_MAIN || currentBackStackEntry?.destination?.route == ROUTE_BOOKMARK
             Scaffold(
                 content = {
                     Box(
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
                     }
                 },
                 bottomBar = {
-                    SachoSaengBottomAppBar(
+                    if (isBottomBarNeeded) SachoSaengBottomAppBar(
                         items = {
                             listOf(
                                 BottomAppbarItem(Screen.HOME.route, R.drawable.ic_home),

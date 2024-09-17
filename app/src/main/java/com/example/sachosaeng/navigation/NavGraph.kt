@@ -45,8 +45,8 @@ internal fun addNavGraph(navController: NavHostController) {
     }
 }
 
-private const val GRAPH_MAIN = "mainGraph"
-private const val ROUTE_MAIN = "main"
+const val GRAPH_MAIN = "mainGraph"
+const val ROUTE_MAIN = "main"
 
 
 fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
