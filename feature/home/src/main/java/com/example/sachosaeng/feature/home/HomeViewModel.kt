@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -28,8 +29,8 @@ class HomeViewModel @Inject constructor(
     private val getCategoryListWithAllIconUseCase: GetCategoryListWithAllIconUseCase,
     private val getMyCategoryListUsecase: GetMyCategoryListUsecase,
     private val setMyCategoryListUseCase: SetMyCategoryListUseCase
-) : ViewModel(), ContainerHost<HomeScreenUiState, Unit> {
-    override val container: Container<HomeScreenUiState, Unit> =
+) : ViewModel(), ContainerHost<HomeScreenUiState, HomeSideEffect> {
+    override val container: Container<HomeScreenUiState, HomeSideEffect> =
         container(HomeScreenUiState())
 
     init {
@@ -40,13 +41,13 @@ class HomeViewModel @Inject constructor(
         getMyCategoryListAndVoteList()
     }
 
-    fun getUserInfo() = intent {
+    private fun getUserInfo() = intent {
         getUserTypeUseCase().collectLatest {
             reduce { state.copy(userType = UserType.getType(it) ?: UserType.NEW_EMPLOYEE) }
         }
     }
 
-    fun getVoteByMyCategory() = intent {
+    private fun getVoteByMyCategory() = intent {
         state.myCategory.forEach {
             getVoteByCategoryUsecase(it.id).collectLatest {
                 reduce {
@@ -92,7 +93,14 @@ class HomeViewModel @Inject constructor(
 
     private fun getHotVotes() = intent {
         getHotVoteUsecase().collectLatest { list ->
-            list?.let { reduce { state.copy(hotVotes = it) } }
+            list?.let {
+                reduce {
+                    state.copy(
+                        hotVotes = it,
+                        isHotVoteDialogOpen = !it.voteInfo[0].isVoted
+                    )
+                }
+            }
         }
     }
 
@@ -109,4 +117,14 @@ class HomeViewModel @Inject constructor(
             getVoteByMyCategory()
         }
     }
+
+    fun onTodaysVoteDialogConfirmClicked() = intent {
+        reduce { state.copy(isHotVoteDialogOpen = false) }.also {
+            postSideEffect(HomeSideEffect.NavigateToVoteDetail(state.hotVotes.voteInfo[0].id))
+        }
+    }
+}
+
+sealed class HomeSideEffect {
+    data class NavigateToVoteDetail(val voteId: Int) : HomeSideEffect()
 }

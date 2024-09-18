@@ -22,6 +22,7 @@ object VoteMapper {
         ),
         isClosed = isClosed,
         voteCount = participantCount,
+        isVoted = isVoted,
     )
 
     fun VoteListInfoResponse.toDomain(): VoteList {

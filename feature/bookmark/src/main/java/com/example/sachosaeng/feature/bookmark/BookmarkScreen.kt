@@ -77,7 +77,7 @@ internal fun BookmarkScreen(
     onBookmarkClick: (Bookmark) -> Unit = {},
     onSelectForModifyBookmark: (Bookmark) -> Unit = {}
 ) {
-    val myCategoryTabTitle = stringResource(id = R.string.bookmark_tab_vote)
+    val myCategoryTabTitle = stringResource(id = R.string.vote_label)
     val allCategoryTabTitle = stringResource(id = R.string.bookmark_tab_article)
     val tabList = listOf(myCategoryTabTitle, allCategoryTabTitle)
 

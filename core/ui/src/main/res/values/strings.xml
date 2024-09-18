@@ -69,10 +69,11 @@
 
     <!--bookmark-->
     <string name="bookmark_screen_title">북마크</string>
-    <string name="bookmark_tab_vote">투표</string>
     <string name="bookmark_tab_article">연관콘텐츠</string>
 
     <!--vote-->
+    <string name="vote_label">투표</string>
     <string name="vote_complete_description">사용자 데이터를 기반으로 제공되는 결과이며,\n판단에 도움을 주기 위한 참고 자료로 활용해 주세요</string>
     <string name="more_vote_button_label">다른 투표 보러 가기</string>
+    <string name="todays_vote_dialog_description">오늘의 투표가 도착했어요!</string>
 </resources>

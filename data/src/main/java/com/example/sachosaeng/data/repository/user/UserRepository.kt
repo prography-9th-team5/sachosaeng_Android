@@ -6,8 +6,7 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
     fun setUserType(type: String): Flow<Boolean>
     fun getUserType(): Flow<String>
-
-    fun getMyInfo(): User
+    fun getMyInfo(): Flow<User>
     fun logout()
     fun signIn(user: User)
     fun updateMyInfo(user: User)

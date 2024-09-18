@@ -36,6 +36,7 @@ import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun HomeScreen(
@@ -47,6 +48,18 @@ fun HomeScreen(
     val listState = rememberLazyListState()
     val state = viewModel.collectAsState()
     var isBottomSheetOpen by remember { mutableStateOf(false) }
+
+    viewModel.collectSideEffect {
+        when (it) {
+            is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId)
+        }
+    }
+
+    if(state.value.isHotVoteDialogOpen) TodaysVoteDialog(
+        onClick = {
+            viewModel.onTodaysVoteDialogConfirmClicked()
+        }
+    )
     Box(
         modifier = modifier
             .fillMaxSize()
