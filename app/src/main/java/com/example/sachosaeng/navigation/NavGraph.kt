@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navigation
 import com.example.sachosaeng.feature.bookmark.navigation.addBookmarkGraph
 import com.example.sachosaeng.feature.home.HomeScreen
@@ -26,8 +27,22 @@ internal fun addNavGraph(navController: NavHostController) {
         startDestination = ROUTE_SPLASH,
     ) {
         addSplashNavGraph(
-            navigateToMain = { navController.navigate(GRAPH_MAIN) },
-            navigateToSignUp = { navController.navigate(GRAPH_SIGNUP) }
+            navigateToMain = {
+                navController.navigate(GRAPH_MAIN) {
+                    popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            },
+            navigateToSignUp = {
+                navController.navigate(GRAPH_SIGNUP) {
+                    popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
+                        inclusive = true
+                    }
+                    launchSingleTop = true
+                }
+            }
         )
         addWebViewScreen(navController = navController)
         addSignUpNavGraph(

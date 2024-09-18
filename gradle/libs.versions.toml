@@ -35,6 +35,8 @@ kotlinComposeCompiler = "1.5.13"
 datastoreCoreAndroid = "1.1.1"
 datastorePreferencesCoreJvm = "1.1.1"
 
+lottie = "6.2.0"
+
 
 [libraries]
 core-ktx-v1120 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
@@ -86,6 +88,8 @@ kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-
 
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
 coroutine-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
+
+lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = "lottie" }
 
 [plugins]
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }

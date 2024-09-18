@@ -3,15 +3,13 @@ package com.example.sachosaeng.feature.vote
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,10 +18,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.model.Vote
+import com.example.sachosaeng.core.model.VoteOption
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.theme.Gs_G2
+import com.example.sachosaeng.core.ui.theme.Gs_G3
+import com.example.sachosaeng.feature.vote.component.VoteCompleteInfo
+import com.example.sachosaeng.feature.vote.component.VoteCompleteScreen
+import com.example.sachosaeng.feature.vote.component.VoteDetailCard
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -31,31 +34,33 @@ fun VoteScreen(
     navigateToBackStack: () -> Unit,
     viewModel: VoteDetailViewModel = hiltViewModel()
 ) {
-    //todo: viewModel.container.stateFlow.collectAsState() -> viewModel.collectAsState()
     val state = viewModel.collectAsState()
 
-    LaunchedEffect(Unit) {
-        viewModel.getVoteContent()
+    when (state.value.isCompleteState) {
+        true -> VoteCompleteScreen()
+        false -> VoteScreen(
+            vote = state.value.vote,
+            completeDescriptionIconRes = state.value.completeIconImageRes,
+            navigateToBackStack = navigateToBackStack,
+            onBookmarkVote = viewModel::bookmarkButtonClick,
+            onVoteComplete = viewModel::vote,
+            onSelectOption = viewModel::onSelectOption
+        )
     }
-    VoteScreen(
-        vote = state.value,
-        navigateToBackStack = navigateToBackStack,
-        onBookmarkVote = viewModel::bookmarkButtonClick,
-        onVoteComplete = { selectedOption -> viewModel.vote(selectedOption) }
-    )
 }
 
 @Composable
 internal fun VoteScreen(
+    modifier: Modifier = Modifier,
     vote: Vote,
+    completeDescriptionIconRes: Int? = null,
+    onSelectOption: (Int) -> Unit = { },
     onBookmarkVote: () -> Unit = { },
-    onVoteComplete: (String) -> Unit = { },
+    onVoteComplete: () -> Unit = { },
     navigateToBackStack: () -> Unit,
 ) {
-    var selectedOption by remember { mutableStateOf(vote.selectedOption) }
-
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(Gs_G2)
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
@@ -66,26 +71,47 @@ internal fun VoteScreen(
             title = vote.category.name,
             navigateToBackStack = navigateToBackStack
         )
-        Column(
-            modifier = Modifier
-                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
+        LazyColumn(
+            modifier = modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
-            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            VoteDetailCard(
-                isBookmarked = vote.isBookmarked,
-                onBookmarkButtonClicked = { onBookmarkVote() },
-                selectedOption = selectedOption,
-                onSelectedOption = { selectedOption = it },
-                vote = vote
-            )
-            SachoSaengButton(
-                enabled = selectedOption.isNotEmpty(),
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = string.confirm_label),
-                onClick = { onVoteComplete(selectedOption) }
-            )
+            item {
+                VoteDetailCard(
+                    modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
+                    isBookmarked = vote.isBookmarked,
+                    onBookmarkButtonClicked = { onBookmarkVote() },
+                    selectedOptionIndex = vote.selectedOptionIds,
+                    onSelectOption = onSelectOption,
+                    vote = vote
+                )
+            }
+            item {
+                if (vote.isVoted) VoteCompleteInfo(
+                    modifier = modifier.padding(horizontal = 20.dp),
+                    completeDescription = vote.description,
+                    completeDescriptionIconRes = completeDescriptionIconRes
+                )
+            }
+            item {
+                Spacer(
+                    modifier = Modifier
+                        .padding(vertical = 40.dp)
+                        .background(Gs_G3)
+                        .fillMaxWidth()
+                        .height(16.dp)
+                )
+            }
+            item {
+                SachoSaengButton(
+                    enabled = vote.selectedOptionIds.isNotEmpty(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
+                    text = stringResource(id = if(vote.isVoted) string.more_vote_button_label else string.confirm_label ),
+                    onClick = { if(vote.isVoted) navigateToBackStack() else onVoteComplete() }
+                )
+            }
         }
     }
 }
@@ -93,13 +119,25 @@ internal fun VoteScreen(
 @Preview
 @Composable
 fun VoteScreenPreview() {
-    VoteScreen(vote = Vote(
-        title = "친한 사수분 결혼식 축의금 얼마가 좋을까요?",
-        count = 1000,
-        option = listOf("옵션1", "옵션2", "옵션3"),
-        category = Category(
-            name = "카테고리",
-            imageUrl = ""
-        )
-    ), navigateToBackStack = {})
+    VoteScreen(
+        vote = Vote(
+            title = "친한 사수분 결혼식 축의금 얼마가 좋을까요?",
+            count = 1000,
+            option = listOf(
+                VoteOption(
+                    voteOptionId = 1,
+                    content = "option1",
+                    count = 100
+                ),
+                VoteOption(
+                    voteOptionId = 2,
+                    content = "option2",
+                    count = 200
+                )
+            ),
+            category = Category(
+                name = "카테고리",
+                imageUrl = ""
+            )
+        ), navigateToBackStack = {})
 }
