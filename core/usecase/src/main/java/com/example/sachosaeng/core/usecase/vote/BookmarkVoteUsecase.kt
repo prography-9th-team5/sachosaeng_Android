@@ -7,5 +7,5 @@ import javax.inject.Inject
 class BookmarkVoteUsecase @Inject constructor(
     private val repository: BookmarkRepository
 ) {
-    operator fun invoke(vote: Vote) = repository.bookmarkVote(voteId = vote.id)
+    operator fun invoke(voteId: Int) = repository.bookmarkVote(voteId = voteId)
 }

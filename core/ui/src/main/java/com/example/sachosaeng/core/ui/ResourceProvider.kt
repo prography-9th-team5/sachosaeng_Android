@@ -1,10 +1,12 @@
 package com.example.sachosaeng.core.ui
 
 import android.content.Context
+import android.graphics.drawable.Drawable
+import androidx.core.content.res.ResourcesCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class StringResourceProvider @Inject constructor(
+class ResourceProvider @Inject constructor(
     @ApplicationContext val context: Context
 ) {
     fun getString(id: Int): String {

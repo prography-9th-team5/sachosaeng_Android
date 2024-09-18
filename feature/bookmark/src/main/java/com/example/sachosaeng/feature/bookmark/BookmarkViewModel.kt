@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Bookmark
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R.string.all_category_icon_text
-import com.example.sachosaeng.core.ui.StringResourceProvider
+import com.example.sachosaeng.core.ui.ResourceProvider
 import com.example.sachosaeng.core.usecase.bookmark.GetBookmarkListUseCase
 import com.example.sachosaeng.core.usecase.category.GetCategoryListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
-    private val stringResourceProvider: StringResourceProvider,
+    private val stringResourceProvider: ResourceProvider,
     private val getCategoryListUseCase: GetCategoryListUseCase,
     private val getBookmarkListByCategoryUseCase: GetBookmarkListUseCase,
 ) : ViewModel(), ContainerHost<BookmarkScreenUiState, Unit> {

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -37,6 +38,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.core.ui.R.string
+import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.feature.mypage.R.drawable
 import org.orbitmvi.orbit.compose.collectAsState
 
@@ -93,9 +95,9 @@ internal fun MyPageScreen(
                 pageLabel = stringResource(id = string.mypage_top_bar_label),
                 navigateToBackStack = { navigateToBackStack() })
             UserInfoCard(
-                levelText = myPageUiState.levelText,
                 userName = myPageUiState.userName,
-                userInfoModifyButtonClick = onModifyUserInfo
+                userInfoModifyButtonClick = onModifyUserInfo,
+                userType = myPageUiState.userType
             )
             MyPageMenuList(
                 modifier = Modifier.padding(vertical = 28.dp),
@@ -136,7 +138,7 @@ internal fun MyPageScreen(
 }
 
 @Composable
-fun UserInfoCard(levelText: String, userName: String, userInfoModifyButtonClick: () -> Unit = {}) {
+fun UserInfoCard(userName: String, userType: UserType, userInfoModifyButtonClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
             .padding(vertical = 20.dp)
@@ -149,16 +151,17 @@ fun UserInfoCard(levelText: String, userName: String, userInfoModifyButtonClick:
         ) {
             Image(
                 modifier = Modifier
+                    .size(80.dp)
                     .padding(end = 20.dp),
                 contentDescription = "",
-                painter = painterResource(id = drawable.ic_modify),
+                painter = painterResource(id = userType.userTypeImageRes),
             )
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Text(
-                    text = levelText,
+                    text = stringResource(id = userType.userTypeLabelRes),
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W500,
                     color = Gs_White
@@ -280,8 +283,7 @@ fun LogoutButton(onClick: () -> Unit = {}) {
 fun MyPageScreenPreview() {
     MyPageScreen(
         MyPageUiState(
-            levelText = "Newcomer",
-            userName = "김철수",
+            userType = UserType.OTHER,
             versionInfo = "1.0.0",
             logoutDialogState = true
         )

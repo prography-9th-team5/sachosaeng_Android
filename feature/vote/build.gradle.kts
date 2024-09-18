@@ -91,6 +91,9 @@ dependencies {
     //coil
     implementation(libs.coil)
 
+    //lottie
+    implementation(libs.lottie)
+
     implementation(project(":core:usecase"))
     implementation(project(":core:model"))
     implementation(project(":core:ui"))

@@ -1,8 +1,8 @@
 package com.example.sachosaeng.data.repository.vote
 
 import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.core.model.VoteInfo
 import com.example.sachosaeng.data.api.VoteService
+import com.example.sachosaeng.data.model.vote.VoteOptionRequest
 import com.example.sachosaeng.data.repository.vote.VoteMapper.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -26,5 +26,10 @@ class VoteRepositoryImpl @Inject constructor(
         voteService.getVote(voteId = voteId).getOrThrow().data?.toDomain()?.let {
             emit(it)
         }
+    }
+
+    override fun setVote(voteId: Int, optionIds: List<Int?>): Flow<Unit> = flow {
+        voteService.setVote(voteId = voteId, VoteOptionRequest(chosenVoteOptionIds = optionIds))
+            .getOrThrow().data?.let { emit(Unit) }
     }
 }

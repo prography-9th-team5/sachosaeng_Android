@@ -10,6 +10,7 @@ import androidx.navigation.navigation
 import com.example.sachosaeng.feature.vote.VoteScreen
 
 const val ROUTE_VOTE = "vote"
+const val ROUTE_VOTE_COMPLETE = "voteComplete"
 const val GRAPH_VOTE = "vote_graph"
 const val VOTE_DETAIL_ID = "voteDetail"
 internal const val ROUTE_VOTE_DETAIL = "$ROUTE_VOTE/$VOTE_DETAIL_ID"
@@ -35,7 +36,7 @@ fun NavGraphBuilder.addVoteGraph(
                 },
             )
         ) { backStackEntry ->
-            VoteScreen(navigateToBackStack = { /* TODO */ })
+            VoteScreen(navigateToBackStack = { navController.popBackStack() })
         }
     }
 }
