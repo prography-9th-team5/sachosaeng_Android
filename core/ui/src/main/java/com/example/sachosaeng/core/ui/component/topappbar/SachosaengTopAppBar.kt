@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.UserType
+import com.example.sachosaeng.core.ui.noRippleClickable
 
 @Composable
 fun SachosaengTopAppBar(
@@ -62,7 +63,7 @@ fun ProfileImage(userType: UserType, onClick: () -> Unit = {}) {
     Image(
         modifier = Modifier
             .size(40.dp)
-            .clickable { onClick() }
+            .noRippleClickable { onClick() }
             .clip(CircleShape),
         painter = painterResource(id = userType.userTypeImageRes),
         contentDescription = "",
