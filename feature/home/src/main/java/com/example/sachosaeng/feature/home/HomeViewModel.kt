@@ -6,6 +6,7 @@ import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.usecase.category.GetCategoryListWithAllIconUseCase
 import com.example.sachosaeng.core.usecase.category.GetMyCategoryListUsecase
 import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
+import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
 import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
 import com.example.sachosaeng.core.usecase.vote.GetDailyVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.GetHotVoteUsecase
@@ -25,7 +26,7 @@ class HomeViewModel @Inject constructor(
     private val getDailyVoteUsecase: GetDailyVoteUsecase,
     private val getHotVoteUsecase: GetHotVoteUsecase,
     private val getVoteByCategoryUsecase: GetVoteByCategoryUsecase,
-    private val getUserTypeUseCase: GetUserTypeUseCase,
+    private val getMyInfoUsecase: GetMyInfoUsecase,
     private val getCategoryListWithAllIconUseCase: GetCategoryListWithAllIconUseCase,
     private val getMyCategoryListUsecase: GetMyCategoryListUsecase,
     private val setMyCategoryListUseCase: SetMyCategoryListUseCase
@@ -42,8 +43,8 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getUserInfo() = intent {
-        getUserTypeUseCase().collectLatest {
-            reduce { state.copy(userType = UserType.getType(it) ?: UserType.NEW_EMPLOYEE) }
+        getMyInfoUsecase().collectLatest {
+            reduce { state.copy(userType = UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) }
         }
     }
 
@@ -87,7 +88,11 @@ class HomeViewModel @Inject constructor(
 
     private fun getDailyVote() = intent {
         getDailyVoteUsecase().collectLatest {
-            reduce { state.copy(dailyVote = it) }
+            reduce {
+                state.copy(
+                    dailyVote = it, isDailyVoteDialogOpen = it?.isVoted == false
+                )
+            }
         }
     }
 
@@ -97,7 +102,6 @@ class HomeViewModel @Inject constructor(
                 reduce {
                     state.copy(
                         hotVotes = it,
-                        isHotVoteDialogOpen = !it.voteInfo[0].isVoted
                     )
                 }
             }
@@ -118,9 +122,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onTodaysVoteDialogConfirmClicked() = intent {
-        reduce { state.copy(isHotVoteDialogOpen = false) }.also {
-            postSideEffect(HomeSideEffect.NavigateToVoteDetail(state.hotVotes.voteInfo[0].id))
+    fun onDailyVoteDialogConfirmClicked() = intent {
+        reduce { state.copy(isDailyVoteDialogOpen = false) }.also {
+            state.dailyVote?.let {
+                postSideEffect(HomeSideEffect.NavigateToVoteDetail(state.dailyVote!!.id))
+            }
         }
     }
 }

@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.core.ui.ResourceProvider
 import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarkUseCase
 import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
@@ -23,6 +22,8 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 import com.example.sachosaeng.core.ui.R.drawable
+import com.example.sachosaeng.core.usecase.article.GetSimilarArticleUseCase
+import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
 import kotlinx.coroutines.flow.first
 
 @HiltViewModel
@@ -31,8 +32,9 @@ class VoteDetailViewModel @Inject constructor(
     private val deleteBookmarkUsecase: DeleteBookmarkUseCase,
     private val bookmarkVoteUsecase: BookmarkVoteUsecase,
     private val getSingleVoteUsecase: GetSingleVoteUsecase,
+    private val getSimilarArticleUseCase: GetSimilarArticleUseCase,
     private val voteUseCase: SetVoteUseCase,
-    private val getUserTypeUseCase: GetUserTypeUseCase,
+    private val getMyInfoUsecase: GetMyInfoUsecase
 ) : ViewModel(), ContainerHost<VoteDetailUiState, Unit> {
     private val voteDetailId = savedStateHandle.get<Int>(VOTE_DETAIL_ID)
     override val container: Container<VoteDetailUiState, Unit> = container(VoteDetailUiState())
@@ -59,8 +61,8 @@ class VoteDetailViewModel @Inject constructor(
     }
 
     private fun getVoteCompleteDescriptionImageRes() = flow {
-        val userType = getUserTypeUseCase().first().let {
-            when (UserType.getType(it) ?: UserType.NEW_EMPLOYEE) {
+        val userType = getMyInfoUsecase().first().let {
+            when (UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) {
                 UserType.NEW_EMPLOYEE -> drawable.ic_vote_complete_newcomer
                 UserType.JOB_SEEKER -> drawable.ic_vote_complete_jobseeker
                 UserType.STUDENT -> drawable.ic_vote_complete_student
@@ -103,6 +105,8 @@ class VoteDetailViewModel @Inject constructor(
     }
 
     fun vote() = intent {
+        getSimilarArticleUseCase(categoryId = state.vote.category.id, voteId = state.vote.id).collectLatest {
+        }
         state.vote.selectedOptionIds.isNotEmpty().let {
             voteUseCase(state.vote.id, state.vote.selectedOptionIds).collectLatest {
                 showVoteCompleteScreen()

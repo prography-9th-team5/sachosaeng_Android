@@ -3,61 +3,42 @@ package com.example.sachosaeng.feature.vote
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.model.Vote
 import com.example.sachosaeng.core.model.VoteOption
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
-import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.feature.vote.component.VoteCompleteInfo
-import com.example.sachosaeng.feature.vote.component.VoteCompleteScreen
 import com.example.sachosaeng.feature.vote.component.VoteDetailCard
-import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
-fun VoteScreen(
+fun DailyVoteDetailScreen(
     navigateToBackStack: () -> Unit,
-    viewModel: VoteDetailViewModel = hiltViewModel()
+    vote: Vote,
 ) {
-    val state = viewModel.collectAsState()
-
-    when (state.value.isCompleteState) {
-        true -> VoteCompleteScreen()
-        false -> VoteScreen(
-            vote = state.value.vote,
-            completeDescriptionIconRes = state.value.completeIconImageRes,
-            navigateToBackStack = navigateToBackStack,
-            onBookmarkVote = viewModel::bookmarkButtonClick,
-            onVoteComplete = viewModel::vote,
-            onSelectOption = viewModel::onSelectOption
-        )
-    }
+    DailyVoteDetailScreen(
+        vote = vote
+    )
 }
 
+
 @Composable
-internal fun VoteScreen(
+internal fun DailyVoteDetailScreen(
     modifier: Modifier = Modifier,
     vote: Vote,
-    completeDescriptionIconRes: Int? = null,
-    onSelectOption: (Int) -> Unit = { },
-    onBookmarkVote: () -> Unit = { },
-    onVoteComplete: () -> Unit = { },
-    navigateToBackStack: () -> Unit,
 ) {
     Column(
         modifier = modifier
@@ -67,40 +48,39 @@ internal fun VoteScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
     )
     {
-        SachosaengDetailTopAppBar(
-            title = vote.category.name,
-            navigateToBackStack = navigateToBackStack
-        )
         LazyColumn(
             modifier = modifier
                 .fillMaxSize(),
             verticalArrangement = Arrangement.SpaceBetween,
         ) {
             item {
-                VoteDetailCard(
-                    modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
-                    isBookmarked = vote.isBookmarked,
-                    onBookmarkButtonClicked = { onBookmarkVote() },
-                    selectedOptionIndex = vote.selectedOptionIds,
-                    onSelectOption = onSelectOption,
-                    vote = vote
-                )
+                Column {
+                    Text(
+                        modifier = Modifier.padding(20.dp),
+                        text = stringResource(id = string.daily_vote),
+                        fontSize = 26.sp,
+                        fontWeight = FontWeight.W700
+                    )
+                    VoteDetailCard(
+                        modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
+                        isBookmarked = vote.isBookmarked,
+                        isDailyVote = true,
+                        onBookmarkButtonClicked = { },
+                        selectedOptionIndex = vote.selectedOptionIds,
+                        onSelectOption = {},
+                        vote = vote
+                    )
+                }
             }
-            item {
-                if (vote.isVoted) VoteCompleteInfo(
-                    modifier = modifier.padding(horizontal = 20.dp),
-                    completeDescription = vote.description,
-                    completeDescriptionIconRes = completeDescriptionIconRes
-                )
-            }
+
             item {
                 SachoSaengButton(
                     enabled = vote.selectedOptionIds.isNotEmpty(),
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
-                    text = stringResource(id = if(vote.isVoted) string.more_vote_button_label else string.confirm_label ),
-                    onClick = { if(vote.isVoted) navigateToBackStack() else onVoteComplete() }
+                    text = stringResource(id = if (vote.isVoted) string.more_vote_button_label else string.confirm_label),
+                    onClick = { }
                 )
             }
         }
@@ -109,8 +89,8 @@ internal fun VoteScreen(
 
 @Preview
 @Composable
-fun VoteScreenPreview() {
-    VoteScreen(
+fun DailyVoteDetailScreenPreview() {
+    DailyVoteDetailScreen(
         vote = Vote(
             title = "친한 사수분 결혼식 축의금 얼마가 좋을까요?",
             count = 1000,

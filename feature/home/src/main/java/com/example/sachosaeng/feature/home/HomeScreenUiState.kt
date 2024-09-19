@@ -14,5 +14,5 @@ data class HomeScreenUiState(
     val myCategory: List<Category> = emptyList(),
     val modifyMyCategoryListVisibility: Boolean = false,
     val selectedCategory: Category? = null,
-    val isHotVoteDialogOpen: Boolean = false
+    val isDailyVoteDialogOpen: Boolean = false
 )

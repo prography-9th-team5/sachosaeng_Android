@@ -55,9 +55,9 @@ fun HomeScreen(
         }
     }
 
-    if(state.value.isHotVoteDialogOpen) TodaysVoteDialog(
+    if(state.value.isDailyVoteDialogOpen) TodaysVoteDialog(
         onClick = {
-            viewModel.onTodaysVoteDialogConfirmClicked()
+            viewModel.onDailyVoteDialogConfirmClicked()
         }
     )
     Box(

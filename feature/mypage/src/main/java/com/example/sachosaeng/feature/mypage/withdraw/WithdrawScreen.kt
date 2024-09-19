@@ -45,6 +45,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.mypage.R
+import com.example.sachosaeng.core.ui.R.drawable
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import com.example.sachosaeng.core.ui.R.string
@@ -206,7 +207,7 @@ fun MultiSelectBox(
     ) {
         Image(
             modifier = modifier.padding(end = 8.dp),
-            painter = painterResource(id = R.drawable.ic_unchecked),
+            painter = painterResource(id = drawable.ic_unchecked),
             contentDescription = null,
             colorFilter = ColorFilter.tint(if (isSelected) Gs_Black else Gs_G4)
         )

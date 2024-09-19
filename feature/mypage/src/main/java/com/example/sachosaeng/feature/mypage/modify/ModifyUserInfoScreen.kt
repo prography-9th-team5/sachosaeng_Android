@@ -44,7 +44,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.mypage.R.drawable
+import com.example.sachosaeng.core.ui.R.drawable
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 import com.example.sachosaeng.core.ui.R.string
