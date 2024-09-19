@@ -4,16 +4,20 @@ import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Vote
+import com.example.sachosaeng.core.ui.R.drawable
 import com.example.sachosaeng.core.ui.UserType
+import com.example.sachosaeng.core.usecase.article.GetSimilarArticleUseCase
 import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarkUseCase
-import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
+import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
 import com.example.sachosaeng.core.usecase.vote.BookmarkVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.GetSingleVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.SetVoteUseCase
 import com.example.sachosaeng.feature.vote.navigation.VOTE_DETAIL_ID
+import com.example.sachosaeng.feature.vote.navigation.VOTE_IS_DAILY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -21,10 +25,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
-import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.usecase.article.GetSimilarArticleUseCase
-import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
-import kotlinx.coroutines.flow.first
 
 @HiltViewModel
 class VoteDetailViewModel @Inject constructor(
@@ -37,6 +37,7 @@ class VoteDetailViewModel @Inject constructor(
     private val getMyInfoUsecase: GetMyInfoUsecase
 ) : ViewModel(), ContainerHost<VoteDetailUiState, Unit> {
     private val voteDetailId = savedStateHandle.get<Int>(VOTE_DETAIL_ID)
+    private val isDailyVote = savedStateHandle.get<Boolean>(VOTE_IS_DAILY)
     override val container: Container<VoteDetailUiState, Unit> = container(VoteDetailUiState())
 
     init {
@@ -51,7 +52,8 @@ class VoteDetailViewModel @Inject constructor(
                     state.copy(
                         vote = vote ?: Vote(),
                         isCompleteState = false,
-                        completeIconImageRes = voteCompleteDescriptionIcon
+                        completeIconImageRes = voteCompleteDescriptionIcon,
+                        isDailyVote = isDailyVote ?: false
                     )
                 }
             }
@@ -105,7 +107,13 @@ class VoteDetailViewModel @Inject constructor(
     }
 
     fun vote() = intent {
-        getSimilarArticleUseCase(categoryId = state.vote.category.id, voteId = state.vote.id).collectLatest {
+        getSimilarArticleUseCase(
+            categoryId = state.vote.category.id,
+            voteId = state.vote.id
+        ).collectLatest {
+            reduce {
+                state.copy(similarArticle = it)
+            }
         }
         state.vote.selectedOptionIds.isNotEmpty().let {
             voteUseCase(state.vote.id, state.vote.selectedOptionIds).collectLatest {

@@ -6,8 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GetSimilarArticleUseCase @Inject constructor(
-    val articleRepository: ArticleRepository
+    private val articleRepository: ArticleRepository
 ) {
-    operator fun invoke(categoryId: Int, voteId: Int, size: Int = 3): Flow<SimilarArticle> =
+    operator fun invoke(categoryId: Int, voteId: Int, size: Int = 3): Flow<List<SimilarArticle>> =
         articleRepository.getSimilarArticle(categoryId, voteId, size)
 }

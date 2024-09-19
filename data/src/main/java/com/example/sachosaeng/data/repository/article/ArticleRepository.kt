@@ -4,5 +4,5 @@ import com.example.sachosaeng.core.model.SimilarArticle
 import kotlinx.coroutines.flow.Flow
 
 interface ArticleRepository {
-    fun getSimilarArticle(categoryId: Int, voteId: Int, size: Int): Flow<SimilarArticle>
+    fun getSimilarArticle(categoryId: Int, voteId: Int, size: Int): Flow<List<SimilarArticle>>
 }

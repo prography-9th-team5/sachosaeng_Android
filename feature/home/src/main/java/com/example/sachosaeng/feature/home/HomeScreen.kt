@@ -42,7 +42,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun HomeScreen(
     modifier: Modifier = Modifier,
     moveToMyPage: () -> Unit = {},
-    navigateToVoteCard: (Int) -> Unit = {},
+    navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val listState = rememberLazyListState()
@@ -51,7 +51,7 @@ fun HomeScreen(
 
     viewModel.collectSideEffect {
         when (it) {
-            is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId)
+            is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId, true)
         }
     }
 
@@ -88,7 +88,7 @@ fun HomeScreen(
                     state.value.dailyVote?.title?.let {
                         TodaysVoteCard(
                             voteTitle = state.value.dailyVote!!.title,
-                            onClick = { state.value.dailyVote?.id?.let { navigateToVoteCard(it) } }
+                            onClick = { state.value.dailyVote?.id?.let { navigateToVoteCard(it, true) } }
                         )
                     }
                 }
@@ -97,7 +97,7 @@ fun HomeScreen(
                     VoteColumnByCategory(
                         rankinTextVisibility = true,
                         voteList = state.value.hotVotes.voteInfo,
-                        onVoteClick = { navigateToVoteCard(it) }
+                        onVoteClick = { navigateToVoteCard(it, false) }
                     )
                 }
                 items(state.value.voteListWithCategory.size) {
@@ -107,7 +107,7 @@ fun HomeScreen(
                         )
                         VoteColumnByCategory(
                             voteList = state.value.voteListWithCategory[it]!!.voteInfo,
-                            onVoteClick = { navigateToVoteCard(it) }
+                            onVoteClick = { navigateToVoteCard(it, false) }
                         )
                     }
                 }

@@ -10,7 +10,7 @@ import javax.inject.Inject
 class ArticleRepositoryImpl @Inject constructor(
     private val articleService: ArticleService
 ) : ArticleRepository {
-    override fun getSimilarArticle(categoryId: Int, voteId: Int, size: Int): Flow<SimilarArticle> = flow {
+    override fun getSimilarArticle(categoryId: Int, voteId: Int, size: Int): Flow<List<SimilarArticle>> = flow {
         articleService.getSimilarArticle(categoryId, voteId, size).getOrThrow().data?.toDomain()
             ?.let { emit(it) }
     }

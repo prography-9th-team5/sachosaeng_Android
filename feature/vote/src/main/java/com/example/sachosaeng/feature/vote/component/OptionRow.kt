@@ -48,7 +48,7 @@ fun OptionRow(
     onSelected: (String) -> Unit
 ) {
     var largestSize by remember { mutableStateOf(IntSize.Zero) }
-    val normalizedPercentage = (optionPercentage / 100f)
+    val normalizedPercentage = (optionPercentage / 100f).coerceIn(0f, 1f)
     val animateFloat = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
 

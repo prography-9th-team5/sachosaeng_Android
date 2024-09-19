@@ -1,9 +1,7 @@
 package com.example.sachosaeng.core.usecase.vote
 
-import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.core.usecase.NoParameterUseCase
-import com.example.sachosaeng.data.repository.card.CardRepository
+import com.example.sachosaeng.data.repository.vote.VoteRepository
 
-class GetVoteListUsecase(private val repository: CardRepository) : NoParameterUseCase<List<Vote>> {
-    override operator fun invoke() = repository.getCardList()
+class GetVoteListUsecase(private val repository: VoteRepository) {
+    operator fun invoke() = repository.getVotesByCategory(3)
 }

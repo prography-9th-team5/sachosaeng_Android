@@ -7,5 +7,6 @@ data class VoteDetailUiState(
     val vote: Vote = Vote(),
     val isCompleteState: Boolean = false,
     val completeIconImageRes: Int? = null,
-    val similarArticle: List<SimilarArticle> = emptyList()
+    val similarArticle: List<SimilarArticle> = emptyList(),
+    val isDailyVote: Boolean = false
 )

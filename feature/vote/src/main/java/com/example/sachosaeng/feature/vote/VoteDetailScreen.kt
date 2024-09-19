@@ -38,14 +38,22 @@ fun VoteScreen(
 
     when (state.value.isCompleteState) {
         true -> VoteCompleteScreen()
-        false -> VoteScreen(
-            vote = state.value.vote,
-            completeDescriptionIconRes = state.value.completeIconImageRes,
-            navigateToBackStack = navigateToBackStack,
-            onBookmarkVote = viewModel::bookmarkButtonClick,
-            onVoteComplete = viewModel::vote,
-            onSelectOption = viewModel::onSelectOption
-        )
+        false -> {
+            when(state.value.isDailyVote) {
+                true -> DailyVoteDetailScreen(
+                    navigateToBackStack = navigateToBackStack,
+                    vote = state.value.vote
+                )
+                false -> VoteScreen(
+                    vote = state.value.vote,
+                    completeDescriptionIconRes = state.value.completeIconImageRes,
+                    navigateToBackStack = navigateToBackStack,
+                    onBookmarkVote = viewModel::bookmarkButtonClick,
+                    onVoteComplete = viewModel::vote,
+                    onSelectOption = viewModel::onSelectOption
+                )
+            }
+        }
     }
 }
 

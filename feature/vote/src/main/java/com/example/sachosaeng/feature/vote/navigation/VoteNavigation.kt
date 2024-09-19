@@ -13,10 +13,11 @@ const val ROUTE_VOTE = "vote"
 const val ROUTE_VOTE_COMPLETE = "voteComplete"
 const val GRAPH_VOTE = "vote_graph"
 const val VOTE_DETAIL_ID = "voteDetail"
+const val VOTE_IS_DAILY = "isDailyVote"
 internal const val ROUTE_VOTE_DETAIL = "$ROUTE_VOTE/$VOTE_DETAIL_ID"
 
-fun NavController.navigateToVoteDetail(voteId: Int?) {
-    navigate("$ROUTE_VOTE_DETAIL?$VOTE_DETAIL_ID=$voteId")
+fun NavController.navigateToVoteDetail(voteId: Int?, isDailyVote: Boolean) {
+    navigate("$ROUTE_VOTE_DETAIL?$VOTE_DETAIL_ID=$voteId?$VOTE_IS_DAILY=$isDailyVote")
 }
 
 fun NavGraphBuilder.addVoteGraph(
