@@ -59,7 +59,8 @@ fun BookmarkScreen(
         onProfileImageClicked = moveToMyPage,
         onModifyButtonClicked = viewModel::modifyBookmark,
         onCategoryClicked = viewModel::categoryClicked,
-        onSelectForModifyBookmark = viewModel::selectModifyBookmark
+        onSelectForModifyBookmark = viewModel::selectModifyBookmark,
+        deleteSelectedBookmarks = viewModel::deleteSelectedBookmarks
     )
 }
 
@@ -71,6 +72,7 @@ internal fun BookmarkScreen(
     onProfileImageClicked: () -> Unit = {},
     onCategoryClicked: (Category) -> Unit = {},
     onBookmarkClick: (Bookmark) -> Unit = {},
+    deleteSelectedBookmarks: () -> Unit = {},
     onSelectForModifyBookmark: (Bookmark) -> Unit = {}
 ) {
     val myCategoryTabTitle = stringResource(id = R.string.vote_label)
@@ -118,7 +120,7 @@ internal fun BookmarkScreen(
                         enabled = state.selectedForModifyBookmarkList.isNotEmpty(),
                         modifier = Modifier.fillMaxWidth(),
                         text = stringResource(id = R.string.delete_label),
-                        onClick = { }
+                        onClick = deleteSelectedBookmarks
                     )
                 },
                 {

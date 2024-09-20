@@ -8,11 +8,12 @@ import com.example.sachosaeng.data.remote.util.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface BookmarkService {
-    @DELETE("/api/v1/bookmarks/votes")
+    @HTTP(method = "DELETE", path = "/api/v1/bookmarks/votes", hasBody = true)
     suspend fun deleteBookmarks(
         @Body bookmarkIds: BookmarkListRequest
     ): ApiResult<BaseResponse<Unit>>
