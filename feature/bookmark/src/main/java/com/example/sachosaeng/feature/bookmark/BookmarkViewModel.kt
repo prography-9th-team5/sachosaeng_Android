@@ -5,10 +5,10 @@ import com.example.sachosaeng.core.model.Bookmark
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R.string.all_category_icon_text
 import com.example.sachosaeng.core.ui.ResourceProvider
-import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarkUseCase
 import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarksUseCase
 import com.example.sachosaeng.core.usecase.bookmark.GetBookmarkListUseCase
 import com.example.sachosaeng.core.usecase.category.GetCategoryListUseCase
+import com.example.sachosaeng.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
@@ -78,7 +78,10 @@ class BookmarkViewModel @Inject constructor(
             state.copy(
                 selectedCategory = category
             )
-        }.also { getBookmarkListByCategory() }
+        }.also {
+            if(category.id == ALL_CATEGORY_ID) getAllBookmarkList()
+            else getBookmarkListByCategory()
+        }
     }
 
     private fun getBookmarkListByCategory() = intent {
