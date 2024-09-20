@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -34,15 +35,15 @@ fun BookmarkList(
     onSelectForModifyBookmark: (Bookmark) -> Unit = {},
     onBookmarkClicked: (Bookmark) -> Unit = {}
 ) {
-    Column(
+    LazyColumn(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        bookmarks.forEach { bookmark ->
+        items(bookmarks.size) {
             BookmarkCard(
-                isSelected = selectedForModifyBookmarkList.contains(bookmark),
+                isSelected = selectedForModifyBookmarkList.contains(bookmarks[it]),
                 isModifyMode = isModifyMode,
-                bookmark = bookmark,
+                bookmark = bookmarks[it],
                 onBookmarkClicked = onBookmarkClicked,
                 onSelectForModifyBookmark = onSelectForModifyBookmark
             )
@@ -67,8 +68,13 @@ private fun BookmarkCard(
             .fillMaxWidth()
             .noRippleClickable {
                 when (isModifyMode) {
-                    true -> { onSelectForModifyBookmark(bookmark) }
-                    false -> { onBookmarkClicked(bookmark) }
+                    true -> {
+                        onSelectForModifyBookmark(bookmark)
+                    }
+
+                    false -> {
+                        onBookmarkClicked(bookmark)
+                    }
                 }
             }
     ) {
@@ -78,7 +84,7 @@ private fun BookmarkCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             if (isModifyMode) Image(
-                painter = painterResource(id = if(isSelected) drawable.ic_checked_circle else drawable.ic_unchecked_circle),
+                painter = painterResource(id = if (isSelected) drawable.ic_checked_circle else drawable.ic_unchecked_circle),
                 contentDescription = null
             )
             Column(

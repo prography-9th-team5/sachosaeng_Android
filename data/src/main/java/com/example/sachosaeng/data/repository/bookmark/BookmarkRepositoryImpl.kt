@@ -16,7 +16,7 @@ class BookmarkRepositoryImpl @Inject constructor(
         bookmarkService.deleteBookmark(bookmarkId).getOrThrow().data?.let { emit(it) }
     }
 
-    override fun deleteBookmarkList(bookmarkIds: List<Int>) = flow {
+    override fun deleteBookmarks(bookmarkIds: List<Int>): Flow<Unit> = flow {
         bookmarkService.deleteBookmarks(bookmarkIds.toRequest()).getOrThrow().data?.let { emit(it) }
     }
 
@@ -26,5 +26,9 @@ class BookmarkRepositoryImpl @Inject constructor(
 
     override fun getBookmarkList(categoryId: Int): Flow<List<Bookmark>> = flow {
         bookmarkService.getBookmarkList(categoryId).getOrThrow().data?.let { emit(it.toDomain()) }
+    }
+
+    override fun getAllBookmarkList(): Flow<List<Bookmark>> = flow {
+        bookmarkService.getAllBookmarkList().getOrThrow().data?.let { emit(it.toDomain()) }
     }
 }

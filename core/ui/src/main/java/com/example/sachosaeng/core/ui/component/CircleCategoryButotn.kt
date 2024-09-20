@@ -26,7 +26,7 @@ import com.example.sachosaeng.core.util.extension.StringExtension.toColorResourc
 
 @Composable
 fun CircleCategoryButton(
-    isSelected: Boolean = false,
+    isOn: Boolean = false,
     category: Category,
     onClickCategory: (Category) -> Unit,
     modifier: Modifier = Modifier
@@ -34,13 +34,13 @@ fun CircleCategoryButton(
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         AsyncImage(
             contentDescription = "",
-            colorFilter = if (!isSelected) ColorFilter.tint(Gs_G4) else null,
+            colorFilter = if (!isOn) ColorFilter.tint(Gs_G4) else null,
             model = category.imageUrl ?: R.drawable.if_default_category_circle,
             modifier = Modifier
                 .clip(CircleShape)
                 .clickable { onClickCategory(category) }
                 .size(72.dp)
-                .background(color = if (!isSelected) Gs_G2 else Color(category.color.toColorResource()))
+                .background(color = if (!isOn) Gs_G2 else Color(category.color.toColorResource()))
                 .padding(20.dp)
         )
         Text(

@@ -62,14 +62,15 @@ fun SelectCategoryBottomSheet(
                 {
                     when (modifyListVisible) {
                         true -> CategoryFlowRowWithButton(
-                            allCategoryList,
-                            selectedCategoryList = myCategoryList,
+                            allCategoryList.drop(1),
+                            onCategoryList = myCategoryList,
                             onClickCategory = onSelectFavoriteCategory,
                             onClickButton = onModifyComplete
                         )
 
                         false -> CategoryListFlowRow(
                             myCategoryList,
+                            onCategoryList = myCategoryList,
                             onClickCategory = onSelectCategory
                         )
                     }
@@ -77,7 +78,7 @@ fun SelectCategoryBottomSheet(
                 {
                     CategoryListFlowRow(
                         allCategoryList,
-                        selectedCategoryList = allCategoryList,
+                        onCategoryList = allCategoryList,
                         onClickCategory = onSelectCategory
                     )
                 }
@@ -102,14 +103,14 @@ private fun ModifyCategoryButton(onClick: () -> Unit = {}) {
 @Composable
 private fun CategoryFlowRowWithButton(
     categoryList: List<Category>,
-    selectedCategoryList: List<Category>? = null,
+    onCategoryList: List<Category>? = null,
     onClickCategory: (Category) -> Unit,
     onClickButton: () -> Unit = {}
 ) {
     Column {
         CategoryListFlowRow(
             categoryList,
-            selectedCategoryList = selectedCategoryList,
+            onCategoryList = onCategoryList,
             onClickCategory = onClickCategory,
         )
         Spacer(modifier = Modifier.weight(1f))

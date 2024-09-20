@@ -6,5 +6,6 @@ import javax.inject.Inject
 class DeleteBookmarkUseCase @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) {
-    operator fun invoke(bookmarkId: Int) = bookmarkRepository.deleteBookmark(bookmarkId = bookmarkId)
+    operator fun invoke(bookmarkId: Int) =
+        bookmarkRepository.deleteBookmark(bookmarkId = bookmarkId)
 }

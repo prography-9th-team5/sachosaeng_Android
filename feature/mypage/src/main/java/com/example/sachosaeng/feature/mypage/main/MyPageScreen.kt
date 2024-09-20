@@ -49,6 +49,9 @@ fun MyPageScreen(
     navigateToUserInfoModify: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
     navigateToTermsOfService: () -> Unit = {},
+    navigateToFaq: () -> Unit = {},
+    navigateToRequestToAdmin: () -> Unit = {},
+    navigateToOpenSource: () -> Unit = {},
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
@@ -71,7 +74,10 @@ fun MyPageScreen(
         navigateToBackStack = { navigateToBackStack() },
         onModifyUserInfo = { navigateToUserInfoModify() },
         navigateToPrivacyPolicy = { navigateToPrivacyPolicy() },
-        navigateToTermsOfService = { navigateToTermsOfService() }
+        navigateToTermsOfService = { navigateToTermsOfService() },
+        navigateToFaq = navigateToFaq,
+        navigateToRequestToAdmin = navigateToRequestToAdmin,
+        navigateToOpenSource = navigateToOpenSource
     )
 }
 
@@ -82,7 +88,10 @@ internal fun MyPageScreen(
     onModifyUserInfo: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
-    navigateToTermsOfService: () -> Unit = {}
+    navigateToTermsOfService: () -> Unit = {},
+    navigateToFaq: () -> Unit = {},
+    navigateToRequestToAdmin: () -> Unit = {},
+    navigateToOpenSource: () -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -109,7 +118,8 @@ internal fun MyPageScreen(
                     },
                     {
                         MyPageMenuCard(
-                            menuName = stringResource(id = string.mypage_menu_suggest_vote)
+                            menuName = stringResource(id = string.mypage_menu_suggest_vote),
+                            onClick = navigateToRequestToAdmin
                         )
                     }
                 )
@@ -118,7 +128,12 @@ internal fun MyPageScreen(
             MyPageMenuList(
                 menuCard = listOf(
                     { VersionInfoCard(versionInfo = myPageUiState.versionInfo) },
-                    { MyPageMenuCard(menuName = stringResource(id = string.mypage_menu_open_source)) },
+                    {
+                        MyPageMenuCard(
+                            menuName = stringResource(id = string.mypage_menu_open_source),
+                            onClick = navigateToOpenSource
+                        )
+                    },
                     {
                         MyPageMenuCard(
                             menuName = stringResource(id = string.mypage_menu_privacy_policy),
@@ -129,7 +144,12 @@ internal fun MyPageScreen(
                             menuName = stringResource(id = string.mypage_menu_terms_of_service),
                             onClick = { navigateToTermsOfService() })
                     },
-                    { MyPageMenuCard(menuName = stringResource(id = string.mypage_menu_faq)) }
+                    {
+                        MyPageMenuCard(
+                            menuName = stringResource(id = string.mypage_menu_faq),
+                            onClick = navigateToFaq
+                        )
+                    }
                 )
             )
             LogoutButton(onClick = { onLogout() })

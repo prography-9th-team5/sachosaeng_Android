@@ -1,12 +1,14 @@
 package com.example.sachosaeng.navigation
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.navigation
+import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.feature.bookmark.navigation.addBookmarkGraph
 import com.example.sachosaeng.feature.home.HomeScreen
 import com.example.sachosaeng.feature.mypage.navigation.GRAPH_MY_PAGE
@@ -19,6 +21,7 @@ import com.example.sachosaeng.feature.vote.navigation.addVoteGraph
 import com.example.sachosaeng.feature.vote.navigation.navigateToVoteDetail
 import com.example.sachosaeng.feature.webview.addWebViewScreen
 import com.example.sachosaeng.feature.webview.navigateToWebView
+import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 @Composable
 internal fun addNavGraph(navController: NavHostController) {
@@ -51,7 +54,8 @@ internal fun addNavGraph(navController: NavHostController) {
         addMainGraph(navController = navController)
         addMyPageNavGraph(
             navController = navController,
-            navigateToWebView = { url -> navController.navigateToWebView(url) }
+            navigateToWebView = { url -> navController.navigateToWebView(url) },
+            navigateToOpenSource = { navController.navigateToOpenSource() }
         )
         addVoteGraph(navController = navController)
         addBookmarkGraph(
@@ -84,3 +88,9 @@ fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
     }
 }
 
+
+fun NavController.navigateToOpenSource() {
+    val resourceProvider = context.resources
+    context.startActivity(Intent(context, OssLicensesMenuActivity::class.java))
+    OssLicensesMenuActivity.setActivityTitle(resourceProvider.getString(R.string.mypage_menu_open_source))
+}

@@ -19,7 +19,4 @@ interface AuthService {
     suspend fun login(
         @Body loginRequest: LoginRequest
     ): ApiResult<BaseResponse<LoginResponse>>
-
-    @POST("/api/v1/auth/refresh")
-    suspend fun getNewAccessToken(): ApiResult<BaseResponse<TokenResponse>>
 }

@@ -36,10 +36,10 @@ internal class ServiceModule {
         @NetworkModule.SachoSaeng retrofit: Retrofit
     ): ArticleService = retrofit.create(ArticleService::class.java)
 
-//    @Provides
-//    internal fun provideOAuthService(
-//        @NetworkModule.OAuth retrofit: Retrofit
-//    ): OAuthService = retrofit.create(OAuthService::class.java)
+    @Provides
+    internal fun provideOAuthService(
+        @NetworkModule.OAuth retrofit: Retrofit
+    ): OAuthService = retrofit.create(OAuthService::class.java)
 
     @Provides
     internal fun provideUserService(

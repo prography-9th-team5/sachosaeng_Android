@@ -74,7 +74,10 @@ class HomeViewModel @Inject constructor(
 
     fun onSelectFavoriteCategory(category: Category) = intent {
         val currentMyCategory = state.myCategory
-        reduce { state.copy(myCategory = currentMyCategory.plus(category)) }
+        reduce {
+            if (currentMyCategory.contains(category)) state.copy(myCategory = currentMyCategory.minus(category))
+            else state.copy(myCategory = currentMyCategory.plus(category))
+        }
     }
 
     fun onModifyMyCategory() = intent {
@@ -117,7 +120,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getMyCategoryListAndVoteList() = intent {
         getMyCategoryListUsecase().collectLatest {
-            reduce { state.copy(myCategory = it) }
+            reduce { state.copy(myCategory = it, modifyMyCategoryListVisibility = false) }
         }.also {
             getVoteByMyCategory()
         }
@@ -126,7 +129,6 @@ class HomeViewModel @Inject constructor(
     fun onDailyVoteDialogConfirmClicked() = intent {
         reduce { state.copy(isDailyVoteDialogOpen = false) }.also {
             state.dailyVote?.let {
-                Log.e("HomeViewModel", "${it.id}")
                 postSideEffect(HomeSideEffect.NavigateToVoteDetail(state.dailyVote!!.id, true))
             }
         }

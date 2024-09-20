@@ -7,16 +7,20 @@ import androidx.navigation.navigation
 import com.example.sachosaeng.feature.mypage.main.MyPageScreen
 import com.example.sachosaeng.feature.mypage.modify.ModifyUserInfoScreen
 import com.example.sachosaeng.feature.mypage.withdraw.WithdrawScreen
+import com.example.sachosaeng.feature.webview.WebViewUrl.FAQ
 import com.example.sachosaeng.feature.webview.WebViewUrl.PRIVACY_POLICY
+import com.example.sachosaeng.feature.webview.WebViewUrl.REQUEST_TO_ADMIN
 import com.example.sachosaeng.feature.webview.WebViewUrl.TERMS_OF_SERVICE
 
 const val GRAPH_MY_PAGE = "myPageGraph"
 const val ROUTE_MY_PAGE = "myPage"
 private const val WITHDRAW = "withdraw"
 private const val MODIFY_USER_INFO = "modifyUserInfo"
+
 fun NavGraphBuilder.addMyPageNavGraph(
     navController: NavHostController,
-    navigateToWebView: (String) -> Unit
+    navigateToWebView: (String) -> Unit,
+    navigateToOpenSource: () -> Unit = {}
 ) {
     navigation(
         route = ROUTE_MY_PAGE,
@@ -26,13 +30,12 @@ fun NavGraphBuilder.addMyPageNavGraph(
             MyPageScreen(
                 navigateToBackStack = { navController.popBackStack() },
                 navigateToWithDraw = { navController.navigate(WITHDRAW) },
-                navigateToPrivacyPolicy = {
-                    navigateToWebView(PRIVACY_POLICY)
-                },
-                navigateToTermsOfService = {
-                    navigateToWebView(TERMS_OF_SERVICE)
-                },
-                navigateToUserInfoModify = { navController.navigate(MODIFY_USER_INFO) }
+                navigateToPrivacyPolicy = { navigateToWebView(PRIVACY_POLICY) },
+                navigateToTermsOfService = { navigateToWebView(TERMS_OF_SERVICE) },
+                navigateToUserInfoModify = { navController.navigate(MODIFY_USER_INFO) },
+                navigateToFaq = { navigateToWebView(FAQ) },
+                navigateToRequestToAdmin = { navigateToWebView(REQUEST_TO_ADMIN) },
+                navigateToOpenSource = { navigateToOpenSource() }
             )
         }
         composable(WITHDRAW) {

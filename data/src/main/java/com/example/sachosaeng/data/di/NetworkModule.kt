@@ -1,6 +1,5 @@
 package com.example.sachosaeng.data.di
 
-import android.content.Context
 import com.example.sachosaeng.data.BuildConfig
 import com.example.sachosaeng.data.remote.oauth.OAuthHeaderInterceptor
 import com.example.sachosaeng.data.remote.oauth.OAuthenticator
@@ -8,7 +7,6 @@ import com.example.sachosaeng.data.remote.util.ResultCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
@@ -32,8 +30,13 @@ internal object NetworkModule {
     }
 
     @Provides
-    fun provideOkHttpClient(okhttpClientBuilder: OkHttpClient.Builder): OkHttpClient {
-        return okhttpClientBuilder.build()
+    fun provideOkHttpClient(
+        okhttpClientBuilder: OkHttpClient.Builder,
+        oAuthenticator: OAuthenticator
+    ): OkHttpClient {
+        return okhttpClientBuilder
+            .authenticator(oAuthenticator)
+            .build()
     }
 
     @Provides
@@ -55,7 +58,6 @@ internal object NetworkModule {
     @Singleton
     @SachoSaeng
     fun provideRetrofit(
-        @ApplicationContext context: Context,
         okhttpClientBuilder: OkHttpClient.Builder,
         json: Json,
         oAuthenticator: OAuthenticator,
@@ -67,6 +69,28 @@ internal object NetworkModule {
                 okhttpClientBuilder
                     .authenticator(oAuthenticator)
                     .addInterceptor(oAuthHeaderInterceptor)
+                    .build()
+            )
+            .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+            .addCallAdapterFactory(ResultCallAdapterFactory())
+            .build()
+    }
+
+    @Qualifier
+    @Retention(AnnotationRetention.BINARY)
+    annotation class OAuth
+
+    @Provides
+    @Singleton
+    @OAuth
+    fun provideOAuthRetrofit(
+        okhttpClientBuilder: OkHttpClient.Builder,
+        json: Json,
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .client(
+                okhttpClientBuilder
                     .build()
             )
             .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
