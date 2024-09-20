@@ -14,35 +14,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.sachosaeng.core.model.SimilarArticle
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G3
+import com.example.sachosaeng.core.ui.theme.Gs_White
 
 @Composable
-fun ArticleRow(modifier: Modifier = Modifier) {
+fun ArticleRow(modifier: Modifier = Modifier, similarArticle: SimilarArticle) {
     Box(
         modifier = modifier
+            .padding(start = 20.dp, end = 20.dp, top = 6.dp)
             .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = Gs_G3,
-                shape = RoundedCornerShape(4.dp)
-            )
             .clip(RoundedCornerShape(4.dp))
-            .background(Gs_G2)
+            .background(Gs_White)
     ) {
         Text(
-            text = "text",
+            text = similarArticle.title,
             modifier = Modifier.padding(
                 start = 16.dp,
                 top = 16.dp,
                 bottom = 16.dp,
                 end = 40.dp
             ),
-            fontSize = 14.sp,
+            fontSize = 15.sp,
             overflow = TextOverflow.Ellipsis,
             color = Gs_Black,
-            fontWeight = FontWeight.W700
+            fontWeight = FontWeight.W600
         )
     }
 }

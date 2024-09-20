@@ -3,10 +3,8 @@ package com.example.sachosaeng.feature.vote
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
@@ -17,14 +15,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.model.Category
+import com.example.sachosaeng.core.model.SimilarArticle
 import com.example.sachosaeng.core.model.Vote
 import com.example.sachosaeng.core.model.VoteOption
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.feature.vote.component.VoteCompleteInfo
+import com.example.sachosaeng.feature.vote.component.VoteCompleteFooter
 import com.example.sachosaeng.feature.vote.component.VoteCompleteScreen
 import com.example.sachosaeng.feature.vote.component.VoteDetailCard
 import org.orbitmvi.orbit.compose.collectAsState
@@ -49,6 +47,7 @@ fun VoteScreen(
                 )
                 false -> VoteScreen(
                     vote = state.value.vote,
+                    similarArticle = state.value.similarArticle,
                     completeDescriptionIconRes = state.value.completeIconImageRes,
                     navigateToBackStack = navigateToBackStack,
                     onBookmarkVote = viewModel::bookmarkButtonClick,
@@ -64,6 +63,7 @@ fun VoteScreen(
 internal fun VoteScreen(
     modifier: Modifier = Modifier,
     vote: Vote,
+    similarArticle: List<SimilarArticle> = emptyList(),
     completeDescriptionIconRes: Int? = null,
     onSelectOption: (Int) -> Unit = { },
     onBookmarkVote: () -> Unit = { },
@@ -98,10 +98,11 @@ internal fun VoteScreen(
                 )
             }
             item {
-                if (vote.isVoted) VoteCompleteInfo(
+                if (vote.isVoted) VoteCompleteFooter(
                     modifier = modifier.padding(horizontal = 20.dp),
                     completeDescription = vote.description,
-                    completeDescriptionIconRes = completeDescriptionIconRes
+                    completeDescriptionIconRes = completeDescriptionIconRes,
+                    similarArticleList = similarArticle
                 )
             }
             item {

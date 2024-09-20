@@ -34,10 +34,10 @@ class VoteDetailViewModel @Inject constructor(
     private val getSimilarArticleUseCase: GetSimilarArticleUseCase,
     private val voteUseCase: SetVoteUseCase,
     private val getMyInfoUsecase: GetMyInfoUsecase
-) : ViewModel(), ContainerHost<VoteDetailUiState, VoteDetailSideEffect> {
+) : ViewModel(), ContainerHost<VoteDetailUiState, Unit> {
     private val voteDetailId = savedStateHandle.get<Int>(VOTE_DETAIL_ID)
     private val isDailyVote = savedStateHandle.get<Boolean>(VOTE_IS_DAILY)
-    override val container: Container<VoteDetailUiState, VoteDetailSideEffect> =
+    override val container: Container<VoteDetailUiState, Unit> =
         container(VoteDetailUiState())
 
     init {
@@ -56,6 +56,7 @@ class VoteDetailViewModel @Inject constructor(
                         isDailyVote = isDailyVote ?: false
                     )
                 }
+                getSimilarArticle()
             }
         }
     }
@@ -110,7 +111,7 @@ class VoteDetailViewModel @Inject constructor(
         }
     }
 
-    fun vote() = intent {
+    private fun getSimilarArticle() = intent {
         getSimilarArticleUseCase(
             categoryId = state.vote.category.id,
             voteId = state.vote.id
@@ -119,6 +120,9 @@ class VoteDetailViewModel @Inject constructor(
                 state.copy(similarArticle = it)
             }
         }
+    }
+
+    fun vote() = intent {
         state.vote.selectedOptionIds.isNotEmpty().let {
             voteUseCase(state.vote.id, state.vote.selectedOptionIds).collectLatest {
                 showVoteCompleteScreen()
@@ -131,8 +135,4 @@ class VoteDetailViewModel @Inject constructor(
         delay(2000)
         getVoteContent()
     }
-}
-
-sealed class VoteDetailSideEffect {
-    data class NavigateToAnotherVote(val categoryId: Int) : VoteDetailSideEffect()
 }
