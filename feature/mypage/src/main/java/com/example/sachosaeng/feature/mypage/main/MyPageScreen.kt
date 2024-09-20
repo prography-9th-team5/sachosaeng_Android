@@ -49,6 +49,8 @@ fun MyPageScreen(
     navigateToUserInfoModify: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
     navigateToTermsOfService: () -> Unit = {},
+    navigateToFaq: () -> Unit = {},
+    navigateToRequestToAdmin: () -> Unit = {},
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
@@ -71,7 +73,9 @@ fun MyPageScreen(
         navigateToBackStack = { navigateToBackStack() },
         onModifyUserInfo = { navigateToUserInfoModify() },
         navigateToPrivacyPolicy = { navigateToPrivacyPolicy() },
-        navigateToTermsOfService = { navigateToTermsOfService() }
+        navigateToTermsOfService = { navigateToTermsOfService() },
+        navigateToFaq = navigateToFaq,
+        navigateToRequestToAdmin = navigateToRequestToAdmin
     )
 }
 
@@ -82,7 +86,9 @@ internal fun MyPageScreen(
     onModifyUserInfo: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
-    navigateToTermsOfService: () -> Unit = {}
+    navigateToTermsOfService: () -> Unit = {},
+    navigateToFaq: () -> Unit = {},
+    navigateToRequestToAdmin: () -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -109,7 +115,8 @@ internal fun MyPageScreen(
                     },
                     {
                         MyPageMenuCard(
-                            menuName = stringResource(id = string.mypage_menu_suggest_vote)
+                            menuName = stringResource(id = string.mypage_menu_suggest_vote),
+                            onClick = navigateToRequestToAdmin
                         )
                     }
                 )
@@ -129,7 +136,12 @@ internal fun MyPageScreen(
                             menuName = stringResource(id = string.mypage_menu_terms_of_service),
                             onClick = { navigateToTermsOfService() })
                     },
-                    { MyPageMenuCard(menuName = stringResource(id = string.mypage_menu_faq)) }
+                    {
+                        MyPageMenuCard(
+                            menuName = stringResource(id = string.mypage_menu_faq),
+                            onClick = navigateToFaq
+                        )
+                    }
                 )
             )
             LogoutButton(onClick = { onLogout() })

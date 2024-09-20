@@ -77,7 +77,7 @@ class BookmarkViewModel @Inject constructor(
     }
 
     private fun getAllBookmarkList() = intent {
-        getBookmarkListByCategoryUseCase(category = Category(id = 2)).collectLatest { bookmarkList ->
+        getBookmarkListByCategoryUseCase(category = Category(id = 1)).collectLatest { bookmarkList ->
             reduce {
                 state.copy(
                     bookmarkList = bookmarkList
