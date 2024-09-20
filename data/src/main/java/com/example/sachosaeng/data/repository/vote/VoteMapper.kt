@@ -22,6 +22,7 @@ object VoteMapper {
         ),
         isClosed = isClosed,
         voteCount = participantCount,
+        isVoted = isVoted,
     )
 
     fun VoteListInfoResponse.toDomain(): VoteList {
@@ -52,6 +53,7 @@ object VoteMapper {
             isBookmarked = isBookmarked,
             isVoted = isVoted,
             isClosed = isClosed,
+            isMultipleChoiceAllowed = isMultipleChoiceAllowed,
             count = participantCount ?: 0,
             option = voteOptions.map { voteOptionResponse ->
                 VoteOption(

@@ -1,5 +1,6 @@
 package com.example.sachosaeng.feature.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,17 +37,30 @@ import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     moveToMyPage: () -> Unit = {},
-    navigateToVoteCard: (Int) -> Unit = {},
+    navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val listState = rememberLazyListState()
     val state = viewModel.collectAsState()
     var isBottomSheetOpen by remember { mutableStateOf(false) }
+
+    viewModel.collectSideEffect {
+        when (it) {
+            is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId, it.isDailyVote)
+        }
+    }
+
+    if(state.value.isDailyVoteDialogOpen) TodaysVoteDialog(
+        onClick = {
+            viewModel.onDailyVoteDialogConfirmClicked()
+        }
+    )
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -75,7 +89,7 @@ fun HomeScreen(
                     state.value.dailyVote?.title?.let {
                         TodaysVoteCard(
                             voteTitle = state.value.dailyVote!!.title,
-                            onClick = { state.value.dailyVote?.id?.let { navigateToVoteCard(it) } }
+                            onClick = { state.value.dailyVote?.id?.let { navigateToVoteCard(it, true) } }
                         )
                     }
                 }
@@ -84,7 +98,7 @@ fun HomeScreen(
                     VoteColumnByCategory(
                         rankinTextVisibility = true,
                         voteList = state.value.hotVotes.voteInfo,
-                        onVoteClick = { navigateToVoteCard(it) }
+                        onVoteClick = { navigateToVoteCard(it, false) }
                     )
                 }
                 items(state.value.voteListWithCategory.size) {
@@ -94,7 +108,7 @@ fun HomeScreen(
                         )
                         VoteColumnByCategory(
                             voteList = state.value.voteListWithCategory[it]!!.voteInfo,
-                            onVoteClick = { navigateToVoteCard(it) }
+                            onVoteClick = { navigateToVoteCard(it, false) }
                         )
                     }
                 }

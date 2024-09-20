@@ -1,11 +1,13 @@
 package com.example.sachosaeng.feature.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.usecase.category.GetCategoryListWithAllIconUseCase
 import com.example.sachosaeng.core.usecase.category.GetMyCategoryListUsecase
 import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
+import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
 import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
 import com.example.sachosaeng.core.usecase.vote.GetDailyVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.GetHotVoteUsecase
@@ -15,6 +17,7 @@ import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -24,12 +27,12 @@ class HomeViewModel @Inject constructor(
     private val getDailyVoteUsecase: GetDailyVoteUsecase,
     private val getHotVoteUsecase: GetHotVoteUsecase,
     private val getVoteByCategoryUsecase: GetVoteByCategoryUsecase,
-    private val getUserTypeUseCase: GetUserTypeUseCase,
+    private val getMyInfoUsecase: GetMyInfoUsecase,
     private val getCategoryListWithAllIconUseCase: GetCategoryListWithAllIconUseCase,
     private val getMyCategoryListUsecase: GetMyCategoryListUsecase,
     private val setMyCategoryListUseCase: SetMyCategoryListUseCase
-) : ViewModel(), ContainerHost<HomeScreenUiState, Unit> {
-    override val container: Container<HomeScreenUiState, Unit> =
+) : ViewModel(), ContainerHost<HomeScreenUiState, HomeSideEffect> {
+    override val container: Container<HomeScreenUiState, HomeSideEffect> =
         container(HomeScreenUiState())
 
     init {
@@ -40,13 +43,13 @@ class HomeViewModel @Inject constructor(
         getMyCategoryListAndVoteList()
     }
 
-    fun getUserInfo() = intent {
-        getUserTypeUseCase().collectLatest {
-            reduce { state.copy(userType = UserType.getType(it) ?: UserType.NEW_EMPLOYEE) }
+    private fun getUserInfo() = intent {
+        getMyInfoUsecase().collectLatest {
+            reduce { state.copy(userType = UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) }
         }
     }
 
-    fun getVoteByMyCategory() = intent {
+    private fun getVoteByMyCategory() = intent {
         state.myCategory.forEach {
             getVoteByCategoryUsecase(it.id).collectLatest {
                 reduce {
@@ -86,13 +89,23 @@ class HomeViewModel @Inject constructor(
 
     private fun getDailyVote() = intent {
         getDailyVoteUsecase().collectLatest {
-            reduce { state.copy(dailyVote = it) }
+            reduce {
+                state.copy(
+                    dailyVote = it, isDailyVoteDialogOpen = it?.isVoted == false
+                )
+            }
         }
     }
 
     private fun getHotVotes() = intent {
         getHotVoteUsecase().collectLatest { list ->
-            list?.let { reduce { state.copy(hotVotes = it) } }
+            list?.let {
+                reduce {
+                    state.copy(
+                        hotVotes = it,
+                    )
+                }
+            }
         }
     }
 
@@ -109,4 +122,17 @@ class HomeViewModel @Inject constructor(
             getVoteByMyCategory()
         }
     }
+
+    fun onDailyVoteDialogConfirmClicked() = intent {
+        reduce { state.copy(isDailyVoteDialogOpen = false) }.also {
+            state.dailyVote?.let {
+                Log.e("HomeViewModel", "${it.id}")
+                postSideEffect(HomeSideEffect.NavigateToVoteDetail(state.dailyVote!!.id, true))
+            }
+        }
+    }
+}
+
+sealed class HomeSideEffect {
+    data class NavigateToVoteDetail(val voteId: Int, val isDailyVote: Boolean) : HomeSideEffect()
 }

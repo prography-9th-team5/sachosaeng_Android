@@ -1,7 +1,10 @@
 package com.example.sachosaeng.feature.mypage.main
 
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.ui.UserType
+import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -10,15 +13,20 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class MyPageViewModel @Inject constructor(): ViewModel(), ContainerHost <MyPageUiState, Unit>{
+class MyPageViewModel @Inject constructor(
+    val getMyInfoUseCase: GetMyInfoUsecase
+): ViewModel(), ContainerHost <MyPageUiState, Unit>{
     override val container: Container<MyPageUiState, Unit> = container(MyPageUiState())
 
     fun getUserInfo() = intent {
-        reduce {
-            state.copy(
-                levelText = "레벨 1",
-                userName = "사초생"
-            )
+        getMyInfoUseCase().collectLatest { userInfo ->
+            reduce {
+                state.copy(
+                    levelText = "레벨 1",
+                    userName = userInfo.name,
+                    userType = UserType.getType(userInfo.userType) ?: UserType.OTHER,
+                )
+            }
         }
     }
 

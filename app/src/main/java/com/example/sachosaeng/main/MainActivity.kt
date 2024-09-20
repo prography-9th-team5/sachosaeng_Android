@@ -44,7 +44,7 @@ class MainActivity : ComponentActivity() {
                     if (isBottomBarNeeded) SachoSaengBottomAppBar(
                         items = {
                             listOf(
-                                BottomAppbarItem(Screen.HOME.route, R.drawable.ic_home),
+                                BottomAppbarItem(ROUTE_MAIN, R.drawable.ic_home),
                                 BottomAppbarItem(ROUTE_BOOKMARK, R.drawable.ic_bookmark)
                             )
                         },

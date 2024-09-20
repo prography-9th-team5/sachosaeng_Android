@@ -28,6 +28,8 @@ import com.example.sachosaeng.core.ui.theme.SachosaengTheme
 import com.example.sachosaeng.feature.auth.BuildConfig
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.example.sachosaeng.core.ui.R.drawable
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -78,7 +80,7 @@ class AuthActivitiy : ComponentActivity() {
         return Image(
             alignment = Alignment.BottomCenter,
             contentScale = ContentScale.Fit,
-            painter = painterResource(id = R.drawable.kakao_login_medium_wide),
+            painter = painterResource(id = drawable.ic_vote_complete_etc),
             contentDescription = "",
             modifier = Modifier
                 .clickable {
@@ -107,7 +109,7 @@ class AuthActivitiy : ComponentActivity() {
         return Image(
             alignment = Alignment.BottomCenter,
             contentScale = ContentScale.Fit,
-            painter = painterResource(id = R.drawable.web_light_sq),
+            painter = painterResource(id = drawable.ic_vote_complete_student),
             contentDescription = "",
             modifier = Modifier
                 .clickable { launcher.launch(googleSignInClient.signInIntent) }

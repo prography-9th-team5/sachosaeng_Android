@@ -42,7 +42,12 @@ fun SachoSaengBottomAppBar(
             items.invoke().forEachIndexed { index, it ->
                 IconButton(onClick = {
                     isSelectedIndex.value = index
-                    navController.navigate(it.route)
+                    navController.navigate(it.route) {
+                        popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true
+                    }
                 }) {
                     Icon(
                         painter = painterResource(id = it.icon),

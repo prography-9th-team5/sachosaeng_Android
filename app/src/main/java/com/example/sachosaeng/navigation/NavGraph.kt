@@ -55,7 +55,7 @@ internal fun addNavGraph(navController: NavHostController) {
         )
         addVoteGraph(navController = navController)
         addBookmarkGraph(
-            navigateToVote = { id -> navController.navigateToVoteDetail(voteId = id) },
+            navigateToVote = { id -> navController.navigateToVoteDetail(voteId = id, isDailyVote = false) },
             navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) })
     }
 }
@@ -76,8 +76,8 @@ fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
                         GRAPH_MY_PAGE
                     )
                 },
-                navigateToVoteCard = {
-                    navController.navigateToVoteDetail(voteId = it)
+                navigateToVoteCard = { voteId, isDailyVote ->
+                    navController.navigateToVoteDetail(voteId = voteId, isDailyVote = isDailyVote)
                 }
             )
         }

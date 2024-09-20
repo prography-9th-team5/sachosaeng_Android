@@ -36,8 +36,7 @@ import com.example.sachosaeng.core.util.extension.IntExtension.toNumberOfPeople
 import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
 
 @Composable
-fun VoteDetailCard(
-    //todo: 추상화 한 번 더 하기
+fun DailyVoteDetailCard(
     modifier: Modifier = Modifier,
     vote: Vote,
     selectedOptionIndex: List<Int?>,
@@ -68,8 +67,7 @@ fun VoteDetailCard(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 vote.option.forEach { option ->
-                    OptionRow(
-                        optionPercentage = (option.count * 100f) / vote.count,
+                    DailyVoteOptionRow(
                         isVoted = vote.isVoted,
                         isSeleceted = selectedOptionIndex.contains(option.voteOptionId),
                         text = option.content,
@@ -78,7 +76,10 @@ fun VoteDetailCard(
                         }
                     )
                 }
-                if(vote.isVoted) Text(
+            }
+            if (vote.isVoted) {
+                Text(
+                    modifier = Modifier.padding(top = 16.dp),
                     text = stringResource(id = R.string.vote_complete_description),
                     color = Gs_G5,
                     fontWeight = FontWeight.W500,
@@ -120,7 +121,7 @@ private fun BookmarkButton(
 
 @Preview
 @Composable
-fun VoteDetailCardPreview() {
+fun DailyVoteDetailCardPreview() {
     VoteDetailCard(
         selectedOptionIndex = listOf(1, 2),
         isBookmarked = true,

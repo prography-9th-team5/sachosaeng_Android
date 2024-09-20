@@ -2,6 +2,8 @@ package com.example.sachosaeng.data.di
 
 import com.example.sachosaeng.data.remote.oauth.OAuthRepository
 import com.example.sachosaeng.data.remote.oauth.OAuthRepositoryImpl
+import com.example.sachosaeng.data.repository.article.ArticleRepository
+import com.example.sachosaeng.data.repository.article.ArticleRepositoryImpl
 import com.example.sachosaeng.data.repository.auth.AuthRepository
 import com.example.sachosaeng.data.repository.auth.AuthRepositoryImpl
 import com.example.sachosaeng.data.repository.bookmark.BookmarkRepository
@@ -56,4 +58,10 @@ internal abstract class RepositoryModule {
     abstract fun bindBookmarkRepository(
         bookmarkRepositoryImpl: BookmarkRepositoryImpl
     ): BookmarkRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindArticleRepository(
+        articleRepositoryImpl: ArticleRepositoryImpl
+    ): ArticleRepository
 }

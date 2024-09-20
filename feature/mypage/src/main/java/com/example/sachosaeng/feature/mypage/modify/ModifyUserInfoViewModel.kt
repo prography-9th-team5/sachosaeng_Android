@@ -9,9 +9,10 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import javax.inject.Inject
 
 @HiltViewModel
-class ModifyUserInfoViewModel : ViewModel(),
+class ModifyUserInfoViewModel @Inject constructor() : ViewModel(),
     ContainerHost<ModifiyUserInfoUiState, ModifyUserInfoSideEffect> {
     override val container: Container<ModifiyUserInfoUiState, ModifyUserInfoSideEffect> = container(
         ModifiyUserInfoUiState(

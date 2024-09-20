@@ -1,9 +1,7 @@
 package com.example.sachosaeng.feature.vote.component
 
-import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -11,7 +9,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -26,18 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.unit.toSize
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G3
@@ -56,7 +48,7 @@ fun OptionRow(
     onSelected: (String) -> Unit
 ) {
     var largestSize by remember { mutableStateOf(IntSize.Zero) }
-    val normalizedPercentage = (optionPercentage / 100f)
+    val normalizedPercentage = (optionPercentage / 100f).coerceIn(0f, 1f)
     val animateFloat = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
 
@@ -66,7 +58,7 @@ fun OptionRow(
                 animateFloat.animateTo(
                     targetValue = normalizedPercentage,
                     animationSpec = tween(
-                        durationMillis = 800,
+                        durationMillis = 500,
                         easing = LinearEasing
                     )
                 )
