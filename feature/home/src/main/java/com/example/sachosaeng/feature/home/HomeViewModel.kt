@@ -74,7 +74,10 @@ class HomeViewModel @Inject constructor(
 
     fun onSelectFavoriteCategory(category: Category) = intent {
         val currentMyCategory = state.myCategory
-        reduce { state.copy(myCategory = currentMyCategory.plus(category)) }
+        reduce {
+            if (currentMyCategory.contains(category)) state.copy(myCategory = currentMyCategory.minus(category))
+            else state.copy(myCategory = currentMyCategory.plus(category))
+        }
     }
 
     fun onModifyMyCategory() = intent {

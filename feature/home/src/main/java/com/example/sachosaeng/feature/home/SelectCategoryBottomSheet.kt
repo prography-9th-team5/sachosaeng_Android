@@ -62,7 +62,7 @@ fun SelectCategoryBottomSheet(
                 {
                     when (modifyListVisible) {
                         true -> CategoryFlowRowWithButton(
-                            allCategoryList,
+                            allCategoryList.drop(1),
                             onCategoryList = myCategoryList,
                             onClickCategory = onSelectFavoriteCategory,
                             onClickButton = onModifyComplete
