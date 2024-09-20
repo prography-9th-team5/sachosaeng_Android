@@ -53,6 +53,7 @@ object VoteMapper {
             isBookmarked = isBookmarked,
             isVoted = isVoted,
             isClosed = isClosed,
+            isMultipleChoiceAllowed = isMultipleChoiceAllowed,
             count = participantCount ?: 0,
             option = voteOptions.map { voteOptionResponse ->
                 VoteOption(

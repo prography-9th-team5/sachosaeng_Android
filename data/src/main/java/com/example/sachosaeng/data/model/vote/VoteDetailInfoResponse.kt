@@ -11,6 +11,7 @@ data class VoteDetailInfoResponse(
     val isVoted: Boolean,
     val category: CategoryResponse,
     val isClosed: Boolean,
+    val isMultipleChoiceAllowed: Boolean,
     val voteOptions: List<VoteOptionResponse>,
     val chosenVoteOptionId: List<Int?> = emptyList(),
     val description: String,

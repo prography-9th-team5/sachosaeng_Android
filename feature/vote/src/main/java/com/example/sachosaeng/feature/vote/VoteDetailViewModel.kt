@@ -1,6 +1,5 @@
 package com.example.sachosaeng.feature.vote
 
-import android.util.Log
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Vote
@@ -35,10 +34,11 @@ class VoteDetailViewModel @Inject constructor(
     private val getSimilarArticleUseCase: GetSimilarArticleUseCase,
     private val voteUseCase: SetVoteUseCase,
     private val getMyInfoUsecase: GetMyInfoUsecase
-) : ViewModel(), ContainerHost<VoteDetailUiState, Unit> {
+) : ViewModel(), ContainerHost<VoteDetailUiState, VoteDetailSideEffect> {
     private val voteDetailId = savedStateHandle.get<Int>(VOTE_DETAIL_ID)
     private val isDailyVote = savedStateHandle.get<Boolean>(VOTE_IS_DAILY)
-    override val container: Container<VoteDetailUiState, Unit> = container(VoteDetailUiState())
+    override val container: Container<VoteDetailUiState, VoteDetailSideEffect> =
+        container(VoteDetailUiState())
 
     init {
         getVoteContent()
@@ -47,7 +47,6 @@ class VoteDetailViewModel @Inject constructor(
     private fun getVoteContent() = intent {
         val voteCompleteDescriptionIcon = getVoteCompleteDescriptionImageRes().first()
         voteDetailId?.let {
-            Log.e("VoteDetailViewModel", "$it")
             getSingleVoteUsecase(voteDetailId).collectLatest { vote ->
                 reduce {
                     state.copy(
@@ -58,8 +57,6 @@ class VoteDetailViewModel @Inject constructor(
                     )
                 }
             }
-        } ?: run {
-            Log.e("VoteDetailViewModel", "voteDetailId is null")
         }
     }
 
@@ -100,10 +97,16 @@ class VoteDetailViewModel @Inject constructor(
 
     fun onSelectOption(optionId: Int) = intent {
         reduce {
-            when (state.vote.selectedOptionIds.contains(optionId)) {
-                true -> state.copy(vote = state.vote.copy(selectedOptionIds = state.vote.selectedOptionIds - optionId))
-                false -> state.copy(vote = state.vote.copy(selectedOptionIds = state.vote.selectedOptionIds + optionId))
+            val newSelectedOptionIds = if (state.vote.isMultipleChoiceAllowed) {
+                if (state.vote.selectedOptionIds.contains(optionId)) {
+                    state.vote.selectedOptionIds - optionId
+                } else {
+                    state.vote.selectedOptionIds + optionId
+                }
+            } else {
+                listOf(optionId)
             }
+            state.copy(vote = state.vote.copy(selectedOptionIds = newSelectedOptionIds))
         }
     }
 
@@ -128,4 +131,8 @@ class VoteDetailViewModel @Inject constructor(
         delay(2000)
         getVoteContent()
     }
+}
+
+sealed class VoteDetailSideEffect {
+    data class NavigateToAnotherVote(val categoryId: Int) : VoteDetailSideEffect()
 }

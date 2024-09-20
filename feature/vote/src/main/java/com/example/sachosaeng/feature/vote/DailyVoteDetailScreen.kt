@@ -23,7 +23,6 @@ import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.feature.vote.component.DailyVoteDetailCard
-import com.example.sachosaeng.feature.vote.component.VoteDetailCard
 
 @Composable
 fun DailyVoteDetailScreen(
@@ -37,7 +36,8 @@ fun DailyVoteDetailScreen(
         vote = vote,
         onSelectOption = onSelectOption,
         onBookmarkVote = onBookmarkVote,
-        onVoteComplete = onVoteComplete
+        onVoteComplete = onVoteComplete,
+        navigateToMain = navigateToBackStack
     )
 }
 
@@ -48,7 +48,8 @@ internal fun DailyVoteDetailScreen(
     vote: Vote,
     onBookmarkVote: () -> Unit,
     onVoteComplete: () -> Unit,
-    onSelectOption: (Int) -> Unit = { }
+    onSelectOption: (Int) -> Unit = { },
+    navigateToMain: () -> Unit = { }
 ) {
     Column(
         modifier = modifier
@@ -89,7 +90,7 @@ internal fun DailyVoteDetailScreen(
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
                     text = stringResource(id = if (vote.isVoted) string.more_vote_button_label else string.todays_vote_complete_label),
-                    onClick = onVoteComplete
+                    onClick = if (vote.isVoted) navigateToMain else onVoteComplete
                 )
             }
         }

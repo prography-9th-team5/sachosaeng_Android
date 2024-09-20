@@ -9,6 +9,7 @@ data class Vote(
     var isBookmarked: Boolean = false,
     val isClosed: Boolean = false,
     val isVoted: Boolean = false,
+    val isMultipleChoiceAllowed: Boolean = false,
     val description: String = "",
 )
 

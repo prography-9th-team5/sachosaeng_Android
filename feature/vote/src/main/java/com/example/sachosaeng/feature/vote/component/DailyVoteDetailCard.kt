@@ -79,6 +79,7 @@ fun DailyVoteDetailCard(
             }
             if (vote.isVoted) {
                 Text(
+                    modifier = Modifier.padding(top = 16.dp),
                     text = stringResource(id = R.string.vote_complete_description),
                     color = Gs_G5,
                     fontWeight = FontWeight.W500,
