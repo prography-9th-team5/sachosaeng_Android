@@ -1,5 +1,6 @@
 package com.example.sachosaeng.data.remote.oauth
 
+import android.util.Log
 import com.example.sachosaeng.data.api.OAuthService
 import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
 import com.example.sachosaeng.data.model.auth.TokenResponse
@@ -10,19 +11,20 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class OAuthRepositoryImpl @Inject constructor(
- //   private val authService: OAuthService,
+    private val oAuthService: OAuthService,
     private val authDataStore: AuthDataStore
 ) : OAuthRepository {
     override fun getNewAccessToken(): Flow<String> {
         return flow {
             authDataStore.getRefreshToken()
                 .run {
-//                    authService.getNewAccessToken().onSuccess { response ->
-//                        response.data?.let { data -> setToken(data) }
-//                            .run { emit(authDataStore.getAccessToken()) }
-//                    }.onFailure {
-//                        emit(authDataStore.getAccessToken())
-//                    }
+                    oAuthService.getNewAccessToken()
+                        .onSuccess { response ->
+                            response.data?.let { data -> setToken(data) }
+                                .run { emit(authDataStore.getAccessToken()) }
+                        }.onFailure {
+                            Log.e("OAuthRepositoryImpl", "getNewAccessToken: $it")
+                        }
                 }
         }
     }

@@ -1,5 +1,7 @@
 package com.example.sachosaeng.data.remote.oauth
 
+import com.example.sachosaeng.data.api.AuthService
+import com.example.sachosaeng.data.api.OAuthService
 import com.example.sachosaeng.data.repository.auth.AuthRepository
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -13,14 +15,14 @@ import javax.inject.Singleton
 
 @Singleton
 class OAuthenticator @Inject constructor(
-//    private val oAuthRepository: OAuthRepository
+    private val oAuthRepository: OAuthRepository,
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
         if (response.code == HTTP_UNAUTHORIZED) {
             synchronized(this) {
                 return runBlocking {
-                    val newToken = "token"
+                    val newToken = oAuthRepository.getNewAccessToken().first()
                     return@runBlocking response.request.newBuilder()
                         .putTokenHeader(newToken)
                         .build()
