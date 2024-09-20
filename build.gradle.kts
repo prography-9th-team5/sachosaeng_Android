@@ -8,3 +8,13 @@ plugins {
     alias(libs.plugins.google.ksp) apply false
     alias(libs.plugins.serialization) apply false
 }
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath(libs.oss.licenses.plugin)
+    }
+}

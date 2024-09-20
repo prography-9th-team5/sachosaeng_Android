@@ -19,7 +19,8 @@ private const val MODIFY_USER_INFO = "modifyUserInfo"
 
 fun NavGraphBuilder.addMyPageNavGraph(
     navController: NavHostController,
-    navigateToWebView: (String) -> Unit
+    navigateToWebView: (String) -> Unit,
+    navigateToOpenSource: () -> Unit = {}
 ) {
     navigation(
         route = ROUTE_MY_PAGE,
@@ -33,7 +34,8 @@ fun NavGraphBuilder.addMyPageNavGraph(
                 navigateToTermsOfService = { navigateToWebView(TERMS_OF_SERVICE) },
                 navigateToUserInfoModify = { navController.navigate(MODIFY_USER_INFO) },
                 navigateToFaq = { navigateToWebView(FAQ) },
-                navigateToRequestToAdmin = { navigateToWebView(REQUEST_TO_ADMIN) }
+                navigateToRequestToAdmin = { navigateToWebView(REQUEST_TO_ADMIN) },
+                navigateToOpenSource = { navigateToOpenSource() }
             )
         }
         composable(WITHDRAW) {

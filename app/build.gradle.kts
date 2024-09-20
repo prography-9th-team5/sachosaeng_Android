@@ -1,4 +1,3 @@
-import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 import java.util.Properties
 
 plugins {
@@ -7,6 +6,7 @@ plugins {
     alias(libs.plugins.google.dagger.hilt.android)
     alias(libs.plugins.google.gms)
     alias(libs.plugins.google.ksp)
+    id(libs.plugins.oss.licenses.plugin.get().pluginId)
 }
 
 fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
@@ -88,7 +88,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
 
-
     //orbit
     implementation(libs.orbit.compose)
     implementation(libs.orbit.viewmodel)
@@ -118,6 +117,9 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     debugImplementation(libs.ui.tooling)
+
+    //google-services
+    implementation(libs.oss.licenses)
 
     //module
     implementation(project(":core:ui"))
