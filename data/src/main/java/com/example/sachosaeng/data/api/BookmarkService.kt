@@ -31,4 +31,7 @@ interface BookmarkService {
     suspend fun getBookmarkList(
         @Path("categoryId") categoryId: Int
     ): ApiResult<BaseResponse<BookmarkResponse>>
+
+    @GET("/api/v1/bookmarks/votes")
+    suspend fun getAllBookmarkList(): ApiResult<BaseResponse<BookmarkResponse>>
 }

@@ -27,4 +27,8 @@ class BookmarkRepositoryImpl @Inject constructor(
     override fun getBookmarkList(categoryId: Int): Flow<List<Bookmark>> = flow {
         bookmarkService.getBookmarkList(categoryId).getOrThrow().data?.let { emit(it.toDomain()) }
     }
+
+    override fun getAllBookmarkList(): Flow<List<Bookmark>> = flow {
+        bookmarkService.getAllBookmarkList().getOrThrow().data?.let { emit(it.toDomain()) }
+    }
 }

@@ -8,4 +8,5 @@ interface BookmarkRepository {
     fun deleteBookmarkList(bookmarkIds : List<Int>): Flow<Unit>
     fun bookmarkVote(voteId: Int): Flow<Unit>
     fun getBookmarkList(categoryId: Int): Flow<List<Bookmark>>
+    fun getAllBookmarkList(): Flow<List<Bookmark>>
 }
