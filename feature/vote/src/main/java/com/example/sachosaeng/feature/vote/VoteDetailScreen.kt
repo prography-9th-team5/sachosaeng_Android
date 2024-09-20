@@ -41,6 +41,9 @@ fun VoteScreen(
         false -> {
             when(state.value.isDailyVote) {
                 true -> DailyVoteDetailScreen(
+                    onSelectOption = viewModel::onSelectOption,
+                    onBookmarkVote = viewModel::bookmarkButtonClick,
+                    onVoteComplete = viewModel::vote,
                     navigateToBackStack = navigateToBackStack,
                     vote = state.value.vote
                 )

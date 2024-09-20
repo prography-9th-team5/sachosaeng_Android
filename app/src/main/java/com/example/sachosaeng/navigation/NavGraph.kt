@@ -77,7 +77,7 @@ fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
                     )
                 },
                 navigateToVoteCard = { voteId, isDailyVote ->
-                    navController.navigateToVoteDetail(voteId = voteId, isDailyVote = false)
+                    navController.navigateToVoteDetail(voteId = voteId, isDailyVote = isDailyVote)
                 }
             )
         }

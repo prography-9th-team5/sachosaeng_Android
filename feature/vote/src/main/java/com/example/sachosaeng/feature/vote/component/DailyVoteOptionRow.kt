@@ -26,6 +26,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.core.ui.R.drawable
+import com.example.sachosaeng.core.ui.theme.Gs_G6
 
 @Composable
 fun DailyVoteOptionRow(
@@ -39,17 +40,12 @@ fun DailyVoteOptionRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
-            .background(if (isVoted && isSeleceted) Gs_G5 else Gs_G2)
+            .clip(RoundedCornerShape(4.dp))
+            .background(if (isSeleceted) Gs_G6 else Gs_G2)
             .fillMaxWidth()
-            .border(
-                width = 1.dp,
-                color = if (isSeleceted) Gs_Black else Gs_G3,
-                shape = RoundedCornerShape(4.dp)
-            )
             .padding(
                 start = 16.dp, top = 16.dp, bottom = 16.dp, end = 40.dp
             )
-            .clip(RoundedCornerShape(4.dp))
             .clickable {
                 if (!isVoted) onSelected(text)
             }
@@ -59,7 +55,7 @@ fun DailyVoteOptionRow(
             text = text,
             fontSize = 14.sp,
             overflow = TextOverflow.Ellipsis,
-            color = if (isVoted && isSeleceted) Gs_White else Gs_Black,
+            color = if (isSeleceted) Gs_White else Gs_Black,
             fontWeight = if (isSeleceted) FontWeight.W700 else FontWeight.W500
         )
     }

@@ -22,7 +22,6 @@ import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
 
-
 @Composable
 fun TodaysVoteCard(voteTitle: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {
     Row(

@@ -1,5 +1,6 @@
 package com.example.sachosaeng.feature.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.UserType
@@ -125,12 +126,13 @@ class HomeViewModel @Inject constructor(
     fun onDailyVoteDialogConfirmClicked() = intent {
         reduce { state.copy(isDailyVoteDialogOpen = false) }.also {
             state.dailyVote?.let {
-                postSideEffect(HomeSideEffect.NavigateToVoteDetail(state.dailyVote!!.id))
+                Log.e("HomeViewModel", "${it.id}")
+                postSideEffect(HomeSideEffect.NavigateToVoteDetail(state.dailyVote!!.id, true))
             }
         }
     }
 }
 
 sealed class HomeSideEffect {
-    data class NavigateToVoteDetail(val voteId: Int) : HomeSideEffect()
+    data class NavigateToVoteDetail(val voteId: Int, val isDailyVote: Boolean) : HomeSideEffect()
 }

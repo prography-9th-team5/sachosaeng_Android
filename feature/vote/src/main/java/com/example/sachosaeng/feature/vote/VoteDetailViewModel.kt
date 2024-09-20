@@ -47,6 +47,7 @@ class VoteDetailViewModel @Inject constructor(
     private fun getVoteContent() = intent {
         val voteCompleteDescriptionIcon = getVoteCompleteDescriptionImageRes().first()
         voteDetailId?.let {
+            Log.e("VoteDetailViewModel", "$it")
             getSingleVoteUsecase(voteDetailId).collectLatest { vote ->
                 reduce {
                     state.copy(

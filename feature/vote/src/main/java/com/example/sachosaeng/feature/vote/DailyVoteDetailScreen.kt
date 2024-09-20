@@ -22,15 +22,22 @@ import com.example.sachosaeng.core.model.VoteOption
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.theme.Gs_G2
+import com.example.sachosaeng.feature.vote.component.DailyVoteDetailCard
 import com.example.sachosaeng.feature.vote.component.VoteDetailCard
 
 @Composable
 fun DailyVoteDetailScreen(
     navigateToBackStack: () -> Unit,
+    onSelectOption: (Int) -> Unit,
+    onBookmarkVote: () -> Unit,
+    onVoteComplete: () -> Unit,
     vote: Vote,
 ) {
     DailyVoteDetailScreen(
-        vote = vote
+        vote = vote,
+        onSelectOption = onSelectOption,
+        onBookmarkVote = onBookmarkVote,
+        onVoteComplete = onVoteComplete
     )
 }
 
@@ -39,6 +46,9 @@ fun DailyVoteDetailScreen(
 internal fun DailyVoteDetailScreen(
     modifier: Modifier = Modifier,
     vote: Vote,
+    onBookmarkVote: () -> Unit,
+    onVoteComplete: () -> Unit,
+    onSelectOption: (Int) -> Unit = { }
 ) {
     Column(
         modifier = modifier
@@ -61,13 +71,12 @@ internal fun DailyVoteDetailScreen(
                         fontSize = 26.sp,
                         fontWeight = FontWeight.W700
                     )
-                    VoteDetailCard(
+                    DailyVoteDetailCard(
                         modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
                         isBookmarked = vote.isBookmarked,
-                        isDailyVote = true,
-                        onBookmarkButtonClicked = { },
+                        onBookmarkButtonClicked = onBookmarkVote,
                         selectedOptionIndex = vote.selectedOptionIds,
-                        onSelectOption = {},
+                        onSelectOption = onSelectOption,
                         vote = vote
                     )
                 }
@@ -79,8 +88,8 @@ internal fun DailyVoteDetailScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
-                    text = stringResource(id = if (vote.isVoted) string.more_vote_button_label else string.confirm_label),
-                    onClick = { }
+                    text = stringResource(id = if (vote.isVoted) string.more_vote_button_label else string.todays_vote_complete_label),
+                    onClick = onVoteComplete
                 )
             }
         }
@@ -110,5 +119,5 @@ fun DailyVoteDetailScreenPreview() {
                 name = "카테고리",
                 imageUrl = ""
             )
-        ), navigateToBackStack = {})
+        ), onSelectOption = {}, navigateToBackStack = {}, onBookmarkVote = {}, onVoteComplete = {})
 }

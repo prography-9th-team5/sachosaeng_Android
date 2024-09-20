@@ -28,13 +28,18 @@ fun NavGraphBuilder.addVoteGraph(
         route = GRAPH_VOTE
     ) {
         composable(
-            route = "$ROUTE_VOTE_DETAIL?$VOTE_DETAIL_ID={$VOTE_DETAIL_ID}",
+            route = "$ROUTE_VOTE_DETAIL?$VOTE_DETAIL_ID={$VOTE_DETAIL_ID}?${VOTE_IS_DAILY}={$VOTE_IS_DAILY}",
             arguments = listOf(
                 navArgument(VOTE_DETAIL_ID) {
                     type = NavType.IntType
                     nullable = false
                     defaultValue = 1
                 },
+                navArgument(VOTE_IS_DAILY) {
+                    type = NavType.BoolType
+                    nullable = false
+                    defaultValue = false
+                }
             )
         ) { backStackEntry ->
             VoteScreen(navigateToBackStack = { navController.popBackStack() })

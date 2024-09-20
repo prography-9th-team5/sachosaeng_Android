@@ -58,7 +58,7 @@ fun OptionRow(
                 animateFloat.animateTo(
                     targetValue = normalizedPercentage,
                     animationSpec = tween(
-                        durationMillis = 800,
+                        durationMillis = 500,
                         easing = LinearEasing
                     )
                 )
