@@ -19,5 +19,5 @@ interface CategoryService {
     @PUT("/api/v1/my-categories")
     suspend fun setMyCategoryList(
         @Body categoryIds: SetCategoryRequest
-    ): ApiResult<BaseResponse<String>>
+    ): ApiResult<BaseResponse<Unit>>
 }
