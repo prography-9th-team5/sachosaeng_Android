@@ -10,7 +10,6 @@ import androidx.navigation.navigation
 import com.example.sachosaeng.feature.vote.VoteScreen
 
 const val ROUTE_VOTE = "vote"
-const val ROUTE_VOTE_COMPLETE = "voteComplete"
 const val GRAPH_VOTE = "vote_graph"
 const val VOTE_DETAIL_ID = "voteDetail"
 const val VOTE_IS_DAILY = "isDailyVote"
@@ -21,7 +20,8 @@ fun NavController.navigateToVoteDetail(voteId: Int?, isDailyVote: Boolean) {
 }
 
 fun NavGraphBuilder.addVoteGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    navigateToArticleDetail: (Int, Int) -> Unit
 ) {
     navigation(
         startDestination = ROUTE_VOTE_DETAIL,
@@ -42,7 +42,10 @@ fun NavGraphBuilder.addVoteGraph(
                 }
             )
         ) { backStackEntry ->
-            VoteScreen(navigateToBackStack = { navController.popBackStack() })
+            VoteScreen(
+                navigateToBackStack = { navController.popBackStack() },
+                navigateToArticleDetail = { articleId, categoryId -> navigateToArticleDetail(articleId , categoryId) }
+            )
         }
     }
 }

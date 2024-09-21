@@ -10,14 +10,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +26,7 @@ import com.example.sachosaeng.core.model.Vote
 import com.example.sachosaeng.core.model.VoteOption
 import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.ui.theme.Gs_Black
+import com.example.sachosaeng.core.ui.component.button.BookmarkButton
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.core.util.extension.IntExtension.toNumberOfPeople
@@ -55,6 +52,7 @@ fun DailyVoteDetailCard(
         ) {
             CategoryIcon(imageUrl = vote.category.imageUrl)
             BookmarkButton(
+                modifier = Modifier.padding(18.dp),
                 isBookmarked = isBookmarked,
                 onBookmarkButtonClicked = onBookmarkButtonClicked
             )
@@ -99,24 +97,6 @@ private fun CategoryIcon(imageUrl: String?) {
         model = imageUrl ?: drawable.ic_default_category,
         contentDescription = "",
     )
-}
-
-@Composable
-private fun BookmarkButton(
-    isBookmarked: Boolean = false,
-    onBookmarkButtonClicked: () -> Unit = { }
-) {
-    IconButton(
-        modifier = Modifier
-            .size(68.dp)
-            .padding(18.dp),
-        onClick = { onBookmarkButtonClicked() }) {
-        Icon(
-            painterResource(id = drawable.ic_bookmark),
-            tint = if (isBookmarked) Gs_Black else Gs_G5,
-            contentDescription = ""
-        )
-    }
 }
 
 @Preview

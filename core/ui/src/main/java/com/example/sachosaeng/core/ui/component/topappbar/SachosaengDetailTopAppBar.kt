@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -18,12 +19,15 @@ fun SachosaengDetailTopAppBar(
     title: String,
     fontSize: Int = 18,
     fontWeight: FontWeight = FontWeight.W700,
-    navigateToBackStack: (() -> Unit)? = null
+    navigateToBackStack: (() -> Unit)? = null,
+    tailingComponent: @Composable (() -> Unit)? = null
 ) {
     SachosaengTopAppBar(
+        modifier = modifier,
         componentRow = {
             Row(
-                modifier = modifier
+                modifier = modifier,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 navigateToBackStack?.let {
                     Image(
@@ -39,6 +43,7 @@ fun SachosaengDetailTopAppBar(
                     fontWeight = fontWeight,
                     textAlign = TextAlign.Center
                 )
+                tailingComponent?.invoke()
             }
         }
     )

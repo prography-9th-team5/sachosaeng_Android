@@ -3,6 +3,7 @@ package com.example.sachosaeng.data.repository.bookmark
 import com.example.sachosaeng.core.model.Bookmark
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.data.api.BookmarkService
+import com.example.sachosaeng.data.model.bookmark.SingleArticleBookmarkRequest
 import com.example.sachosaeng.data.repository.bookmark.BookmarkMapper.toDomain
 import com.example.sachosaeng.data.repository.bookmark.BookmarkMapper.toRequest
 import kotlinx.coroutines.flow.Flow
@@ -16,16 +17,32 @@ class BookmarkRepositoryImpl @Inject constructor(
         bookmarkService.deleteBookmark(bookmarkId).getOrThrow().data?.let { emit(it) }
     }
 
+    override fun deleteBookmarkArticle(bookmarkId: Int): Flow<Unit> {
+        return flow {
+            bookmarkService.deleteArticleBookmark(bookmarkId).getOrThrow().data?.let { emit(it) }
+        }
+    }
+
     override fun deleteBookmarks(bookmarkIds: List<Int>): Flow<Unit> = flow {
-        bookmarkService.deleteBookmarks(bookmarkIds.toRequest()).getOrThrow().data?.let { emit(it) }
+        bookmarkService.deleteBookmarks(bookmarkIds.toRequest()).getOrThrow().data?.let {
+            emit(
+                it
+            )
+        }
     }
 
     override fun bookmarkVote(voteId: Int): Flow<Unit> = flow {
         bookmarkService.voteBookmark(voteId.toRequest()).getOrThrow().data?.let { emit(it) }
     }
 
+    override fun bookmarkArticle(articleId: Int): Flow<Unit> = flow {
+        bookmarkService.bookmarkArticle(SingleArticleBookmarkRequest(informationId = articleId))
+            .getOrThrow().data?.let { emit(it) }
+    }
+
     override fun getBookmarkList(categoryId: Int): Flow<List<Bookmark>> = flow {
-        bookmarkService.getBookmarkList(categoryId).getOrThrow().data?.let { emit(it.toDomain()) }
+        bookmarkService.getBookmarkList(categoryId)
+            .getOrThrow().data?.let { emit(it.toDomain()) }
     }
 
     override fun getAllBookmarkList(): Flow<List<Bookmark>> = flow {

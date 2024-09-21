@@ -1,6 +1,5 @@
-package com.example.sachosaeng.core.usecase.vote
+package com.example.sachosaeng.core.usecase.article
 
-import com.example.sachosaeng.core.model.Vote
 import com.example.sachosaeng.data.repository.bookmark.BookmarkRepository
 import javax.inject.Inject
 

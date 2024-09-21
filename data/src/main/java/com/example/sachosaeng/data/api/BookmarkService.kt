@@ -3,6 +3,7 @@ package com.example.sachosaeng.data.api
 import com.example.sachosaeng.data.model.BaseResponse
 import com.example.sachosaeng.data.model.bookmark.BookmarkListRequest
 import com.example.sachosaeng.data.model.bookmark.BookmarkResponse
+import com.example.sachosaeng.data.model.bookmark.SingleArticleBookmarkRequest
 import com.example.sachosaeng.data.model.bookmark.SingleVoteBookmarkRequest
 import com.example.sachosaeng.data.remote.util.ApiResult
 import retrofit2.http.Body
@@ -23,6 +24,11 @@ interface BookmarkService {
         @Path("voteId") voteId: Int
     ): ApiResult<BaseResponse<Unit>>
 
+    @DELETE("/api/v1/bookmarks/information/{informationId}")
+    suspend fun deleteArticleBookmark(
+        @Path("informationId") informationId: Int
+    ): ApiResult<BaseResponse<Unit>>
+
     @POST("/api/v1/bookmarks/votes")
     suspend fun voteBookmark(
         @Body voteId: SingleVoteBookmarkRequest
@@ -35,4 +41,9 @@ interface BookmarkService {
 
     @GET("/api/v1/bookmarks/votes")
     suspend fun getAllBookmarkList(): ApiResult<BaseResponse<BookmarkResponse>>
+
+    @POST("/api/v1/bookmarks/information")
+    suspend fun bookmarkArticle(
+        @Body articleId: SingleArticleBookmarkRequest
+    ): ApiResult<BaseResponse<Unit>>
 }

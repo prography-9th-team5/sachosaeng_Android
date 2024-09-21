@@ -18,6 +18,14 @@ object CategoryMapper {
         )
     }
 
+    fun CategoryResponse.toDomain(): Category = Category(
+        id = this.categoryId ?: 0,
+        name = this.name,
+        imageUrl = this.iconUrl,
+        color = this.backgroundColor ?: GS_BLACK_CODE,
+        textColor = this.textColor ?: GS_BLACK_CODE
+    )
+
     fun AllCategoryIconResponse.toDomain(): Category = Category(
         id = ALL_CATEGORY_ID,
         name = ALL_CATEGORY_NAME,

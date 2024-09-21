@@ -8,7 +8,7 @@ import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.usecase.article.GetSimilarArticleUseCase
 import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarkUseCase
 import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
-import com.example.sachosaeng.core.usecase.vote.BookmarkVoteUsecase
+import com.example.sachosaeng.core.usecase.article.BookmarkVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.GetSingleVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.SetVoteUseCase
 import com.example.sachosaeng.feature.vote.navigation.VOTE_DETAIL_ID

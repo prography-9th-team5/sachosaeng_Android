@@ -27,7 +27,8 @@ fun VoteCompleteFooter(
     similarArticleList: List<SimilarArticle>,
     modifier: Modifier = Modifier,
     completeDescription: String,
-    completeDescriptionIconRes: Int?
+    completeDescriptionIconRes: Int?,
+    navigateToArticleDetail: (Int) -> Unit
 ) {
     Column {
         Row(
@@ -62,7 +63,7 @@ fun VoteCompleteFooter(
                 fontSize = 18.sp
             )
             similarArticleList.forEach {
-                ArticleRow(similarArticle = it)
+                ArticleRow(similarArticle = it, onClickArticle = navigateToArticleDetail)
             }
         }
     }

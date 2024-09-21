@@ -16,9 +16,8 @@ import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.component.bottomappbar.BottomAppbarItem
 import com.example.sachosaeng.core.ui.component.bottomappbar.SachoSaengBottomAppBar
 import com.example.sachosaeng.feature.bookmark.navigation.ROUTE_BOOKMARK
+import com.example.sachosaeng.navigation.NavGraph
 import com.example.sachosaeng.navigation.ROUTE_MAIN
-import com.example.sachosaeng.navigation.Screen
-import com.example.sachosaeng.navigation.addNavGraph
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,7 +36,7 @@ class MainActivity : ComponentActivity() {
                             .fillMaxSize()
                             .padding(it)
                     ) {
-                        addNavGraph(navController = navController)
+                        NavGraph(navController = navController)
                     }
                 },
                 bottomBar = {
