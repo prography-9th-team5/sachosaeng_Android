@@ -26,6 +26,7 @@ fun VoteColumnByCategory(
                     .clickable {
                         onVoteClick(vote.id)
                     },
+                isVoted = vote.isVoted,
                 text = vote.title,
                 backgroundColorCode = vote.category.color,
                 iconUrl = vote.category.imageUrl,
