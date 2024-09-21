@@ -11,4 +11,6 @@ interface BookmarkRepository {
     fun bookmarkArticle(articleId: Int): Flow<Unit>
     fun getBookmarkList(categoryId: Int): Flow<List<Bookmark>>
     fun getAllBookmarkList(): Flow<List<Bookmark>>
+    fun getAllBookmarkedArticleList(): Flow<List<Bookmark>>
+    fun getBookmarkedArticleList(categoryId: Int): Flow<List<Bookmark>>
 }

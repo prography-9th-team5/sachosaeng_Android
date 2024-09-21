@@ -8,7 +8,9 @@ data class BookmarkScreenUiState(
     val userType: UserType = UserType.NEW_EMPLOYEE,
     val selectedCategory: Category? = null,
     val allCategory: List<Category> = emptyList(),
-    val bookmarkList: List<Bookmark> = emptyList(),
+    val bookmarkedVoteList: List<Bookmark> = emptyList(),
+    val bookmarkedArticleList: List<Bookmark> = emptyList(),
     val isModifyMode : Boolean = false,
-    val selectedForModifyBookmarkList: List<Bookmark> = emptyList()
+    val selectedForModifyBookmarkList: List<Bookmark> = emptyList(),
+    val selectedForModifyBookmarkedArticleList: List<Bookmark> = emptyList(),
 )

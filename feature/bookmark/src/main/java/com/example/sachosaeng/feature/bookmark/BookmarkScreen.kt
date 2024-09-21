@@ -40,25 +40,30 @@ import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
+import com.example.sachosaeng.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun BookmarkScreen(
     moveToVote: (Int) -> Unit = {},
+    moveToArticle: (Int, Int) -> Unit = { _, _ -> },
     moveToMyPage: () -> Unit = {},
     viewModel: BookmarkViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
     BookmarkScreen(
         state = state.value,
-        onBookmarkClick = { bookmark ->
-            //todo: bookmark로 가야하는지? vote로 봐야하는지?
-            moveToVote(bookmark.voteId)
-        },
         onProfileImageClicked = moveToMyPage,
         onModifyButtonClicked = viewModel::modifyBookmark,
         onCategoryClicked = viewModel::categoryClicked,
+        onBookmarkedVoteClicked = { bookmark -> moveToVote(bookmark.id) },
+        onBookmarkedArticleClick = { bookmark ->
+            moveToArticle(
+                bookmark.id,
+                state.value.selectedCategory?.id ?: ALL_CATEGORY_ID
+            )
+        },
         onSelectForModifyBookmark = viewModel::selectModifyBookmark,
         deleteSelectedBookmarks = viewModel::deleteSelectedBookmarks
     )
@@ -71,7 +76,8 @@ internal fun BookmarkScreen(
     onModifyButtonClicked: () -> Unit = {},
     onProfileImageClicked: () -> Unit = {},
     onCategoryClicked: (Category) -> Unit = {},
-    onBookmarkClick: (Bookmark) -> Unit = {},
+    onBookmarkedVoteClicked: (Bookmark) -> Unit = {},
+    onBookmarkedArticleClick: (Bookmark) -> Unit = {},
     deleteSelectedBookmarks: () -> Unit = {},
     onSelectForModifyBookmark: (Bookmark) -> Unit = {}
 ) {
@@ -101,26 +107,13 @@ internal fun BookmarkScreen(
             tabs = tabList,
             contentScreens = listOf(
                 {
-                    CategoryRow(
-                        selectedCategory = state.selectedCategory,
-                        categories = state.allCategory,
+                    VoteTabScreen(
+                        state = state,
                         onModifyButtonClicked = onModifyButtonClicked,
                         onCategoryClicked = onCategoryClicked,
-                        isModifyMode = state.isModifyMode
-                    )
-                    BookmarkList(
-                        isModifyMode = state.isModifyMode,
-                        bookmarks = state.bookmarkList,
-                        onBookmarkClicked = onBookmarkClick,
-                        selectedForModifyBookmarkList = state.selectedForModifyBookmarkList,
+                        onBookmarkedVoteClicked = onBookmarkedVoteClicked,
+                        deleteSelectedBookmarks = deleteSelectedBookmarks,
                         onSelectForModifyBookmark = onSelectForModifyBookmark
-                    )
-                    Spacer(modifier = Modifier.weight(1f))
-                    if (state.isModifyMode) SachoSaengButton(
-                        enabled = state.selectedForModifyBookmarkList.isNotEmpty(),
-                        modifier = Modifier.fillMaxWidth(),
-                        text = stringResource(id = R.string.delete_label),
-                        onClick = deleteSelectedBookmarks
                     )
                 },
                 {
@@ -129,8 +122,49 @@ internal fun BookmarkScreen(
                         onModifyButtonClicked = onModifyButtonClicked,
                         isModifyMode = state.isModifyMode,
                     )
+                    BookmarkList(
+                        isModifyMode = state.isModifyMode,
+                        bookmarks = state.bookmarkedArticleList,
+                        onBookmarkClicked = onBookmarkedArticleClick,
+                        selectedForModifyBookmarkList = state.selectedForModifyBookmarkList,
+                        onSelectForModifyBookmark = onSelectForModifyBookmark
+                    )
                 },
             )
+        )
+    }
+}
+
+@Composable
+private fun VoteTabScreen(
+    state: BookmarkScreenUiState,
+    onModifyButtonClicked: () -> Unit = {},
+    onCategoryClicked: (Category) -> Unit = {},
+    onBookmarkedVoteClicked: (Bookmark) -> Unit = {},
+    deleteSelectedBookmarks: () -> Unit = {},
+    onSelectForModifyBookmark: (Bookmark) -> Unit = {}
+) {
+    Column {
+        CategoryRow(
+            selectedCategory = state.selectedCategory,
+            categories = state.allCategory,
+            onModifyButtonClicked = onModifyButtonClicked,
+            onCategoryClicked = onCategoryClicked,
+            isModifyMode = state.isModifyMode
+        )
+        BookmarkList(
+            isModifyMode = state.isModifyMode,
+            bookmarks = state.bookmarkedVoteList,
+            onBookmarkClicked = onBookmarkedVoteClicked,
+            selectedForModifyBookmarkList = state.selectedForModifyBookmarkList,
+            onSelectForModifyBookmark = onSelectForModifyBookmark
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        if (state.isModifyMode) SachoSaengButton(
+            enabled = state.selectedForModifyBookmarkList.isNotEmpty(),
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = R.string.delete_label),
+            onClick = deleteSelectedBookmarks
         )
     }
 }
@@ -250,22 +284,22 @@ fun BookmarkScreenPreview() {
                     textColor = "#FFFFFF"
                 ),
             ),
-            bookmarkList = listOf(
+            bookmarkedVoteList = listOf(
                 Bookmark(
-                    voteBookmarkId = 1,
-                    voteId = 1,
+                    bookmarkId = 1,
+                    id = 1,
                     title = "Bookmark1",
                     description = "Description1"
                 ),
                 Bookmark(
-                    voteBookmarkId = 2,
-                    voteId = 2,
+                    bookmarkId = 2,
+                    id = 2,
                     title = "Bookmark2",
                     description = "Description2"
                 ),
                 Bookmark(
-                    voteBookmarkId = 3,
-                    voteId = 3,
+                    bookmarkId = 3,
+                    id = 3,
                     title = "Bookmark3",
                     description = "Description3"
                 ),
@@ -273,14 +307,14 @@ fun BookmarkScreenPreview() {
             isModifyMode = true,
             selectedForModifyBookmarkList = listOf(
                 Bookmark(
-                    voteBookmarkId = 1,
-                    voteId = 1,
+                    bookmarkId = 1,
+                    id = 1,
                     title = "Bookmark1",
                     description = "Description1"
                 ),
                 Bookmark(
-                    voteBookmarkId = 2,
-                    voteId = 2,
+                    bookmarkId = 2,
+                    id = 2,
                     title = "Bookmark2",
                     description = "Description2"
                 ),

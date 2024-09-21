@@ -3,6 +3,7 @@ package com.example.sachosaeng.data.repository.bookmark
 import com.example.sachosaeng.core.model.Bookmark
 import com.example.sachosaeng.data.model.bookmark.BookmarkListRequest
 import com.example.sachosaeng.data.model.bookmark.BookmarkResponse
+import com.example.sachosaeng.data.model.bookmark.BookmarkedArticleResponse
 import com.example.sachosaeng.data.model.bookmark.SingleVoteBookmarkRequest
 
 object BookmarkMapper {
@@ -17,10 +18,21 @@ object BookmarkMapper {
     fun BookmarkResponse.toDomain(): List<Bookmark> {
         return votes.map {
             Bookmark(
-                voteBookmarkId = it.voteBookmarkId,
-                voteId = it.voteId,
+                bookmarkId = it.voteBookmarkId,
+                id = it.voteId,
                 title = it.title,
                 description = it.description
+            )
+        }
+    }
+
+    fun BookmarkedArticleResponse.toDomain(): List<Bookmark> {
+        return information.map {
+            Bookmark(
+                bookmarkId = it.informationBookmarkId,
+                id = it.informationId,
+                title = it.title,
+                description = ""
             )
         }
     }

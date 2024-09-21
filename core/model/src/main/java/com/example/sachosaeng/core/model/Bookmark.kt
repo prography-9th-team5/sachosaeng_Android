@@ -1,8 +1,8 @@
 package com.example.sachosaeng.core.model
 
 data class Bookmark(
-    val voteBookmarkId: Int,
-    val voteId: Int,
+    val bookmarkId: Int,
+    val id: Int,
     val title: String,
     val description: String
 )

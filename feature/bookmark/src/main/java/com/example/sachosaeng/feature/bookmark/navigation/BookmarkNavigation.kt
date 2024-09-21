@@ -11,6 +11,7 @@ const val GRAPH_BOOKMARK = "bookmark_graph"
 
 fun NavGraphBuilder.addBookmarkGraph(
     navigateToVote: (Int) -> Unit,
+    navigateToArticle: (Int, Int) -> Unit,
     navigateToMyPage: () -> Unit
 ) {
     navigation(
@@ -22,7 +23,8 @@ fun NavGraphBuilder.addBookmarkGraph(
         ) {
             BookmarkScreen(
                 moveToVote = navigateToVote,
-                moveToMyPage = navigateToMyPage
+                moveToMyPage = navigateToMyPage,
+                moveToArticle = navigateToArticle
             )
         }
     }
