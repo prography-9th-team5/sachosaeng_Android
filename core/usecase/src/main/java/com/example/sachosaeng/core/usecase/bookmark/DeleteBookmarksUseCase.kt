@@ -8,5 +8,5 @@ class DeleteBookmarksUseCase @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) {
     operator fun invoke(bookmarkIds: List<Bookmark>) =
-        bookmarkRepository.deleteBookmarks(bookmarkIds = bookmarkIds.map { it.voteBookmarkId })
+        bookmarkRepository.deleteBookmarks(bookmarkIds = bookmarkIds.map { it.bookmarkId })
 }

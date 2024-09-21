@@ -3,6 +3,7 @@ package com.example.sachosaeng.data.api
 import com.example.sachosaeng.data.model.BaseResponse
 import com.example.sachosaeng.data.model.bookmark.BookmarkListRequest
 import com.example.sachosaeng.data.model.bookmark.BookmarkResponse
+import com.example.sachosaeng.data.model.bookmark.BookmarkedArticleResponse
 import com.example.sachosaeng.data.model.bookmark.SingleArticleBookmarkRequest
 import com.example.sachosaeng.data.model.bookmark.SingleVoteBookmarkRequest
 import com.example.sachosaeng.data.remote.util.ApiResult
@@ -41,6 +42,14 @@ interface BookmarkService {
 
     @GET("/api/v1/bookmarks/votes")
     suspend fun getAllBookmarkList(): ApiResult<BaseResponse<BookmarkResponse>>
+
+    @GET("/api/v1/bookmarks/information")
+    suspend fun getAllBookmarkedArticleList(): ApiResult<BaseResponse<BookmarkedArticleResponse>>
+
+    @GET("/api/v1/bookmarks/information/categories/{categoryId}")
+    suspend fun getBookmarkedArticleList(
+        @Path("categoryId") categoryId: Int
+    ): ApiResult<BaseResponse<BookmarkedArticleResponse>>
 
     @POST("/api/v1/bookmarks/information")
     suspend fun bookmarkArticle(
