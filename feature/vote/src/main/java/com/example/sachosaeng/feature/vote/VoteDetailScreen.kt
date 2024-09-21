@@ -30,6 +30,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 @Composable
 fun VoteScreen(
     navigateToBackStack: () -> Unit,
+    navigateToArticleDetail: (Int, Int) -> Unit,
     viewModel: VoteDetailViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
@@ -37,7 +38,7 @@ fun VoteScreen(
     when (state.value.isCompleteState) {
         true -> VoteCompleteScreen()
         false -> {
-            when(state.value.isDailyVote) {
+            when (state.value.isDailyVote) {
                 true -> DailyVoteDetailScreen(
                     onSelectOption = viewModel::onSelectOption,
                     onBookmarkVote = viewModel::bookmarkButtonClick,
@@ -45,6 +46,7 @@ fun VoteScreen(
                     navigateToBackStack = navigateToBackStack,
                     vote = state.value.vote
                 )
+
                 false -> VoteScreen(
                     vote = state.value.vote,
                     similarArticle = state.value.similarArticle,
@@ -52,7 +54,8 @@ fun VoteScreen(
                     navigateToBackStack = navigateToBackStack,
                     onBookmarkVote = viewModel::bookmarkButtonClick,
                     onVoteComplete = viewModel::vote,
-                    onSelectOption = viewModel::onSelectOption
+                    onSelectOption = viewModel::onSelectOption,
+                    navigateToArticleDetail = navigateToArticleDetail
                 )
             }
         }
@@ -69,6 +72,7 @@ internal fun VoteScreen(
     onBookmarkVote: () -> Unit = { },
     onVoteComplete: () -> Unit = { },
     navigateToBackStack: () -> Unit,
+    navigateToArticleDetail: (Int, Int) -> Unit
 ) {
     Column(
         modifier = modifier
@@ -102,7 +106,8 @@ internal fun VoteScreen(
                     modifier = modifier.padding(horizontal = 20.dp),
                     completeDescription = vote.description,
                     completeDescriptionIconRes = completeDescriptionIconRes,
-                    similarArticleList = similarArticle
+                    similarArticleList = similarArticle,
+                    navigateToArticleDetail = { id -> navigateToArticleDetail(id, vote.category.id) }
                 )
             }
             item {
@@ -111,8 +116,8 @@ internal fun VoteScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
-                    text = stringResource(id = if(vote.isVoted) string.more_vote_button_label else string.confirm_label ),
-                    onClick = { if(vote.isVoted) navigateToBackStack() else onVoteComplete() }
+                    text = stringResource(id = if (vote.isVoted) string.more_vote_button_label else string.confirm_label),
+                    onClick = { if (vote.isVoted) navigateToBackStack() else onVoteComplete() }
                 )
             }
         }
@@ -142,5 +147,11 @@ fun VoteScreenPreview() {
                 name = "카테고리",
                 imageUrl = ""
             )
-        ), navigateToBackStack = {})
+        ),
+        navigateToBackStack = {},
+        navigateToArticleDetail = { _, _ -> },
+        onBookmarkVote = {},
+        onSelectOption = {},
+        onVoteComplete = {}
+    )
 }

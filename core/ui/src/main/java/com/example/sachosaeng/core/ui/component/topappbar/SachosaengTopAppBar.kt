@@ -25,12 +25,13 @@ import com.example.sachosaeng.core.ui.noRippleClickable
 
 @Composable
 fun SachosaengTopAppBar(
+    modifier: Modifier = Modifier,
     componentRow: @Composable () -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(20.dp)
     ) {

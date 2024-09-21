@@ -2,6 +2,7 @@ package com.example.sachosaeng.feature.vote.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,13 +22,18 @@ import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_White
 
 @Composable
-fun ArticleRow(modifier: Modifier = Modifier, similarArticle: SimilarArticle) {
+fun ArticleRow(
+    modifier: Modifier = Modifier,
+    similarArticle: SimilarArticle,
+    onClickArticle: (Int) -> Unit
+) {
     Box(
         modifier = modifier
             .padding(start = 20.dp, end = 20.dp, top = 6.dp)
             .fillMaxWidth()
             .clip(RoundedCornerShape(4.dp))
             .background(Gs_White)
+            .clickable { onClickArticle(similarArticle.articleId) }
     ) {
         Text(
             text = similarArticle.title,

@@ -9,6 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.sachosaeng.core.ui.R
+import com.example.sachosaeng.feature.article.navigation.addArticleGraph
+import com.example.sachosaeng.feature.article.navigation.navigateToArticleDetail
 import com.example.sachosaeng.feature.bookmark.navigation.addBookmarkGraph
 import com.example.sachosaeng.feature.home.HomeScreen
 import com.example.sachosaeng.feature.mypage.navigation.GRAPH_MY_PAGE
@@ -24,7 +26,7 @@ import com.example.sachosaeng.feature.webview.navigateToWebView
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 @Composable
-internal fun addNavGraph(navController: NavHostController) {
+internal fun NavGraph(navController: NavHostController) {
     NavHost(
         navController = navController,
         startDestination = ROUTE_SPLASH,
@@ -57,9 +59,22 @@ internal fun addNavGraph(navController: NavHostController) {
             navigateToWebView = { url -> navController.navigateToWebView(url) },
             navigateToOpenSource = { navController.navigateToOpenSource() }
         )
-        addVoteGraph(navController = navController)
+        addVoteGraph(
+            navController = navController,
+            navigateToArticleDetail = { articleId, categoryId ->
+                navController.navigateToArticleDetail(
+                    articleId = articleId,
+                    categoryId = categoryId
+                )
+            })
+        addArticleGraph(navController = navController)
         addBookmarkGraph(
-            navigateToVote = { id -> navController.navigateToVoteDetail(voteId = id, isDailyVote = false) },
+            navigateToVote = { id ->
+                navController.navigateToVoteDetail(
+                    voteId = id,
+                    isDailyVote = false
+                )
+            },
             navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) })
     }
 }

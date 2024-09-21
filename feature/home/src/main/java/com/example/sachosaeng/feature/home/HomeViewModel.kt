@@ -1,6 +1,5 @@
 package com.example.sachosaeng.feature.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.UserType
@@ -8,7 +7,6 @@ import com.example.sachosaeng.core.usecase.category.GetCategoryListWithAllIconUs
 import com.example.sachosaeng.core.usecase.category.GetMyCategoryListUsecase
 import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
 import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
-import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
 import com.example.sachosaeng.core.usecase.vote.GetDailyVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.GetHotVoteUsecase
 import com.example.sachosaeng.core.usecase.vote.GetVoteByCategoryUsecase
