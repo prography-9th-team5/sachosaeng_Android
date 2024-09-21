@@ -96,7 +96,7 @@ private fun BookmarkCard(
                     fontWeight = FontWeight.W700,
                     color = Gs_Black
                 )
-                Text(
+                if(bookmark.description.isNotEmpty()) Text(
                     text = bookmark.description,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W700,
@@ -112,20 +112,20 @@ private fun BookmarkCard(
 fun BookmarkListPreview() {
     val bookmarks = listOf(
         Bookmark(
-            voteBookmarkId = 1,
-            voteId = 1,
+            bookmarkId = 1,
+            id = 1,
             title = "title1",
             description = "description1"
         ),
         Bookmark(
-            voteBookmarkId = 2,
-            voteId = 2,
+            bookmarkId = 2,
+            id = 2,
             title = "title2",
             description = "description2"
         ),
         Bookmark(
-            voteBookmarkId = 3,
-            voteId = 3,
+            bookmarkId = 3,
+            id = 3,
             title = "title3",
             description = "description3"
         )

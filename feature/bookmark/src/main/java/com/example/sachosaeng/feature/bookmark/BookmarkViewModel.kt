@@ -7,6 +7,7 @@ import com.example.sachosaeng.core.ui.R.string.all_category_icon_text
 import com.example.sachosaeng.core.ui.ResourceProvider
 import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarksUseCase
 import com.example.sachosaeng.core.usecase.bookmark.GetBookmarkListUseCase
+import com.example.sachosaeng.core.usecase.bookmark.GetBookmarkedArticleListUseCase
 import com.example.sachosaeng.core.usecase.category.GetCategoryListUseCase
 import com.example.sachosaeng.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +24,7 @@ class BookmarkViewModel @Inject constructor(
     private val stringResourceProvider: ResourceProvider,
     private val getCategoryListUseCase: GetCategoryListUseCase,
     private val getBookmarkListByCategoryUseCase: GetBookmarkListUseCase,
+    private val getAllBookmarkedArticleListUseCase: GetBookmarkedArticleListUseCase,
     private val deleteBookmarkUseCase: DeleteBookmarksUseCase
 ) : ViewModel(), ContainerHost<BookmarkScreenUiState, Unit> {
     override val container: Container<BookmarkScreenUiState, Unit> =
@@ -31,12 +33,18 @@ class BookmarkViewModel @Inject constructor(
     init {
         getAllCategoryList()
         getAllBookmarkList()
+        getAllBookmarkedArticleList()
     }
 
     private fun getAllCategoryList() = intent {
         getCategoryListUseCase().collectLatest { allCategoryList ->
             val newList =
-                listOf(Category(name = stringResourceProvider.getString(all_category_icon_text))) + allCategoryList
+                listOf(
+                    Category(
+                        id = ALL_CATEGORY_ID,
+                        name = stringResourceProvider.getString(all_category_icon_text)
+                    )
+                ) + allCategoryList
             reduce {
                 state.copy(
                     allCategory = newList
@@ -79,7 +87,7 @@ class BookmarkViewModel @Inject constructor(
                 selectedCategory = category
             )
         }.also {
-            if(category.id == ALL_CATEGORY_ID) getAllBookmarkList()
+            if (category.id == ALL_CATEGORY_ID) getAllBookmarkList()
             else getBookmarkListByCategory()
         }
     }
@@ -88,7 +96,7 @@ class BookmarkViewModel @Inject constructor(
         getBookmarkListByCategoryUseCase(state.selectedCategory).collectLatest { bookmarkList ->
             reduce {
                 state.copy(
-                    bookmarkList = bookmarkList,
+                    bookmarkedVoteList = bookmarkList,
                     isModifyMode = false,
                 )
             }
@@ -99,7 +107,17 @@ class BookmarkViewModel @Inject constructor(
         getBookmarkListByCategoryUseCase().collectLatest { bookmarkList ->
             reduce {
                 state.copy(
-                    bookmarkList = bookmarkList
+                    bookmarkedVoteList = bookmarkList
+                )
+            }
+        }
+    }
+
+    private fun getAllBookmarkedArticleList() = intent {
+        getAllBookmarkedArticleListUseCase().collectLatest { bookmarkList ->
+            reduce {
+                state.copy(
+                    bookmarkedArticleList = bookmarkList
                 )
             }
         }

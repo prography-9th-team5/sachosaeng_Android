@@ -93,4 +93,5 @@ dependencies {
 
     //module
     implementation(project(":core:model"))
+    implementation(project(":core:util"))
 }
