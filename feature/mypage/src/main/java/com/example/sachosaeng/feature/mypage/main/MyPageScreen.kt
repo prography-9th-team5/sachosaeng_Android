@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -161,22 +162,21 @@ internal fun MyPageScreen(
 fun UserInfoCard(userName: String, userType: UserType, userInfoModifyButtonClick: () -> Unit = {}) {
     Box(
         modifier = Modifier
-            .padding(vertical = 20.dp)
             .fillMaxWidth()
             .background(color = Gs_G6, shape = RoundedCornerShape(8.dp))
     ) {
         Row(
             modifier = Modifier.align(Alignment.Center),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.Bottom
         ) {
             Image(
                 modifier = Modifier
-                    .size(80.dp)
-                    .padding(end = 20.dp),
+                    .width(width = 52.dp),
                 contentDescription = "",
-                painter = painterResource(id = userType.userTypeImageRes),
+                painter = painterResource(id = userType.userTypeIconImageRes),
             )
             Column(
+                modifier = Modifier.padding(top = 23.dp, start = 20.dp, bottom = 23.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
@@ -303,6 +303,7 @@ fun LogoutButton(onClick: () -> Unit = {}) {
 fun MyPageScreenPreview() {
     MyPageScreen(
         MyPageUiState(
+            userName = "이름을길게한번써보자",
             userType = UserType.OTHER,
             versionInfo = "1.0.0",
             logoutDialogState = true
