@@ -1,8 +1,11 @@
 package com.example.sachosaeng.data.repository.user
 
+import android.util.Log
 import com.example.sachosaeng.core.model.User
 import com.example.sachosaeng.data.api.UserService
 import com.example.sachosaeng.data.datasource.datastore.UserDataStore
+import com.example.sachosaeng.data.model.user.NicknameRequest
+import com.example.sachosaeng.data.model.user.UserTypeRequest
 import com.example.sachosaeng.data.model.user.WithdrawRequest
 import com.example.sachosaeng.data.repository.user.UserMapper.toDomain
 import kotlinx.coroutines.flow.Flow
@@ -28,6 +31,22 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun updateMyInfo(user: User) {
         TODO("Not yet implemented")
+    }
+
+    override suspend fun setUserNickname(nickname: String) {
+        userService.updateUserNickname(
+            nickname = NicknameRequest(
+                nickname = nickname
+            )
+        )
+    }
+
+    override suspend fun setUserTypeToRemote(type: String) {
+        userService.updateUserType(
+            UserTypeRequest(
+                userType = type
+            )
+        )
     }
 
     override fun withdraw(reason: String) = flow<Unit> {

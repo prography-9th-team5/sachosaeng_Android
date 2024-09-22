@@ -3,6 +3,7 @@ package com.example.sachosaeng.data.remote.oauth
 import com.example.sachosaeng.core.util.manager.DeviceManager
 import com.example.sachosaeng.data.api.OAuthService
 import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
+import com.example.sachosaeng.data.model.auth.LoginRequest
 import com.example.sachosaeng.data.model.auth.TokenResponse
 import com.example.sachosaeng.data.remote.util.onFailure
 import com.example.sachosaeng.data.remote.util.onSuccess
@@ -26,7 +27,18 @@ class OAuthRepositoryImpl @Inject constructor(
             "Refresh=${authDataStore.getRefreshToken()}"
         )
             .onSuccess { it.data?.let { it1 -> setToken(it1) } }
-            .onFailure { setToken(TokenResponse("", "")) }
+            .onFailure {
+                getNewAccessTokenFromEmail()?.let { it1 -> setToken(it1) }
+                    ?: setToken(TokenResponse("", ""))
+            }
+    }
+
+    private suspend fun getNewAccessTokenFromEmail(): TokenResponse? {
+        return oAuthService.loginWithEmail(
+            LoginRequest(
+                email = authDataStore.getEmail()
+            )
+        ).getOrThrow().data
     }
 
     private fun setToken(data: TokenResponse): Flow<Unit> {
