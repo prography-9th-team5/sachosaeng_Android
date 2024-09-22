@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
+import java.time.ZoneOffset
 import javax.inject.Inject
 
 private const val USER_ID = "id"
@@ -48,7 +49,7 @@ class AuthDataStoreImpl @Inject constructor(
     //todo: default 값 지우기
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getEmail() = context.authDataStore.data.map { preferences ->
-        preferences[stringPreferencesKey(USER_EMAIL)] ?: "${LocalDateTime.now()}@naver.com"
+        preferences[stringPreferencesKey(USER_EMAIL)] ?: "${LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()}@naver.com"
     }.catch {
         it.printStackTrace()
         emit("")
