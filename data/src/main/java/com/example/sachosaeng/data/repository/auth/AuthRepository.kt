@@ -9,6 +9,5 @@ interface AuthRepository {
     fun getEmail(): Flow<String>
     fun getAccessToken(): Flow<String>
     fun getRefreshToken(): Flow<String>
-
     suspend fun withdraw()
 }

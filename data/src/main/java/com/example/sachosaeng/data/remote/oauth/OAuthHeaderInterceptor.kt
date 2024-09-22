@@ -1,8 +1,5 @@
 package com.example.sachosaeng.data.remote.oauth
 
-import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
-import com.example.sachosaeng.data.repository.auth.AuthRepository
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -12,18 +9,26 @@ import javax.inject.Singleton
 
 @Singleton
 internal class OAuthHeaderInterceptor @Inject constructor(
-    private val dataStore: AuthDataStore
+    private val oAuthRepository: OAuthRepository,
 ) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
-        return runBlocking {
-            val accessToken = dataStore.getAccessToken()
-            val request = if (accessToken.isNotEmpty()) {
-                chain.request().putTokenHeader(accessToken)
-            } else {
-                chain.request()
-            }
-            chain.proceed(request)
+    override fun intercept(chain: Interceptor.Chain): Response = runBlocking {
+        val accessToken = oAuthRepository.getAccessToken()
+
+        var request = chain.request().let {
+            if (accessToken.isNotEmpty()) it.putTokenHeader(accessToken) else it
         }
+
+        var response = chain.proceed(request)
+        repeat(2) {
+            if (response.isRedirect) {
+                val location = response.header(LOCATION) ?: return@runBlocking response
+                request = request.newBuilder().url(location).build()
+                response = chain.proceed(request)
+            } else {
+                return@runBlocking response
+            }
+        }
+        response
     }
 
     private fun Request.putTokenHeader(accessToken: String): Request {
@@ -34,5 +39,6 @@ internal class OAuthHeaderInterceptor @Inject constructor(
 
     companion object {
         private const val AUTHORIZATION = "authorization"
+        private const val LOCATION = "Location"
     }
 }

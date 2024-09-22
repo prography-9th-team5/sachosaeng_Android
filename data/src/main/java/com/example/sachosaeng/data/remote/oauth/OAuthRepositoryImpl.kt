@@ -1,6 +1,7 @@
 package com.example.sachosaeng.data.remote.oauth
 
 import android.util.Log
+import com.example.sachosaeng.core.util.manager.PackageManager
 import com.example.sachosaeng.data.api.OAuthService
 import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
 import com.example.sachosaeng.data.model.auth.TokenResponse
@@ -12,25 +13,22 @@ import javax.inject.Inject
 
 class OAuthRepositoryImpl @Inject constructor(
     private val oAuthService: OAuthService,
-    private val authDataStore: AuthDataStore
+    private val authDataStore: AuthDataStore,
+    private val packageManager: PackageManager
 ) : OAuthRepository {
-    override fun getNewAccessToken(): Flow<String> {
-        return flow {
-            authDataStore.getRefreshToken()
-                .run {
-                    oAuthService.getNewAccessToken()
-                        .onSuccess { response ->
-                            response.data?.let { data -> setToken(data) }
-                                .run { emit(authDataStore.getAccessToken()) }
-                        }.onFailure {
-                            Log.e("OAuthRepositoryImpl", "getNewAccessToken: $it")
-                        }
-                }
-        }
-    }
 
-    override fun getAccessToken(): Flow<String> =
-        flow { emit(authDataStore.getAccessToken()) }
+    override suspend fun getAccessToken(): String = authDataStore.getAccessToken()
+
+    override suspend fun getRefreshToken(): String = authDataStore.getRefreshToken()
+
+    override suspend fun refreshAccessToken() {
+        oAuthService.getNewAccessToken(
+            packageManager.getDeviceId(),
+            "Refresh=${authDataStore.getRefreshToken()}"
+        )
+            .onSuccess { it.data?.let { it1 -> setToken(it1) } }
+            .onFailure { setToken(TokenResponse("", "")) }
+    }
 
     private fun setToken(data: TokenResponse): Flow<Unit> {
         return flow {

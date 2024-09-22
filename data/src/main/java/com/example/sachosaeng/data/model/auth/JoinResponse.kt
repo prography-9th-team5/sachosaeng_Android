@@ -3,8 +3,7 @@ package com.example.sachosaeng.data.model.auth
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class LoginResponse(
+data class JoinResponse(
     val userId: Int,
-    val accessToken: String,
-    val refreshToken: String
+    val loginToken: String,
 )

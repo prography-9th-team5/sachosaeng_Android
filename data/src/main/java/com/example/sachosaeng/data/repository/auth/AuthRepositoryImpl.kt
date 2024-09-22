@@ -5,10 +5,8 @@ import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
 import com.example.sachosaeng.data.model.auth.JoinRequest
 import com.example.sachosaeng.data.model.auth.LoginRequest
 import com.example.sachosaeng.data.model.auth.LoginResponse
-import com.example.sachosaeng.data.model.auth.TokenResponse
 import com.example.sachosaeng.data.remote.util.onFailure
 import com.example.sachosaeng.data.remote.util.onSuccess
-import com.example.sachosaeng.data.util.ERROR_CODE.SUCCESS
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -28,7 +26,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     private suspend fun setUserInfo(data: LoginResponse) {
         with(authLocalDataSource) {
-            setEmail(data.userId)
+            setUserId(data.userId)
             setAccessToken(data.accessToken)
             setRefreshToken(data.refreshToken)
         }
@@ -49,14 +47,16 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun join(email: String, userType: String): Flow<Boolean> =
         flow {
-            emit(
-                authService.join(
-                    joinRequest = JoinRequest(
-                        email = email,
-                        userType = userType
-                    )
-                ).getOrThrow().code == SUCCESS
-            )
+            authService.join(
+                joinRequest = JoinRequest(
+                    email = email,
+                    userType = userType
+                )
+            ).getOrThrow().data?.let { data ->
+                authLocalDataSource.setAccessToken(data.loginToken)
+            }.also {
+                login(email).collect { emit(it) }
+            }
         }
 
     override suspend fun withdraw() {

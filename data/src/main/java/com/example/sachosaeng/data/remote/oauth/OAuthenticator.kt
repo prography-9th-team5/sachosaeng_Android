@@ -1,9 +1,5 @@
 package com.example.sachosaeng.data.remote.oauth
 
-import com.example.sachosaeng.data.api.AuthService
-import com.example.sachosaeng.data.api.OAuthService
-import com.example.sachosaeng.data.repository.auth.AuthRepository
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Request
@@ -17,26 +13,40 @@ import javax.inject.Singleton
 class OAuthenticator @Inject constructor(
     private val oAuthRepository: OAuthRepository,
 ) : Authenticator {
-
     override fun authenticate(route: Route?, response: Response): Request? {
-        if (response.code == HTTP_UNAUTHORIZED) {
-            synchronized(this) {
-                return runBlocking {
-                    val newToken = oAuthRepository.getNewAccessToken().first()
-                    return@runBlocking response.request.newBuilder()
-                        .putTokenHeader(newToken)
-                        .build()
-                }
+        if (response.priorResponseCount() >= 2 || response.code != HTTP_UNAUTHORIZED) {
+            return null
+        }
+
+        return runBlocking {
+            oAuthRepository.refreshAccessToken()
+            val newToken = oAuthRepository.getAccessToken()
+            if (newToken.isNotEmpty()) {
+                response.request.newBuilder()
+                    .putTokenHeader(newToken)
+            } else {
+                null
             }
         }
-        return response.request
     }
 
-    private fun Request.Builder.putTokenHeader(accessToken: String): Request.Builder {
-        return this.header(AUTHORIZATION, "Bearer $accessToken")
+    private fun Response.priorResponseCount(): Int {
+        var count = 0
+        var prior = priorResponse
+        while (prior != null) {
+            count++
+            prior = prior.priorResponse
+        }
+        return count
+    }
+
+    private fun Request.Builder.putTokenHeader(accessToken: String): Request {
+        return this.addHeader(AUTHORIZATION, "Bearer $accessToken")
+            .build()
     }
 
     companion object {
         private const val AUTHORIZATION = "authorization"
+        private const val LOCATION = "Location"
     }
 }
