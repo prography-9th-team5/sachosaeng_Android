@@ -19,8 +19,4 @@ class PackageManager(
     fun getVersionCode(): Int {
         return context.packageManager.getPackageInfo(getPackageName(), 0).versionCode
     }
-
-    fun getDeviceId(): String {
-        return getString(context.contentResolver, ANDROID_ID)
-    }
 }

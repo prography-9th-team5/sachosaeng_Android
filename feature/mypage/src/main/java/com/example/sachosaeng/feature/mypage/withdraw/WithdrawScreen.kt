@@ -51,6 +51,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
+import com.example.sachosaeng.feature.mypage.main.WithdrawDialog
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -62,6 +63,7 @@ fun WithdrawScreen(
 ) {
     val state by viewModel.collectAsState()
     var snackbarMessage by remember { mutableStateOf<String?>(null) }
+    var withdrawDialogShowState by remember { mutableStateOf(true) }
 
     viewModel.collectSideEffect {
         when (it) {
@@ -86,12 +88,10 @@ fun WithdrawScreen(
                     navigateToBackStack = { navigateToBackStack() }
                 )
                 WithdrawScreenTitleAndDescription(userName = state.userName)
-                state.selectedReason?.let {
-                    ReasonForWithdrawList(
-                        onSelect = { viewModel.changeSelectedReason(it) },
-                        selectedReason = it
-                    )
-                }
+                ReasonForWithdrawList(
+                    onSelect = { viewModel.changeSelectedReason(it) },
+                    selectedReason = state.selectedReason
+                )
                 Spacer(modifier = Modifier.padding(top = 12.dp))
                 if (state.reasonForWithdrawDetailFieldIsOpened) {
                     DetailReasonForWithdraw(
@@ -118,6 +118,12 @@ fun WithdrawScreen(
             message = it, onDismiss = { snackbarMessage = null }
         )
     }
+    if (withdrawDialogShowState) {
+        WithdrawDialog(
+            onWithdraw = { withdrawDialogShowState = false },
+            onCancel = navigateToBackStack
+        )
+    }
 }
 
 @Composable
@@ -136,10 +142,11 @@ fun WithdrawScreenTitleAndDescription(modifier: Modifier = Modifier, userName: S
     }
 }
 
+
 @Composable
 fun ReasonForWithdrawList(
     onSelect: (WithdrawReason) -> Unit,
-    selectedReason: WithdrawReason
+    selectedReason: WithdrawReason? = null
 ) {
     Column {
         MultiSelectBox(
@@ -201,7 +208,7 @@ fun DetailReasonForWithdraw(reasonForWithdrawDetail: String, onValueChanged: (St
 fun MultiSelectBox(
     modifier: Modifier = Modifier,
     reason: WithdrawReason,
-    selectedReason: WithdrawReason,
+    selectedReason: WithdrawReason?,
     onSelect: (WithdrawReason) -> Unit = {}
 ) {
     val isSelected = selectedReason == reason
@@ -234,7 +241,6 @@ fun MultiSelectBox(
         )
     }
 }
-
 
 @Composable
 @Preview

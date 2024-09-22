@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.sachosaeng.core.util.extension.StringExtension.urlEncode
 import com.example.sachosaeng.feature.mypage.main.MyPageScreen
 import com.example.sachosaeng.feature.mypage.modify.ModifyUserInfoScreen
 import com.example.sachosaeng.feature.mypage.withdraw.WithdrawScreen
@@ -22,7 +23,8 @@ const val USER_NAME = "userName"
 private const val MODIFY_USER_INFO = "modifyUserInfo"
 
 private fun NavController.navigateToWithdraw(userName: String) {
-    navigate("$ROUTE_WITHDRAW?$USER_NAME=$userName")
+    val encodedUrl = userName.urlEncode()
+    navigate("$ROUTE_WITHDRAW?$USER_NAME=$encodedUrl")
 }
 
 fun NavGraphBuilder.addMyPageNavGraph(
@@ -46,7 +48,7 @@ fun NavGraphBuilder.addMyPageNavGraph(
             )
         }
         composable(
-            route = "$ROUTE_WITHDRAW?$USER_NAME=$USER_NAME",
+            route = "$ROUTE_WITHDRAW?$USER_NAME={$USER_NAME}",
             arguments = listOf(
                 navArgument(USER_NAME) {
                     type = NavType.StringType

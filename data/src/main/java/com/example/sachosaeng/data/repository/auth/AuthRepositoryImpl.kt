@@ -58,8 +58,4 @@ class AuthRepositoryImpl @Inject constructor(
                 login(email).collect { emit(it) }
             }
         }
-
-    override suspend fun withdraw() {
-        TODO("Not yet implemented")
-    }
 }

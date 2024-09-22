@@ -6,8 +6,11 @@ import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.ResourceProvider
 import com.example.sachosaeng.core.ui.WithdrawReason
 import com.example.sachosaeng.core.usecase.auth.WithdrawUsecase
+import com.example.sachosaeng.core.util.manager.DeviceManager
 import com.example.sachosaeng.feature.mypage.navigation.USER_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -21,6 +24,7 @@ class WithdrawViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val resourceProvider: ResourceProvider,
     private val withdrawUsecase: WithdrawUsecase,
+    private val deviceManager: DeviceManager,
 ) : ViewModel(), ContainerHost<WIthdrawUiState, WithdrawSideEffect> {
     override val container: Container<WIthdrawUiState, WithdrawSideEffect> =
         container(WIthdrawUiState())
@@ -50,13 +54,16 @@ class WithdrawViewModel @Inject constructor(
     }
 
     fun withdraw() = intent {
-        if (state.selectedReason == null) postSideEffect(
-            WithdrawSideEffect.ShowSnackbar(
-                resourceProvider.getString(string.withdraw_reason_required)
-            )
-        )
-        else {
-            withdrawUsecase(state.selectedReason!!.name)
+        when(state.selectedReason) {
+            null -> postSideEffect(WithdrawSideEffect.ShowSnackbar(resourceProvider.getString(string.withdraw_reason_required)))
+            else -> {
+                val reason = resourceProvider.getString(state.selectedReason!!.userTypeLabelRes)
+                withdrawUsecase(reason).collectLatest {
+                    postSideEffect(WithdrawSideEffect.ShowSnackbar(resourceProvider.getString(string.withdraw_complete_toast_message)))
+                    delay(2000)
+                    deviceManager.finishApp()
+                }
+            }
         }
     }
 }

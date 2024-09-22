@@ -1,7 +1,6 @@
 package com.example.sachosaeng.data.remote.oauth
 
-import android.util.Log
-import com.example.sachosaeng.core.util.manager.PackageManager
+import com.example.sachosaeng.core.util.manager.DeviceManager
 import com.example.sachosaeng.data.api.OAuthService
 import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
 import com.example.sachosaeng.data.model.auth.TokenResponse
@@ -14,7 +13,7 @@ import javax.inject.Inject
 class OAuthRepositoryImpl @Inject constructor(
     private val oAuthService: OAuthService,
     private val authDataStore: AuthDataStore,
-    private val packageManager: PackageManager
+    private val deviceManager: DeviceManager
 ) : OAuthRepository {
 
     override suspend fun getAccessToken(): String = authDataStore.getAccessToken()
@@ -23,7 +22,7 @@ class OAuthRepositoryImpl @Inject constructor(
 
     override suspend fun refreshAccessToken() {
         oAuthService.getNewAccessToken(
-            packageManager.getDeviceId(),
+            deviceManager.getDeviceId(),
             "Refresh=${authDataStore.getRefreshToken()}"
         )
             .onSuccess { it.data?.let { it1 -> setToken(it1) } }
