@@ -1,6 +1,8 @@
 package com.example.sachosaeng.data.datasource.datastore
 
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -11,6 +13,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import java.time.LocalDateTime
 import javax.inject.Inject
 
 private const val USER_ID = "id"
@@ -43,8 +46,9 @@ class AuthDataStoreImpl @Inject constructor(
     }
 
     //todo: default 값 지우기
+    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getEmail() = context.authDataStore.data.map { preferences ->
-        preferences[stringPreferencesKey(USER_EMAIL)] ?: "testtest19@naver.com"
+        preferences[stringPreferencesKey(USER_EMAIL)] ?: "${LocalDateTime.now()}@naver.com"
     }.catch {
         it.printStackTrace()
         emit("")
