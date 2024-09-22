@@ -4,7 +4,9 @@ import com.example.sachosaeng.core.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
+    suspend fun setUserNickname(nickname: String)
     fun setUserType(type: String): Flow<Boolean>
+    suspend fun setUserTypeToRemote(type: String)
     fun getUserType(): Flow<String>
     fun getMyInfo(): Flow<User>
     fun logout()

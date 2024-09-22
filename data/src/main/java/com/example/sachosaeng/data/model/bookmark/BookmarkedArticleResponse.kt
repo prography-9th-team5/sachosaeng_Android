@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class BookmarkedArticleResponse(
     val information: List<BookmarkedArticle>,
     val hasNext: Boolean,
-    val nextCursor: Int,
+    val nextCursor: Int?,
 )
 
 @Serializable
