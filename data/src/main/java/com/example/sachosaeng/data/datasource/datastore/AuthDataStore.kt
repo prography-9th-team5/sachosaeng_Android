@@ -9,5 +9,4 @@ interface AuthDataStore {
     suspend fun getAccessToken(): String
     suspend fun setRefreshToken(token: String): Boolean
     suspend fun getRefreshToken(): String
-
 }

@@ -1,9 +1,15 @@
 package com.example.sachosaeng.feature.mypage.modify
 
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.ui.ResourceProvider
 import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
+import com.example.sachosaeng.core.usecase.user.SetUserNickNameUseCase
+import com.example.sachosaeng.core.usecase.user.SetUserTypeUseCase
+import com.example.sachosaeng.core.ui.R.string
+import com.example.sachosaeng.core.usecase.user.SetUserTypetoRemoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -15,7 +21,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ModifyUserInfoViewModel @Inject constructor(
-    private val getMyInfoUsecase: GetMyInfoUsecase
+    private val getMyInfoUsecase: GetMyInfoUsecase,
+    private val setUserNickNameUseCase: SetUserNickNameUseCase,
+    private val setUserTypetoRemoteUseCase: SetUserTypetoRemoteUseCase,
+    private val resourceProvider: ResourceProvider
 ) : ViewModel(),
     ContainerHost<ModifiyUserInfoUiState, ModifyUserInfoSideEffect> {
     override val container: Container<ModifiyUserInfoUiState, ModifyUserInfoSideEffect> = container(
@@ -30,7 +39,7 @@ class ModifyUserInfoViewModel @Inject constructor(
         getMyInfo()
     }
 
-   private fun getMyInfo() = intent {
+    private fun getMyInfo() = intent {
         getMyInfoUsecase().collectLatest { userInfo ->
             reduce {
                 state.copy(
@@ -56,7 +65,16 @@ class ModifyUserInfoViewModel @Inject constructor(
     }
 
     fun saveUserInfo() = intent {
-        postSideEffect(ModifyUserInfoSideEffect.ShowSnackBar("저장되었습니다"))
+        getMyInfoUsecase().collectLatest { userInfo ->
+            if (userInfo.name != state.userName) {
+                setUserNickNameUseCase(state.userName)
+            }
+            if (UserType.getType(userInfo.userType) != state.userType) {
+                setUserTypetoRemoteUseCase(state.userType.name)
+            }
+        }.also {
+            postSideEffect(ModifyUserInfoSideEffect.ShowSnackBar(resourceProvider.getString(string.saved_snackbar)))
+        }
     }
 
     private fun checkIsSaveButtonEnable() = intent {
@@ -67,5 +85,5 @@ class ModifyUserInfoViewModel @Inject constructor(
 }
 
 sealed class ModifyUserInfoSideEffect {
-   data class ShowSnackBar(val message: String) : ModifyUserInfoSideEffect()
+    data class ShowSnackBar(val message: String) : ModifyUserInfoSideEffect()
 }

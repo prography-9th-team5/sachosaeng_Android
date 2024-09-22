@@ -80,4 +80,6 @@
 
     <!--article-->
     <string name="article_label">연관 콘텐츠</string>
+
+    <string name="saved_snackbar">저장되었습니다</string>
 </resources>
