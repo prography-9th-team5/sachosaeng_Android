@@ -1,9 +1,13 @@
 package com.example.sachosaeng.feature.mypage.navigation
 
+import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.sachosaeng.core.util.extension.StringExtension.urlEncode
 import com.example.sachosaeng.feature.mypage.main.MyPageScreen
 import com.example.sachosaeng.feature.mypage.modify.ModifyUserInfoScreen
 import com.example.sachosaeng.feature.mypage.withdraw.WithdrawScreen
@@ -14,8 +18,14 @@ import com.example.sachosaeng.feature.webview.WebViewUrl.TERMS_OF_SERVICE
 
 const val GRAPH_MY_PAGE = "myPageGraph"
 const val ROUTE_MY_PAGE = "myPage"
-private const val WITHDRAW = "withdraw"
+private const val ROUTE_WITHDRAW = "withdraw"
+const val USER_NAME = "userName"
 private const val MODIFY_USER_INFO = "modifyUserInfo"
+
+private fun NavController.navigateToWithdraw(userName: String) {
+    val encodedUrl = userName.urlEncode()
+    navigate("$ROUTE_WITHDRAW?$USER_NAME=$encodedUrl")
+}
 
 fun NavGraphBuilder.addMyPageNavGraph(
     navController: NavHostController,
@@ -29,7 +39,6 @@ fun NavGraphBuilder.addMyPageNavGraph(
         composable(GRAPH_MY_PAGE) {
             MyPageScreen(
                 navigateToBackStack = { navController.popBackStack() },
-                navigateToWithDraw = { navController.navigate(WITHDRAW) },
                 navigateToPrivacyPolicy = { navigateToWebView(PRIVACY_POLICY) },
                 navigateToTermsOfService = { navigateToWebView(TERMS_OF_SERVICE) },
                 navigateToUserInfoModify = { navController.navigate(MODIFY_USER_INFO) },
@@ -38,13 +47,23 @@ fun NavGraphBuilder.addMyPageNavGraph(
                 navigateToOpenSource = { navigateToOpenSource() }
             )
         }
-        composable(WITHDRAW) {
-            WithdrawScreen()
+        composable(
+            route = "$ROUTE_WITHDRAW?$USER_NAME={$USER_NAME}",
+            arguments = listOf(
+                navArgument(USER_NAME) {
+                    type = NavType.StringType
+                    nullable = false
+                    defaultValue = ""
+                },
+            )) {
+            WithdrawScreen(
+                navigateToBackStack = { navController.popBackStack() }
+            )
         }
         composable(MODIFY_USER_INFO) {
             ModifyUserInfoScreen(
                 navigateToBackStack = { navController.popBackStack() },
-                navigateToWithdrawScreen = { navController.navigate(com.example.sachosaeng.feature.mypage.navigation.WITHDRAW) }
+                navigateToWithdrawScreen = { userName -> navController.navigateToWithdraw(userName = userName) }
             )
         }
     }

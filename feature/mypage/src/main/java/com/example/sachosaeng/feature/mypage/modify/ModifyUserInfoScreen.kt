@@ -53,7 +53,7 @@ import com.example.sachosaeng.core.ui.UserType
 @Composable
 fun ModifyUserInfoScreen(
     navigateToBackStack: () -> Unit = {},
-    navigateToWithdrawScreen: () -> Unit = {},
+    navigateToWithdrawScreen: (String) -> Unit = {},
     viewModel: ModifyUserInfoViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
@@ -71,7 +71,7 @@ fun ModifyUserInfoScreen(
         state = state,
         onNicknameChange = viewModel::onNickNameChange,
         onUserTypeSelect = viewModel::onUserTypeSelect,
-        onWithdraw = { navigateToWithdrawScreen() },
+        onWithdraw = { navigateToWithdrawScreen(state.userName) },
         navigateToBackStack = navigateToBackStack,
         saveUserInfo = viewModel::saveUserInfo
     )

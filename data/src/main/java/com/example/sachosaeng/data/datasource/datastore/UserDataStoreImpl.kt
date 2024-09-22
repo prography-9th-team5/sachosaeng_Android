@@ -20,9 +20,9 @@ class UserDataStoreImpl @Inject constructor(
 ) : UserDataStore {
     private val dataStore = context.userDataStore
 
-    override suspend fun setUserType(email: String): Boolean {
+    override suspend fun setUserType(userType: String): Boolean {
         dataStore.edit { preferences ->
-            preferences[stringPreferencesKey(USER_TYPE)] = email
+            preferences[stringPreferencesKey(USER_TYPE)] = userType
         }.run { return true }
     }
 

@@ -19,7 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     val getAccessTokenUsecase: GetAccessTokenUsecase,
-    val loginUsecase: LoginUsecase
 ) : ViewModel(), ContainerHost<Boolean, SplashSideEffect> {
     override val container: Container<Boolean, SplashSideEffect> = container(true)
 
@@ -36,17 +35,12 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun checkIfUserJoined() = intent {
-        loginUsecase(id = "testtest12@test").collectLatest {
-            when (it) {
-                true -> postSideEffect(SplashSideEffect.NavigateToHome)
-                false -> postSideEffect(SplashSideEffect.NavigateToSignUp)
+        getAccessTokenUsecase().collectLatest {
+            when (it.isEmpty()) {
+                true -> postSideEffect(SplashSideEffect.NavigateToSignUp)
+                false -> postSideEffect(SplashSideEffect.NavigateToHome)
             }
         }
-//        getAccessTokenUsecase().collectLatest {
-//            when (it.isEmpty()) {
-//                true -> postSideEffect(SplashSideEffect.NavigateToSignUp)
-//                false -> postSideEffect(SplashSideEffect.NavigateToHome)
-//            }
     }
 }
 

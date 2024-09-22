@@ -3,6 +3,7 @@ package com.example.sachosaeng.data.repository.user
 import com.example.sachosaeng.core.model.User
 import com.example.sachosaeng.data.api.UserService
 import com.example.sachosaeng.data.datasource.datastore.UserDataStore
+import com.example.sachosaeng.data.model.user.WithdrawRequest
 import com.example.sachosaeng.data.repository.user.UserMapper.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,7 +30,11 @@ class UserRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun withdraw() {
-        TODO("Not yet implemented")
+    override fun withdraw(reason: String) = flow<Unit> {
+        userService.withdraw(
+            reason = WithdrawRequest(
+                reason = reason
+            )
+        ).getOrThrow().data?.let { emit(it) }
     }
 }

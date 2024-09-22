@@ -1,9 +1,9 @@
 package com.example.sachosaeng.core.usecase.auth
 
-import com.example.sachosaeng.core.usecase.NoParameterUseCase
-import com.example.sachosaeng.core.usecase.Usecase
 import com.example.sachosaeng.data.repository.user.UserRepository
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class WithdrawUsecase(private val repositroy : UserRepository) : NoParameterUseCase<Unit> {
-    override operator fun invoke() = repositroy.withdraw()
+class WithdrawUsecase @Inject constructor(private val repositroy: UserRepository) {
+    operator fun invoke(reason: String): Flow<Unit> = repositroy.withdraw(reason)
 }

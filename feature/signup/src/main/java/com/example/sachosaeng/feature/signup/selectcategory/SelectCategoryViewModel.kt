@@ -57,9 +57,8 @@ class SelectCategoryViewModel @Inject constructor(
 
     private fun selectCategory(category: Category) = intent {
         val newSelectecCategoryList = state.selectedCategoryList + category
-        setMyCategoryListUseCase(newSelectecCategoryList).collectLatest {
-            reduce { state.copy(selectedCategoryList = newSelectecCategoryList) }
-        }
+        reduce { state.copy(selectedCategoryList = newSelectecCategoryList) }
+        checkIsAnyCategorySelected()
     }
 
     private fun unselectCategory(category: Category) = intent {
@@ -67,9 +66,7 @@ class SelectCategoryViewModel @Inject constructor(
     }
 
     fun skipSelectCategory() = intent {
-        setMyCategoryListUseCase(emptyList()).collectLatest {
-            postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
-        }
+        postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
     }
 
     fun join() = intent {
@@ -77,12 +74,12 @@ class SelectCategoryViewModel @Inject constructor(
         val userType = getLocalUserTypeUseCase().first()
         runCatching {
             joinUseCase(email = email, userType = userType).collectLatest {
-                //todo: error handling 추가하기?
+                setMyCategoryListUseCase(state.selectedCategoryList).collectLatest {
+                    postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
+                }
             }
         }.onFailure {
             postSideEffect(SelectCategorySideEffect.ShowError(it.message ?: "unknown"))
-        }.onSuccess {
-            postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
         }
     }
 }

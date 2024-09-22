@@ -1,17 +1,11 @@
 package com.example.sachosaeng.feature.mypage.withdraw
 
+import com.example.sachosaeng.core.ui.WithdrawReason
+
 data class WIthdrawUiState(
     val userName: String = "",
     val reasonForWithdrawList: List<Int> = emptyList(),
     val reasonForWithdrawDetail: String = "",
     val reasonForWithdrawDetailFieldIsOpened: Boolean = false,
-    val selectedReason: ReasonForWithdraw = ReasonForWithdraw.NONE,
+    val selectedReason: WithdrawReason? = null,
 )
-
-enum class ReasonForWithdraw {
-    DISSATISFACTION,
-    LACK_OF_CONTENT,
-    NO_LONGER_USE,
-    ETC,
-    NONE
-}

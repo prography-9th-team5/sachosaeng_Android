@@ -55,6 +55,14 @@ fun SelectCategoryScreen(
         }
     }
 
+    SelectCategoryScreen(
+        state = state,
+        onClickCategory = viewModel::onClickCategory,
+        onSkip = viewModel::skipSelectCategory,
+        moveToNextStep = viewModel::join,
+        navigateToBackStack = navigateToBackStack
+    )
+
     snackbarMessage?.let {
         SachoSaengSnackbar(
             Modifier.padding(bottom = 60.dp),
@@ -65,14 +73,6 @@ fun SelectCategoryScreen(
                 )
             }, message = it, onDismiss = { snackbarMessage = null })
     }
-
-    SelectCategoryScreen(
-        state = state,
-        onClickCategory = viewModel::onClickCategory,
-        onSkip = viewModel::skipSelectCategory,
-        moveToNextStep = viewModel::join,
-        navigateToBackStack = navigateToBackStack
-    )
 }
 
 @Composable
@@ -112,7 +112,8 @@ internal fun SelectCategoryScreen(
             CategoryListFlowRow(
                 state.categoryList,
                 state.selectedCategoryList,
-                onClickCategory = { onClickCategory(it) }
+                onClickCategory = { onClickCategory(it) },
+                modifier = Modifier.fillMaxWidth(),
             )
             SachoSaengButton(
                 modifier = Modifier
