@@ -6,8 +6,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -35,6 +39,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sachosaeng.core.ui.R.drawable
+import com.example.sachosaeng.core.ui.R.string
+import com.example.sachosaeng.core.ui.WithdrawReason
 import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.snackbar.SachoSaengSnackbar
@@ -44,11 +51,8 @@ import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G4
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.mypage.R
-import com.example.sachosaeng.core.ui.R.drawable
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import com.example.sachosaeng.core.ui.R.string
 
 @Composable
 fun WithdrawScreen(
@@ -69,38 +73,50 @@ fun WithdrawScreen(
     LaunchedEffect(Unit) {
         viewModel.getUserName()
     }
-    snackbarMessage?.let {
-        SachoSaengSnackbar(
-            modifier.padding(bottom = 60.dp),
-            message = it, onDismiss = { snackbarMessage = null }
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(Gs_White)
+            .padding(16.dp)
+            .padding(WindowInsets.ime.asPaddingValues())
+    ) {
+        LazyColumn {
+            item {
+                DetailScreenTopbar(
+                    navigateToBackStack = { navigateToBackStack() }
+                )
+                WithdrawScreenTitleAndDescription(userName = state.userName)
+                state.selectedReason?.let {
+                    ReasonForWithdrawList(
+                        onSelect = { viewModel.changeSelectedReason(it) },
+                        selectedReason = it
+                    )
+                }
+                Spacer(modifier = Modifier.padding(top = 12.dp))
+                if (state.reasonForWithdrawDetailFieldIsOpened) {
+                    DetailReasonForWithdraw(
+                        reasonForWithdrawDetail = state.reasonForWithdrawDetail,
+                        onValueChanged = { viewModel.changeReasonForWithdrawDetail(it) }
+                    )
+                }
+            }
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        SachoSaengButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .imePadding()
+                .padding(vertical = 16.dp),
+            text = stringResource(id = string.confirm_label),
+            onClick = { viewModel.withdraw() }
+
         )
     }
-    LazyColumn(modifier.padding(16.dp)) {
-        item {
-            DetailScreenTopbar(
-                navigateToBackStack = { navigateToBackStack() }
-            )
-            WithdrawScreenTitleAndDescription(userName = state.userName)
-            ReasonForWithdrawList(
-                onSelect = { viewModel.changeSelectedReason(it) },
-                selectedReason = state.selectedReason
-            )
-            Spacer(modifier = Modifier.padding(top = 12.dp))
-            if (state.reasonForWithdrawDetailFieldIsOpened) {
-                DetailReasonForWithdraw(
-                    reasonForWithdrawDetail = state.reasonForWithdrawDetail,
-                    onValueChanged = { viewModel.changeReasonForWithdrawDetail(it) }
-                )
-            }
-            SachoSaengButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .imePadding()
-                    .padding(vertical = 16.dp),
-                text = stringResource(id = string.confirm_label),
-                onClick = { viewModel.withdraw() }
-            )
-        }
+    snackbarMessage?.let {
+        SachoSaengSnackbar(
+            modifier.padding(bottom = 80.dp),
+            message = it, onDismiss = { snackbarMessage = null }
+        )
     }
 }
 
@@ -122,26 +138,26 @@ fun WithdrawScreenTitleAndDescription(modifier: Modifier = Modifier, userName: S
 
 @Composable
 fun ReasonForWithdrawList(
-    onSelect: (ReasonForWithdraw) -> Unit,
-    selectedReason: ReasonForWithdraw
+    onSelect: (WithdrawReason) -> Unit,
+    selectedReason: WithdrawReason
 ) {
     Column {
         MultiSelectBox(
-            reason = ReasonForWithdraw.DISSATISFACTION,
+            reason = WithdrawReason.DISSATISFACTION,
             onSelect = {
                 onSelect(it)
             },
             selectedReason = selectedReason
         )
         MultiSelectBox(
-            reason = ReasonForWithdraw.LACK_OF_CONTENT,
+            reason = WithdrawReason.LACK_OF_CONTENT,
             onSelect = {
                 onSelect(it)
             },
             selectedReason = selectedReason
         )
         MultiSelectBox(
-            reason = ReasonForWithdraw.NO_LONGER_USE,
+            reason = WithdrawReason.NO_LONGER_USE,
             onSelect = {
                 onSelect(it)
             },
@@ -149,7 +165,7 @@ fun ReasonForWithdrawList(
         )
         MultiSelectBox(onSelect = {
             onSelect(it)
-        }, reason = ReasonForWithdraw.ETC, selectedReason = selectedReason)
+        }, reason = WithdrawReason.ETC, selectedReason = selectedReason)
     }
 }
 
@@ -184,9 +200,9 @@ fun DetailReasonForWithdraw(reasonForWithdrawDetail: String, onValueChanged: (St
 @Composable
 fun MultiSelectBox(
     modifier: Modifier = Modifier,
-    reason: ReasonForWithdraw,
-    selectedReason: ReasonForWithdraw,
-    onSelect: (ReasonForWithdraw) -> Unit = {}
+    reason: WithdrawReason,
+    selectedReason: WithdrawReason,
+    onSelect: (WithdrawReason) -> Unit = {}
 ) {
     val isSelected = selectedReason == reason
     Row(
@@ -212,20 +228,11 @@ fun MultiSelectBox(
             colorFilter = ColorFilter.tint(if (isSelected) Gs_Black else Gs_G4)
         )
         Text(
-            text = labelFromReason(reason = reason),
+            text = stringResource(id = reason.userTypeLabelRes),
             fontWeight = FontWeight.W500,
             fontSize = 18.sp
         )
     }
-}
-
-@Composable
-private fun labelFromReason(reason: ReasonForWithdraw) = when (reason) {
-    ReasonForWithdraw.DISSATISFACTION -> stringResource(id = string.reason_for_withdraw_1)
-    ReasonForWithdraw.LACK_OF_CONTENT -> stringResource(id = string.reason_for_withdraw_2)
-    ReasonForWithdraw.NO_LONGER_USE -> stringResource(id = string.reason_for_withdraw_3)
-    ReasonForWithdraw.ETC -> stringResource(id = string.reason_for_withdraw_4)
-    else -> ""
 }
 
 

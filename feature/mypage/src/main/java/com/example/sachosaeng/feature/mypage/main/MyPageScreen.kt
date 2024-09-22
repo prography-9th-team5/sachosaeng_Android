@@ -45,7 +45,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun MyPageScreen(
-    navigateToWithDraw: () -> Unit = {},
+    navigateToLogout: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     navigateToUserInfoModify: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
@@ -63,10 +63,10 @@ fun MyPageScreen(
     if (state.logoutDialogState) {
         LogoutDialog(
             onLogout = {
-                viewModel.hideWithdrawDialog()
-                navigateToWithDraw()
+                viewModel.hideLogoutDialog()
+                navigateToLogout()
             },
-            onCancel = { viewModel.hideWithdrawDialog() }
+            onCancel = { viewModel.hideLogoutDialog() }
         )
     }
     MyPageScreen(

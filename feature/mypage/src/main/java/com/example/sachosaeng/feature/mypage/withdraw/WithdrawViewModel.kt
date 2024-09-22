@@ -1,6 +1,12 @@
 package com.example.sachosaeng.feature.mypage.withdraw
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.ui.R.string
+import com.example.sachosaeng.core.ui.ResourceProvider
+import com.example.sachosaeng.core.ui.WithdrawReason
+import com.example.sachosaeng.core.usecase.auth.WithdrawUsecase
+import com.example.sachosaeng.feature.mypage.navigation.USER_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -12,25 +18,27 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WithdrawViewModel @Inject constructor(
-    //private val withdrawUsecase: WithdrawUsecase,
+    savedStateHandle: SavedStateHandle,
+    private val resourceProvider: ResourceProvider,
+    private val withdrawUsecase: WithdrawUsecase,
 ) : ViewModel(), ContainerHost<WIthdrawUiState, WithdrawSideEffect> {
     override val container: Container<WIthdrawUiState, WithdrawSideEffect> =
         container(WIthdrawUiState())
+    private val userName = savedStateHandle.get<String>(USER_NAME)
 
     fun getUserName() = intent {
-        //todo: navigatoion으로부터 받기
         reduce {
             state.copy(
-                userName = "사초생"
+                userName = userName ?: ""
             )
         }
     }
 
-    fun changeSelectedReason(selectedReason: ReasonForWithdraw) = intent {
+    fun changeSelectedReason(selectedReason: WithdrawReason) = intent {
         reduce {
             state.copy(
                 selectedReason = selectedReason,
-                reasonForWithdrawDetailFieldIsOpened = selectedReason == ReasonForWithdraw.ETC
+                reasonForWithdrawDetailFieldIsOpened = selectedReason == WithdrawReason.ETC
             )
         }
     }
@@ -42,13 +50,14 @@ class WithdrawViewModel @Inject constructor(
     }
 
     fun withdraw() = intent {
-        when (state.selectedReason) {
-            ReasonForWithdraw.NONE -> postSideEffect(WithdrawSideEffect.ShowSnackbar("사유를 선택해주세요"))
-            else -> {
-               // withdrawUsecase()
-            }
+        if (state.selectedReason == null) postSideEffect(
+            WithdrawSideEffect.ShowSnackbar(
+                resourceProvider.getString(string.withdraw_reason_required)
+            )
+        )
+        else {
+            withdrawUsecase(state.selectedReason!!.name)
         }
-
     }
 }
 

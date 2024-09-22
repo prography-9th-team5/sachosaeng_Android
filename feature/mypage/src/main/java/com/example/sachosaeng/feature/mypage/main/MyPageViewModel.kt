@@ -41,7 +41,7 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
-    fun hideWithdrawDialog() = intent {
+    fun hideLogoutDialog() = intent {
         reduce {
             state.copy(
                 logoutDialogState = false

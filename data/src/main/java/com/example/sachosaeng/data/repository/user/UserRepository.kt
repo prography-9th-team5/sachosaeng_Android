@@ -10,5 +10,5 @@ interface UserRepository {
     fun logout()
     fun signIn(user: User)
     fun updateMyInfo(user: User)
-    fun withdraw()
+    fun withdraw(reason: String): Flow<Unit>
 }

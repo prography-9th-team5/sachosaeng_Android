@@ -29,7 +29,7 @@ class UserRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override fun withdraw() {
-        TODO("Not yet implemented")
+    override fun withdraw(reason: String) = flow<Unit> {
+        userService.withdraw(reason = reason).getOrThrow().data?.let { emit(it) }
     }
 }
