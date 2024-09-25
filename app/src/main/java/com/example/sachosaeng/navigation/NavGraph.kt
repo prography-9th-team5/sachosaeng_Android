@@ -10,6 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.example.sachosaeng.core.ui.R
+import com.example.sachosaeng.core.util.constant.NavigationConstant.Main.MAIN_DEEP_LINK
+import com.example.sachosaeng.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
 import com.example.sachosaeng.feature.article.navigation.addArticleGraph
 import com.example.sachosaeng.feature.article.navigation.navigateToArticleDetail
 import com.example.sachosaeng.feature.auth.navigation.navigationToAuth
@@ -99,9 +101,6 @@ internal fun NavGraph(
 }
 
 const val GRAPH_MAIN = "mainGraph"
-const val ROUTE_MAIN = "main"
-const val MAIN_DEEP_LINK = "app://${BuildConfig.APP_URL}/$ROUTE_MAIN"
-
 
 fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
     navigation(
