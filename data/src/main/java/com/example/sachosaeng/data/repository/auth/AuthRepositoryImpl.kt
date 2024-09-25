@@ -39,11 +39,7 @@ class AuthRepositoryImpl @Inject constructor(
     override fun getEmail(): Flow<String> =
         flow { emit(authLocalDataSource.getEmail()) }
 
-    override fun getAccessToken(): Flow<String> =
-        flow { emit(authLocalDataSource.getAccessToken()) }
-
-    override fun getRefreshToken(): Flow<String> =
-        flow { emit(authLocalDataSource.getRefreshToken()) }
+    override suspend fun setEmail(email: String): Boolean = authLocalDataSource.setEmail(email)
 
     override fun join(email: String, userType: String): Flow<Boolean> =
         flow {

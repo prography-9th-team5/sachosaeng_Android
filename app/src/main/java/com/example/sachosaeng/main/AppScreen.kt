@@ -21,9 +21,9 @@ import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.component.bottomappbar.BottomAppbarItem
 import com.example.sachosaeng.core.ui.component.bottomappbar.SachoSaengBottomAppBar
 import com.example.sachosaeng.core.ui.component.snackbar.SachoSaengSnackbar
+import com.example.sachosaeng.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
 import com.example.sachosaeng.feature.bookmark.navigation.ROUTE_BOOKMARK
 import com.example.sachosaeng.navigation.NavGraph
-import com.example.sachosaeng.navigation.ROUTE_MAIN
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable

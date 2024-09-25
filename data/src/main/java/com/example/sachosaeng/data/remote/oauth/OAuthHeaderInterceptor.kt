@@ -9,7 +9,7 @@ import javax.inject.Singleton
 
 @Singleton
 internal class OAuthHeaderInterceptor @Inject constructor(
-    private val oAuthRepository: OAuthRepository,
+    private val oAuthRepository: OAuthRepository
 ) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response = runBlocking {
         val accessToken = oAuthRepository.getAccessToken()
@@ -38,7 +38,7 @@ internal class OAuthHeaderInterceptor @Inject constructor(
     }
 
     companion object {
-        private const val AUTHORIZATION = "authorization"
+        private const val AUTHORIZATION = "Authorization"
         private const val LOCATION = "Location"
     }
 }

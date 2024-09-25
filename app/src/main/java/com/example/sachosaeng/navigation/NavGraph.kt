@@ -19,9 +19,7 @@ import com.example.sachosaeng.feature.bookmark.navigation.addBookmarkGraph
 import com.example.sachosaeng.feature.home.HomeScreen
 import com.example.sachosaeng.feature.mypage.navigation.GRAPH_MY_PAGE
 import com.example.sachosaeng.feature.mypage.navigation.addMyPageNavGraph
-import com.example.sachosaeng.feature.signup.BuildConfig
 import com.example.sachosaeng.feature.signup.navigation.GRAPH_SIGNUP
-import com.example.sachosaeng.feature.signup.navigation.SELECT_USER_TYPE
 import com.example.sachosaeng.feature.signup.navigation.addSignUpNavGraph
 import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
 import com.example.sachosaeng.feature.splash.addSplashNavGraph

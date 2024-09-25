@@ -7,6 +7,8 @@ interface AuthDataStore {
     suspend fun getEmail(): String
     suspend fun setAccessToken(token: String): Boolean
     suspend fun getAccessToken(): String
+    suspend fun getKakaoAccessToken(): String
     suspend fun setRefreshToken(token: String): Boolean
     suspend fun getRefreshToken(): String
+    suspend fun setKakaoLoginToken(token: String): Boolean
 }

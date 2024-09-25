@@ -19,6 +19,7 @@ import javax.inject.Inject
 
 private const val USER_ID = "id"
 private const val USER_EMAIL = "email"
+private const val USER_KAKAO_TOKEN = "kakao_token"
 private const val USER_ACCESS_TOKEN = "access_token"
 private const val USER_REFRESH_TOKEN = "refresh_token"
 private val Context.authDataStore: DataStore<Preferences> by preferencesDataStore(name = "sachosaeng_auth")
@@ -68,6 +69,13 @@ class AuthDataStoreImpl @Inject constructor(
         emit("")
     }.first()
 
+    override suspend fun getKakaoAccessToken(): String = context.authDataStore.data.map { preferences ->
+        preferences[stringPreferencesKey(USER_KAKAO_TOKEN)] ?: ""
+    }.catch {
+        it.printStackTrace()
+        emit("")
+    }.first()
+
     override suspend fun setRefreshToken(token: String): Boolean {
         dataStore.edit { preferences ->
             preferences[stringPreferencesKey(USER_REFRESH_TOKEN)] = token
@@ -80,4 +88,10 @@ class AuthDataStoreImpl @Inject constructor(
         it.printStackTrace()
         emit("")
     }.first()
+
+    override suspend fun setKakaoLoginToken(token: String): Boolean {
+        dataStore.edit { preferences ->
+            preferences[stringPreferencesKey(USER_KAKAO_TOKEN)] = token
+        }.run { return true }
+    }
 }
