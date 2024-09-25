@@ -7,15 +7,19 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.feature.article.navigation.addArticleGraph
 import com.example.sachosaeng.feature.article.navigation.navigateToArticleDetail
+import com.example.sachosaeng.feature.auth.navigation.navigationToAuth
 import com.example.sachosaeng.feature.bookmark.navigation.addBookmarkGraph
 import com.example.sachosaeng.feature.home.HomeScreen
 import com.example.sachosaeng.feature.mypage.navigation.GRAPH_MY_PAGE
 import com.example.sachosaeng.feature.mypage.navigation.addMyPageNavGraph
+import com.example.sachosaeng.feature.signup.BuildConfig
 import com.example.sachosaeng.feature.signup.navigation.GRAPH_SIGNUP
+import com.example.sachosaeng.feature.signup.navigation.SELECT_USER_TYPE
 import com.example.sachosaeng.feature.signup.navigation.addSignUpNavGraph
 import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
 import com.example.sachosaeng.feature.splash.addSplashNavGraph
@@ -26,7 +30,10 @@ import com.example.sachosaeng.feature.webview.navigateToWebView
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 @Composable
-internal fun NavGraph(navController: NavHostController) {
+internal fun NavGraph(
+    navController: NavHostController,
+    snackBarMessage: (String) -> Unit
+) {
     NavHost(
         navController = navController,
         startDestination = ROUTE_SPLASH,
@@ -52,12 +59,16 @@ internal fun NavGraph(navController: NavHostController) {
         addWebViewScreen(navController = navController)
         addSignUpNavGraph(
             navController = navController,
-            navigateToMain = { navController.navigate(GRAPH_MAIN) })
+            navigateToMain = { navController.navigate(GRAPH_MAIN) },
+            navigateToAuth = { navController.navigationToAuth() },
+            snackBarMessage = snackBarMessage
+        )
         addMainGraph(navController = navController)
         addMyPageNavGraph(
             navController = navController,
             navigateToWebView = { url -> navController.navigateToWebView(url) },
-            navigateToOpenSource = { navController.navigateToOpenSource() }
+            navigateToOpenSource = { navController.navigateToOpenSource() },
+            snackBarMessage = snackBarMessage
         )
         addVoteGraph(
             navController = navController,
@@ -66,7 +77,8 @@ internal fun NavGraph(navController: NavHostController) {
                     articleId = articleId,
                     categoryId = categoryId
                 )
-            })
+            },
+        )
         addArticleGraph(navController = navController)
         addBookmarkGraph(
             navigateToVote = { id ->
@@ -81,12 +93,14 @@ internal fun NavGraph(navController: NavHostController) {
                     categoryId = categoryId
                 )
             },
-            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) })
+            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) }
+        )
     }
 }
 
 const val GRAPH_MAIN = "mainGraph"
 const val ROUTE_MAIN = "main"
+const val MAIN_DEEP_LINK = "app://${BuildConfig.APP_URL}/$ROUTE_MAIN"
 
 
 fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
@@ -94,7 +108,10 @@ fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
         startDestination = ROUTE_MAIN,
         route = GRAPH_MAIN
     ) {
-        composable(ROUTE_MAIN) {
+        composable(
+            route = ROUTE_MAIN,
+            deepLinks = listOf(navDeepLink { uriPattern = MAIN_DEEP_LINK })
+        ) {
             HomeScreen(
                 moveToMyPage = {
                     navController.navigate(
