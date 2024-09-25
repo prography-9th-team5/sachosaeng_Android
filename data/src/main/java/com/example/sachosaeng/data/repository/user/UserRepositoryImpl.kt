@@ -1,6 +1,5 @@
 package com.example.sachosaeng.data.repository.user
 
-import android.util.Log
 import com.example.sachosaeng.core.model.User
 import com.example.sachosaeng.data.api.UserService
 import com.example.sachosaeng.data.datasource.datastore.UserDataStore

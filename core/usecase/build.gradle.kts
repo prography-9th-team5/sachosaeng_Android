@@ -36,6 +36,9 @@ android {
 dependencies {
     implementation(libs.androidx.annotation.jvm)
     implementation(libs.javax.inject)
+    implementation(libs.core.ktx.v1120)
+    implementation(libs.appcompat)
+    implementation(libs.material)
 
     // Hilt
     ksp(libs.hilt.compiler)
@@ -43,9 +46,7 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    implementation(libs.core.ktx.v1120)
-    implementation(libs.appcompat)
-    implementation(libs.material)
+    // test
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

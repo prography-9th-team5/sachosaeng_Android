@@ -39,6 +39,7 @@ android {
             useSupportLibrary = true
         }
 
+        manifestPlaceholders["APP_URL"] = getApiKey("app.url")
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = getApiKey("kakao.key.native")
         manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("kakao.key.api")
         manifestPlaceholders["KAKAO_ADMIN_KEY"] = getApiKey("kakao.key.admin")
@@ -53,6 +54,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -99,6 +101,8 @@ dependencies {
     implementation(libs.javax.inject)
     implementation(project(":feature:bookmark"))
     implementation(project(":feature:article"))
+    implementation(project(":feature:auth"))
+    implementation(project(":core:usecase"))
 
     // Hilt
     ksp(libs.hilt.compiler)

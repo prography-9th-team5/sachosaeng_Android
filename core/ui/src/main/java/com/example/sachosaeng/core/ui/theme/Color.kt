@@ -46,5 +46,8 @@ val Tc_11_Pink = Color(0x1FEE4697)
 val ActiveTextColor = Color(0xFF0C111D)
 val InactiveTextColor = Color(0xFF98A2B3)
 
+//ButtonColor
+val Kakao_Yellow = Color(0xFFFEE500)
+
 
 
