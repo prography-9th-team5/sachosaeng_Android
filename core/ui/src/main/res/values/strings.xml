@@ -78,6 +78,8 @@
     <!--bookmark-->
     <string name="bookmark_screen_title">북마크</string>
     <string name="bookmark_tab_article">연관콘텐츠</string>
+    <string name="bookmarked_vote_is_empty_description">북마크한 투표가 없어요</string>
+    <string name="bookmarked_article_is_empty_description">북마크한 연관콘텐츠가 없어요</string>
 
     <!--vote-->
     <string name="vote_label">투표</string>

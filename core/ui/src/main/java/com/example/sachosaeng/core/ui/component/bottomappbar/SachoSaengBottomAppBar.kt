@@ -18,6 +18,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.sachosaeng.core.ui.IntConstant.BOTTOM_BAR_HEIGHT
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G4
@@ -35,7 +36,7 @@ fun SachoSaengBottomAppBar(
         containerColor = Gs_G4,
         modifier = modifier
             .background(Gs_G2)
-            .height(76.dp)
+            .height(BOTTOM_BAR_HEIGHT.dp)
             .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
     ) {
         Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = modifier.fillMaxWidth()) {
