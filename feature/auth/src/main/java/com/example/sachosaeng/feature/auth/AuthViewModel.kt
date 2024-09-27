@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.sachosaeng.core.domain.constant.OAuthType
+import com.example.sachosaeng.core.usecase.auth.GetRecentAuthTypeUseCase
 import com.example.sachosaeng.core.usecase.auth.LoginUsecase
 import com.example.sachosaeng.core.usecase.auth.SetEmailUsecase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -20,6 +21,7 @@ import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
@@ -27,10 +29,21 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     val setEmailUsecase: SetEmailUsecase,
     val loginWithEmailUsecase: LoginUsecase,
+    val getRecentAuthTypeUseCase: GetRecentAuthTypeUseCase
 ) : ViewModel(),
-    ContainerHost<Unit, AuthSideEffect> {
-    override val container: Container<Unit, AuthSideEffect> =
-        container(Unit)
+    ContainerHost<AuthUiState, AuthSideEffect> {
+    override val container: Container<AuthUiState, AuthSideEffect> =
+        container(AuthUiState())
+
+    init {
+        getRecentAuthType()
+    }
+
+    fun getRecentAuthType() = intent {
+        getRecentAuthTypeUseCase().collectLatest {
+            reduce { state.copy(recentAuthType = it) }
+        }
+    }
 
     fun loginFail(throwable: Throwable) = intent {
         postSideEffect(AuthSideEffect.ShowSnackbar(throwable.message ?: "unknown error"))
@@ -119,3 +132,7 @@ sealed class AuthSideEffect {
     data object NavigateToSelectUserType : AuthSideEffect()
     data class ShowSnackbar(val message: String) : AuthSideEffect()
 }
+
+data class AuthUiState(
+    val recentAuthType: OAuthType = OAuthType.NONE
+)
