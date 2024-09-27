@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
+import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_G4
@@ -39,6 +40,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun TermsOfServiceScreen(
+    navigateToServiceTermsDetail: () -> Unit,
+    navigateToPersonalInformationTerm: () -> Unit,
     navigateToSocialLogin: () -> Unit,
     viewModel: TermsOfServiceViewModel = hiltViewModel()
 ) {
@@ -51,6 +54,8 @@ fun TermsOfServiceScreen(
     }
 
     TermsOfServiceScreen(
+        navigateToServiceTermsDetail = navigateToServiceTermsDetail,
+        navigateToPersonalInformationTerm = navigateToPersonalInformationTerm,
         onAgreeAllRequiredTerms = viewModel::onConsentToAllTermsChanged,
         onAgreePersonalInformation = viewModel::onConsentToCollectPersonalInfoChanged,
         onAgreeServiceTerms = viewModel::onConsentToTermsOfServiceChanged,
@@ -63,6 +68,8 @@ fun TermsOfServiceScreen(
 internal fun TermsOfServiceScreen(
     onAgreeAllRequiredTerms: () -> Unit,
     onAgreePersonalInformation: () -> Unit,
+    navigateToServiceTermsDetail: () -> Unit,
+    navigateToPersonalInformationTerm: () -> Unit,
     onAgreeServiceTerms: () -> Unit,
     onConfirm: () -> Unit,
     state: TermsOfServiceUiState
@@ -85,12 +92,14 @@ internal fun TermsOfServiceScreen(
         TermSelectBox(
             term = stringResource(id = R.string.agree_personal_information),
             isSelected = state.isConsentToCollectPersonalInfo,
-            onSelect = onAgreePersonalInformation
+            onSelect = onAgreePersonalInformation,
+            navigateToTermDetail = navigateToPersonalInformationTerm
         )
         TermSelectBox(
             term = stringResource(id = R.string.agree_service_terms),
             isSelected = state.isConsentToTermsOfService,
-            onSelect = onAgreeServiceTerms
+            onSelect = onAgreeServiceTerms,
+            navigateToTermDetail = navigateToServiceTermsDetail
         )
         Spacer(modifier = Modifier.weight(1f))
         SachoSaengButton(
@@ -109,6 +118,7 @@ internal fun TermsOfServiceScreen(
 fun TermSelectBox(
     modifier: Modifier = Modifier,
     term: String,
+    navigateToTermDetail: () -> Unit = { },
     isSelected: Boolean = false,
     onSelect: () -> Unit = { }
 ) {
@@ -128,9 +138,18 @@ fun TermSelectBox(
             )
         )
         Text(
+            modifier = Modifier.weight(1f),
             text = term,
             fontSize = 16.sp,
             fontWeight = if (isSelected) FontWeight.W500 else FontWeight.W400,
+        )
+        Image(
+            modifier = Modifier.noRippleClickable { navigateToTermDetail() },
+            painter = painterResource(id = R.drawable.ic_arrow_right),
+            contentDescription = null,
+            colorFilter = ColorFilter.tint(
+                if (isSelected) Gs_G6 else Gs_G4
+            )
         )
     }
 }
@@ -139,6 +158,8 @@ fun TermSelectBox(
 @Composable
 fun PreviewTermsOfServiceScreen() {
     TermsOfServiceScreen(
+        navigateToServiceTermsDetail = { },
+        navigateToPersonalInformationTerm = { },
         onAgreeAllRequiredTerms = { },
         onAgreePersonalInformation = { },
         onAgreeServiceTerms = { },

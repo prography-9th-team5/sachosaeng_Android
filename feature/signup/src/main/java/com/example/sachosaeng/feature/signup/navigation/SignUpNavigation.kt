@@ -11,6 +11,9 @@ import com.example.sachosaeng.feature.signup.gettermsagree.TermsOfServiceScreen
 import com.example.sachosaeng.feature.signup.selectcategory.SelectCategoryScreen
 import com.example.sachosaeng.feature.signup.selectusertype.SelectUserTypeScreen
 import com.example.sachosaeng.feature.signup.signupcomplete.SignUpCompleteScreen
+import com.example.sachosaeng.feature.webview.WebViewUrl.PRIVACY_POLICY
+import com.example.sachosaeng.feature.webview.WebViewUrl.TERMS_OF_SERVICE
+import com.example.sachosaeng.feature.webview.navigateToWebView
 
 const val ROUTE_SIGNUP = "signup"
 const val GRAPH_SIGNUP = "signup_graph"
@@ -28,7 +31,10 @@ fun NavGraphBuilder.addSignUpNavGraph(
         route = GRAPH_SIGNUP
     ) {
         composable(ROUTE_SIGNUP) {
-            TermsOfServiceScreen(navigateToSocialLogin = { navigateToAuth() })
+            TermsOfServiceScreen(
+                navigateToSocialLogin = { navigateToAuth() },
+                navigateToServiceTermsDetail = { navController.navigateToWebView(TERMS_OF_SERVICE) },
+                navigateToPersonalInformationTerm = { navController.navigateToWebView(PRIVACY_POLICY) })
         }
         composable(
             route = SELECT_USER_TYPE,

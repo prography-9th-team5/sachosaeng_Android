@@ -75,13 +75,6 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
 
-    //auth
-    implementation(libs.kakao.sdk)
-    implementation(libs.google.gms)
-    implementation(libs.firebase.auth)
-    implementation(libs.gms.auth)
-    implementation(platform(libs.firebase.bom))
-
     //orbit
     implementation(libs.orbit.compose)
     implementation(libs.orbit.viewmodel)

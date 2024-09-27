@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.google.ksp)
+    alias(libs.plugins.google.gms)
 }
 
 fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
