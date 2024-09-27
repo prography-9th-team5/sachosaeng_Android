@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.bookmark
+package com.example.sachosaeng.feature.bookmark.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -19,12 +19,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G6
-import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.core.ui.R.drawable
 import com.example.sachosaeng.core.ui.noRippleClickable
+import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G3
+import com.example.sachosaeng.core.ui.theme.Gs_G6
+import com.example.sachosaeng.core.ui.theme.Gs_White
 
 @Composable
 fun BookmarkList(
