@@ -16,5 +16,6 @@ buildscript {
     }
     dependencies {
         classpath(libs.oss.licenses.plugin)
+        classpath(libs.google.gms)
     }
 }

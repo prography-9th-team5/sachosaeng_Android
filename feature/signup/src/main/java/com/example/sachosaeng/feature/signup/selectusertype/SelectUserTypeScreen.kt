@@ -33,9 +33,9 @@ import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G3
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.feature.signup.R.drawable
-import com.example.sachosaeng.feature.signup.SelectScreenDescription
-import com.example.sachosaeng.feature.signup.SignUpProgressBar
-import com.example.sachosaeng.feature.signup.SignUpProgressbarWithColor
+import com.example.sachosaeng.feature.signup.component.SelectScreenDescription
+import com.example.sachosaeng.feature.signup.component.SignUpProgressBar
+import com.example.sachosaeng.feature.signup.component.SignUpProgressbarWithColor
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

@@ -30,7 +30,8 @@ private fun NavController.navigateToWithdraw(userName: String) {
 fun NavGraphBuilder.addMyPageNavGraph(
     navController: NavHostController,
     navigateToWebView: (String) -> Unit,
-    navigateToOpenSource: () -> Unit = {}
+    navigateToOpenSource: () -> Unit = {},
+    snackBarMessage: (String) -> Unit = {}
 ) {
     navigation(
         route = ROUTE_MY_PAGE,
@@ -44,7 +45,7 @@ fun NavGraphBuilder.addMyPageNavGraph(
                 navigateToUserInfoModify = { navController.navigate(MODIFY_USER_INFO) },
                 navigateToFaq = { navigateToWebView(FAQ) },
                 navigateToRequestToAdmin = { navigateToWebView(REQUEST_TO_ADMIN) },
-                navigateToOpenSource = { navigateToOpenSource() }
+                navigateToOpenSource = { navigateToOpenSource() },
             )
         }
         composable(
@@ -57,11 +58,13 @@ fun NavGraphBuilder.addMyPageNavGraph(
                 },
             )) {
             WithdrawScreen(
-                navigateToBackStack = { navController.popBackStack() }
+                navigateToBackStack = { navController.popBackStack() },
+                snackBarMessage = snackBarMessage
             )
         }
         composable(MODIFY_USER_INFO) {
             ModifyUserInfoScreen(
+                snackBarMessage = snackBarMessage,
                 navigateToBackStack = { navController.popBackStack() },
                 navigateToWithdrawScreen = { userName -> navController.navigateToWithdraw(userName = userName) }
             )

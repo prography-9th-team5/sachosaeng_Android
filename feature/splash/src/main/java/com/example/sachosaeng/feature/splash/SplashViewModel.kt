@@ -1,18 +1,12 @@
 package com.example.sachosaeng.feature.splash
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.sachosaeng.core.usecase.auth.GetAccessTokenUsecase
-import com.example.sachosaeng.core.usecase.auth.LoginUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
-import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
-import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
@@ -23,23 +17,13 @@ class SplashViewModel @Inject constructor(
     override val container: Container<Boolean, SplashSideEffect> = container(true)
 
     init {
-        showSplash()
-        checkIfUserJoined()
+        checkHasAccessToken()
     }
 
-    private fun showSplash() = intent {
-        viewModelScope.launch {
-            delay(1000)
-            reduce { false }
-        }
-    }
-
-    private fun checkIfUserJoined() = intent {
-        getAccessTokenUsecase().collectLatest {
-            when (it.isEmpty()) {
-                true -> postSideEffect(SplashSideEffect.NavigateToSignUp)
-                false -> postSideEffect(SplashSideEffect.NavigateToHome)
-            }
+    private fun checkHasAccessToken() = blockingIntent {
+        when (getAccessTokenUsecase().isEmpty()) {
+            true -> postSideEffect(SplashSideEffect.NavigateToSignUp)
+            false -> postSideEffect(SplashSideEffect.NavigateToHome)
         }
     }
 }

@@ -46,7 +46,7 @@ class OAuthenticator @Inject constructor(
     }
 
     companion object {
-        private const val AUTHORIZATION = "authorization"
+        private const val AUTHORIZATION = "Authorization"
         private const val LOCATION = "Location"
     }
 }

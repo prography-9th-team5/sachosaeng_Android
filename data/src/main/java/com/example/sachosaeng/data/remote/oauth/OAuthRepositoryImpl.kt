@@ -7,8 +7,6 @@ import com.example.sachosaeng.data.model.auth.LoginRequest
 import com.example.sachosaeng.data.model.auth.TokenResponse
 import com.example.sachosaeng.data.remote.util.onFailure
 import com.example.sachosaeng.data.remote.util.onSuccess
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class OAuthRepositoryImpl @Inject constructor(
@@ -16,7 +14,6 @@ class OAuthRepositoryImpl @Inject constructor(
     private val authDataStore: AuthDataStore,
     private val deviceManager: DeviceManager
 ) : OAuthRepository {
-
     override suspend fun getAccessToken(): String = authDataStore.getAccessToken()
 
     override suspend fun getRefreshToken(): String = authDataStore.getRefreshToken()
@@ -38,15 +35,13 @@ class OAuthRepositoryImpl @Inject constructor(
             LoginRequest(
                 email = authDataStore.getEmail()
             )
-        ).getOrThrow().data
+        ).getOrNull()?.data
     }
 
-    private fun setToken(data: TokenResponse): Flow<Unit> {
-        return flow {
-            with(authDataStore) {
-                setAccessToken(data.accessToken)
-                setRefreshToken(data.refreshToken)
-            }
+    private suspend fun setToken(data: TokenResponse) {
+        with(authDataStore) {
+            setAccessToken(data.accessToken)
+            setRefreshToken(data.refreshToken)
         }
     }
 }

@@ -1,8 +1,11 @@
 import java.util.Properties
 
 plugins {
+    id(libs.plugins.google.dagger.hilt.android.get().pluginId)
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.google.ksp)
+    alias(libs.plugins.google.gms)
 }
 
 fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
@@ -19,8 +22,6 @@ fun Project.getApiKey(propertyKey: String): String {
     return localProperties.getProperty(propertyKey, "")
 }
 
-
-
 android {
     namespace = "com.example.sachosaeng.feature.auth"
     compileSdk = 34
@@ -34,6 +35,8 @@ android {
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = getApiKey("kakao.key.native")
         manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("kakao.key.api")
         manifestPlaceholders["KAKAO_ADMIN_KEY"] = getApiKey("kakao.key.admin")
+
+        buildConfigField("String", "APP_URL", getApiKey("app.url"))
         buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("kakao.key.native"))
         buildConfigField("String", "GOOGLE_OAUTH_KEY", getApiKey("google.key"))
     }
@@ -91,9 +94,11 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.constraintlayout)
 
-    //hilt
-    implementation(libs.androidx.hilt.navigation.compose)
+    // Hilt
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.complier)
     implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     //auth
     implementation(libs.kakao.sdk)
@@ -112,4 +117,6 @@ dependencies {
 
     implementation(project(":core:ui"))
     implementation(project(":core:util"))
+    implementation(project(":core:usecase"))
+    implementation(project(":core:model"))
 }

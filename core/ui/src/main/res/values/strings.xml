@@ -39,6 +39,14 @@
     <string name="start_button">시작</string>
 
     <!-- signup -->
+    <string name="login_with_kakao">카카오로 로그인</string>
+    <string name="login_with_google">Google로 로그인</string>
+    <string name="select_account_platform_screen_description">사회초년생 집단지성 투표 서비스, 사초생</string>
+    <string name="select_account_platform_screen_title">궁금했던 사회생활\n사초생이 모두 알려줄게요</string>
+    <string name="terms_of_service_screen_title">서비스이용에\n동의해주세요</string>
+    <string name="agree_all_required_terms">필수 약관 모두 동의</string>
+    <string name="agree_personal_information">개인정보 수집 및 이용 동의 (필수)</string>
+    <string name="agree_service_terms">서비스 이용약관 동의 (필수)</string>
     <string name="select_user_type_screen_title">사초생 유형 선택</string>
     <string name="select_category_screen_top_bar">카테고리 선택</string>
     <string name="select_user_type_label">어떤 사회초년생에\n해당하나요?</string>

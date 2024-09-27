@@ -37,7 +37,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
-import com.example.sachosaeng.core.ui.component.snackbar.SachoSaengSnackbar
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
@@ -54,15 +53,16 @@ import com.example.sachosaeng.core.ui.UserType
 fun ModifyUserInfoScreen(
     navigateToBackStack: () -> Unit = {},
     navigateToWithdrawScreen: (String) -> Unit = {},
+    snackBarMessage: (String) -> Unit = {},
     viewModel: ModifyUserInfoViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
-    var snackbarMessage by remember { mutableStateOf<String?>(null) }
 
     viewModel.collectSideEffect {
         when (it) {
             is ModifyUserInfoSideEffect.ShowSnackBar -> {
-                snackbarMessage = it.message
+                snackBarMessage(it.message)
+                navigateToBackStack()
             }
         }
     }
@@ -75,15 +75,6 @@ fun ModifyUserInfoScreen(
         navigateToBackStack = navigateToBackStack,
         saveUserInfo = viewModel::saveUserInfo
     )
-
-
-    snackbarMessage?.let {
-        SachoSaengSnackbar(
-            message = it, onDismiss = {
-                snackbarMessage = null
-                navigateToBackStack()
-            })
-    }
 }
 
 @Composable
