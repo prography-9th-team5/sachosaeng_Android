@@ -33,7 +33,7 @@ class AuthViewModel @Inject constructor(
         container(Unit)
 
     fun loginFail(throwable: Throwable) = intent {
-        postSideEffect(AuthSideEffect.ShowSnackbar(throwable.message ?: ""))
+        postSideEffect(AuthSideEffect.ShowSnackbar(throwable.message ?: "unknown error"))
     }
 
     fun requestGoogleLogin(
@@ -44,7 +44,10 @@ class AuthViewModel @Inject constructor(
                 .getResult(ApiException::class.java)
             val credential = GoogleAuthProvider.getCredential(account.idToken, null)
             FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener { task -> if (task.isSuccessful) handleLoginResult(OAuthType.GOOGLE) }
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) handleGoogleLoginResult()
+                    else loginFail(task.exception!!)
+                }
         } catch (e: Exception) {
             Log.e("GoogleLogin", e.toString())
         }
@@ -56,7 +59,7 @@ class AuthViewModel @Inject constructor(
         onFailure: (Throwable) -> Unit
     ) {
         UserApiClient.instance.loginWithKakaoTalk(activity) { token, error ->
-            error?.let(onFailure)
+            error?.let { onFailure(it) }
             token?.let { onSuccess() }
         }
     }
@@ -72,23 +75,19 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    private fun handleLoginResult(type: OAuthType) = intent {
-        when (type) {
-            OAuthType.KAKAO -> {
-                UserApiClient.instance.me { user, error ->
-                    viewModelScope.launch {
-                        val email = user?.kakaoAccount?.email ?: ""
-                        setEmailUsecase(email)
-                        checkLogin(email = email)
-                    }
-                }
-            }
+    private fun handleGoogleLoginResult() = intent {
+        FirebaseAuth.getInstance().currentUser?.email?.let {
+            setEmailUsecase(it, OAuthType.GOOGLE)
+            checkLogin(it)
+        }
+    }
 
-            OAuthType.GOOGLE -> {
-                FirebaseAuth.getInstance().currentUser?.email?.let {
-                    setEmailUsecase(it)
-                    checkLogin(it)
-                }
+    private fun handleKakaoLogin() = intent {
+        UserApiClient.instance.me { user, error ->
+            viewModelScope.launch {
+                val email = user?.kakaoAccount?.email ?: ""
+                setEmailUsecase(email, OAuthType.KAKAO)
+                checkLogin(email = email)
             }
         }
     }
@@ -107,18 +106,16 @@ class AuthViewModel @Inject constructor(
         if (UserApiClient.instance.isKakaoTalkLoginAvailable(activity))
             loginWithKakaoTalk(
                 activity,
-                { handleLoginResult(OAuthType.KAKAO) },
+                { handleKakaoLogin() },
             ) {
-                loginWithKakaoAccount(activity, { handleLoginResult(OAuthType.KAKAO) }, onFailure)
+                loginWithKakaoAccount(activity, { handleKakaoLogin() }, onFailure)
             }
-        else loginWithKakaoAccount(activity, { handleLoginResult(OAuthType.KAKAO) }, onFailure)
+        else loginWithKakaoAccount(activity, { handleKakaoLogin() }, onFailure)
     }
 }
 
 sealed class AuthSideEffect {
     data object NavigateToMain : AuthSideEffect()
     data object NavigateToSelectUserType : AuthSideEffect()
-    data class LoginFail(val message: String) : AuthSideEffect()
-    data object IDle : AuthSideEffect()
     data class ShowSnackbar(val message: String) : AuthSideEffect()
 }

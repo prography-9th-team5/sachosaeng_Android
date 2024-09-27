@@ -13,7 +13,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -38,10 +37,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.R.drawable
 import com.example.sachosaeng.core.ui.component.snackbar.SachoSaengSnackbar
@@ -55,11 +53,8 @@ import com.example.sachosaeng.core.ui.theme.Kakao_Yellow
 import com.example.sachosaeng.core.ui.theme.SachosaengTheme
 import com.example.sachosaeng.core.util.constant.NavigationConstant.Main.MAIN_DEEP_LINK
 import com.example.sachosaeng.core.util.constant.NavigationConstant.SignUp.SIGNUP_SELECT_USER_TYPE_DEEP_LINK
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -67,7 +62,6 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @AndroidEntryPoint
 class AuthActivitiy : ComponentActivity() {
     private val authViewModel: AuthViewModel by viewModels()
-    private lateinit var client: GoogleSignInClient
 
     val options = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestIdToken(BuildConfig.GOOGLE_OAUTH_KEY)
@@ -94,11 +88,6 @@ class AuthActivitiy : ComponentActivity() {
                         startActivity(intent)
                     }
 
-                    is AuthSideEffect.LoginFail -> {
-                        Log.d("AuthActivity", it.message)
-                    }
-
-                    is AuthSideEffect.IDle -> {}
                     is AuthSideEffect.ShowSnackbar -> {
                         snackbarMessage = it.message
                     }
@@ -106,39 +95,7 @@ class AuthActivitiy : ComponentActivity() {
             }
             SachosaengTheme {
                 Surface {
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(Gs_White)
-                            .padding(horizontal = 20.dp)
-                    ) {
-                        Text(
-                            modifier = Modifier.padding(bottom = 20.dp, top = 70.dp),
-                            text = stringResource(id = R.string.select_account_platform_screen_title),
-                            fontSize = 26.sp,
-                            fontWeight = FontWeight.W700,
-                            color = Gs_Black
-                        )
-                        Text(
-                            text = stringResource(id = R.string.select_account_platform_screen_description),
-                            fontSize = 16.sp,
-                            color = Gs_G6,
-                            fontWeight = FontWeight.W500,
-                        )
-                        Image(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 30.dp, vertical = 62.dp)
-                                .size(280.dp)
-                                .background(Gs_G3, RoundedCornerShape(4.dp))
-                                .padding(55.dp),
-                            painter = painterResource(id = R.drawable.image_todays_vote_dialog),
-                            contentDescription = null
-                        )
-                        KakaoLoginButton()
-                        Spacer(modifier = Modifier.size(8.dp))
-                        GoogleLoginButton()
-                    }
+                    AuthScreen()
                 }
                 snackbarMessage?.let {
                     SachoSaengSnackbar(
@@ -151,6 +108,43 @@ class AuthActivitiy : ComponentActivity() {
                         }, message = it, onDismiss = { snackbarMessage = null })
                 }
             }
+        }
+    }
+
+    @Composable
+    fun AuthScreen() {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Gs_White)
+                .padding(horizontal = 20.dp)
+        ) {
+            Text(
+                modifier = Modifier.padding(bottom = 20.dp, top = 70.dp),
+                text = stringResource(id = R.string.select_account_platform_screen_title),
+                fontSize = 26.sp,
+                fontWeight = FontWeight.W700,
+                color = Gs_Black
+            )
+            Text(
+                text = stringResource(id = R.string.select_account_platform_screen_description),
+                fontSize = 16.sp,
+                color = Gs_G6,
+                fontWeight = FontWeight.W500,
+            )
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 30.dp, vertical = 62.dp)
+                    .size(280.dp)
+                    .background(Gs_G3, RoundedCornerShape(4.dp))
+                    .padding(55.dp),
+                painter = painterResource(id = R.drawable.image_todays_vote_dialog),
+                contentDescription = null
+            )
+            KakaoLoginButton()
+            Spacer(modifier = Modifier.size(8.dp))
+            GoogleLoginButton()
         }
     }
 
@@ -168,26 +162,28 @@ class AuthActivitiy : ComponentActivity() {
                     )
                 }
         ) {
-            Image(
-                alignment = Alignment.BottomCenter,
-                contentScale = ContentScale.Fit,
-                painter = painterResource(id = drawable.ic_kakao),
-                contentDescription = "",
-                modifier = Modifier
-                    .padding(10.dp)
-                    .size(28.dp)
-                    .align(Alignment.CenterStart)
-            )
-            Text(
-                textAlign = TextAlign.Center,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.W500,
-                color = Gs_Black,
-                text = stringResource(id = R.string.login_with_kakao),
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(vertical = 18.dp)
-            )
+            Box {
+                Image(
+                    alignment = Alignment.BottomCenter,
+                    contentScale = ContentScale.Fit,
+                    painter = painterResource(id = drawable.ic_kakao),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .padding(10.dp)
+                        .size(28.dp)
+                        .align(Alignment.CenterStart)
+                )
+                Text(
+                    textAlign = TextAlign.Center,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W500,
+                    color = Gs_Black,
+                    text = stringResource(id = R.string.login_with_kakao),
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .padding(vertical = 18.dp)
+                )
+            }
         }
     }
 
@@ -228,6 +224,13 @@ class AuthActivitiy : ComponentActivity() {
                     .align(Alignment.Center)
                     .padding(vertical = 18.dp)
             )
+        }
+    }
+    @Composable
+    @Preview
+    fun PreviewAuthScreen() {
+        SachosaengTheme {
+            AuthScreen()
         }
     }
 }

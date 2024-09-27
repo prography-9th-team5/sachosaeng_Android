@@ -1,5 +1,6 @@
 package com.example.sachosaeng.data.repository.auth
 
+import com.example.sachosaeng.core.domain.constant.OAuthType
 import com.example.sachosaeng.data.api.AuthService
 import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
 import com.example.sachosaeng.data.model.auth.JoinRequest
@@ -39,7 +40,10 @@ class AuthRepositoryImpl @Inject constructor(
     override fun getEmail(): Flow<String> =
         flow { emit(authLocalDataSource.getEmail()) }
 
-    override suspend fun setEmail(email: String): Boolean = authLocalDataSource.setEmail(email)
+    override fun getRecentOauthType(): Flow<OAuthType> =
+        flow { emit(authLocalDataSource.getRecentOauthType()) }
+
+    override suspend fun setEmail(email: String, type: OAuthType): Boolean = authLocalDataSource.setEmail(email, type)
 
     override fun join(email: String, userType: String): Flow<Boolean> =
         flow {

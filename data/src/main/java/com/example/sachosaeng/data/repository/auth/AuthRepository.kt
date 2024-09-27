@@ -1,5 +1,6 @@
 package com.example.sachosaeng.data.repository.auth
 
+import com.example.sachosaeng.core.domain.constant.OAuthType
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
@@ -7,5 +8,6 @@ interface AuthRepository {
     fun logout()
     fun join(email: String, userType: String): Flow<Boolean>
     fun getEmail(): Flow<String>
-    suspend fun setEmail(email: String): Boolean
+    fun getRecentOauthType(): Flow<OAuthType>
+    suspend fun setEmail(email: String, type: OAuthType): Boolean
 }

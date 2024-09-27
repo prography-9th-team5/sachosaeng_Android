@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.example.sachosaeng.core.domain.constant.OAuthType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -19,6 +20,7 @@ import javax.inject.Inject
 
 private const val USER_ID = "id"
 private const val USER_EMAIL = "email"
+private const val USER_AUTH_TYPE = "auth_type"
 private const val USER_KAKAO_TOKEN = "kakao_token"
 private const val USER_ACCESS_TOKEN = "access_token"
 private const val USER_REFRESH_TOKEN = "refresh_token"
@@ -41,9 +43,10 @@ class AuthDataStoreImpl @Inject constructor(
         emit(-1)
     }.first()
 
-    override suspend fun setEmail(email: String): Boolean {
+    override suspend fun setEmail(email: String, type: OAuthType): Boolean {
         dataStore.edit { preferences ->
             preferences[stringPreferencesKey(USER_EMAIL)] = email
+            preferences[stringPreferencesKey(USER_AUTH_TYPE)] = type.name
         }.run { return true }
     }
 
@@ -87,6 +90,13 @@ class AuthDataStoreImpl @Inject constructor(
     }.catch {
         it.printStackTrace()
         emit("")
+    }.first()
+
+    override suspend fun getRecentOauthType() = context.authDataStore.data.map { preferences ->
+        OAuthType.valueOf(preferences[stringPreferencesKey(USER_AUTH_TYPE)] ?: OAuthType.NONE.name)
+    }.catch {
+        it.printStackTrace()
+        emit(OAuthType.NONE)
     }.first()
 
     override suspend fun setKakaoLoginToken(token: String): Boolean {
