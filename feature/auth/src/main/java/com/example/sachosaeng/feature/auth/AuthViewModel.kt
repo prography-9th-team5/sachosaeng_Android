@@ -4,46 +4,53 @@ import android.app.Activity
 import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.feature.auth.BuildConfig
+import androidx.lifecycle.viewModelScope
+import com.example.sachosaeng.core.domain.constant.OAuthType
+import com.example.sachosaeng.core.usecase.auth.LoginUsecase
+import com.example.sachosaeng.core.usecase.auth.SetEmailUsecase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
+import org.orbitmvi.orbit.Container
+import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class AuthViewModel @Inject constructor() : ViewModel() {
-    private val _socialLoginUiState = MutableStateFlow<AuthUiState>(AuthUiState.IDle)
-    val socialLoginUiState = _socialLoginUiState.asStateFlow()
-    val googleSignInOptions = GoogleSignInOptions
-        .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken(BuildConfig.GOOGLE_OAUTH_KEY)
-        .requestEmail()
-        .build()
-    fun loginSuccess() = _socialLoginUiState.tryEmit(AuthUiState.LoginSuccess)
-    fun loginFail() = _socialLoginUiState.tryEmit(AuthUiState.LoginFail)
-    fun setUiStateIdle() = _socialLoginUiState.tryEmit(AuthUiState.IDle)
+class AuthViewModel @Inject constructor(
+    val setEmailUsecase: SetEmailUsecase,
+    val loginWithEmailUsecase: LoginUsecase,
+) : ViewModel(),
+    ContainerHost<Unit, AuthSideEffect> {
+    override val container: Container<Unit, AuthSideEffect> =
+        container(Unit)
+
+    fun loginFail(throwable: Throwable) = intent {
+        postSideEffect(AuthSideEffect.ShowSnackbar(throwable.message ?: ""))
+    }
+
     fun requestGoogleLogin(
         activityResult: ActivityResult,
-        onSuccess: () -> Unit
     ) {
         try {
             val account = GoogleSignIn.getSignedInAccountFromIntent(activityResult.data)
                 .getResult(ApiException::class.java)
             val credential = GoogleAuthProvider.getCredential(account.idToken, null)
             FirebaseAuth.getInstance().signInWithCredential(credential)
-                .addOnCompleteListener { task -> if (task.isSuccessful) onSuccess() }
+                .addOnCompleteListener { task -> if (task.isSuccessful) handleLoginResult(OAuthType.GOOGLE) }
         } catch (e: Exception) {
             Log.e("GoogleLogin", e.toString())
         }
     }
 
-    fun loginWithKakaoTalk(
+    private fun loginWithKakaoTalk(
         activity: Activity,
         onSuccess: () -> Unit,
         onFailure: (Throwable) -> Unit
@@ -54,7 +61,7 @@ class AuthViewModel @Inject constructor() : ViewModel() {
         }
     }
 
-    fun loginWithKakaoAccount(
+    private fun loginWithKakaoAccount(
         activity: Activity,
         onSuccess: () -> Unit,
         onFailure: (Throwable) -> Unit
@@ -65,22 +72,53 @@ class AuthViewModel @Inject constructor() : ViewModel() {
         }
     }
 
+    private fun handleLoginResult(type: OAuthType) = intent {
+        when (type) {
+            OAuthType.KAKAO -> {
+                UserApiClient.instance.me { user, error ->
+                    viewModelScope.launch {
+                        val email = user?.kakaoAccount?.email ?: ""
+                        setEmailUsecase(email)
+                        checkLogin(email = email)
+                    }
+                }
+            }
+
+            OAuthType.GOOGLE -> {
+                FirebaseAuth.getInstance().currentUser?.email?.let {
+                    setEmailUsecase(it)
+                    checkLogin(it)
+                }
+            }
+        }
+    }
+
+    private fun checkLogin(email: String) = intent {
+        loginWithEmailUsecase(email).collectLatest {
+            if (it) postSideEffect(AuthSideEffect.NavigateToMain)
+            else postSideEffect(AuthSideEffect.NavigateToSelectUserType)
+        }
+    }
+
     fun handleKakaoLogin(
         activity: Activity,
-        onSuccess: () -> Unit,
         onFailure: (Throwable) -> Unit
     ) {
-        if (UserApiClient.instance.isKakaoTalkLoginAvailable(activity)) loginWithKakaoTalk(
-            activity,
-            onSuccess,
-            onFailure
-        )
-        else loginWithKakaoAccount(activity, onSuccess, onFailure)
+        if (UserApiClient.instance.isKakaoTalkLoginAvailable(activity))
+            loginWithKakaoTalk(
+                activity,
+                { handleLoginResult(OAuthType.KAKAO) },
+            ) {
+                loginWithKakaoAccount(activity, { handleLoginResult(OAuthType.KAKAO) }, onFailure)
+            }
+        else loginWithKakaoAccount(activity, { handleLoginResult(OAuthType.KAKAO) }, onFailure)
     }
 }
 
-sealed interface AuthUiState {
-    object LoginSuccess : AuthUiState
-    object LoginFail : AuthUiState
-    object IDle : AuthUiState
+sealed class AuthSideEffect {
+    data object NavigateToMain : AuthSideEffect()
+    data object NavigateToSelectUserType : AuthSideEffect()
+    data class LoginFail(val message: String) : AuthSideEffect()
+    data object IDle : AuthSideEffect()
+    data class ShowSnackbar(val message: String) : AuthSideEffect()
 }
