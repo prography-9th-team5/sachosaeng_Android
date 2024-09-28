@@ -93,7 +93,8 @@ internal fun NavGraph(
                     categoryId = categoryId
                 )
             },
-            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) }
+            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
+            showSnackBar = snackBarMessage
         )
     }
 }
