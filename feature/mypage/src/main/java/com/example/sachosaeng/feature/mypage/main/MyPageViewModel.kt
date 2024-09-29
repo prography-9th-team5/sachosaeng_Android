@@ -1,7 +1,11 @@
 package com.example.sachosaeng.feature.mypage.main
 
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.UserType
+import com.example.sachosaeng.core.usecase.category.GetCategoryListWithAllIconUseCase
+import com.example.sachosaeng.core.usecase.category.GetMyCategoryListUsecase
+import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
 import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
 import com.example.sachosaeng.core.util.manager.PackageManager
 import dagger.hilt.android.lifecycle.HiltViewModel

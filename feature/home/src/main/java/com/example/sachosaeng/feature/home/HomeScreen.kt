@@ -1,6 +1,5 @@
 package com.example.sachosaeng.feature.home
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -31,6 +30,7 @@ import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R.drawable
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.CategoryTitleText
+import com.example.sachosaeng.core.ui.component.SelectCategoryBottomSheet
 import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
 import com.example.sachosaeng.core.ui.component.topappbar.TopBarWithProfileImage
 import com.example.sachosaeng.core.ui.noRippleClickable
