@@ -85,6 +85,16 @@ class AuthDataStoreImpl @Inject constructor(
         }.run { return true }
     }
 
+    override suspend fun clearUserInfo(): Boolean {
+        dataStore.edit { preferences ->
+            preferences.remove(intPreferencesKey(USER_ID))
+            preferences.remove(stringPreferencesKey(USER_EMAIL))
+            preferences.remove(stringPreferencesKey(USER_AUTH_TYPE))
+            preferences.remove(stringPreferencesKey(USER_ACCESS_TOKEN))
+            preferences.remove(stringPreferencesKey(USER_REFRESH_TOKEN))
+        }.run { return true }
+    }
+
     override suspend fun getRefreshToken(): String = context.authDataStore.data.map { preferences ->
         preferences[stringPreferencesKey(USER_REFRESH_TOKEN)] ?: ""
     }.catch {

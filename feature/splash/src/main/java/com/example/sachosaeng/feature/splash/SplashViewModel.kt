@@ -22,7 +22,14 @@ class SplashViewModel @Inject constructor(
 
     private fun checkHasAccessToken() = blockingIntent {
         when (getAccessTokenUsecase().isEmpty()) {
-            true -> postSideEffect(SplashSideEffect.NavigateToSignUp)
+            true -> postSideEffect(SplashSideEffect.NavigateToLogin)
+            false -> postSideEffect(SplashSideEffect.NavigateToHome)
+        }
+    }
+
+    private fun checkLogin() = blockingIntent {
+        when (getAccessTokenUsecase().isEmpty()) {
+            true -> postSideEffect(SplashSideEffect.NavigateToLogin)
             false -> postSideEffect(SplashSideEffect.NavigateToHome)
         }
     }
@@ -30,5 +37,5 @@ class SplashViewModel @Inject constructor(
 
 sealed class SplashSideEffect {
     data object NavigateToHome : SplashSideEffect()
-    data object NavigateToSignUp : SplashSideEffect()
+    data object NavigateToLogin : SplashSideEffect()
 }

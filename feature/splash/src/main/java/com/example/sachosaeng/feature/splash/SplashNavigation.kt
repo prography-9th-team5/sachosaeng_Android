@@ -7,12 +7,12 @@ const val ROUTE_SPLASH = "splash"
 
 fun NavGraphBuilder.addSplashNavGraph(
     navigateToMain: () -> Unit,
-    navigateToSignUp: () -> Unit
+    navigateToLogin: () -> Unit
 ) {
     composable(ROUTE_SPLASH) {
         SplashScreen(
             navigateToMain = navigateToMain,
-            navigateToSignUp = navigateToSignUp
+            navigateToLogin = navigateToLogin
         )
     }
 }

@@ -38,11 +38,11 @@ import com.example.sachosaeng.feature.mypage.R.drawable
 import com.example.sachosaeng.feature.mypage.component.LogoutDialog
 import com.example.sachosaeng.feature.mypage.component.UserInfoCard
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyPageScreen(
     navigateToModifyCategory: () -> Unit = {},
-    navigateToLogout: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     navigateToUserInfoModify: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
@@ -59,10 +59,7 @@ fun MyPageScreen(
     }
     if (state.logoutDialogState) {
         LogoutDialog(
-            onLogout = {
-                viewModel.hideLogoutDialog()
-                navigateToLogout()
-            },
+            onLogout = { viewModel.logout() },
             onCancel = { viewModel.hideLogoutDialog() }
         )
     }
