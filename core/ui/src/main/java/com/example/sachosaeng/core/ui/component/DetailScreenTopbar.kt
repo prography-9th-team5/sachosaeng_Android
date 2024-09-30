@@ -19,11 +19,15 @@ import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 
 @Composable
-fun DetailScreenTopbar(pageLabel: String? = null, navigateToBackStack: () -> Unit) {
+fun DetailScreenTopbar(
+    modifier: Modifier = Modifier,
+    pageLabel: String? = null,
+    navigateToBackStack: () -> Unit
+) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(vertical = 26.dp)
     ) {

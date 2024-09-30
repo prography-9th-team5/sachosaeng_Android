@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage.modify
+package com.example.sachosaeng.feature.mypage.modifyUserInfo
 
 import com.example.sachosaeng.core.ui.UserType
 

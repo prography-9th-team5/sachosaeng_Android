@@ -8,8 +8,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.sachosaeng.core.util.extension.StringExtension.urlEncode
+import com.example.sachosaeng.feature.mypage.modifyCategory.ModifyCategoryScreen
 import com.example.sachosaeng.feature.mypage.main.MyPageScreen
-import com.example.sachosaeng.feature.mypage.modify.ModifyUserInfoScreen
+import com.example.sachosaeng.feature.mypage.modifyUserInfo.ModifyUserInfoScreen
 import com.example.sachosaeng.feature.mypage.withdraw.WithdrawScreen
 import com.example.sachosaeng.feature.webview.WebViewUrl.FAQ
 import com.example.sachosaeng.feature.webview.WebViewUrl.PRIVACY_POLICY
@@ -21,6 +22,7 @@ const val ROUTE_MY_PAGE = "myPage"
 private const val ROUTE_WITHDRAW = "withdraw"
 const val USER_NAME = "userName"
 private const val MODIFY_USER_INFO = "modifyUserInfo"
+private const val MODIFY_CATEGORY = "modifyCategory"
 
 private fun NavController.navigateToWithdraw(userName: String) {
     val encodedUrl = userName.urlEncode()
@@ -39,6 +41,7 @@ fun NavGraphBuilder.addMyPageNavGraph(
     ) {
         composable(GRAPH_MY_PAGE) {
             MyPageScreen(
+                navigateToModifyCategory = { navController.navigate(MODIFY_CATEGORY) },
                 navigateToBackStack = { navController.popBackStack() },
                 navigateToPrivacyPolicy = { navigateToWebView(PRIVACY_POLICY) },
                 navigateToTermsOfService = { navigateToWebView(TERMS_OF_SERVICE) },
@@ -67,6 +70,12 @@ fun NavGraphBuilder.addMyPageNavGraph(
                 snackBarMessage = snackBarMessage,
                 navigateToBackStack = { navController.popBackStack() },
                 navigateToWithdrawScreen = { userName -> navController.navigateToWithdraw(userName = userName) }
+            )
+        }
+        composable(MODIFY_CATEGORY) {
+            ModifyCategoryScreen(
+                showSnackBar = snackBarMessage,
+                navigateToBackStack = { navController.popBackStack() }
             )
         }
     }

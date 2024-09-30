@@ -4,17 +4,13 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -31,21 +27,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sachosaeng.core.ui.R.string
+import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
-import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.core.ui.theme.Gs_G6
 import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.feature.mypage.R.drawable
+import com.example.sachosaeng.feature.mypage.component.LogoutDialog
+import com.example.sachosaeng.feature.mypage.component.UserInfoCard
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyPageScreen(
-    navigateToLogout: () -> Unit = {},
+    navigateToModifyCategory: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     navigateToUserInfoModify: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
@@ -62,20 +59,18 @@ fun MyPageScreen(
     }
     if (state.logoutDialogState) {
         LogoutDialog(
-            onLogout = {
-                viewModel.hideLogoutDialog()
-                navigateToLogout()
-            },
+            onLogout = { viewModel.logout() },
             onCancel = { viewModel.hideLogoutDialog() }
         )
     }
     MyPageScreen(
-        state,
-        onLogout = { viewModel.showLogoutDialog() },
-        navigateToBackStack = { navigateToBackStack() },
-        onModifyUserInfo = { navigateToUserInfoModify() },
-        navigateToPrivacyPolicy = { navigateToPrivacyPolicy() },
-        navigateToTermsOfService = { navigateToTermsOfService() },
+        myPageUiState = state,
+        onLogout = viewModel::showLogoutDialog,
+        onModifyUserInfo = navigateToUserInfoModify,
+        navigateToModifyCategory = navigateToModifyCategory,
+        navigateToBackStack = navigateToBackStack,
+        navigateToPrivacyPolicy = navigateToPrivacyPolicy,
+        navigateToTermsOfService = navigateToTermsOfService,
         navigateToFaq = navigateToFaq,
         navigateToRequestToAdmin = navigateToRequestToAdmin,
         navigateToOpenSource = navigateToOpenSource
@@ -86,6 +81,7 @@ fun MyPageScreen(
 internal fun MyPageScreen(
     myPageUiState: MyPageUiState,
     onLogout: () -> Unit = {},
+    navigateToModifyCategory: () -> Unit = {},
     onModifyUserInfo: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
@@ -104,17 +100,22 @@ internal fun MyPageScreen(
             DetailScreenTopbar(
                 pageLabel = stringResource(id = string.mypage_top_bar_label),
                 navigateToBackStack = { navigateToBackStack() })
+        }
+        item {
             UserInfoCard(
                 userName = myPageUiState.userName,
                 userInfoModifyButtonClick = onModifyUserInfo,
                 userType = myPageUiState.userType
             )
+        }
+        item {
             MyPageMenuList(
                 modifier = Modifier.padding(vertical = 28.dp),
                 menuCard = listOf(
                     {
                         MyPageMenuCard(
-                            menuName = stringResource(id = string.mypage_menu_change_category)
+                            menuName = stringResource(id = string.mypage_menu_change_category),
+                            onClick = navigateToModifyCategory
                         )
                     },
                     {
@@ -125,10 +126,16 @@ internal fun MyPageScreen(
                     }
                 )
             )
+        }
+        item {
             MenuTitle(title = stringResource(id = string.mypage_menu_setting))
             MyPageMenuList(
                 menuCard = listOf(
-                    { VersionInfoCard(versionInfo = myPageUiState.versionInfo) },
+                    {
+                        VersionInfoCard(
+                            versionInfo = myPageUiState.versionInfo
+                        )
+                    },
                     {
                         MyPageMenuCard(
                             menuName = stringResource(id = string.mypage_menu_open_source),
@@ -153,55 +160,10 @@ internal fun MyPageScreen(
                     }
                 )
             )
+        }
+        item {
             LogoutButton(onClick = { onLogout() })
         }
-    }
-}
-
-@Composable
-fun UserInfoCard(userName: String, userType: UserType, userInfoModifyButtonClick: () -> Unit = {}) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = Gs_G6, shape = RoundedCornerShape(8.dp))
-    ) {
-        Row(
-            modifier = Modifier.align(Alignment.Center),
-            verticalAlignment = Alignment.Bottom
-        ) {
-            Image(
-                modifier = Modifier
-                    .width(width = 52.dp),
-                contentDescription = "",
-                painter = painterResource(id = userType.userTypeIconImageRes),
-            )
-            Column(
-                modifier = Modifier.padding(top = 23.dp, start = 20.dp, bottom = 23.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = stringResource(id = userType.userTypeLabelRes),
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.W500,
-                    color = Gs_White
-                )
-                Text(
-                    text = userName,
-                    color = Gs_White,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.W700
-                )
-            }
-        }
-        Image(
-            modifier = Modifier
-                .noRippleClickable { userInfoModifyButtonClick() }
-                .align(Alignment.TopEnd)
-                .padding(top = 12.dp, end = 12.dp),
-            painter = painterResource(id = drawable.ic_modify),
-            contentDescription = null
-        )
     }
 }
 

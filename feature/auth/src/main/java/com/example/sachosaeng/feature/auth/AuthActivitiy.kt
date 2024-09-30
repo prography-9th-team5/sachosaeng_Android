@@ -51,7 +51,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.core.ui.theme.Kakao_Yellow
 import com.example.sachosaeng.core.ui.theme.SachosaengTheme
 import com.example.sachosaeng.core.util.constant.NavigationConstant.Main.MAIN_DEEP_LINK
-import com.example.sachosaeng.core.util.constant.NavigationConstant.SignUp.SIGNUP_SELECT_USER_TYPE_DEEP_LINK
+import com.example.sachosaeng.core.util.constant.NavigationConstant.SignUp.SIGNUP_DEEP_LINK
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import dagger.hilt.android.AndroidEntryPoint
@@ -83,9 +83,9 @@ class AuthActivitiy : ComponentActivity() {
                         startActivity(intent)
                     }
 
-                    is AuthSideEffect.NavigateToSelectUserType -> {
+                    is AuthSideEffect.NavigateToTermsOfService -> {
                         val intent = Intent(Intent.ACTION_VIEW).apply {
-                            data = Uri.parse(SIGNUP_SELECT_USER_TYPE_DEEP_LINK)
+                            data = Uri.parse(SIGNUP_DEEP_LINK)
                         }
                         startActivity(intent)
                     }

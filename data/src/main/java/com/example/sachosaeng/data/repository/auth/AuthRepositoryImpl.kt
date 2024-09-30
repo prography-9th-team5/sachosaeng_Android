@@ -33,8 +33,8 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun logout() {
-        TODO("Not yet implemented")
+    override fun logout(): Flow<Boolean> = flow {
+        emit(authLocalDataSource.clearUserInfo())
     }
 
     override fun getEmail(): Flow<String> =
@@ -43,7 +43,8 @@ class AuthRepositoryImpl @Inject constructor(
     override fun getRecentOauthType(): Flow<OAuthType> =
         flow { emit(authLocalDataSource.getRecentOauthType()) }
 
-    override suspend fun setEmail(email: String, type: OAuthType): Boolean = authLocalDataSource.setEmail(email, type)
+    override suspend fun setEmail(email: String, type: OAuthType): Boolean =
+        authLocalDataSource.setEmail(email, type)
 
     override fun join(email: String, userType: String): Flow<Boolean> =
         flow {

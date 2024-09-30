@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {
     fun login(email: String): Flow<Boolean>
-    fun logout()
+    fun logout(): Flow<Boolean>
     fun join(email: String, userType: String): Flow<Boolean>
     fun getEmail(): Flow<String>
     fun getRecentOauthType(): Flow<OAuthType>

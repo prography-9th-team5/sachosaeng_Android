@@ -3,7 +3,7 @@ package com.example.sachosaeng.feature.bookmark
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.model.Bookmark
 import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.R.string.all_category_icon_text
+import com.example.sachosaeng.core.ui.R
 import com.example.sachosaeng.core.ui.ResourceProvider
 import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarksUseCase
 import com.example.sachosaeng.core.usecase.bookmark.GetBookmarkListUseCase
@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -25,9 +26,10 @@ class BookmarkViewModel @Inject constructor(
     private val getCategoryListUseCase: GetCategoryListUseCase,
     private val getBookmarkListByCategoryUseCase: GetBookmarkListUseCase,
     private val getAllBookmarkedArticleListUseCase: GetBookmarkedArticleListUseCase,
-    private val deleteBookmarkUseCase: DeleteBookmarksUseCase
-) : ViewModel(), ContainerHost<BookmarkScreenUiState, Unit> {
-    override val container: Container<BookmarkScreenUiState, Unit> =
+    private val deleteBookmarkUseCase: DeleteBookmarksUseCase,
+    private val resourceProvider: ResourceProvider
+) : ViewModel(), ContainerHost<BookmarkScreenUiState, BookmarkSideEffect> {
+    override val container: Container<BookmarkScreenUiState, BookmarkSideEffect> =
         container(BookmarkScreenUiState())
 
     init {
@@ -42,7 +44,7 @@ class BookmarkViewModel @Inject constructor(
                 listOf(
                     Category(
                         id = ALL_CATEGORY_ID,
-                        name = stringResourceProvider.getString(all_category_icon_text)
+                        name = stringResourceProvider.getString(R.string.all_category_icon_text)
                     )
                 ) + allCategoryList
             reduce {
@@ -78,7 +80,10 @@ class BookmarkViewModel @Inject constructor(
     }
 
     fun deleteSelectedBookmarks() = intent {
-        deleteBookmarkUseCase(state.selectedForModifyBookmarkList).collectLatest { getBookmarkListByCategory() }
+        deleteBookmarkUseCase(state.selectedForModifyBookmarkList).collectLatest {
+            postSideEffect(BookmarkSideEffect.ShowSnackBar(resourceProvider.getString(R.string.bookmark_modify_complete)))
+            getBookmarkListByCategory()
+        }
     }
 
     fun categoryClicked(category: Category) = intent {
@@ -122,4 +127,8 @@ class BookmarkViewModel @Inject constructor(
             }
         }
     }
+}
+
+sealed class BookmarkSideEffect {
+    data class ShowSnackBar(val message: String) : BookmarkSideEffect()
 }

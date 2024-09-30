@@ -39,7 +39,7 @@ class AuthViewModel @Inject constructor(
         getRecentAuthType()
     }
 
-    fun getRecentAuthType() = intent {
+    private fun getRecentAuthType() = intent {
         getRecentAuthTypeUseCase().collectLatest {
             reduce { state.copy(recentAuthType = it) }
         }
@@ -108,7 +108,7 @@ class AuthViewModel @Inject constructor(
     private fun checkLogin(email: String) = intent {
         loginWithEmailUsecase(email).collectLatest {
             if (it) postSideEffect(AuthSideEffect.NavigateToMain)
-            else postSideEffect(AuthSideEffect.NavigateToSelectUserType)
+            else postSideEffect(AuthSideEffect.NavigateToTermsOfService)
         }
     }
 
@@ -129,7 +129,7 @@ class AuthViewModel @Inject constructor(
 
 sealed class AuthSideEffect {
     data object NavigateToMain : AuthSideEffect()
-    data object NavigateToSelectUserType : AuthSideEffect()
+    data object NavigateToTermsOfService : AuthSideEffect()
     data class ShowSnackbar(val message: String) : AuthSideEffect()
 }
 

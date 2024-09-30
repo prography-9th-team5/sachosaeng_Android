@@ -61,7 +61,6 @@ fun AppScreen(
                 })
                 snackbarMessage?.let {
                     SachoSaengSnackbar(
-                        Modifier.padding(bottom = 80.dp),
                         message = it, onDismiss = { snackbarMessage = null }
                     )
                 }

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.home
+package com.example.sachosaeng.core.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,9 +10,6 @@ import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -20,8 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
-import com.example.sachosaeng.core.ui.component.TabRowComponent
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_G5
@@ -88,7 +83,7 @@ fun SelectCategoryBottomSheet(
 }
 
 @Composable
-private fun ModifyCategoryButton(onClick: () -> Unit = {}) {
+fun ModifyCategoryButton(onClick: () -> Unit = {}) {
     Text(
         modifier = Modifier
             .padding(top = 10.dp)

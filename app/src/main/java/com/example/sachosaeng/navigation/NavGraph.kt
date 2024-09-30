@@ -47,14 +47,7 @@ internal fun NavGraph(
                     launchSingleTop = true
                 }
             },
-            navigateToSignUp = {
-                navController.navigate(GRAPH_SIGNUP) {
-                    popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
-                        inclusive = true
-                    }
-                    launchSingleTop = true
-                }
-            }
+            navigateToLogin = { navController.navigationToAuth() }
         )
         addWebViewScreen(navController = navController)
         addSignUpNavGraph(
@@ -93,7 +86,8 @@ internal fun NavGraph(
                     categoryId = categoryId
                 )
             },
-            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) }
+            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
+            showSnackBar = snackBarMessage
         )
     }
 }

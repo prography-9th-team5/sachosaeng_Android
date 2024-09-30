@@ -1,10 +1,9 @@
 package com.example.sachosaeng.core.usecase.auth
 
-import com.example.sachosaeng.core.usecase.Usecase
-import com.example.sachosaeng.data.repository.user.UserRepository
+import com.example.sachosaeng.data.repository.auth.AuthRepository
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class LogoutUsecase(private val repository: UserRepository) : Usecase<Nothing, Unit> {
-    override fun invoke(param: Nothing) {
-        TODO("Not yet implemented")
-    }
+class LogoutUsecase @Inject constructor(private val repository: AuthRepository) {
+    operator fun invoke(): Flow<Boolean> = repository.logout()
 }

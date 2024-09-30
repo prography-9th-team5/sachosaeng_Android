@@ -25,9 +25,7 @@ class BookmarkRepositoryImpl @Inject constructor(
 
     override fun deleteBookmarks(bookmarkIds: List<Int>): Flow<Unit> = flow {
         bookmarkService.deleteBookmarks(bookmarkIds.toRequest()).getOrThrow().data?.let {
-            emit(
-                it
-            )
+            emit(it)
         }
     }
 

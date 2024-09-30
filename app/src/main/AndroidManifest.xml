@@ -32,7 +32,7 @@
                 <data android:scheme="app"/>
                 <data android:host="sachosaeng.store"/>
                 <data android:path="/main"/>
-                <data android:path="/selectUserType"/>
+                <data android:path="/signUp"/>
             </intent-filter>
         </activity>
         <activity android:name=".feature.auth.AuthActivitiy"
