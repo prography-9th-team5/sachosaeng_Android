@@ -53,7 +53,7 @@ fun TabRowComponent(
             Column(
                 modifier = modifier
                     .width(IntrinsicSize.Max)
-                    .padding(10.dp)
+                    .padding(end = 10.dp)
             ) {
                 Text(
                     text = tabTitle,

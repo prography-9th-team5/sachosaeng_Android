@@ -38,6 +38,7 @@
     <string name="mypage_menu_terms_of_service">서비스 이용약관</string>
     <string name="mypage_menu_faq">FAQ</string>
     <string name="start_button">시작</string>
+    <string name="modify_category_title">관심사 설정</string>
 
     <!-- signup -->
     <string name="login_with_kakao">카카오로 로그인</string>
@@ -81,6 +82,7 @@
     <string name="bookmark_tab_article">연관콘텐츠</string>
     <string name="bookmarked_vote_is_empty_description">북마크한 투표가 없어요</string>
     <string name="bookmarked_article_is_empty_description">북마크한 연관콘텐츠가 없어요</string>
+    <string name="bookmark_modify_complete">편집이 완료되었어요!</string>
 
     <!--vote-->
     <string name="vote_label">투표</string>

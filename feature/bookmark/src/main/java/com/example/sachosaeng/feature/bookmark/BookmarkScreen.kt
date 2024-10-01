@@ -1,34 +1,20 @@
 package com.example.sachosaeng.feature.bookmark
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
 import com.example.sachosaeng.core.model.Bookmark
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R
@@ -36,26 +22,29 @@ import com.example.sachosaeng.core.ui.UserType
 import com.example.sachosaeng.core.ui.component.TabRowComponentWithBottomLine
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
 import com.example.sachosaeng.core.ui.component.topappbar.TopBarWithProfileImage
-import com.example.sachosaeng.core.ui.noRippleClickable
-import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
 import com.example.sachosaeng.core.util.constant.IntConstant.ALL_CATEGORY_ID
-import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
 import com.example.sachosaeng.feature.bookmark.component.BookmarkEmptyScreen
 import com.example.sachosaeng.feature.bookmark.component.BookmarkList
 import com.example.sachosaeng.feature.bookmark.component.CategoryRow
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun BookmarkScreen(
     moveToVote: (Int) -> Unit = {},
     moveToArticle: (Int, Int) -> Unit = { _, _ -> },
     moveToMyPage: () -> Unit = {},
+    showSnackBar: (String) -> Unit = {},
     viewModel: BookmarkViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
+    viewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is BookmarkSideEffect.ShowSnackBar -> showSnackBar(sideEffect.message)
+        }
+    }
     BookmarkScreen(
         state = state.value,
         onProfileImageClicked = moveToMyPage,

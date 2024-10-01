@@ -3,16 +3,21 @@ package com.example.sachosaeng.feature.vote
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,78 +26,80 @@ import com.example.sachosaeng.core.model.Vote
 import com.example.sachosaeng.core.model.VoteOption
 import com.example.sachosaeng.core.ui.R.string
 import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
+import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.feature.vote.component.DailyVoteDetailCard
 
 @Composable
 fun DailyVoteDetailScreen(
-    navigateToBackStack: () -> Unit,
-    onSelectOption: (Int) -> Unit,
-    onBookmarkVote: () -> Unit,
-    onVoteComplete: () -> Unit,
     vote: Vote,
-) {
-    DailyVoteDetailScreen(
-        vote = vote,
-        onSelectOption = onSelectOption,
-        onBookmarkVote = onBookmarkVote,
-        onVoteComplete = onVoteComplete,
-        navigateToMain = navigateToBackStack
-    )
-}
-
-
-@Composable
-internal fun DailyVoteDetailScreen(
     modifier: Modifier = Modifier,
-    vote: Vote,
     onBookmarkVote: () -> Unit,
     onVoteComplete: () -> Unit,
     onSelectOption: (Int) -> Unit = { },
-    navigateToMain: () -> Unit = { }
+    navigateToBackStack: () -> Unit = { },
 ) {
+    val isVoted by remember {
+        mutableStateOf(vote.isVoted)
+    }
     Column(
         modifier = modifier
             .background(Gs_G2)
             .fillMaxSize(),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
-    )
-    {
+    ) {
         LazyColumn(
             modifier = modifier
-                .fillMaxSize(),
-            verticalArrangement = Arrangement.SpaceBetween,
         ) {
             item {
-                Column {
-                    Text(
-                        modifier = Modifier.padding(20.dp),
-                        text = stringResource(id = string.daily_vote),
-                        fontSize = 26.sp,
-                        fontWeight = FontWeight.W700
-                    )
-                    DailyVoteDetailCard(
-                        modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
-                        isBookmarked = vote.isBookmarked,
-                        onBookmarkButtonClicked = onBookmarkVote,
-                        selectedOptionIndex = vote.selectedOptionIds,
-                        onSelectOption = onSelectOption,
-                        vote = vote
-                    )
-                }
+                DailyVoteTopBar(isVoted, navigateToBackStack)
             }
-
             item {
-                SachoSaengButton(
-                    enabled = vote.selectedOptionIds.isNotEmpty(),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
-                    text = stringResource(id = if (vote.isVoted) string.more_vote_button_label else string.todays_vote_complete_label),
-                    onClick = if (vote.isVoted) navigateToMain else onVoteComplete
+                DailyVoteDetailCard(
+                    modifier = modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
+                    isBookmarked = vote.isBookmarked,
+                    onBookmarkButtonClicked = onBookmarkVote,
+                    selectedOptionIndex = vote.selectedOptionIds,
+                    onSelectOption = onSelectOption,
+                    vote = vote
                 )
             }
+        }
+        Spacer(modifier = Modifier.weight(1f))
+        SachoSaengButton(
+            enabled = vote.selectedOptionIds.isNotEmpty(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
+            text = stringResource(id = if (vote.isVoted) string.more_vote_button_label else string.todays_vote_complete_label),
+            onClick = if (vote.isVoted) navigateToBackStack else onVoteComplete
+        )
+    }
+}
+
+@Composable
+fun DailyVoteTopBar(isVoted: Boolean, navigateToBackStack: () -> Unit) {
+    when (!isVoted) {
+        true -> {
+            Text(
+                modifier = Modifier
+                    .padding(20.dp)
+                    .fillMaxWidth(),
+                text = stringResource(id = string.daily_vote),
+                fontSize = 26.sp,
+                fontWeight = FontWeight.W700,
+                textAlign = TextAlign.Start
+            )
+        }
+
+        false -> {
+            SachosaengDetailTopAppBar(
+                navigateToBackStack = navigateToBackStack,
+                title = stringResource(id = string.daily_vote),
+                fontWeight = FontWeight.W700,
+                fontSize = 18
+            )
         }
     }
 }
@@ -120,5 +127,10 @@ fun DailyVoteDetailScreenPreview() {
                 name = "카테고리",
                 imageUrl = ""
             )
-        ), onSelectOption = {}, navigateToBackStack = {}, onBookmarkVote = {}, onVoteComplete = {})
+        ),
+        onSelectOption = {},
+        navigateToBackStack = {},
+        onBookmarkVote = {},
+        onVoteComplete = {},
+    )
 }

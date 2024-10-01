@@ -40,7 +40,7 @@ import com.example.sachosaeng.core.ui.theme.Gs_Black
 import com.example.sachosaeng.core.ui.theme.Gs_G2
 import com.example.sachosaeng.core.ui.theme.Gs_G5
 import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.mypage.main.WithdrawDialog
+import com.example.sachosaeng.feature.mypage.component.WithdrawDialog
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

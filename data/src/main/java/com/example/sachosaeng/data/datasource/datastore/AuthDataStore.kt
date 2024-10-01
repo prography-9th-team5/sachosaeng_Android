@@ -6,6 +6,7 @@ interface AuthDataStore {
     suspend fun setUserId(userId: Int): Boolean
     suspend fun getUserId(): Int
     suspend fun setEmail(email: String, type: OAuthType): Boolean
+    suspend fun clearUserInfo(): Boolean
     suspend fun getEmail(): String
     suspend fun getRecentOauthType(): OAuthType
     suspend fun setAccessToken(token: String): Boolean

@@ -15,7 +15,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface BookmarkService {
-    @POST("/api/v1/bookmarks/votes")
+    @POST("/api/v1/bookmarks/votes/delete")
     suspend fun deleteBookmarks(
         @Body bookmarkIds: BookmarkListRequest
     ): ApiResult<BaseResponse<Unit>>

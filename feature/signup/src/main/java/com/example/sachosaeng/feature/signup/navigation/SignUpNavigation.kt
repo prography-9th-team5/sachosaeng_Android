@@ -6,7 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.example.sachosaeng.core.util.constant.NavigationConstant.SignUp.SELECT_USER_TYPE
-import com.example.sachosaeng.core.util.constant.NavigationConstant.SignUp.SIGNUP_SELECT_USER_TYPE_DEEP_LINK
+import com.example.sachosaeng.core.util.constant.NavigationConstant.SignUp.SIGNUP_DEEP_LINK
 import com.example.sachosaeng.feature.signup.gettermsagree.TermsOfServiceScreen
 import com.example.sachosaeng.feature.signup.selectcategory.SelectCategoryScreen
 import com.example.sachosaeng.feature.signup.selectusertype.SelectUserTypeScreen
@@ -30,16 +30,16 @@ fun NavGraphBuilder.addSignUpNavGraph(
         startDestination = ROUTE_SIGNUP,
         route = GRAPH_SIGNUP
     ) {
-        composable(ROUTE_SIGNUP) {
+        composable(
+            route = ROUTE_SIGNUP,
+            deepLinks = listOf(navDeepLink { uriPattern = SIGNUP_DEEP_LINK })
+        ) {
             TermsOfServiceScreen(
                 navigateToSocialLogin = { navigateToAuth() },
                 navigateToServiceTermsDetail = { navController.navigateToWebView(TERMS_OF_SERVICE) },
                 navigateToPersonalInformationTerm = { navController.navigateToWebView(PRIVACY_POLICY) })
         }
-        composable(
-            route = SELECT_USER_TYPE,
-            deepLinks = listOf(navDeepLink { uriPattern = SIGNUP_SELECT_USER_TYPE_DEEP_LINK })
-        ) {
+        composable(SELECT_USER_TYPE) {
             SelectUserTypeScreen(moveToNextStep = { navController.navigate(SELECT_CATEGORY) })
         }
         composable(SELECT_CATEGORY) {

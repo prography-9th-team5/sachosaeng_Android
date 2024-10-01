@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage.main
+package com.example.sachosaeng.feature.mypage.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

@@ -1,7 +1,6 @@
 package com.example.sachosaeng.feature.bookmark.navigation
 
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.sachosaeng.feature.bookmark.BookmarkScreen
@@ -12,7 +11,8 @@ const val GRAPH_BOOKMARK = "bookmark_graph"
 fun NavGraphBuilder.addBookmarkGraph(
     navigateToVote: (Int) -> Unit,
     navigateToArticle: (Int, Int) -> Unit,
-    navigateToMyPage: () -> Unit
+    navigateToMyPage: () -> Unit,
+    showSnackBar: (String) -> Unit
 ) {
     navigation(
         startDestination = ROUTE_BOOKMARK,
@@ -24,7 +24,8 @@ fun NavGraphBuilder.addBookmarkGraph(
             BookmarkScreen(
                 moveToVote = navigateToVote,
                 moveToMyPage = navigateToMyPage,
-                moveToArticle = navigateToArticle
+                moveToArticle = navigateToArticle,
+                showSnackBar = showSnackBar
             )
         }
     }
