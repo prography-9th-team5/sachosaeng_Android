@@ -1,11 +1,11 @@
-package com.example.sachosaeng.data.api
+package com.sachosaeng.app.data.api
 
-import com.example.sachosaeng.data.model.BaseResponse
-import com.example.sachosaeng.data.model.user.NicknameRequest
-import com.example.sachosaeng.data.model.user.UserInfoResponse
-import com.example.sachosaeng.data.model.user.UserTypeRequest
-import com.example.sachosaeng.data.model.user.WithdrawRequest
-import com.example.sachosaeng.data.remote.util.ApiResult
+import com.sachosaeng.app.data.model.BaseResponse
+import com.sachosaeng.app.data.model.user.NicknameRequest
+import com.sachosaeng.app.data.model.user.UserInfoResponse
+import com.sachosaeng.app.data.model.user.UserTypeRequest
+import com.sachosaeng.app.data.model.user.WithdrawRequest
+import com.sachosaeng.app.data.remote.util.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

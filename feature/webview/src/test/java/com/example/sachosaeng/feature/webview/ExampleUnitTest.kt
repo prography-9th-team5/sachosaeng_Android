@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.webview
+package com.sachosaeng.app.feature.webview
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.bookmark.component
+package com.sachosaeng.app.feature.bookmark.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -22,15 +22,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.noRippleClickable
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
-import com.example.sachosaeng.feature.bookmark.BookmarkScreenUiState
+import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.noRippleClickable
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.util.extension.StringExtension.toColorResource
+import com.sachosaeng.app.feature.bookmark.BookmarkScreenUiState
 
 @Composable
 fun CategoryRow(

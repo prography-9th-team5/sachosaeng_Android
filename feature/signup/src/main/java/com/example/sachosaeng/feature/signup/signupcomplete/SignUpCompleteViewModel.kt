@@ -1,10 +1,10 @@
-package com.example.sachosaeng.feature.signup.signupcomplete
+package com.sachosaeng.app.feature.signup.signupcomplete
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.usecase.auth.GetEmailUsecase
-import com.example.sachosaeng.core.usecase.auth.LoginUsecase
-import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
+import com.sachosaeng.app.core.ui.UserType
+import com.sachosaeng.app.core.usecase.auth.GetEmailUsecase
+import com.sachosaeng.app.core.usecase.auth.LoginUsecase
+import com.sachosaeng.app.core.usecase.user.GetUserTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest

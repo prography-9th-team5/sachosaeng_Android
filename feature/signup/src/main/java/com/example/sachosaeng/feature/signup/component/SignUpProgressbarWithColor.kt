@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.signup.component
+package com.sachosaeng.app.feature.signup.component
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxWidth

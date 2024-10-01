@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.bookmark
+package com.sachosaeng.app.feature.bookmark
 
 import org.junit.Test
 

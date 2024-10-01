@@ -1,9 +1,9 @@
-package com.example.sachosaeng.feature.home
+package com.sachosaeng.app.feature.home
 
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.model.VoteInfo
-import com.example.sachosaeng.core.model.VoteList
-import com.example.sachosaeng.core.ui.UserType
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.model.VoteInfo
+import com.sachosaeng.app.core.model.VoteList
+import com.sachosaeng.app.core.ui.UserType
 
 data class HomeScreenUiState(
     val userType: UserType = UserType.NEW_EMPLOYEE,

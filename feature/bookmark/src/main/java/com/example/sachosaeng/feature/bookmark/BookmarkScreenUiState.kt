@@ -1,8 +1,8 @@
-package com.example.sachosaeng.feature.bookmark
+package com.sachosaeng.app.feature.bookmark
 
-import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.UserType
+import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.UserType
 
 data class BookmarkScreenUiState(
     val userType: UserType = UserType.NEW_EMPLOYEE,

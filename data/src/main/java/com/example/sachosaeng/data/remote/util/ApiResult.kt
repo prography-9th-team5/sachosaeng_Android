@@ -1,4 +1,4 @@
-package com.example.sachosaeng.data.remote.util
+package com.sachosaeng.app.data.remote.util
 sealed interface ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>
 

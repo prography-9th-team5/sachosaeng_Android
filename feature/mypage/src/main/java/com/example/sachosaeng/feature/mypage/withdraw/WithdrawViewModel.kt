@@ -1,13 +1,13 @@
-package com.example.sachosaeng.feature.mypage.withdraw
+package com.sachosaeng.app.feature.mypage.withdraw
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.ResourceProvider
-import com.example.sachosaeng.core.ui.WithdrawReason
-import com.example.sachosaeng.core.usecase.auth.WithdrawUsecase
-import com.example.sachosaeng.core.util.manager.DeviceManager
-import com.example.sachosaeng.feature.mypage.navigation.USER_NAME
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.ResourceProvider
+import com.sachosaeng.app.core.ui.WithdrawReason
+import com.sachosaeng.app.core.usecase.auth.WithdrawUsecase
+import com.sachosaeng.app.core.util.manager.DeviceManager
+import com.sachosaeng.app.feature.mypage.navigation.USER_NAME
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest

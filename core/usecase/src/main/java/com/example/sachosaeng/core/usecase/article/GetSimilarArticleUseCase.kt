@@ -1,7 +1,7 @@
-package com.example.sachosaeng.core.usecase.article
+package com.sachosaeng.app.core.usecase.article
 
-import com.example.sachosaeng.core.model.SimilarArticle
-import com.example.sachosaeng.data.repository.article.ArticleRepository
+import com.sachosaeng.app.core.model.SimilarArticle
+import com.sachosaeng.app.data.repository.article.ArticleRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

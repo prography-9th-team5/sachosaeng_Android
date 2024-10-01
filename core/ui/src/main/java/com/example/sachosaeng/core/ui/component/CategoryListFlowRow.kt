@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component
+package com.sachosaeng.app.core.ui.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,7 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.sachosaeng.core.model.Category
+import com.sachosaeng.app.core.model.Category
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

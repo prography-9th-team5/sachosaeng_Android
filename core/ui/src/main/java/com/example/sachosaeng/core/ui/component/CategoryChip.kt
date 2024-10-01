@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component
+package com.sachosaeng.app.core.ui.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

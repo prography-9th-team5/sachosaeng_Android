@@ -1,6 +1,6 @@
-package com.example.sachosaeng.feature.mypage.withdraw
+package com.sachosaeng.app.feature.mypage.withdraw
 
-import com.example.sachosaeng.core.ui.WithdrawReason
+import com.sachosaeng.app.core.ui.WithdrawReason
 
 data class WIthdrawUiState(
     val userName: String = "",

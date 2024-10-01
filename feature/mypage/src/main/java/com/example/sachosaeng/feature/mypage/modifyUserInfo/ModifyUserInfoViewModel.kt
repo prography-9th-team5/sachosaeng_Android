@@ -1,12 +1,12 @@
-package com.example.sachosaeng.feature.mypage.modifyUserInfo
+package com.sachosaeng.app.feature.mypage.modifyUserInfo
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.ui.ResourceProvider
-import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
-import com.example.sachosaeng.core.usecase.user.SetUserNickNameUseCase
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.usecase.user.SetUserTypetoRemoteUseCase
+import com.sachosaeng.app.core.ui.ResourceProvider
+import com.sachosaeng.app.core.ui.UserType
+import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
+import com.sachosaeng.app.core.usecase.user.SetUserNickNameUseCase
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.usecase.user.SetUserTypetoRemoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container

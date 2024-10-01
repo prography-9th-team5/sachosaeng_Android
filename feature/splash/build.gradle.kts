@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.feature.splash"
+    namespace = "com.sachosaeng.app.feature.splash"
     compileSdk = 34
 
     defaultConfig {

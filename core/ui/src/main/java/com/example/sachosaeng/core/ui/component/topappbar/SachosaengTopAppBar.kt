@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component.topappbar
+package com.sachosaeng.app.core.ui.component.topappbar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -19,9 +19,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.ui.noRippleClickable
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.UserType
+import com.sachosaeng.app.core.ui.noRippleClickable
 
 @Composable
 fun SachosaengTopAppBar(

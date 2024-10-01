@@ -1,6 +1,6 @@
-package com.example.sachosaeng.data.datasource.datastore
+package com.sachosaeng.app.data.datasource.datastore
 
-import com.example.sachosaeng.core.domain.constant.OAuthType
+import com.sachosaeng.app.core.domain.constant.OAuthType
 
 interface AuthDataStore {
     suspend fun setUserId(userId: Int): Boolean

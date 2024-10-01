@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component.snackbar
+package com.sachosaeng.app.core.ui.component.snackbar
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.MutableTransitionState
@@ -31,10 +31,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.theme.Gs_G4
-import com.example.sachosaeng.core.ui.theme.Gs_G6
-import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.ui.theme.Gs_G4
+import com.sachosaeng.app.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.theme.Gs_White
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

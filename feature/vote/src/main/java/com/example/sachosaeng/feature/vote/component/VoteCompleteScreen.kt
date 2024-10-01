@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.vote.component
+package com.sachosaeng.app.feature.vote.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -14,8 +14,8 @@ import com.airbnb.lottie.compose.LottieClipSpec
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.rememberLottieAnimatable
 import com.airbnb.lottie.compose.rememberLottieComposition
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.feature.vote.R
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.feature.vote.R
 
 @Composable
 fun VoteCompleteScreen(

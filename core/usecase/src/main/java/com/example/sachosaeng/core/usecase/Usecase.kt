@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.usecase
+package com.sachosaeng.app.core.usecase
 
 interface Usecase<in PARAM, out RESULT> {
     operator fun invoke(param: PARAM): RESULT

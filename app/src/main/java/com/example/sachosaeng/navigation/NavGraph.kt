@@ -1,4 +1,4 @@
-package com.example.sachosaeng.navigation
+package com.sachosaeng.app.navigation
 
 import android.content.Intent
 import androidx.compose.runtime.Composable
@@ -9,24 +9,24 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.util.constant.NavigationConstant.Main.MAIN_DEEP_LINK
-import com.example.sachosaeng.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
-import com.example.sachosaeng.feature.article.navigation.addArticleGraph
-import com.example.sachosaeng.feature.article.navigation.navigateToArticleDetail
-import com.example.sachosaeng.feature.auth.navigation.navigationToAuth
-import com.example.sachosaeng.feature.bookmark.navigation.addBookmarkGraph
-import com.example.sachosaeng.feature.home.HomeScreen
-import com.example.sachosaeng.feature.mypage.navigation.GRAPH_MY_PAGE
-import com.example.sachosaeng.feature.mypage.navigation.addMyPageNavGraph
-import com.example.sachosaeng.feature.signup.navigation.GRAPH_SIGNUP
-import com.example.sachosaeng.feature.signup.navigation.addSignUpNavGraph
-import com.example.sachosaeng.feature.splash.ROUTE_SPLASH
-import com.example.sachosaeng.feature.splash.addSplashNavGraph
-import com.example.sachosaeng.feature.vote.navigation.addVoteGraph
-import com.example.sachosaeng.feature.vote.navigation.navigateToVoteDetail
-import com.example.sachosaeng.feature.webview.addWebViewScreen
-import com.example.sachosaeng.feature.webview.navigateToWebView
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.MAIN_DEEP_LINK
+import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
+import com.sachosaeng.app.feature.article.navigation.addArticleGraph
+import com.sachosaeng.app.feature.article.navigation.navigateToArticleDetail
+import com.sachosaeng.app.feature.auth.navigation.navigationToAuth
+import com.sachosaeng.app.feature.bookmark.navigation.addBookmarkGraph
+import com.sachosaeng.app.feature.home.HomeScreen
+import com.sachosaeng.app.feature.mypage.navigation.GRAPH_MY_PAGE
+import com.sachosaeng.app.feature.mypage.navigation.addMyPageNavGraph
+import com.sachosaeng.app.feature.signup.navigation.GRAPH_SIGNUP
+import com.sachosaeng.app.feature.signup.navigation.addSignUpNavGraph
+import com.sachosaeng.app.feature.splash.ROUTE_SPLASH
+import com.sachosaeng.app.feature.splash.addSplashNavGraph
+import com.sachosaeng.app.feature.vote.navigation.addVoteGraph
+import com.sachosaeng.app.feature.vote.navigation.navigateToVoteDetail
+import com.sachosaeng.app.feature.webview.addWebViewScreen
+import com.sachosaeng.app.feature.webview.navigateToWebView
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 
 @Composable

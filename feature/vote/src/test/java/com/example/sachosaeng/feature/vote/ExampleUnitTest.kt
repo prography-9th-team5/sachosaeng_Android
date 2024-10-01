@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.vote
+package com.sachosaeng.app.feature.vote
 
 import org.junit.Test
 

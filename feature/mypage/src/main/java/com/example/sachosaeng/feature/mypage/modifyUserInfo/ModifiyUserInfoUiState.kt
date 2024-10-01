@@ -1,6 +1,6 @@
-package com.example.sachosaeng.feature.mypage.modifyUserInfo
+package com.sachosaeng.app.feature.mypage.modifyUserInfo
 
-import com.example.sachosaeng.core.ui.UserType
+import com.sachosaeng.app.core.ui.UserType
 
 data class ModifiyUserInfoUiState (
     val userName: String,

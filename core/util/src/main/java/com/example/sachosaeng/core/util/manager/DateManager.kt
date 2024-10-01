@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.util.manager
+package com.sachosaeng.app.core.util.manager
 
 import java.text.SimpleDateFormat
 import java.util.Calendar

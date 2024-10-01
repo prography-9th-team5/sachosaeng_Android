@@ -1,6 +1,6 @@
-package com.example.sachosaeng.core.util.constant
+package com.sachosaeng.app.core.util.constant
 
-import com.example.sachosaeng.core.util.BuildConfig
+import com.sachosaeng.app.core.util.BuildConfig
 
 object NavigationConstant {
     object SignUp {

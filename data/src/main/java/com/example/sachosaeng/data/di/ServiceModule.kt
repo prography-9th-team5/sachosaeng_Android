@@ -1,12 +1,12 @@
-package com.example.sachosaeng.data.di
+package com.sachosaeng.app.data.di
 
-import com.example.sachosaeng.data.api.ArticleService
-import com.example.sachosaeng.data.api.AuthService
-import com.example.sachosaeng.data.api.BookmarkService
-import com.example.sachosaeng.data.api.CategoryService
-import com.example.sachosaeng.data.api.OAuthService
-import com.example.sachosaeng.data.api.UserService
-import com.example.sachosaeng.data.api.VoteService
+import com.sachosaeng.app.data.api.ArticleService
+import com.sachosaeng.app.data.api.AuthService
+import com.sachosaeng.app.data.api.BookmarkService
+import com.sachosaeng.app.data.api.CategoryService
+import com.sachosaeng.app.data.api.OAuthService
+import com.sachosaeng.app.data.api.UserService
+import com.sachosaeng.app.data.api.VoteService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

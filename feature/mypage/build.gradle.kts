@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.feature.mypage"
+    namespace = "com.sachosaeng.app.feature.mypage"
     compileSdk = 34
 
     defaultConfig {

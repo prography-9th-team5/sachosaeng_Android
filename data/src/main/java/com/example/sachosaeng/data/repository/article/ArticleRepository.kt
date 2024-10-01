@@ -1,7 +1,7 @@
-package com.example.sachosaeng.data.repository.article
+package com.sachosaeng.app.data.repository.article
 
-import com.example.sachosaeng.core.model.SimilarArticle
-import com.example.sachosaeng.core.model.SimilarArticleDetail
+import com.sachosaeng.app.core.model.SimilarArticle
+import com.sachosaeng.app.core.model.SimilarArticleDetail
 import kotlinx.coroutines.flow.Flow
 
 interface ArticleRepository {

@@ -1,9 +1,9 @@
-package com.example.sachosaeng.core.util
+package com.sachosaeng.app.core.util
 
 import android.content.Context
-import com.example.sachosaeng.core.util.manager.DateManager
-import com.example.sachosaeng.core.util.manager.DeviceManager
-import com.example.sachosaeng.core.util.manager.PackageManager
+import com.sachosaeng.app.core.util.manager.DateManager
+import com.sachosaeng.app.core.util.manager.DeviceManager
+import com.sachosaeng.app.core.util.manager.PackageManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

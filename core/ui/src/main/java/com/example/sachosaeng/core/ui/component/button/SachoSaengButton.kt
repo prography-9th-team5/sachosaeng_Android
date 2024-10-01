@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component.button
+package com.sachosaeng.app.core.ui.component.button
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G4
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G4
 
 
 @Composable

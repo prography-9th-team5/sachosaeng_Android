@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.splash
+package com.sachosaeng.app.feature.splash
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.signup.gettermsagree
+package com.sachosaeng.app.feature.signup.gettermsagree
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

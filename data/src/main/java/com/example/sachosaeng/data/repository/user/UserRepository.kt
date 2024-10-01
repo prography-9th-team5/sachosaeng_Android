@@ -1,6 +1,6 @@
-package com.example.sachosaeng.data.repository.user
+package com.sachosaeng.app.data.repository.user
 
-import com.example.sachosaeng.core.model.User
+import com.sachosaeng.app.core.model.User
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {

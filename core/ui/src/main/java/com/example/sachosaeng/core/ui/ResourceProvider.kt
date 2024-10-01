@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui
+package com.sachosaeng.app.core.ui
 
 import android.content.Context
 import android.graphics.drawable.Drawable

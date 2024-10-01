@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.home
+package com.sachosaeng.app.feature.home
 
 import org.junit.Test
 

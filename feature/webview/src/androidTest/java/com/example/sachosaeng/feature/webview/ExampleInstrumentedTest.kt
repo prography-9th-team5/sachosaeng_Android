@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.webview
+package com.sachosaeng.app.feature.webview
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.example.sachosaeng.feature.webview.test", appContext.packageName)
+        assertEquals("com.sachosaeng.app.feature.webview.test", appContext.packageName)
     }
 }

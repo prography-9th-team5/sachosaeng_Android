@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage.main
+package com.sachosaeng.app.feature.mypage.main
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,16 +27,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.mypage.R.drawable
-import com.example.sachosaeng.feature.mypage.component.LogoutDialog
-import com.example.sachosaeng.feature.mypage.component.UserInfoCard
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.UserType
+import com.sachosaeng.app.core.ui.component.DetailScreenTopbar
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.feature.mypage.R.drawable
+import com.sachosaeng.app.feature.mypage.component.LogoutDialog
+import com.sachosaeng.app.feature.mypage.component.UserInfoCard
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

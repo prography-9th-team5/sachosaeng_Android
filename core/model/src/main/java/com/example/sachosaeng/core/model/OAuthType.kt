@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.domain.constant
+package com.sachosaeng.app.core.domain.constant
 
 enum class OAuthType {
     GOOGLE,

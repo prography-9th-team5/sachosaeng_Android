@@ -1,12 +1,12 @@
-package com.example.sachosaeng.feature.article
+package com.sachosaeng.app.feature.article
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.usecase.article.BookmarkArticleUseCase
-import com.example.sachosaeng.core.usecase.article.GetSimilarArticleDetailUseCase
-import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarkArticleUseCase
-import com.example.sachosaeng.feature.article.navigation.ARTICLE_CATEGORY_ID
-import com.example.sachosaeng.feature.article.navigation.ARTICLE_DETAIL_ID
+import com.sachosaeng.app.core.usecase.article.BookmarkArticleUseCase
+import com.sachosaeng.app.core.usecase.article.GetSimilarArticleDetailUseCase
+import com.sachosaeng.app.core.usecase.bookmark.DeleteBookmarkArticleUseCase
+import com.sachosaeng.app.feature.article.navigation.ARTICLE_CATEGORY_ID
+import com.sachosaeng.app.feature.article.navigation.ARTICLE_DETAIL_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container

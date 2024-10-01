@@ -1,8 +1,8 @@
-package com.example.sachosaeng.data.repository.vote
+package com.sachosaeng.app.data.repository.vote
 
-import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.core.model.VoteInfo
-import com.example.sachosaeng.core.model.VoteList
+import com.sachosaeng.app.core.model.Vote
+import com.sachosaeng.app.core.model.VoteInfo
+import com.sachosaeng.app.core.model.VoteList
 import kotlinx.coroutines.flow.Flow
 
 interface VoteRepository {

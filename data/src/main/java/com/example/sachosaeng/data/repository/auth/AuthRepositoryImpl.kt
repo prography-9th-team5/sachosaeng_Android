@@ -1,13 +1,13 @@
-package com.example.sachosaeng.data.repository.auth
+package com.sachosaeng.app.data.repository.auth
 
-import com.example.sachosaeng.core.domain.constant.OAuthType
-import com.example.sachosaeng.data.api.AuthService
-import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
-import com.example.sachosaeng.data.model.auth.JoinRequest
-import com.example.sachosaeng.data.model.auth.LoginRequest
-import com.example.sachosaeng.data.model.auth.LoginResponse
-import com.example.sachosaeng.data.remote.util.onFailure
-import com.example.sachosaeng.data.remote.util.onSuccess
+import com.sachosaeng.app.core.domain.constant.OAuthType
+import com.sachosaeng.app.data.api.AuthService
+import com.sachosaeng.app.data.datasource.datastore.AuthDataStore
+import com.sachosaeng.app.data.model.auth.JoinRequest
+import com.sachosaeng.app.data.model.auth.LoginRequest
+import com.sachosaeng.app.data.model.auth.LoginResponse
+import com.sachosaeng.app.data.remote.util.onFailure
+import com.sachosaeng.app.data.remote.util.onSuccess
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component
+package com.sachosaeng.app.core.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -18,11 +18,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G4
-import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G4
+import com.sachosaeng.app.core.util.extension.StringExtension.toColorResource
 
 @Composable
 fun CircleCategoryButton(

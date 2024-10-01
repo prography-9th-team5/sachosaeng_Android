@@ -24,7 +24,7 @@ fun Project.getRemoteInfo(propertyKey: String): String {
 
 
 android {
-    namespace = "com.example.sachosaeng.data"
+    namespace = "com.sachosaeng.app.data"
     compileSdk = 34
 
     defaultConfig {

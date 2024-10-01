@@ -1,9 +1,9 @@
-package com.example.sachosaeng.data.repository.vote
+package com.sachosaeng.app.data.repository.vote
 
-import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.data.api.VoteService
-import com.example.sachosaeng.data.model.vote.VoteOptionRequest
-import com.example.sachosaeng.data.repository.vote.VoteMapper.toDomain
+import com.sachosaeng.app.core.model.Vote
+import com.sachosaeng.app.data.api.VoteService
+import com.sachosaeng.app.data.model.vote.VoteOptionRequest
+import com.sachosaeng.app.data.repository.vote.VoteMapper.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.signup.selectusertype
+package com.sachosaeng.app.feature.signup.selectusertype
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
@@ -24,18 +24,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
-import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
-import com.example.sachosaeng.core.ui.noRippleClickable
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.signup.R.drawable
-import com.example.sachosaeng.feature.signup.component.SelectScreenDescription
-import com.example.sachosaeng.feature.signup.component.SignUpProgressBar
-import com.example.sachosaeng.feature.signup.component.SignUpProgressbarWithColor
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.UserType
+import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
+import com.sachosaeng.app.core.ui.component.topappbar.SachosaengDetailTopAppBar
+import com.sachosaeng.app.core.ui.noRippleClickable
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G3
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.feature.signup.R.drawable
+import com.sachosaeng.app.feature.signup.component.SelectScreenDescription
+import com.sachosaeng.app.feature.signup.component.SignUpProgressBar
+import com.sachosaeng.app.feature.signup.component.SignUpProgressbarWithColor
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.signup.component
+package com.sachosaeng.app.feature.signup.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.theme.Gs_G6
 
 @Composable
 fun SelectScreenDescription(title: String, subText: String) {

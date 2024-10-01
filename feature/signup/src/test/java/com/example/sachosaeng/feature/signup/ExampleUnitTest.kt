@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.signup
+package com.sachosaeng.app.feature.signup
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.bookmark
+package com.sachosaeng.app.feature.bookmark
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -15,19 +15,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.ui.component.TabRowComponentWithBottomLine
-import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
-import com.example.sachosaeng.core.ui.component.topappbar.TopBarWithProfileImage
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.core.util.constant.IntConstant.ALL_CATEGORY_ID
-import com.example.sachosaeng.feature.bookmark.component.BookmarkEmptyScreen
-import com.example.sachosaeng.feature.bookmark.component.BookmarkList
-import com.example.sachosaeng.feature.bookmark.component.CategoryRow
+import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.UserType
+import com.sachosaeng.app.core.ui.component.TabRowComponentWithBottomLine
+import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
+import com.sachosaeng.app.core.ui.component.topappbar.TopBarWithProfileImage
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
+import com.sachosaeng.app.feature.bookmark.component.BookmarkEmptyScreen
+import com.sachosaeng.app.feature.bookmark.component.BookmarkList
+import com.sachosaeng.app.feature.bookmark.component.CategoryRow
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

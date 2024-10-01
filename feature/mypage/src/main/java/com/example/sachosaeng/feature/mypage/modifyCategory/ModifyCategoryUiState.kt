@@ -1,6 +1,6 @@
-package com.example.sachosaeng.feature.mypage.modifyCategory
+package com.sachosaeng.app.feature.mypage.modifyCategory
 
-import com.example.sachosaeng.core.model.Category
+import com.sachosaeng.app.core.model.Category
 
 data class ModifyCategoryUiState (
     val selectedList : List<Category> = listOf(),

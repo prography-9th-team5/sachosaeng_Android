@@ -21,7 +21,7 @@ fun Project.getApiKey(propertyKey: String): String {
 }
 
 android {
-    namespace = "com.example.sachosaeng.core.util"
+    namespace = "com.sachosaeng.app.core.util"
     compileSdk = 34
 
     defaultConfig {

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.auth
+package com.sachosaeng.app.feature.auth
 
 import org.junit.Test
 

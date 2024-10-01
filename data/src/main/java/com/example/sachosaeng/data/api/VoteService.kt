@@ -1,11 +1,11 @@
-package com.example.sachosaeng.data.api
+package com.sachosaeng.app.data.api
 
-import com.example.sachosaeng.data.model.BaseResponse
-import com.example.sachosaeng.data.model.vote.VoteDetailInfoResponse
-import com.example.sachosaeng.data.model.vote.VoteInfoResponse
-import com.example.sachosaeng.data.model.vote.VoteListInfoResponse
-import com.example.sachosaeng.data.model.vote.VoteOptionRequest
-import com.example.sachosaeng.data.remote.util.ApiResult
+import com.sachosaeng.app.data.model.BaseResponse
+import com.sachosaeng.app.data.model.vote.VoteDetailInfoResponse
+import com.sachosaeng.app.data.model.vote.VoteInfoResponse
+import com.sachosaeng.app.data.model.vote.VoteListInfoResponse
+import com.sachosaeng.app.data.model.vote.VoteOptionRequest
+import com.sachosaeng.app.data.remote.util.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT

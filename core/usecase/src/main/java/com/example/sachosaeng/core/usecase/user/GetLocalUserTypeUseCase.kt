@@ -1,8 +1,8 @@
-package com.example.sachosaeng.core.usecase.user
+package com.sachosaeng.app.core.usecase.user
 
-import com.example.sachosaeng.core.usecase.NoParameterUseCase
-import com.example.sachosaeng.core.usecase.Usecase
-import com.example.sachosaeng.data.repository.user.UserRepository
+import com.sachosaeng.app.core.usecase.NoParameterUseCase
+import com.sachosaeng.app.core.usecase.Usecase
+import com.sachosaeng.app.data.repository.user.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

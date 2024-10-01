@@ -1,10 +1,10 @@
-package com.example.sachosaeng.data.repository.article
+package com.sachosaeng.app.data.repository.article
 
-import com.example.sachosaeng.core.model.SimilarArticle
-import com.example.sachosaeng.core.model.SimilarArticleDetail
-import com.example.sachosaeng.data.api.ArticleService
-import com.example.sachosaeng.data.model.bookmark.SingleArticleBookmarkRequest
-import com.example.sachosaeng.data.repository.article.ArticleMapper.toDomain
+import com.sachosaeng.app.core.model.SimilarArticle
+import com.sachosaeng.app.core.model.SimilarArticleDetail
+import com.sachosaeng.app.data.api.ArticleService
+import com.sachosaeng.app.data.model.bookmark.SingleArticleBookmarkRequest
+import com.sachosaeng.app.data.repository.article.ArticleMapper.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

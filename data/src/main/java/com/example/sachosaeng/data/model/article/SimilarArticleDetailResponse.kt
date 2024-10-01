@@ -1,6 +1,6 @@
-package com.example.sachosaeng.data.model.article
+package com.sachosaeng.app.data.model.article
 
-import com.example.sachosaeng.data.model.category.CategoryResponse
+import com.sachosaeng.app.data.model.category.CategoryResponse
 import kotlinx.serialization.Serializable
 
 @Serializable

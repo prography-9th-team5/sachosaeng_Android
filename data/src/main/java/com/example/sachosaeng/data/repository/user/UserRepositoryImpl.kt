@@ -1,12 +1,12 @@
-package com.example.sachosaeng.data.repository.user
+package com.sachosaeng.app.data.repository.user
 
-import com.example.sachosaeng.core.model.User
-import com.example.sachosaeng.data.api.UserService
-import com.example.sachosaeng.data.datasource.datastore.UserDataStore
-import com.example.sachosaeng.data.model.user.NicknameRequest
-import com.example.sachosaeng.data.model.user.UserTypeRequest
-import com.example.sachosaeng.data.model.user.WithdrawRequest
-import com.example.sachosaeng.data.repository.user.UserMapper.toDomain
+import com.sachosaeng.app.core.model.User
+import com.sachosaeng.app.data.api.UserService
+import com.sachosaeng.app.data.datasource.datastore.UserDataStore
+import com.sachosaeng.app.data.model.user.NicknameRequest
+import com.sachosaeng.app.data.model.user.UserTypeRequest
+import com.sachosaeng.app.data.model.user.WithdrawRequest
+import com.sachosaeng.app.data.repository.user.UserMapper.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

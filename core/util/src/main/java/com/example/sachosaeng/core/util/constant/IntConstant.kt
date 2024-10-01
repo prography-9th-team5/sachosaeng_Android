@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.util.constant
+package com.sachosaeng.app.core.util.constant
 
 object IntConstant {
     const val ALL_CATEGORY_ID = 1

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.vote.component
+package com.sachosaeng.app.feature.vote.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,16 +21,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.core.model.VoteOption
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.ui.component.button.BookmarkButton
-import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.core.util.extension.IntExtension.toNumberOfPeople
-import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.model.Vote
+import com.sachosaeng.app.core.model.VoteOption
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.component.button.BookmarkButton
+import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.util.extension.IntExtension.toNumberOfPeople
+import com.sachosaeng.app.core.util.extension.StringExtension.toColorResource
 
 @Composable
 fun VoteDetailCard(

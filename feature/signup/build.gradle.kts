@@ -21,7 +21,7 @@ fun Project.getApiKey(propertyKey: String): String {
     return localProperties.getProperty(propertyKey, "")
 }
 android {
-    namespace = "com.example.sachosaeng.feature.signup"
+    namespace = "com.sachosaeng.app.feature.signup"
     compileSdk = 34
 
     defaultConfig {

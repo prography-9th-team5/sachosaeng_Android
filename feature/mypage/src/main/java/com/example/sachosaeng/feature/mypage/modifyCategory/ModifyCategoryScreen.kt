@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage.modifyCategory
+package com.sachosaeng.app.feature.mypage.modifyCategory
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -17,15 +17,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.component.CategoryListFlowRow
-import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
-import com.example.sachosaeng.core.ui.component.ModifyCategoryButton
-import com.example.sachosaeng.core.ui.component.TabRowComponent
-import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.component.CategoryListFlowRow
+import com.sachosaeng.app.core.ui.component.DetailScreenTopbar
+import com.sachosaeng.app.core.ui.component.ModifyCategoryButton
+import com.sachosaeng.app.core.ui.component.TabRowComponent
+import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_White
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

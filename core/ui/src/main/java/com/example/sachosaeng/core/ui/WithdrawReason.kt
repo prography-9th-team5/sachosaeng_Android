@@ -1,6 +1,6 @@
-package com.example.sachosaeng.core.ui
+package com.sachosaeng.app.core.ui
 
-import com.example.sachosaeng.core.ui.R.string
+import com.sachosaeng.app.core.ui.R.string
 
 enum class WithdrawReason(
     val userTypeLabelRes: Int

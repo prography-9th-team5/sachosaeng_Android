@@ -23,7 +23,7 @@ fun Project.getApiKey(propertyKey: String): String {
 }
 
 android {
-    namespace = "com.example.sachosaeng.feature.auth"
+    namespace = "com.sachosaeng.app.feature.auth"
     compileSdk = 34
 
     defaultConfig {

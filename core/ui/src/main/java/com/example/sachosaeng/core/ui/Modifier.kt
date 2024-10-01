@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui
+package com.sachosaeng.app.core.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

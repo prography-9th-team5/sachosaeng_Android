@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.usecase
+package com.sachosaeng.app.core.usecase
 
 import org.junit.Test
 

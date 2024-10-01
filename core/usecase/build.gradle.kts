@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.core.usecase"
+    namespace = "com.sachosaeng.app.core.usecase"
     compileSdk = 34
 
     defaultConfig {

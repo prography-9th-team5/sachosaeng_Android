@@ -1,6 +1,6 @@
-package com.example.sachosaeng.feature.signup.signupcomplete
+package com.sachosaeng.app.feature.signup.signupcomplete
 
-import com.example.sachosaeng.core.ui.UserType
+import com.sachosaeng.app.core.ui.UserType
 
 data class SignUpCompleteUiState (
     val userType : UserType = UserType.NEW_EMPLOYEE,

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage.withdraw
+package com.sachosaeng.app.feature.mypage.withdraw
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -32,15 +32,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.WithdrawReason
-import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
-import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.feature.mypage.component.WithdrawDialog
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.WithdrawReason
+import com.sachosaeng.app.core.ui.component.DetailScreenTopbar
+import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.feature.mypage.component.WithdrawDialog
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 

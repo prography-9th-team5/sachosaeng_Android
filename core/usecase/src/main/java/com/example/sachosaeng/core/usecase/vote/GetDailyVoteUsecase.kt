@@ -1,6 +1,6 @@
-package com.example.sachosaeng.core.usecase.vote
+package com.sachosaeng.app.core.usecase.vote
 
-import com.example.sachosaeng.data.repository.vote.VoteRepository
+import com.sachosaeng.app.data.repository.vote.VoteRepository
 import javax.inject.Inject
 
 

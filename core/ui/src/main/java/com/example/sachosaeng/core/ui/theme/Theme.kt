@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.theme
+package com.sachosaeng.app.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

@@ -1,6 +1,6 @@
-package com.example.sachosaeng.feature.mypage.main
+package com.sachosaeng.app.feature.mypage.main
 
-import com.example.sachosaeng.core.ui.UserType
+import com.sachosaeng.app.core.ui.UserType
 
 data class MyPageUiState (
     val levelText : String = "",

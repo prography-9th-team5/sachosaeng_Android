@@ -1,9 +1,9 @@
-package com.example.sachosaeng.feature.bookmark.navigation
+package com.sachosaeng.app.feature.bookmark.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.sachosaeng.feature.bookmark.BookmarkScreen
+import com.sachosaeng.app.feature.bookmark.BookmarkScreen
 
 const val ROUTE_BOOKMARK = "bookmark"
 const val GRAPH_BOOKMARK = "bookmark_graph"

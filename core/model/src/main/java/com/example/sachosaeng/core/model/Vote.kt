@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.model
+package com.sachosaeng.app.core.model
 data class Vote(
     val id: Int = 0,
     val title: String = "친한 사수분 결혼식 축의금 얼마가 좋을까요?",

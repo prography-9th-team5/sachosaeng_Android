@@ -1,11 +1,11 @@
-package com.example.sachosaeng.data.repository.category
+package com.sachosaeng.app.data.repository.category
 
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.util.constant.ColorConstant.GS_BLACK_CODE
-import com.example.sachosaeng.data.model.category.AllCategoryIconResponse
-import com.example.sachosaeng.data.model.category.CategoriesResponse
-import com.example.sachosaeng.data.model.category.CategoryResponse
-import com.example.sachosaeng.data.model.category.SetCategoryRequest
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.util.constant.ColorConstant.GS_BLACK_CODE
+import com.sachosaeng.app.data.model.category.AllCategoryIconResponse
+import com.sachosaeng.app.data.model.category.CategoriesResponse
+import com.sachosaeng.app.data.model.category.CategoryResponse
+import com.sachosaeng.app.data.model.category.SetCategoryRequest
 
 object CategoryMapper {
     fun CategoriesResponse.toDomain(): List<Category> = this.categories.map {

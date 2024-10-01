@@ -1,14 +1,14 @@
-package com.example.sachosaeng.data.repository.vote
+package com.sachosaeng.app.data.repository.vote
 
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.core.model.VoteInfo
-import com.example.sachosaeng.core.model.VoteList
-import com.example.sachosaeng.core.model.VoteOption
-import com.example.sachosaeng.data.model.vote.VoteDetailInfoResponse
-import com.example.sachosaeng.data.model.vote.VoteInfoResponse
-import com.example.sachosaeng.data.model.vote.VoteListInfoResponse
-import com.example.sachosaeng.core.util.constant.ColorConstant.GS_BLACK_CODE
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.model.Vote
+import com.sachosaeng.app.core.model.VoteInfo
+import com.sachosaeng.app.core.model.VoteList
+import com.sachosaeng.app.core.model.VoteOption
+import com.sachosaeng.app.data.model.vote.VoteDetailInfoResponse
+import com.sachosaeng.app.data.model.vote.VoteInfoResponse
+import com.sachosaeng.app.data.model.vote.VoteListInfoResponse
+import com.sachosaeng.app.core.util.constant.ColorConstant.GS_BLACK_CODE
 
 object VoteMapper {
     fun VoteInfoResponse.toDomain() = VoteInfo(

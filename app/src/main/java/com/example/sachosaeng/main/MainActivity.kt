@@ -1,4 +1,4 @@
-package com.example.sachosaeng.main
+package com.sachosaeng.app.main
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -7,7 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.sachosaeng.feature.auth.AuthViewModel
+import com.sachosaeng.app.feature.auth.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

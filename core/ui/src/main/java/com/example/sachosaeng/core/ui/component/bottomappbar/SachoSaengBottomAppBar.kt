@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component.bottomappbar
+package com.sachosaeng.app.core.ui.component.bottomappbar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,11 +18,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.sachosaeng.core.ui.IntConstant.BOTTOM_BAR_HEIGHT
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G4
-import com.example.sachosaeng.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.IntConstant.BOTTOM_BAR_HEIGHT
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G4
+import com.sachosaeng.app.core.ui.theme.Gs_G5
 
 @Composable
 fun SachoSaengBottomAppBar(

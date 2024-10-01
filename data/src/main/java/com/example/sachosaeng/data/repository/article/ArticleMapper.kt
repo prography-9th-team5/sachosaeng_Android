@@ -1,11 +1,11 @@
-package com.example.sachosaeng.data.repository.article
+package com.sachosaeng.app.data.repository.article
 
-import com.example.sachosaeng.core.model.SimilarArticle
-import com.example.sachosaeng.core.model.SimilarArticleDetail
-import com.example.sachosaeng.data.model.article.SimilarArticleDetailResponse
-import com.example.sachosaeng.data.model.article.SimilarArticleResponse
-import com.example.sachosaeng.data.repository.article.ArticleMapper.toDomain
-import com.example.sachosaeng.data.repository.category.CategoryMapper.toDomain
+import com.sachosaeng.app.core.model.SimilarArticle
+import com.sachosaeng.app.core.model.SimilarArticleDetail
+import com.sachosaeng.app.data.model.article.SimilarArticleDetailResponse
+import com.sachosaeng.app.data.model.article.SimilarArticleResponse
+import com.sachosaeng.app.data.repository.article.ArticleMapper.toDomain
+import com.sachosaeng.app.data.repository.category.CategoryMapper.toDomain
 
 object ArticleMapper {
     fun SimilarArticleResponse.toDomain(): List<SimilarArticle> {

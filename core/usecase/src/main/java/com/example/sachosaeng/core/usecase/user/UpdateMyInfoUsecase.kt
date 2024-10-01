@@ -1,8 +1,8 @@
-package com.example.sachosaeng.core.usecase.user
+package com.sachosaeng.app.core.usecase.user
 
-import com.example.sachosaeng.core.model.User
-import com.example.sachosaeng.core.usecase.Usecase
-import com.example.sachosaeng.data.repository.user.UserRepository
+import com.sachosaeng.app.core.model.User
+import com.sachosaeng.app.core.usecase.Usecase
+import com.sachosaeng.app.data.repository.user.UserRepository
 
 class UpdateMyInfoUsecase(private val repository: UserRepository): Usecase<User, Unit> {
     override fun invoke(user: User) {

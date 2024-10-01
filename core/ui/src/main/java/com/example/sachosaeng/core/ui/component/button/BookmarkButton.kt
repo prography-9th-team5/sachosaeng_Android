@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component.button
+package com.sachosaeng.app.core.ui.component.button
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G5
 
 @Composable
 fun BookmarkButton(

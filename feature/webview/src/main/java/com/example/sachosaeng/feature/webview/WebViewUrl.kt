@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.webview
+package com.sachosaeng.app.feature.webview
 
 object WebViewUrl {
     const val PRIVACY_POLICY = "https://www.notion.so/d3ea3926640746ce9156fc23251fda7e"

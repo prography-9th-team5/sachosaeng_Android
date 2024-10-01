@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component
+package com.sachosaeng.app.core.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -15,8 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.theme.Gs_Black
 
 @Composable
 fun DetailScreenTopbar(

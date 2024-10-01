@@ -1,9 +1,9 @@
-package com.example.sachosaeng.data.repository.category
+package com.sachosaeng.app.data.repository.category
 
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.data.api.CategoryService
-import com.example.sachosaeng.data.repository.category.CategoryMapper.toDomain
-import com.example.sachosaeng.data.repository.category.CategoryMapper.toRequest
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.data.api.CategoryService
+import com.sachosaeng.app.data.repository.category.CategoryMapper.toDomain
+import com.sachosaeng.app.data.repository.category.CategoryMapper.toRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.home.component
+package com.sachosaeng.app.feature.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -20,14 +20,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.model.VoteInfo
-import com.example.sachosaeng.core.model.VoteList
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
-import com.example.sachosaeng.feature.home.HomeScreenUiState
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.model.VoteInfo
+import com.sachosaeng.app.core.model.VoteList
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.component.VoteColumnByCategory
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.util.extension.StringExtension.toColorResource
+import com.sachosaeng.app.feature.home.HomeScreenUiState
 
 @Composable
 fun ListByCategory(

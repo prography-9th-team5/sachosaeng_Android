@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.signup.signupcomplete
+package com.sachosaeng.app.feature.signup.signupcomplete
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.UserType
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.UserType
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable

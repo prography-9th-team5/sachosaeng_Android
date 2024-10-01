@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.signup.gettermsagree
+package com.sachosaeng.app.feature.signup.gettermsagree
 
 data class TermsOfServiceUiState(
     val isConsentToAllTerms: Boolean = false,

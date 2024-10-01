@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component.topappbar
+package com.sachosaeng.app.core.ui.component.topappbar
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Row
@@ -10,8 +10,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.noRippleClickable
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.noRippleClickable
 
 @Composable
 fun SachosaengDetailTopAppBar(

@@ -1,11 +1,11 @@
-package com.example.sachosaeng.data.repository.bookmark
+package com.sachosaeng.app.data.repository.bookmark
 
-import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.data.api.BookmarkService
-import com.example.sachosaeng.data.model.bookmark.SingleArticleBookmarkRequest
-import com.example.sachosaeng.data.repository.bookmark.BookmarkMapper.toDomain
-import com.example.sachosaeng.data.repository.bookmark.BookmarkMapper.toRequest
+import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.data.api.BookmarkService
+import com.sachosaeng.app.data.model.bookmark.SingleArticleBookmarkRequest
+import com.sachosaeng.app.data.repository.bookmark.BookmarkMapper.toDomain
+import com.sachosaeng.app.data.repository.bookmark.BookmarkMapper.toRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject

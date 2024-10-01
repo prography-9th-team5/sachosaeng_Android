@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.util.extension
+package com.sachosaeng.app.core.util.extension
 
 object IntExtension {
     fun Int.toNumberOfPeople(): String {

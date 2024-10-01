@@ -1,15 +1,15 @@
-package com.example.sachosaeng.feature.mypage.main
+package com.sachosaeng.app.feature.mypage.main
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.usecase.auth.LogoutUsecase
-import com.example.sachosaeng.core.usecase.category.GetCategoryListWithAllIconUseCase
-import com.example.sachosaeng.core.usecase.category.GetMyCategoryListUsecase
-import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
-import com.example.sachosaeng.core.usecase.user.GetMyInfoUsecase
-import com.example.sachosaeng.core.util.manager.DeviceManager
-import com.example.sachosaeng.core.util.manager.PackageManager
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.UserType
+import com.sachosaeng.app.core.usecase.auth.LogoutUsecase
+import com.sachosaeng.app.core.usecase.category.GetCategoryListWithAllIconUseCase
+import com.sachosaeng.app.core.usecase.category.GetMyCategoryListUsecase
+import com.sachosaeng.app.core.usecase.category.SetMyCategoryListUseCase
+import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
+import com.sachosaeng.app.core.util.manager.DeviceManager
+import com.sachosaeng.app.core.util.manager.PackageManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container

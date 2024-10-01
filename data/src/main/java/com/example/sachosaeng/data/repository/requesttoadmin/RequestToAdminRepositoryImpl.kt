@@ -1,4 +1,4 @@
-package com.example.sachosaeng.data.repository.requesttoadmin
+package com.sachosaeng.app.data.repository.requesttoadmin
 
 class RequestToAdminRepositoryImpl : RequestToAdminRepository {
     override  fun sendRequestToAdmin(request: String) {

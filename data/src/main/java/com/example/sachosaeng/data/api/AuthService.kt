@@ -1,11 +1,11 @@
-package com.example.sachosaeng.data.api
+package com.sachosaeng.app.data.api
 
-import com.example.sachosaeng.data.model.BaseResponse
-import com.example.sachosaeng.data.model.auth.JoinRequest
-import com.example.sachosaeng.data.model.auth.JoinResponse
-import com.example.sachosaeng.data.model.auth.LoginRequest
-import com.example.sachosaeng.data.model.auth.LoginResponse
-import com.example.sachosaeng.data.remote.util.ApiResult
+import com.sachosaeng.app.data.model.BaseResponse
+import com.sachosaeng.app.data.model.auth.JoinRequest
+import com.sachosaeng.app.data.model.auth.JoinResponse
+import com.sachosaeng.app.data.model.auth.LoginRequest
+import com.sachosaeng.app.data.model.auth.LoginResponse
+import com.sachosaeng.app.data.remote.util.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.POST
 

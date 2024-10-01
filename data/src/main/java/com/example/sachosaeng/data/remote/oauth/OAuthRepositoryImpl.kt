@@ -1,12 +1,12 @@
-package com.example.sachosaeng.data.remote.oauth
+package com.sachosaeng.app.data.remote.oauth
 
-import com.example.sachosaeng.core.util.manager.DeviceManager
-import com.example.sachosaeng.data.api.OAuthService
-import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
-import com.example.sachosaeng.data.model.auth.LoginRequest
-import com.example.sachosaeng.data.model.auth.TokenResponse
-import com.example.sachosaeng.data.remote.util.onFailure
-import com.example.sachosaeng.data.remote.util.onSuccess
+import com.sachosaeng.app.core.util.manager.DeviceManager
+import com.sachosaeng.app.data.api.OAuthService
+import com.sachosaeng.app.data.datasource.datastore.AuthDataStore
+import com.sachosaeng.app.data.model.auth.LoginRequest
+import com.sachosaeng.app.data.model.auth.TokenResponse
+import com.sachosaeng.app.data.remote.util.onFailure
+import com.sachosaeng.app.data.remote.util.onSuccess
 import javax.inject.Inject
 
 class OAuthRepositoryImpl @Inject constructor(

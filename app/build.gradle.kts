@@ -24,15 +24,15 @@ fun Project.getApiKey(propertyKey: String): String {
 }
 
 android {
-    namespace = "com.example.sachosaeng"
+    namespace = "com.sachosaeng.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.sachosaeng"
+        applicationId = "com.sachosaeng.app"
         minSdk = 24
         targetSdk = 34
-        versionCode = 10002
-        versionName = "1.0.2"
+        versionCode = 10006
+        versionName = "1.0.6"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

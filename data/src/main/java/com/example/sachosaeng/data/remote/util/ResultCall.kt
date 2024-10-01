@@ -1,6 +1,6 @@
-package com.example.sachosaeng.data.remote.util
+package com.sachosaeng.app.data.remote.util
 
-import com.example.sachosaeng.data.model.util.ErrorResult
+import com.sachosaeng.app.data.model.util.ErrorResult
 import kotlinx.serialization.json.Json
 import okhttp3.Request
 import okio.Timeout

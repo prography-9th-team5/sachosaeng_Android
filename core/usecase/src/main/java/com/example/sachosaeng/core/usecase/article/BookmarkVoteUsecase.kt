@@ -1,6 +1,6 @@
-package com.example.sachosaeng.core.usecase.article
+package com.sachosaeng.app.core.usecase.article
 
-import com.example.sachosaeng.data.repository.bookmark.BookmarkRepository
+import com.sachosaeng.app.data.repository.bookmark.BookmarkRepository
 import javax.inject.Inject
 
 class BookmarkVoteUsecase @Inject constructor(

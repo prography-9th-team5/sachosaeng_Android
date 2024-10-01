@@ -1,12 +1,12 @@
-package com.example.sachosaeng.feature.mypage.modifyCategory
+package com.sachosaeng.app.feature.mypage.modifyCategory
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.ResourceProvider
-import com.example.sachosaeng.core.usecase.category.GetCategoryListUseCase
-import com.example.sachosaeng.core.usecase.category.GetMyCategoryListUsecase
-import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.ResourceProvider
+import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
+import com.sachosaeng.app.core.usecase.category.GetMyCategoryListUsecase
+import com.sachosaeng.app.core.usecase.category.SetMyCategoryListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container

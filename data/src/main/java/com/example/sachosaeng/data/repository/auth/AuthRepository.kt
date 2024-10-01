@@ -1,6 +1,6 @@
-package com.example.sachosaeng.data.repository.auth
+package com.sachosaeng.app.data.repository.auth
 
-import com.example.sachosaeng.core.domain.constant.OAuthType
+import com.sachosaeng.app.core.domain.constant.OAuthType
 import kotlinx.coroutines.flow.Flow
 
 interface AuthRepository {

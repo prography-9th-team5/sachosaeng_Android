@@ -1,6 +1,6 @@
-package com.example.sachosaeng.data.repository.bookmark
+package com.sachosaeng.app.data.repository.bookmark
 
-import com.example.sachosaeng.core.model.Bookmark
+import com.sachosaeng.app.core.model.Bookmark
 import kotlinx.coroutines.flow.Flow
 
 interface BookmarkRepository {

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.core.ui"
+    namespace = "com.sachosaeng.app.core.ui"
     compileSdk = 34
 
     defaultConfig {

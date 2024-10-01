@@ -1,8 +1,8 @@
-package com.example.sachosaeng.core.usecase.bookmark
+package com.sachosaeng.app.core.usecase.bookmark
 
-import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.data.repository.bookmark.BookmarkRepository
+import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.data.repository.bookmark.BookmarkRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

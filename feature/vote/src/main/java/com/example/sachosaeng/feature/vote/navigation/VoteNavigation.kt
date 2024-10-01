@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.vote.navigation
+package com.sachosaeng.app.feature.vote.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.sachosaeng.feature.vote.VoteScreen
+import com.sachosaeng.app.feature.vote.VoteScreen
 
 const val ROUTE_VOTE = "vote"
 const val GRAPH_VOTE = "vote_graph"

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.feature.bookmark"
+    namespace = "com.sachosaeng.app.feature.bookmark"
     compileSdk = 34
 
     defaultConfig {

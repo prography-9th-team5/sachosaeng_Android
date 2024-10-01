@@ -1,4 +1,4 @@
-package com.example.sachosaeng.data.model.category
+package com.sachosaeng.app.data.model.category
 
 import kotlinx.serialization.Serializable
 

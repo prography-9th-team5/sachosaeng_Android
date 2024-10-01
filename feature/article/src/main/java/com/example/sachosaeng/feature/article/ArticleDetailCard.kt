@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.article
+package com.sachosaeng.app.feature.article
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -11,9 +11,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.theme.Gs_G1
-import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.theme.Gs_G1
+import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.theme.Gs_G6
 
 @Composable
 fun ArticleDetailCard(

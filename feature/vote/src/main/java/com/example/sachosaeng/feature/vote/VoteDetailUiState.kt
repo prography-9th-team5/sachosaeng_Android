@@ -1,7 +1,7 @@
-package com.example.sachosaeng.feature.vote
+package com.sachosaeng.app.feature.vote
 
-import com.example.sachosaeng.core.model.SimilarArticle
-import com.example.sachosaeng.core.model.Vote
+import com.sachosaeng.app.core.model.SimilarArticle
+import com.sachosaeng.app.core.model.Vote
 
 data class VoteDetailUiState(
     val vote: Vote = Vote(),

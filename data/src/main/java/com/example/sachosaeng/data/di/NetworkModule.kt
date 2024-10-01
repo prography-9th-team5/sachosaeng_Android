@@ -1,9 +1,9 @@
-package com.example.sachosaeng.data.di
+package com.sachosaeng.app.data.di
 
-import com.example.sachosaeng.data.BuildConfig
-import com.example.sachosaeng.data.remote.oauth.OAuthHeaderInterceptor
-import com.example.sachosaeng.data.remote.oauth.OAuthenticator
-import com.example.sachosaeng.data.remote.util.ResultCallAdapterFactory
+import com.sachosaeng.app.data.BuildConfig
+import com.sachosaeng.app.data.remote.oauth.OAuthHeaderInterceptor
+import com.sachosaeng.app.data.remote.oauth.OAuthenticator
+import com.sachosaeng.app.data.remote.util.ResultCallAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

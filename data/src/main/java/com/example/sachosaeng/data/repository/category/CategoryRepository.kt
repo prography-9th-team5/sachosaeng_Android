@@ -1,6 +1,6 @@
-package com.example.sachosaeng.data.repository.category
+package com.sachosaeng.app.data.repository.category
 
-import com.example.sachosaeng.core.model.Category
+import com.sachosaeng.app.core.model.Category
 import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository {

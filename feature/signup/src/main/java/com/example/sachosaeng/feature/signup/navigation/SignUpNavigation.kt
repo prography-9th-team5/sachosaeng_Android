@@ -1,19 +1,19 @@
-package com.example.sachosaeng.feature.signup.navigation
+package com.sachosaeng.app.feature.signup.navigation
 
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
-import com.example.sachosaeng.core.util.constant.NavigationConstant.SignUp.SELECT_USER_TYPE
-import com.example.sachosaeng.core.util.constant.NavigationConstant.SignUp.SIGNUP_DEEP_LINK
-import com.example.sachosaeng.feature.signup.gettermsagree.TermsOfServiceScreen
-import com.example.sachosaeng.feature.signup.selectcategory.SelectCategoryScreen
-import com.example.sachosaeng.feature.signup.selectusertype.SelectUserTypeScreen
-import com.example.sachosaeng.feature.signup.signupcomplete.SignUpCompleteScreen
-import com.example.sachosaeng.feature.webview.WebViewUrl.PRIVACY_POLICY
-import com.example.sachosaeng.feature.webview.WebViewUrl.TERMS_OF_SERVICE
-import com.example.sachosaeng.feature.webview.navigateToWebView
+import com.sachosaeng.app.core.util.constant.NavigationConstant.SignUp.SELECT_USER_TYPE
+import com.sachosaeng.app.core.util.constant.NavigationConstant.SignUp.SIGNUP_DEEP_LINK
+import com.sachosaeng.app.feature.signup.gettermsagree.TermsOfServiceScreen
+import com.sachosaeng.app.feature.signup.selectcategory.SelectCategoryScreen
+import com.sachosaeng.app.feature.signup.selectusertype.SelectUserTypeScreen
+import com.sachosaeng.app.feature.signup.signupcomplete.SignUpCompleteScreen
+import com.sachosaeng.app.feature.webview.WebViewUrl.PRIVACY_POLICY
+import com.sachosaeng.app.feature.webview.WebViewUrl.TERMS_OF_SERVICE
+import com.sachosaeng.app.feature.webview.navigateToWebView
 
 const val ROUTE_SIGNUP = "signup"
 const val GRAPH_SIGNUP = "signup_graph"

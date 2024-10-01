@@ -1,4 +1,4 @@
-package com.example.sachosaeng.data.repository.setting
+package com.sachosaeng.app.data.repository.setting
 
 interface SettingRepository {
     fun getPrivacyPolicyUrl(): String

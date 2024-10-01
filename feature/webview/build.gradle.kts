@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.feature.webview"
+    namespace = "com.sachosaeng.app.feature.webview"
     compileSdk = 34
 
     defaultConfig {

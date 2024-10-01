@@ -1,6 +1,6 @@
-package com.example.sachosaeng.core.usecase.user
+package com.sachosaeng.app.core.usecase.user
 
-import com.example.sachosaeng.data.repository.user.UserRepository
+import com.sachosaeng.app.data.repository.user.UserRepository
 import javax.inject.Inject
 
 class GetMyInfoUsecase @Inject constructor(private val repository: UserRepository) {

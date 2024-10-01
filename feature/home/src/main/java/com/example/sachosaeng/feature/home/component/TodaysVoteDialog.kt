@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.home.component
+package com.sachosaeng.app.feature.home.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -14,10 +14,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.component.dialog.SachosaengOneButtonDialog
-import com.example.sachosaeng.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.component.dialog.SachosaengOneButtonDialog
+import com.sachosaeng.app.core.ui.theme.Gs_G6
 
 
 @Composable

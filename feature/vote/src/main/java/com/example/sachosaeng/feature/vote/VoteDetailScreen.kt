@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.vote
+package com.sachosaeng.app.feature.vote
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,17 +14,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.model.SimilarArticle
-import com.example.sachosaeng.core.model.Vote
-import com.example.sachosaeng.core.model.VoteOption
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
-import com.example.sachosaeng.core.ui.component.topappbar.SachosaengDetailTopAppBar
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.feature.vote.component.VoteCompleteFooter
-import com.example.sachosaeng.feature.vote.component.VoteCompleteScreen
-import com.example.sachosaeng.feature.vote.component.VoteDetailCard
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.model.SimilarArticle
+import com.sachosaeng.app.core.model.Vote
+import com.sachosaeng.app.core.model.VoteOption
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
+import com.sachosaeng.app.core.ui.component.topappbar.SachosaengDetailTopAppBar
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.feature.vote.component.VoteCompleteFooter
+import com.sachosaeng.app.feature.vote.component.VoteCompleteScreen
+import com.sachosaeng.app.feature.vote.component.VoteDetailCard
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable

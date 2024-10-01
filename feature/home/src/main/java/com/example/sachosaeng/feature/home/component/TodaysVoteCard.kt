@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.home.component
+package com.sachosaeng.app.feature.home.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -15,12 +15,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.noRippleClickable
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.core.ui.theme.Gs_G6
-import com.example.sachosaeng.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.noRippleClickable
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G3
+import com.sachosaeng.app.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.theme.Gs_White
 
 @Composable
 fun TodaysVoteCard(voteTitle: String, modifier: Modifier = Modifier, onClick: () -> Unit = {}) {

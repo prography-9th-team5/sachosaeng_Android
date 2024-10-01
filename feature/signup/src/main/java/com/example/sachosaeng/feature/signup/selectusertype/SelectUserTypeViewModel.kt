@@ -1,8 +1,8 @@
-package com.example.sachosaeng.feature.signup.selectusertype
+package com.sachosaeng.app.feature.signup.selectusertype
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.ui.UserType
-import com.example.sachosaeng.core.usecase.user.SetUserTypeUseCase
+import com.sachosaeng.app.core.ui.UserType
+import com.sachosaeng.app.core.usecase.user.SetUserTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container

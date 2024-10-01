@@ -1,7 +1,7 @@
-package com.example.sachosaeng.main;
+package com.sachosaeng.app.main;
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.usecase.auth.GetAccessTokenUsecase
+import com.sachosaeng.app.core.usecase.auth.GetAccessTokenUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost

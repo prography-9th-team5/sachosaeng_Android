@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.home
+package com.sachosaeng.app.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,17 +25,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.component.SelectCategoryBottomSheet
-import com.example.sachosaeng.core.ui.component.topappbar.TopBarWithProfileImage
-import com.example.sachosaeng.core.ui.noRippleClickable
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.util.constant.IntConstant.ALL_CATEGORY_ID
-import com.example.sachosaeng.feature.home.component.ListByCategory
-import com.example.sachosaeng.feature.home.component.MainList
-import com.example.sachosaeng.feature.home.component.TodaysVoteDialog
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.component.SelectCategoryBottomSheet
+import com.sachosaeng.app.core.ui.component.topappbar.TopBarWithProfileImage
+import com.sachosaeng.app.core.ui.noRippleClickable
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
+import com.sachosaeng.app.feature.home.component.ListByCategory
+import com.sachosaeng.app.feature.home.component.MainList
+import com.sachosaeng.app.feature.home.component.TodaysVoteDialog
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect

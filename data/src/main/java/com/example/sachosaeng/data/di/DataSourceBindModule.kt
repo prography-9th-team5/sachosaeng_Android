@@ -1,9 +1,9 @@
-package com.example.sachosaeng.data.di
+package com.sachosaeng.app.data.di
 
-import com.example.sachosaeng.data.datasource.datastore.AuthDataStore
-import com.example.sachosaeng.data.datasource.datastore.AuthDataStoreImpl
-import com.example.sachosaeng.data.datasource.datastore.UserDataStore
-import com.example.sachosaeng.data.datasource.datastore.UserDataStoreImpl
+import com.sachosaeng.app.data.datasource.datastore.AuthDataStore
+import com.sachosaeng.app.data.datasource.datastore.AuthDataStoreImpl
+import com.sachosaeng.app.data.datasource.datastore.UserDataStore
+import com.sachosaeng.app.data.datasource.datastore.UserDataStoreImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

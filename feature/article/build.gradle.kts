@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sachosaeng.feature.article"
+    namespace = "com.sachosaeng.app.feature.article"
     compileSdk = 34
 
     defaultConfig {

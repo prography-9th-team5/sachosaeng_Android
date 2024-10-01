@@ -1,4 +1,4 @@
-package com.example.sachosaeng.data.datasource.datastore
+package com.sachosaeng.app.data.datasource.datastore
 
 import android.content.Context
 import android.os.Build
@@ -9,7 +9,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.sachosaeng.core.domain.constant.OAuthType
+import com.sachosaeng.app.core.domain.constant.OAuthType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first

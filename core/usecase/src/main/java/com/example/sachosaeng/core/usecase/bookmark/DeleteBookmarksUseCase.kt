@@ -1,7 +1,7 @@
-package com.example.sachosaeng.core.usecase.bookmark
+package com.sachosaeng.app.core.usecase.bookmark
 
-import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.data.repository.bookmark.BookmarkRepository
+import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.data.repository.bookmark.BookmarkRepository
 import javax.inject.Inject
 
 class DeleteBookmarksUseCase @Inject constructor(

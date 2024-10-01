@@ -1,6 +1,6 @@
-package com.example.sachosaeng.core.util.extension
+package com.sachosaeng.app.core.util.extension
 
-import com.example.sachosaeng.core.util.constant.ColorConstant.GS_BLACK_CODE
+import com.sachosaeng.app.core.util.constant.ColorConstant.GS_BLACK_CODE
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 import android.graphics.Color as AndroidColor

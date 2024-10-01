@@ -1,10 +1,10 @@
-package com.example.sachosaeng.feature.home.component
+package com.sachosaeng.app.feature.home.component
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import com.example.sachosaeng.core.ui.component.CategoryTitleText
-import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
-import com.example.sachosaeng.feature.home.HomeScreenUiState
+import com.sachosaeng.app.core.ui.component.CategoryTitleText
+import com.sachosaeng.app.core.ui.component.VoteColumnByCategory
+import com.sachosaeng.app.feature.home.HomeScreenUiState
 
 @Composable
 fun MainList(

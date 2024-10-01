@@ -1,13 +1,13 @@
-package com.example.sachosaeng.feature.signup.selectcategory
+package com.sachosaeng.app.feature.signup.selectcategory
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.usecase.auth.GetEmailUsecase
-import com.example.sachosaeng.core.usecase.auth.JoinUseCase
-import com.example.sachosaeng.core.usecase.category.GetCategoryListUseCase
-import com.example.sachosaeng.core.usecase.category.SetMyCategoryListUseCase
-import com.example.sachosaeng.core.usecase.user.GetUserTypeUseCase
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.usecase.auth.GetEmailUsecase
+import com.sachosaeng.app.core.usecase.auth.JoinUseCase
+import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
+import com.sachosaeng.app.core.usecase.category.SetMyCategoryListUseCase
+import com.sachosaeng.app.core.usecase.user.GetUserTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first

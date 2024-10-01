@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage.modifyUserInfo
+package com.sachosaeng.app.feature.mypage.modifyUserInfo
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
@@ -32,19 +32,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.ui.component.DetailScreenTopbar
-import com.example.sachosaeng.core.ui.component.button.SachoSaengButton
-import com.example.sachosaeng.core.ui.noRippleClickable
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.component.DetailScreenTopbar
+import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
+import com.sachosaeng.app.core.ui.noRippleClickable
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G3
+import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.ui.R.drawable
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.UserType
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.UserType
 
 @Composable
 fun ModifyUserInfoScreen(

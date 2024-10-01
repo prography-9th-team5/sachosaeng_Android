@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.splash
+package com.sachosaeng.app.feature.splash
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.ui.theme.Gs_White
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 

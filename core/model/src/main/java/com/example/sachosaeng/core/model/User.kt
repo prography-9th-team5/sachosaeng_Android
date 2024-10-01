@@ -1,6 +1,6 @@
-package com.example.sachosaeng.core.model
+package com.sachosaeng.app.core.model
 
-import com.example.sachosaeng.core.domain.constant.OAuthType
+import com.sachosaeng.app.core.domain.constant.OAuthType
 
 data class User(
     val id: Int,

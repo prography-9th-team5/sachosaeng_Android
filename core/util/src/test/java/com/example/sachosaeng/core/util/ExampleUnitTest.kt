@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.util
+package com.sachosaeng.app.core.util
 
 import org.junit.Test
 

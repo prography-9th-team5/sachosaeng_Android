@@ -1,4 +1,4 @@
-package com.example.sachosaeng.data.model.bookmark
+package com.sachosaeng.app.data.model.bookmark
 
 import kotlinx.serialization.Serializable
 

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.main
+package com.sachosaeng.app.main
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Box
@@ -17,13 +17,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.component.bottomappbar.BottomAppbarItem
-import com.example.sachosaeng.core.ui.component.bottomappbar.SachoSaengBottomAppBar
-import com.example.sachosaeng.core.ui.component.snackbar.SachoSaengSnackbar
-import com.example.sachosaeng.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
-import com.example.sachosaeng.feature.bookmark.navigation.ROUTE_BOOKMARK
-import com.example.sachosaeng.navigation.NavGraph
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.component.bottomappbar.BottomAppbarItem
+import com.sachosaeng.app.core.ui.component.bottomappbar.SachoSaengBottomAppBar
+import com.sachosaeng.app.core.ui.component.snackbar.SachoSaengSnackbar
+import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
+import com.sachosaeng.app.feature.bookmark.navigation.ROUTE_BOOKMARK
+import com.sachosaeng.app.navigation.NavGraph
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable

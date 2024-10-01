@@ -1,4 +1,4 @@
-package com.example.sachosaeng.data.remote.util
+package com.sachosaeng.app.data.remote.util
 
 import retrofit2.Call
 import retrofit2.CallAdapter

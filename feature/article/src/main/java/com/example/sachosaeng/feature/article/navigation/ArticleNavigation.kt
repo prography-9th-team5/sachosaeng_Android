@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.article.navigation
+package com.sachosaeng.app.feature.article.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -7,7 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.sachosaeng.feature.article.ArticleDetailScreen
+import com.sachosaeng.app.feature.article.ArticleDetailScreen
 
 const val ROUTE_ARTICLE = "article"
 const val GRAPH_ARTICLE = "article_graph"

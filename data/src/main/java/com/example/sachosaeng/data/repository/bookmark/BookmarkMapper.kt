@@ -1,10 +1,10 @@
-package com.example.sachosaeng.data.repository.bookmark
+package com.sachosaeng.app.data.repository.bookmark
 
-import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.data.model.bookmark.BookmarkListRequest
-import com.example.sachosaeng.data.model.bookmark.BookmarkResponse
-import com.example.sachosaeng.data.model.bookmark.BookmarkedArticleResponse
-import com.example.sachosaeng.data.model.bookmark.SingleVoteBookmarkRequest
+import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.data.model.bookmark.BookmarkListRequest
+import com.sachosaeng.app.data.model.bookmark.BookmarkResponse
+import com.sachosaeng.app.data.model.bookmark.BookmarkedArticleResponse
+import com.sachosaeng.app.data.model.bookmark.SingleVoteBookmarkRequest
 
 object BookmarkMapper {
     fun List<Int>.toRequest(): BookmarkListRequest {

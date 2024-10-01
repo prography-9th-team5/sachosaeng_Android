@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.util.manager
+package com.sachosaeng.app.core.util.manager
 
 import dagger.hilt.android.qualifiers.ApplicationContext
 import android.content.Context

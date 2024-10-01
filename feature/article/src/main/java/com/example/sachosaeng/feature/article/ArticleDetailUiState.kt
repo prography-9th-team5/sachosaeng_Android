@@ -1,6 +1,6 @@
-package com.example.sachosaeng.feature.article
+package com.sachosaeng.app.feature.article
 
-import com.example.sachosaeng.core.model.Category
+import com.sachosaeng.app.core.model.Category
 
 data class ArticleDetailUiState(
     val articleId: Int? = null,

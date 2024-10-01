@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.signup.component
+package com.sachosaeng.app.feature.signup.component
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -23,9 +23,9 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.feature.signup.R.drawable
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G3
+import com.sachosaeng.app.feature.signup.R.drawable
 import kotlinx.coroutines.launch
 
 @Composable

@@ -1,7 +1,7 @@
-package com.example.sachosaeng.core.ui
+package com.sachosaeng.app.core.ui
 
-import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.ui.R.string
+import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.R.string
 
 enum class UserType(
     val userTypeImageRes: Int,

@@ -1,4 +1,4 @@
-package com.example.sachosaeng.data.remote.oauth
+package com.sachosaeng.app.data.remote.oauth
 
 interface OAuthRepository {
     suspend fun getAccessToken(): String

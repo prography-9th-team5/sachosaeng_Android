@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.mypage.navigation
+package com.sachosaeng.app.feature.mypage.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -7,15 +7,15 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
-import com.example.sachosaeng.core.util.extension.StringExtension.urlEncode
-import com.example.sachosaeng.feature.mypage.modifyCategory.ModifyCategoryScreen
-import com.example.sachosaeng.feature.mypage.main.MyPageScreen
-import com.example.sachosaeng.feature.mypage.modifyUserInfo.ModifyUserInfoScreen
-import com.example.sachosaeng.feature.mypage.withdraw.WithdrawScreen
-import com.example.sachosaeng.feature.webview.WebViewUrl.FAQ
-import com.example.sachosaeng.feature.webview.WebViewUrl.PRIVACY_POLICY
-import com.example.sachosaeng.feature.webview.WebViewUrl.REQUEST_TO_ADMIN
-import com.example.sachosaeng.feature.webview.WebViewUrl.TERMS_OF_SERVICE
+import com.sachosaeng.app.core.util.extension.StringExtension.urlEncode
+import com.sachosaeng.app.feature.mypage.modifyCategory.ModifyCategoryScreen
+import com.sachosaeng.app.feature.mypage.main.MyPageScreen
+import com.sachosaeng.app.feature.mypage.modifyUserInfo.ModifyUserInfoScreen
+import com.sachosaeng.app.feature.mypage.withdraw.WithdrawScreen
+import com.sachosaeng.app.feature.webview.WebViewUrl.FAQ
+import com.sachosaeng.app.feature.webview.WebViewUrl.PRIVACY_POLICY
+import com.sachosaeng.app.feature.webview.WebViewUrl.REQUEST_TO_ADMIN
+import com.sachosaeng.app.feature.webview.WebViewUrl.TERMS_OF_SERVICE
 
 const val GRAPH_MY_PAGE = "myPageGraph"
 const val ROUTE_MY_PAGE = "myPage"

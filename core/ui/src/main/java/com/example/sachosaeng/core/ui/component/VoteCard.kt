@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component
+package com.sachosaeng.app.core.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -25,13 +25,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.core.ui.theme.Gs_G6
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.core.util.extension.IntExtension.toNumberOfPeople
-import com.example.sachosaeng.core.util.extension.StringExtension.toColorResource
+import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G3
+import com.sachosaeng.app.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.util.extension.IntExtension.toNumberOfPeople
+import com.sachosaeng.app.core.util.extension.StringExtension.toColorResource
 
 @Composable
 fun VoteCard(

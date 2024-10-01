@@ -1,10 +1,10 @@
-package com.example.sachosaeng.data.api
+package com.sachosaeng.app.data.api
 
-import com.example.sachosaeng.data.model.BaseResponse
-import com.example.sachosaeng.data.model.article.SimilarArticleDetailResponse
-import com.example.sachosaeng.data.model.article.SimilarArticleResponse
-import com.example.sachosaeng.data.model.bookmark.SingleArticleBookmarkRequest
-import com.example.sachosaeng.data.remote.util.ApiResult
+import com.sachosaeng.app.data.model.BaseResponse
+import com.sachosaeng.app.data.model.article.SimilarArticleDetailResponse
+import com.sachosaeng.app.data.model.article.SimilarArticleResponse
+import com.sachosaeng.app.data.model.bookmark.SingleArticleBookmarkRequest
+import com.sachosaeng.app.data.remote.util.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

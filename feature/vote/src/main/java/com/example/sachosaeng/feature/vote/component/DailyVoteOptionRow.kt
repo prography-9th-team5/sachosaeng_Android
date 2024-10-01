@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.vote.component
+package com.sachosaeng.app.feature.vote.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -20,13 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.theme.Gs_Black
-import com.example.sachosaeng.core.ui.theme.Gs_G2
-import com.example.sachosaeng.core.ui.theme.Gs_G3
-import com.example.sachosaeng.core.ui.theme.Gs_G5
-import com.example.sachosaeng.core.ui.theme.Gs_White
-import com.example.sachosaeng.core.ui.R.drawable
-import com.example.sachosaeng.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G3
+import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.theme.Gs_G6
 
 @Composable
 fun DailyVoteOptionRow(

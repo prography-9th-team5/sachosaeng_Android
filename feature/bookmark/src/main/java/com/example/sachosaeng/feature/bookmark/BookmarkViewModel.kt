@@ -1,15 +1,15 @@
-package com.example.sachosaeng.feature.bookmark
+package com.sachosaeng.app.feature.bookmark
 
 import androidx.lifecycle.ViewModel
-import com.example.sachosaeng.core.model.Bookmark
-import com.example.sachosaeng.core.model.Category
-import com.example.sachosaeng.core.ui.R
-import com.example.sachosaeng.core.ui.ResourceProvider
-import com.example.sachosaeng.core.usecase.bookmark.DeleteBookmarksUseCase
-import com.example.sachosaeng.core.usecase.bookmark.GetBookmarkListUseCase
-import com.example.sachosaeng.core.usecase.bookmark.GetBookmarkedArticleListUseCase
-import com.example.sachosaeng.core.usecase.category.GetCategoryListUseCase
-import com.example.sachosaeng.core.util.constant.IntConstant.ALL_CATEGORY_ID
+import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.ResourceProvider
+import com.sachosaeng.app.core.usecase.bookmark.DeleteBookmarksUseCase
+import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkListUseCase
+import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkedArticleListUseCase
+import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
+import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
