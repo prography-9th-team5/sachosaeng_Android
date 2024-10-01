@@ -53,7 +53,7 @@ fun OptionRow(
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(largestSize.width) {
-        if (largestSize.width > 0) {
+        if (largestSize.width > 0 && isVoted) {
             scope.launch {
                 animateFloat.animateTo(
                     targetValue = normalizedPercentage,
@@ -68,9 +68,7 @@ fun OptionRow(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .onSizeChanged { size ->
-                largestSize = size
-            }
+            .onSizeChanged { size -> largestSize = size }
             .border(
                 width = 1.dp,
                 color = if (isSeleceted) Gs_Black else Gs_G3,
@@ -102,14 +100,14 @@ fun OptionRow(
             color = if (isVoted && isSeleceted) Gs_White else Gs_Black,
             fontWeight = if (isSeleceted) FontWeight.W700 else FontWeight.W500
         )
-        Text(
+        if(isVoted) Text(
             text = "${optionPercentage.toInt()}%",
             textAlign = TextAlign.End,
             modifier = Modifier
                 .padding(16.dp)
                 .align(Alignment.CenterEnd),
             fontSize = 14.sp,
-            color = if (isVoted && isSeleceted) Gs_White else Gs_Black,
+            color = if (isSeleceted) Gs_White else Gs_Black,
             fontWeight = if (isSeleceted) FontWeight.W700 else FontWeight.W500
         )
     }
