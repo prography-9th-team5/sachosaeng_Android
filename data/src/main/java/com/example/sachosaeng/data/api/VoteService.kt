@@ -20,6 +20,11 @@ interface VoteService {
     suspend fun getHotVote(): ApiResult<BaseResponse<VoteListInfoResponse>>
 
     @GET("/api/v1/votes/hot/categories/{categoryId}")
+    suspend fun getHotVoteByCategory(
+        @Path("categoryId") categoryId: Int
+    ): ApiResult<BaseResponse<VoteListInfoResponse>>
+
+    @GET("/api/v1/votes/hot/categories/{categoryId}")
     suspend fun getVotesByCategory(
         @Path("categoryId") categoryId: Int
     ): ApiResult<BaseResponse<VoteListInfoResponse>>

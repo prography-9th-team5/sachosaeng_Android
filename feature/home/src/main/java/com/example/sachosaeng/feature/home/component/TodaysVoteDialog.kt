@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.home
+package com.example.sachosaeng.feature.home.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column

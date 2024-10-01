@@ -17,11 +17,12 @@ fun VoteColumnByCategory(
     onVoteClick: (Int) -> Unit = {}
 ) {
     Column(
+        modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(6.dp)
     ) {
         voteList.forEachIndexed { index, vote ->
             VoteCard(
-                modifier = modifier
+                modifier = Modifier
                     .padding(16.dp)
                     .clickable {
                         onVoteClick(vote.id)
