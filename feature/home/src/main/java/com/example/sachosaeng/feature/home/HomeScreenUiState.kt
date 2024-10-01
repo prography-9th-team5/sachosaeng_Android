@@ -7,12 +7,13 @@ import com.example.sachosaeng.core.ui.UserType
 
 data class HomeScreenUiState(
     val userType: UserType = UserType.NEW_EMPLOYEE,
-    val voteListWithCategory: List<VoteList?> = emptyList(),
-    val hotVotes: VoteList = VoteList(Category(), emptyList()),
+    val mainVoteList: List<VoteList?> = emptyList(),
+    val voteListWithCategory: VoteList? = VoteList(Category(), "", emptyList()),
+    val hotVotes: VoteList = VoteList(Category(), "", emptyList()),
     val dailyVote: VoteInfo? = null,
     val allCategory: List<Category> = emptyList(),
     val myCategory: List<Category> = emptyList(),
     val modifyMyCategoryListVisibility: Boolean = false,
-    val selectedCategory: Category? = null,
+    val selectedCategory: Category = Category(id = 1),
     val isDailyVoteDialogOpen: Boolean = false
 )

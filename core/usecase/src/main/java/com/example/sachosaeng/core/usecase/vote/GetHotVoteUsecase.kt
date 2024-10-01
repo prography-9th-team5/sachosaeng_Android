@@ -5,5 +5,5 @@ import javax.inject.Inject
 
 
 class GetHotVoteUsecase @Inject constructor(private val repository: VoteRepository) {
-    operator fun invoke() = repository.getHotVotes()
+    operator fun invoke(categoryId: Int? = null) = repository.getHotVotes(categoryId)
 }

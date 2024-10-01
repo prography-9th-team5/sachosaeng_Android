@@ -14,8 +14,11 @@ class VoteRepositoryImpl @Inject constructor(
     override fun getDailyVote() =
         flow { emit(voteService.getDailyVote().getOrThrow().data?.toDomain()) }
 
-    override fun getHotVotes() = flow {
-        emit(voteService.getHotVote().getOrThrow().data?.toDomain())
+    override fun getHotVotes(categoryId: Int?) = flow {
+        if (categoryId == null)
+            emit(voteService.getHotVote().getOrThrow().data?.toDomain())
+        else
+            emit(voteService.getHotVoteByCategory(categoryId).getOrThrow().data?.toDomain())
     }
 
     override fun getVotesByCategory(categoryId: Int) = flow {

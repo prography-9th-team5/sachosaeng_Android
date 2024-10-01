@@ -35,6 +35,7 @@ object VoteMapper {
                     name = it.category.name,
                     imageUrl = it.category.iconUrl,
                 ),
+                description = it.description,
                 voteInfo = it.votes.map { voteInfoResponse -> voteInfoResponse.toDomain() }
             )
         }

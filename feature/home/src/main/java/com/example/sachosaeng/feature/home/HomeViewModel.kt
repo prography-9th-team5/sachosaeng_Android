@@ -52,28 +52,37 @@ class HomeViewModel @Inject constructor(
             getVoteByCategoryUsecase(it.id).collectLatest {
                 reduce {
                     state.copy(
-                        voteListWithCategory = state.voteListWithCategory.plus(it)
+                        mainVoteList = state.mainVoteList.plus(it)
                     )
                 }
             }
         }
     }
 
-    fun onSelectCategory(category: Category) = intent {
+    private fun getVoteBySingleCategory(category: Category) = intent {
         getVoteByCategoryUsecase(category.id).collectLatest {
             reduce {
                 state.copy(
                     selectedCategory = category,
-                    voteListWithCategory = listOf(it)
+                    voteListWithCategory = it
                 )
             }
         }
     }
 
+    fun onSelectCategory(category: Category) = intent {
+        getVoteBySingleCategory(category)
+        getHotVotes()
+    }
+
     fun onSelectFavoriteCategory(category: Category) = intent {
         val currentMyCategory = state.myCategory
         reduce {
-            if (currentMyCategory.contains(category)) state.copy(myCategory = currentMyCategory.minus(category))
+            if (currentMyCategory.contains(category)) state.copy(
+                myCategory = currentMyCategory.minus(
+                    category
+                )
+            )
             else state.copy(myCategory = currentMyCategory.plus(category))
         }
     }
@@ -99,7 +108,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getHotVotes() = intent {
-        getHotVoteUsecase().collectLatest { list ->
+        getHotVoteUsecase(state.selectedCategory.id).collectLatest { list ->
             list?.let {
                 reduce {
                     state.copy(

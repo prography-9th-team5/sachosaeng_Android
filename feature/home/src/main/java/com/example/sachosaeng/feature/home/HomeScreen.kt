@@ -1,6 +1,5 @@
 package com.example.sachosaeng.feature.home
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,11 +28,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.model.Category
 import com.example.sachosaeng.core.ui.R.drawable
 import com.example.sachosaeng.core.ui.R.string
-import com.example.sachosaeng.core.ui.component.CategoryTitleText
-import com.example.sachosaeng.core.ui.component.VoteColumnByCategory
 import com.example.sachosaeng.core.ui.component.topappbar.TopBarWithProfileImage
 import com.example.sachosaeng.core.ui.noRippleClickable
 import com.example.sachosaeng.core.ui.theme.Gs_G2
+import com.example.sachosaeng.core.util.constant.IntConstant.ALL_CATEGORY_ID
+import com.example.sachosaeng.feature.home.component.ListByCategory
+import com.example.sachosaeng.feature.home.component.MainList
+import com.example.sachosaeng.feature.home.component.SelectCategoryBottomSheet
+import com.example.sachosaeng.feature.home.component.TodaysVoteDialog
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -53,10 +54,11 @@ fun HomeScreen(
     viewModel.collectSideEffect {
         when (it) {
             is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId, it.isDailyVote)
+            else -> {}
         }
     }
 
-    if(state.value.isDailyVoteDialogOpen) TodaysVoteDialog(
+    if (state.value.isDailyVoteDialogOpen) TodaysVoteDialog(
         onClick = {
             viewModel.onDailyVoteDialogConfirmClicked()
         }
@@ -82,37 +84,15 @@ fun HomeScreen(
                     moveToMyPage()
                 }
             )
-            LazyColumn(
-                state = listState
-            ) {
-                item {
-                    state.value.dailyVote?.title?.let {
-                        TodaysVoteCard(
-                            voteTitle = state.value.dailyVote!!.title,
-                            onClick = { state.value.dailyVote?.id?.let { navigateToVoteCard(it, true) } }
-                        )
-                    }
-                }
-                item {
-                    CategoryTitleText(category = state.value.hotVotes.category)
-                    VoteColumnByCategory(
-                        rankinTextVisibility = true,
-                        voteList = state.value.hotVotes.voteInfo,
-                        onVoteClick = { navigateToVoteCard(it, false) }
-                    )
-                }
-                items(state.value.voteListWithCategory.size) {
-                    if (state.value.voteListWithCategory[it]?.voteInfo?.isNotEmpty() == true) {
-                        CategoryTitleText(
-                            category = state.value.voteListWithCategory[it]!!.category
-                        )
-                        VoteColumnByCategory(
-                            voteList = state.value.voteListWithCategory[it]!!.voteInfo,
-                            onVoteClick = { navigateToVoteCard(it, false) }
-                        )
-                    }
-                }
-            }
+            if (state.value.selectedCategory.id == ALL_CATEGORY_ID) MainList(
+                state = state.value,
+                listState = listState,
+                navigateToVoteCard = navigateToVoteCard
+            )
+            else ListByCategory(
+                state = state.value,
+                navigateToVoteCard = navigateToVoteCard
+            )
         }
         Image(
             modifier = Modifier
