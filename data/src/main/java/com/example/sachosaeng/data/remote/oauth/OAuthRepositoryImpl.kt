@@ -5,8 +5,8 @@ import com.sachosaeng.app.data.api.OAuthService
 import com.sachosaeng.app.data.datasource.datastore.AuthDataStore
 import com.sachosaeng.app.data.model.auth.LoginRequest
 import com.sachosaeng.app.data.model.auth.TokenResponse
-import com.sachosaeng.app.data.remote.util.onFailure
-import com.sachosaeng.app.data.remote.util.onSuccess
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class OAuthRepositoryImpl @Inject constructor(
@@ -18,24 +18,21 @@ class OAuthRepositoryImpl @Inject constructor(
 
     override suspend fun getRefreshToken(): String = authDataStore.getRefreshToken()
 
-    override suspend fun refreshAccessToken() {
-        oAuthService.getNewAccessToken(
-            deviceManager.getDeviceId(),
-            "Refresh=${authDataStore.getRefreshToken()}"
-        )
-            .onSuccess { it.data?.let { it1 -> setToken(it1) } }
-            .onFailure {
-                getNewAccessTokenFromEmail()?.let { it1 -> setToken(it1) }
-                    ?: setToken(TokenResponse("", ""))
-            }
+    override suspend fun getNewAccessToken(): String? {
+        return runCatching {
+            oAuthService.getNewAccessToken(
+                deviceManager.getDeviceId(),
+                "Refresh=${authDataStore.getRefreshToken()}"
+            ).getOrThrow().data?.also { setToken(it) }?.accessToken
+        }.getOrNull() ?: getNewTokenFromEmail()?.accessToken
     }
 
-    private suspend fun getNewAccessTokenFromEmail(): TokenResponse? {
-        return oAuthService.loginWithEmail(
-            LoginRequest(
-                email = authDataStore.getEmail()
-            )
-        ).getOrNull()?.data
+    private suspend fun getNewTokenFromEmail(): TokenResponse? {
+        return runCatching {
+            oAuthService.loginWithEmail(
+                LoginRequest(email = authDataStore.getEmail())
+            ).getOrThrow().data?.also { setToken(it) }
+        }.getOrNull()
     }
 
     private suspend fun setToken(data: TokenResponse) {

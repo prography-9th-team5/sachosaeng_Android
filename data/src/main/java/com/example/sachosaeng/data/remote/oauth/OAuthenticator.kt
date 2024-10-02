@@ -19,9 +19,8 @@ class OAuthenticator @Inject constructor(
         }
 
         return runBlocking {
-            oAuthRepository.refreshAccessToken()
-            val newToken = oAuthRepository.getAccessToken()
-            if (newToken.isNotEmpty()) {
+            val newToken = oAuthRepository.getNewAccessToken()
+            if (!newToken.isNullOrEmpty()) {
                 response.request.newBuilder()
                     .putTokenHeader(newToken)
             } else {
