@@ -37,7 +37,7 @@ android {
         manifestPlaceholders["KAKAO_ADMIN_KEY"] = getApiKey("kakao.key.admin")
 
         buildConfigField("String", "APP_URL", getApiKey("app.url"))
-        buildConfigField("String", "KAKAO_NATIVE_KEY", getApiKey("kakao.key.native"))
+        buildConfigField("String", "KAKAO_NATIVE_KEY",  "\"${getApiKey("kakao.key.native")}\"")
         buildConfigField("String", "GOOGLE_OAUTH_KEY", getApiKey("google.key"))
     }
 
