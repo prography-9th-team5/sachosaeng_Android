@@ -41,7 +41,7 @@ fun NavGraphBuilder.addVoteGraph(
                     defaultValue = false
                 }
             )
-        ) { backStackEntry ->
+        ) {
             VoteScreen(
                 navigateToBackStack = { navController.popBackStack() },
                 navigateToArticleDetail = { articleId, categoryId -> navigateToArticleDetail(articleId , categoryId) }

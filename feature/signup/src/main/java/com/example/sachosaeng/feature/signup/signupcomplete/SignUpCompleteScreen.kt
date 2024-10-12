@@ -52,7 +52,7 @@ internal fun SignUpCompleteScreen(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            text = stringResource(id = string.welcome_text, state.userEmail),
+            text = stringResource(id = string.welcome_text, state.userName),
             textAlign = TextAlign.Center,
             fontSize = 26.sp,
             fontWeight = FontWeight.W700
@@ -67,7 +67,7 @@ internal fun SignUpCompleteScreen(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-            text = stringResource(id = string.signup_complete_text, state.userEmail),
+            text = stringResource(id = string.signup_complete_text, state.userName),
             textAlign = TextAlign.Center,
             fontSize = 16.sp
         )
@@ -90,7 +90,9 @@ internal fun SignUpCompleteScreen(
 fun SignUpCompleteScreenPreview() {
     SignUpCompleteScreen(
         state = SignUpCompleteUiState(
-            userEmail = "SachoSaeng"
+            userName = "SachoSaeng",
+            userType = UserType.NEW_EMPLOYEE,
+            isShow = true
         )
     )
 }

@@ -1,6 +1,7 @@
-package com.sachosaeng.app.main;
+package com.sachosaeng.app.main
 
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.util.ErrorNotifier
 import com.sachosaeng.app.core.usecase.auth.GetAccessTokenUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.Container
@@ -18,12 +19,21 @@ class AppViewModel @Inject constructor(
         container(AppUiState())
 
     init {
-        checkHasAccessToken()
+        handleDeeplink()
+        errorHandling()
     }
 
-    private fun checkHasAccessToken() = intent {
-        if (getAccessTokenUsecase().isNotEmpty())
-            postSideEffect(AppSideEffect.NavigateToDeepLink)
+    private fun errorHandling() = intent {
+        ErrorNotifier.errorFlow.collect { error ->
+            postSideEffect(AppSideEffect.ShowSnackBar(error))
+        }
+    }
+
+    private fun handleDeeplink() = intent {
+        when (getAccessTokenUsecase().isEmpty()) {
+            true -> postSideEffect(AppSideEffect.NavigateToAuthActivity)
+            false -> postSideEffect(AppSideEffect.NavigateToDeepLink)
+        }
     }
 }
 
@@ -32,5 +42,7 @@ data class AppUiState(
 )
 
 sealed class AppSideEffect {
+    data object NavigateToAuthActivity : AppSideEffect()
     data object NavigateToDeepLink : AppSideEffect()
+    data class ShowSnackBar(val message: String) : AppSideEffect()
 }

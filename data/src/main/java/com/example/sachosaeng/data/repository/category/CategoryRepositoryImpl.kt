@@ -12,17 +12,17 @@ class CategoryRepositoryImpl @Inject constructor(
     val categoryService: CategoryService,
 ) : CategoryRepository {
     override fun getCategoryList(): Flow<List<Category>> =
-        flow { categoryService.getAllCategoryList().getOrThrow().data?.let { emit(it.toDomain()) } }
+        flow { categoryService.getAllCategoryList().getOrNull()?.data?.let { emit(it.toDomain()) } }
 
     override fun getAllCategoryIcon(): Flow<Category> = flow {
-        categoryService.getAllCategoryIcon().getOrThrow().data?.let { emit(it.toDomain()) }
+        categoryService.getAllCategoryIcon().getOrNull()?.data?.let { emit(it.toDomain()) }
     }
 
     override fun getMyCategoryList(): Flow<List<Category>> = flow {
-        categoryService.getMyCategoryList().getOrThrow().data?.let { emit(it.toDomain()) }
+        categoryService.getMyCategoryList().getOrNull()?.data?.let { emit(it.toDomain()) }
     }
 
     override fun setCategoryList(categoryList: List<Category>): Flow<Unit> = flow {
-       categoryService.setMyCategoryList(categoryList.toRequest()).getOrThrow().data?.let { emit(Unit) }
+       categoryService.setMyCategoryList(categoryList.toRequest()).getOrNull()?.data?.let { emit(Unit) }
     }
 }

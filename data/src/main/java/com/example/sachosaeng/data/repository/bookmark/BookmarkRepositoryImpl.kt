@@ -14,45 +14,45 @@ class BookmarkRepositoryImpl @Inject constructor(
     private val bookmarkService: BookmarkService
 ) : BookmarkRepository {
     override fun deleteBookmark(bookmarkId: Int): Flow<Unit> = flow {
-        bookmarkService.deleteBookmark(bookmarkId).getOrThrow().data?.let { emit(it) }
+        bookmarkService.deleteBookmark(bookmarkId).getOrNull()?.data?.let { emit(it) }
     }
 
     override fun deleteBookmarkArticle(bookmarkId: Int): Flow<Unit> {
         return flow {
-            bookmarkService.deleteArticleBookmark(bookmarkId).getOrThrow().data?.let { emit(it) }
+            bookmarkService.deleteArticleBookmark(bookmarkId).getOrNull()?.data?.let { emit(it) }
         }
     }
 
     override fun deleteBookmarks(bookmarkIds: List<Int>): Flow<Unit> = flow {
-        bookmarkService.deleteBookmarks(bookmarkIds.toRequest()).getOrThrow().data?.let {
+        bookmarkService.deleteBookmarks(bookmarkIds.toRequest()).getOrNull()?.data?.let {
             emit(it)
         }
     }
 
     override fun bookmarkVote(voteId: Int): Flow<Unit> = flow {
-        bookmarkService.voteBookmark(voteId.toRequest()).getOrThrow().data?.let { emit(it) }
+        bookmarkService.voteBookmark(voteId.toRequest()).getOrNull()?.data?.let { emit(it) }
     }
 
     override fun bookmarkArticle(articleId: Int): Flow<Unit> = flow {
         bookmarkService.bookmarkArticle(SingleArticleBookmarkRequest(informationId = articleId))
-            .getOrThrow().data?.let { emit(it) }
+            .getOrNull()?.data?.let { emit(it) }
     }
 
     override fun getBookmarkList(categoryId: Int): Flow<List<Bookmark>> = flow {
         bookmarkService.getBookmarkList(categoryId)
-            .getOrThrow().data?.let { emit(it.toDomain()) }
+            .getOrNull()?.data?.let { emit(it.toDomain()) }
     }
 
     override fun getAllBookmarkList(): Flow<List<Bookmark>> = flow {
-        bookmarkService.getAllBookmarkList().getOrThrow().data?.let { emit(it.toDomain()) }
+        bookmarkService.getAllBookmarkList().getOrNull()?.data?.let { emit(it.toDomain()) }
     }
 
     override fun getAllBookmarkedArticleList(): Flow<List<Bookmark>> = flow {
-        bookmarkService.getAllBookmarkedArticleList().getOrThrow().data?.let { emit(it.toDomain()) }
+        bookmarkService.getAllBookmarkedArticleList().getOrNull()?.data?.let { emit(it.toDomain()) }
     }
 
     override fun getBookmarkedArticleList(categoryId: Int): Flow<List<Bookmark>> = flow {
         bookmarkService.getBookmarkedArticleList(categoryId)
-            .getOrThrow().data?.let { emit(it.toDomain()) }
+            .getOrNull()?.data?.let { emit(it.toDomain()) }
     }
 }

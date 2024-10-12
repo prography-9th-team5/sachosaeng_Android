@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
+import com.sachosaeng.app.core.util.constant.NavigationConstant.SignUp.ROUTE_SIGNUP
 import com.sachosaeng.app.core.util.constant.NavigationConstant.SignUp.SELECT_USER_TYPE
 import com.sachosaeng.app.core.util.constant.NavigationConstant.SignUp.SIGNUP_DEEP_LINK
 import com.sachosaeng.app.feature.signup.gettermsagree.TermsOfServiceScreen
@@ -15,7 +16,6 @@ import com.sachosaeng.app.feature.webview.WebViewUrl.PRIVACY_POLICY
 import com.sachosaeng.app.feature.webview.WebViewUrl.TERMS_OF_SERVICE
 import com.sachosaeng.app.feature.webview.navigateToWebView
 
-const val ROUTE_SIGNUP = "signup"
 const val GRAPH_SIGNUP = "signup_graph"
 const val SELECT_CATEGORY = "selectCategory"
 const val SIGNUP_COMPLETE = "signupComplete"
@@ -35,7 +35,7 @@ fun NavGraphBuilder.addSignUpNavGraph(
             deepLinks = listOf(navDeepLink { uriPattern = SIGNUP_DEEP_LINK })
         ) {
             TermsOfServiceScreen(
-                navigateToSocialLogin = { navigateToAuth() },
+                navigateToSocialLogin = { navController.navigate(SELECT_USER_TYPE) },
                 navigateToServiceTermsDetail = { navController.navigateToWebView(TERMS_OF_SERVICE) },
                 navigateToPersonalInformationTerm = { navController.navigateToWebView(PRIVACY_POLICY) })
         }

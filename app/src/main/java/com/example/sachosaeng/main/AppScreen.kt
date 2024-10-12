@@ -6,13 +6,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -22,6 +20,7 @@ import com.sachosaeng.app.core.ui.component.bottomappbar.BottomAppbarItem
 import com.sachosaeng.app.core.ui.component.bottomappbar.SachoSaengBottomAppBar
 import com.sachosaeng.app.core.ui.component.snackbar.SachoSaengSnackbar
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
+import com.sachosaeng.app.feature.auth.navigation.navigationToAuth
 import com.sachosaeng.app.feature.bookmark.navigation.ROUTE_BOOKMARK
 import com.sachosaeng.app.navigation.NavGraph
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -44,7 +43,8 @@ fun AppScreen(
                     intent
                 )
             }
-
+            is AppSideEffect.NavigateToAuthActivity -> navController.navigationToAuth()
+            is AppSideEffect.ShowSnackBar -> snackbarMessage = it.message
             else -> {}
         }
     }

@@ -1,5 +1,6 @@
 package com.sachosaeng.app.data.remote.util
 
+import com.example.sachosaeng.core.util.ErrorNotifier
 import okhttp3.Request
 import okio.Timeout
 import retrofit2.Call
@@ -14,9 +15,9 @@ internal class ApiResultCallAdapter<R>(
 ) : CallAdapter<R, Call<ApiResult<R>>> {
 
     override fun adapt(call: Call<R>): Call<ApiResult<R>> = ApiResultCall(call, successType)
-
     override fun responseType(): Type = successType
 }
+
 private class ApiResultCall<R>(
     private val delegate: Call<R>,
     private val successType: Type
@@ -30,7 +31,6 @@ private class ApiResultCall<R>(
             }
 
             private fun Response<R>.toApiResult(): ApiResult<R> {
-                // Http error response (4xx - 5xx)
                 if (!isSuccessful) {
                     val errorBody = errorBody()!!.string()
                     return ApiResult.Failure.HttpError(
@@ -40,11 +40,8 @@ private class ApiResultCall<R>(
                     )
                 }
 
-                // Http success response with body
                 body()?.let { body -> return ApiResult.successOf(body) }
 
-                // if we defined Unit as success type it means we expected no response body
-                // e.g. in case of 204 No Content
                 return if (successType == Unit::class.java) {
                     @Suppress("UNCHECKED_CAST")
                     ApiResult.successOf(Unit as R)
@@ -65,6 +62,7 @@ private class ApiResultCall<R>(
                 } else {
                     ApiResult.Failure.UnknownApiError(throwable)
                 }
+                ErrorNotifier.notifyError(throwable.message) // 에러 전파
                 callback.onResponse(this@ApiResultCall, Response.success(error))
             }
         }

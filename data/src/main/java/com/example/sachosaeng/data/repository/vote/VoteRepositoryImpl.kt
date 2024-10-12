@@ -12,27 +12,27 @@ class VoteRepositoryImpl @Inject constructor(
     private val voteService: VoteService
 ) : VoteRepository {
     override fun getDailyVote() =
-        flow { emit(voteService.getDailyVote().getOrThrow().data?.toDomain()) }
+        flow { emit(voteService.getDailyVote().getOrNull()?.data?.toDomain()) }
 
     override fun getHotVotes(categoryId: Int?) = flow {
         if (categoryId == null)
-            emit(voteService.getHotVote().getOrThrow().data?.toDomain())
+            emit(voteService.getHotVote().getOrNull()?.data?.toDomain())
         else
-            emit(voteService.getHotVoteByCategory(categoryId).getOrThrow().data?.toDomain())
+            emit(voteService.getHotVoteByCategory(categoryId).getOrNull()?.data?.toDomain())
     }
 
     override fun getVotesByCategory(categoryId: Int) = flow {
-        emit(voteService.getVotesByCategory(categoryId).getOrThrow().data?.toDomain())
+        emit(voteService.getVotesByCategory(categoryId).getOrNull()?.data?.toDomain())
     }
 
     override fun getVote(voteId: Int): Flow<Vote?> = flow {
-        voteService.getVote(voteId = voteId).getOrThrow().data?.toDomain()?.let {
+        voteService.getVote(voteId = voteId).getOrNull()?.data?.toDomain()?.let {
             emit(it)
         }
     }
 
     override fun setVote(voteId: Int, optionIds: List<Int?>): Flow<Unit> = flow {
         voteService.setVote(voteId = voteId, VoteOptionRequest(chosenVoteOptionIds = optionIds))
-            .getOrThrow().data?.let { emit(Unit) }
+            .getOrNull()?.data?.let { emit(Unit) }
     }
 }

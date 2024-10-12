@@ -4,6 +4,6 @@ import com.sachosaeng.app.core.ui.UserType
 
 data class SignUpCompleteUiState (
     val userType : UserType = UserType.NEW_EMPLOYEE,
-    val userEmail : String = "",
+    val userName : String = "",
     val isShow : Boolean = true
 )

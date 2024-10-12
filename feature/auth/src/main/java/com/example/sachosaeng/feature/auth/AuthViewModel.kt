@@ -96,7 +96,7 @@ class AuthViewModel @Inject constructor(
     }
 
     private fun handleKakaoLogin() = intent {
-        UserApiClient.instance.me { user, error ->
+        UserApiClient.instance.me { user, _ ->
             viewModelScope.launch {
                 val email = user?.kakaoAccount?.email ?: ""
                 setEmailUsecase(email, OAuthType.KAKAO)

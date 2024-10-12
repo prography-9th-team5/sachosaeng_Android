@@ -18,7 +18,7 @@ class UserRepositoryImpl @Inject constructor(
     override fun setUserType(type: String) = flow { emit(userDataStore.setUserType(type)) }
     override fun getUserType() = flow { emit(userDataStore.getUserType()) }
     override fun getMyInfo(): Flow<User> =
-        flow { userService.getUserInfo().getOrThrow().data?.toDomain()?.let { emit(it) } }
+        flow { userService.getUserInfo().getOrNull()?.data?.toDomain()?.let { emit(it) } }
 
     override fun logout() {
         TODO("Not yet implemented")
@@ -53,6 +53,6 @@ class UserRepositoryImpl @Inject constructor(
             reason = WithdrawRequest(
                 reason = reason
             )
-        ).getOrThrow().data?.let { emit(it) }
+        ).getOrNull()?.data?.let { emit(it) }
     }
 }

@@ -17,7 +17,7 @@ class ArticleRepositoryImpl @Inject constructor(
         voteId: Int,
         size: Int
     ): Flow<List<SimilarArticle>> = flow {
-        articleService.getSimilarArticle(categoryId, voteId, size).getOrThrow().data?.toDomain()
+        articleService.getSimilarArticle(categoryId, voteId, size).getOrNull()?.data?.toDomain()
             ?.let { emit(it) }
     }
 
@@ -26,7 +26,7 @@ class ArticleRepositoryImpl @Inject constructor(
         categoryId: Int
     ): Flow<SimilarArticleDetail> = flow {
         articleService.getArticleDetail(informationId = informationId, categoryId = categoryId)
-            .getOrThrow().data?.toDomain()
+            .getOrNull()?.data?.toDomain()
             ?.let { emit(it) }
     }
 }

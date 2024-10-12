@@ -53,7 +53,7 @@ class AuthRepositoryImpl @Inject constructor(
                     email = email,
                     userType = userType
                 )
-            ).getOrThrow().data?.let { data ->
+            ).getOrNull()?.data?.let { data ->
                 authLocalDataSource.setAccessToken(data.loginToken)
             }.also {
                 login(email).collect { emit(it) }

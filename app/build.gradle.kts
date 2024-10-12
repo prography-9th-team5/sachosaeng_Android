@@ -31,8 +31,8 @@ android {
         applicationId = "com.sachosaeng.app"
         minSdk = 24
         targetSdk = 34
-        versionCode = 10006
-        versionName = "1.0.6"
+        versionCode = 10008
+        versionName = "1.0.8"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {

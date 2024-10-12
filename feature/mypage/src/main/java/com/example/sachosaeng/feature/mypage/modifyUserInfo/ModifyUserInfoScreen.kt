@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
@@ -32,6 +31,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.ui.component.DetailScreenTopbar
 import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
 import com.sachosaeng.app.core.ui.noRippleClickable
@@ -40,11 +42,8 @@ import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G3
 import com.sachosaeng.app.core.ui.theme.Gs_G5
 import com.sachosaeng.app.core.ui.theme.Gs_White
-import com.sachosaeng.app.core.ui.R.drawable
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
-import com.sachosaeng.app.core.ui.R.string
-import com.sachosaeng.app.core.ui.UserType
 
 @Composable
 fun ModifyUserInfoScreen(
@@ -61,12 +60,13 @@ fun ModifyUserInfoScreen(
                 snackBarMessage(it.message)
                 navigateToBackStack()
             }
+
+            else -> {}
         }
     }
 
     ModifyUserInfoScreen(
         state = state,
-        onNicknameChange = viewModel::onNickNameChange,
         onUserTypeSelect = viewModel::onUserTypeSelect,
         onWithdraw = { navigateToWithdrawScreen(state.userName) },
         navigateToBackStack = navigateToBackStack,
@@ -77,7 +77,6 @@ fun ModifyUserInfoScreen(
 @Composable
 internal fun ModifyUserInfoScreen(
     state: ModifiyUserInfoUiState,
-    onNicknameChange: (String) -> Unit,
     onUserTypeSelect: (UserType) -> Unit,
     saveUserInfo: () -> Unit = {},
     onWithdraw: () -> Unit = {},
@@ -95,7 +94,7 @@ internal fun ModifyUserInfoScreen(
             navigateToBackStack = { navigateToBackStack() }
         )
         ProfileImage(userType = state.userType)
-        NickNameField(state.userName, onNicknameChange = onNicknameChange)
+        NickNameField(state.userName)
         Spacer(modifier = modifier.height(36.dp))
         UserTypeField(selectecUserType = state.userType, onUserTypeSelect = onUserTypeSelect)
         WithdrawButton(onClick = onWithdraw)
@@ -147,17 +146,17 @@ private fun FieldTitle(title: String) {
 }
 
 @Composable
-private fun NickNameField(nickName: String, onNicknameChange: (String) -> Unit) {
+private fun NickNameField(nickName: String) {
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.Start) {
         FieldTitle(stringResource(id = string.mypage_nickname_field_label))
-        BasicTextField(
+        Text(
             modifier = Modifier
                 .clip(RoundedCornerShape(8.dp))
                 .background(color = Gs_White)
                 .padding(16.dp)
                 .fillMaxWidth(),
-            value = nickName,
-            onValueChange = { onNicknameChange(it) })
+            text = nickName
+        )
     }
 }
 
@@ -267,13 +266,13 @@ fun WithdrawButton(onClick: () -> Unit = {}) {
 fun ModifyUserInfoScreenPreview() {
     ModifyUserInfoScreen(
         state = ModifiyUserInfoUiState(
-            userName = "",
-            userType = UserType.JOB_SEEKER,
-            canSave = false
+            userName = "김철수",
+            userType = UserType.STUDENT,
+            canSave = true
         ),
-        onNicknameChange = {},
         onUserTypeSelect = {},
-        navigateToBackStack = {},
-        modifier = Modifier.background(Color.White)
+        saveUserInfo = {},
+        onWithdraw = {},
+        navigateToBackStack = {}
     )
 }

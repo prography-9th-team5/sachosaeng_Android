@@ -2,8 +2,8 @@ package com.sachosaeng.app.feature.signup.signupcomplete
 
 import androidx.lifecycle.ViewModel
 import com.sachosaeng.app.core.ui.UserType
-import com.sachosaeng.app.core.usecase.auth.GetEmailUsecase
 import com.sachosaeng.app.core.usecase.auth.LoginUsecase
+import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
 import com.sachosaeng.app.core.usecase.user.GetUserTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpCompleteViewModel @Inject constructor(
-    val getUserEmailUsecase: GetEmailUsecase,
+    val getMyInfoUsecase: GetMyInfoUsecase,
     val getUserTypeUseCase: GetUserTypeUseCase,
     val loginUsecase: LoginUsecase
 ) : ViewModel(),
@@ -32,11 +32,11 @@ class SignUpCompleteViewModel @Inject constructor(
     }
 
     private fun showSignUpCompleteSplash() = intent {
-        val userName = getUserEmailUsecase().first()
+        val userName = getMyInfoUsecase().first().name
         val userType = getUserTypeUseCase().first()
         reduce {
             state.copy(
-                userEmail = userName,
+                userName = userName,
                 userType = UserType.getType(userType) ?: UserType.NEW_EMPLOYEE,
                 isShow = true
             )
@@ -44,7 +44,7 @@ class SignUpCompleteViewModel @Inject constructor(
     }
 
     private fun login() = intent {
-        loginUsecase(state.userEmail).collectLatest {
+        loginUsecase(state.userName).collectLatest {
             delay(2000)
             reduce {
                 state.copy(isShow = false)
