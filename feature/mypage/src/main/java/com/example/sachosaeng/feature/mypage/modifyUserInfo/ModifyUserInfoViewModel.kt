@@ -1,7 +1,7 @@
 package com.sachosaeng.app.feature.mypage.modifyUserInfo
 
 import androidx.lifecycle.ViewModel
-import com.sachosaeng.app.core.ui.ResourceProvider
+import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
 import com.sachosaeng.app.core.usecase.user.SetUserNickNameUseCase

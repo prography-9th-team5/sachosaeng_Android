@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.sachosaeng.app.core.model.Bookmark
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
-import com.sachosaeng.app.core.ui.ResourceProvider
+import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.usecase.bookmark.DeleteBookmarksUseCase
 import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkListUseCase
 import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkedArticleListUseCase

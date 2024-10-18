@@ -3,7 +3,7 @@ package com.sachosaeng.app.feature.mypage.modifyCategory
 import androidx.lifecycle.ViewModel
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R.string
-import com.sachosaeng.app.core.ui.ResourceProvider
+import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
 import com.sachosaeng.app.core.usecase.category.GetMyCategoryListUsecase
 import com.sachosaeng.app.core.usecase.category.SetMyCategoryListUseCase

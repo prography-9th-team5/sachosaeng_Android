@@ -1,9 +1,10 @@
 package com.sachosaeng.app.data.remote.util
+
 sealed interface ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>
 
     sealed interface Failure : ApiResult<Nothing> {
-        data class HttpError(val code: Int, val message: String, val body: String) : Failure
+        data class HttpError(val code: Int, val message: String? = "unknown", val body: String? = "unknown") : Failure
 
         data class NetworkError(val throwable: Throwable) : Failure
 
@@ -14,6 +15,12 @@ sealed interface ApiResult<out T> {
             is NetworkError -> throwable
             is UnknownApiError -> throwable
         }
+
+        fun getErrorMessage(): String = when (this) {
+            is HttpError -> message ?: "unknown"
+            is NetworkError -> "네트워크가 불안정합니다. 다시 시도해주세요"
+            is UnknownApiError -> throwable.message ?: "unknown"
+        }
     }
 
     fun isSuccess(): Boolean = this is Success
@@ -22,7 +29,7 @@ sealed interface ApiResult<out T> {
 
     fun getOrThrow(): T {
         throwOnFailure()
-        return (this as Success).data
+        return (this as? Success<T>)?.data ?: throw IllegalStateException("No success result found.")
     }
 
     fun getOrNull(): T? =
@@ -61,6 +68,6 @@ inline fun <T> ApiResult<T>.onFailure(action: (error: ApiResult.Failure) -> Unit
 }
 
 inline fun <T> ApiResult<T>.onSuccess(action: (value: T) -> Unit): ApiResult<T> {
-    if (isSuccess()) action(getOrThrow())
+    if (isSuccess()) getOrNull()?.let { action(it) }
     return this
 }

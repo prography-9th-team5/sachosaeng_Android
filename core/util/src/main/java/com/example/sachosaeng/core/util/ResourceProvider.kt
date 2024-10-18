@@ -1,8 +1,6 @@
-package com.sachosaeng.app.core.ui
+package com.example.sachosaeng.core.util
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import androidx.core.content.res.ResourcesCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

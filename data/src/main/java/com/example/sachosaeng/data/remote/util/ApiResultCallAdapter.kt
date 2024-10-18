@@ -27,12 +27,22 @@ private class ApiResultCall<R>(
         object : Callback<R> {
 
             override fun onResponse(call: Call<R>, response: Response<R>) {
-                callback.onResponse(this@ApiResultCall, Response.success(response.toApiResult()))
+                try {
+                    val apiResult = response.toApiResult()
+                    callback.onResponse(this@ApiResultCall, Response.success(apiResult))
+                } catch (e: Exception) {
+                    val errorResult = ApiResult.Failure.UnknownApiError(e)
+                    callback.onResponse(this@ApiResultCall, Response.success(errorResult))
+                }
             }
 
             private fun Response<R>.toApiResult(): ApiResult<R> {
                 if (!isSuccessful) {
-                    val errorBody = errorBody()!!.string()
+                    val errorBody = try {
+                        errorBody()?.string() ?: "Unknown error body"
+                    } catch (e: Exception) {
+                        "Failed to read error body"
+                    }
                     return ApiResult.Failure.HttpError(
                         code = code(),
                         message = message(),
@@ -40,7 +50,18 @@ private class ApiResultCall<R>(
                     )
                 }
 
-                body()?.let { body -> return ApiResult.successOf(body) }
+                body()?.let {
+                    return ApiResult.successOf(it)
+                } ?: run {
+                    return if (successType == Unit::class.java) {
+                        @Suppress("UNCHECKED_CAST")
+                        ApiResult.successOf(Unit as R)
+                    } else {
+                        ApiResult.Failure.UnknownApiError(
+                            IllegalStateException("Response body is null")
+                        )
+                    }
+                }
 
                 return if (successType == Unit::class.java) {
                     @Suppress("UNCHECKED_CAST")
@@ -62,7 +83,7 @@ private class ApiResultCall<R>(
                 } else {
                     ApiResult.Failure.UnknownApiError(throwable)
                 }
-                ErrorNotifier.notifyError(throwable.message) // 에러 전파
+                ErrorNotifier.notifyError(error.getErrorMessage())
                 callback.onResponse(this@ApiResultCall, Response.success(error))
             }
         }

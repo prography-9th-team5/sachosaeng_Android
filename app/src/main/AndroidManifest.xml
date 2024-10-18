@@ -33,11 +33,11 @@
 
                 <data
                     android:scheme="app"
-                    android:host="sachosaeng.xyz"
+                    android:host="sachosaeng"
                     android:path="/main" />
                 <data
                     android:scheme="app"
-                    android:host="sachosaeng.xyz"
+                    android:host="sachosaeng"
                     android:path="/signUp" />
             </intent-filter>
         </activity>

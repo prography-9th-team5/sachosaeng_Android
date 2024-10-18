@@ -37,7 +37,6 @@ class ResultCallAdapterFactory : CallAdapter.Factory() {
                 val bodyType = extractReturnType(wrapperType, returnType)
                 ApiResultCallAdapter(bodyType)
             }
-
             else -> null
         }
     }
