@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.google.gms) apply false
     alias(libs.plugins.google.ksp) apply false
     alias(libs.plugins.serialization) apply false
+    alias(libs.plugins.crashlytics) apply false
 }
 
 buildscript {

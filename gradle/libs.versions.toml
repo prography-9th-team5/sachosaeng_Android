@@ -40,6 +40,8 @@ lottie = "6.2.0"
 ossLicensesPlugin = "0.10.6"
 ossLicenses = "17.0.0"
 
+crashlytics = "3.0.2"
+
 
 [libraries]
 core-ktx-v1120 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
@@ -97,6 +99,8 @@ lottie = { group = "com.airbnb.android", name = "lottie-compose", version.ref = 
 oss_licenses_plugin = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "ossLicensesPlugin" }
 oss_licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "ossLicenses" }
 
+crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "crashlytics" }
+
 [plugins]
 oss_licenses_plugin = { id = "com.google.android.gms.oss-licenses-plugin", version.ref = "ossLicensesPlugin" }
 google-dagger-hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
@@ -107,3 +111,4 @@ jetbrainsKotlinAndroid = { id = "org.jetbrains.kotlin.android", version.ref = "k
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }

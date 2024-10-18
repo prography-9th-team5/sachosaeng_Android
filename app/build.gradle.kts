@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.google.gms)
     alias(libs.plugins.google.ksp)
     id(libs.plugins.oss.licenses.plugin.get().pluginId)
+    id(libs.plugins.crashlytics.get().pluginId)
 }
 
 fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
@@ -121,6 +122,9 @@ dependencies {
 
     //google-services
     implementation(libs.oss.licenses)
+
+    //crashlytics
+    implementation(libs.crashlytics)
 
     //module
     implementation(project(":core:ui"))
