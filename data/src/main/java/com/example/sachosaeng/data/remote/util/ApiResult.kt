@@ -12,11 +12,13 @@ sealed interface ApiResult<out T> {
         data class UnknownApiError(val throwable: Throwable) : Failure
 
         fun safeThrowable(): Throwable = when (this) {
-            is HttpError -> IllegalStateException("$message $body")
+            is HttpError -> HttpErrorException(code, message ?: "unknown", body ?: "unknown")
             is NetworkError -> throwable
             is UnknownApiError -> throwable
         }
     }
+
+    class HttpErrorException(val code: Int, message: String, val body: String) : IllegalStateException(message)
 
     fun isSuccess(): Boolean = this is Success
 
