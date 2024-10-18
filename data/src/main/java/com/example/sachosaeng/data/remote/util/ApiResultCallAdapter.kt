@@ -83,7 +83,7 @@ private class ApiResultCall<R>(
                 } else {
                     ApiResult.Failure.UnknownApiError(throwable)
                 }
-                ErrorNotifier.notifyError(error.getErrorMessage())
+                ErrorNotifier.notifyError(throwable)
                 callback.onResponse(this@ApiResultCall, Response.success(error))
             }
         }

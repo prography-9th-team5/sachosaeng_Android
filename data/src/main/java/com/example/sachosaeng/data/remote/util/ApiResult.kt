@@ -1,5 +1,6 @@
 package com.sachosaeng.app.data.remote.util
 
+
 sealed interface ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>
 
@@ -14,12 +15,6 @@ sealed interface ApiResult<out T> {
             is HttpError -> IllegalStateException("$message $body")
             is NetworkError -> throwable
             is UnknownApiError -> throwable
-        }
-
-        fun getErrorMessage(): String = when (this) {
-            is HttpError -> message ?: "unknown"
-            is NetworkError -> "네트워크가 불안정합니다. 다시 시도해주세요"
-            is UnknownApiError -> throwable.message ?: "unknown"
         }
     }
 

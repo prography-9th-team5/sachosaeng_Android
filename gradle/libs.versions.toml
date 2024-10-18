@@ -100,6 +100,7 @@ oss_licenses_plugin = { group = "com.google.android.gms", name = "oss-licenses-p
 oss_licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "ossLicenses" }
 
 crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "crashlytics" }
+analytics = { group = "com.google.firebase", name = "firebase-analytics" }
 
 [plugins]
 oss_licenses_plugin = { id = "com.google.android.gms.oss-licenses-plugin", version.ref = "ossLicensesPlugin" }
@@ -112,3 +113,4 @@ jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrains
 google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "crashlytics" }
+analytics = { id = "com.google.firebase.analytics" }
