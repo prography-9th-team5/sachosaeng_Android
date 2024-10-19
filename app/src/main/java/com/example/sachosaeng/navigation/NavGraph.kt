@@ -9,6 +9,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
+import com.example.sachosaeng.feature.home.navigation.addMainGraph
+import com.example.sachosaeng.feature.home.navigation.navigateToMain
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.MAIN_DEEP_LINK
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
@@ -39,24 +41,25 @@ internal fun NavGraph(
         startDestination = ROUTE_SPLASH,
     ) {
         addSplashNavGraph(
-            navigateToMain = {
-                navController.navigate(GRAPH_MAIN) {
-                    popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
-                        inclusive = true
-                    }
-                    launchSingleTop = true
-                }
-            },
+            navigateToMain = { navController.navigateToMain() },
             navigateToLogin = { navController.navigationToAuth() }
         )
         addWebViewScreen(navController = navController)
         addSignUpNavGraph(
             navController = navController,
-            navigateToMain = { navController.navigate(GRAPH_MAIN) },
+            navigateToMain = { navController.navigateToMain() },
             navigateToAuth = { navController.navigationToAuth() },
             snackBarMessage = snackBarMessage
         )
-        addMainGraph(navController = navController)
+        addMainGraph(
+            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
+            navigateToVoteDetail = { id, isDailyVote ->
+                navController.navigateToVoteDetail(
+                    voteId = id,
+                    isDailyVote = isDailyVote
+                )
+            }
+        )
         addMyPageNavGraph(
             navController = navController,
             navigateToWebView = { url -> navController.navigateToWebView(url) },
@@ -91,32 +94,6 @@ internal fun NavGraph(
         )
     }
 }
-
-const val GRAPH_MAIN = "mainGraph"
-
-fun NavGraphBuilder.addMainGraph(navController: NavHostController) {
-    navigation(
-        startDestination = ROUTE_MAIN,
-        route = GRAPH_MAIN
-    ) {
-        composable(
-            route = ROUTE_MAIN,
-            deepLinks = listOf(navDeepLink { uriPattern = MAIN_DEEP_LINK })
-        ) {
-            HomeScreen(
-                moveToMyPage = {
-                    navController.navigate(
-                        GRAPH_MY_PAGE
-                    )
-                },
-                navigateToVoteCard = { voteId, isDailyVote ->
-                    navController.navigateToVoteDetail(voteId = voteId, isDailyVote = isDailyVote)
-                }
-            )
-        }
-    }
-}
-
 
 fun NavController.navigateToOpenSource() {
     val resourceProvider = context.resources

@@ -19,6 +19,7 @@
     <!-- home -->
     <string name="daily_vote">오늘의 투표</string>
     <string name="sort_by_latest">최신순</string>
+    <string name="double_click_exit_toast_message">한번 더 누르면 종료됩니다</string>
 
     <!-- mypage-->
     <string name="mypage_top_bar_label">마이페이지</string>

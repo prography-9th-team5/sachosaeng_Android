@@ -1,6 +1,7 @@
 package com.sachosaeng.app.main
 
 import android.content.Intent
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.sachosaeng.feature.home.navigation.navigateToMain
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.component.bottomappbar.BottomAppbarItem
 import com.sachosaeng.app.core.ui.component.bottomappbar.SachoSaengBottomAppBar
@@ -36,6 +38,10 @@ fun AppScreen(
     val isBottomBarNeeded =
         currentBackStackEntry?.destination?.route == ROUTE_MAIN || currentBackStackEntry?.destination?.route == ROUTE_BOOKMARK
 
+    BackHandler {
+        viewModel.backPressed(currentBackStackEntry?.destination?.route)
+    }
+
     viewModel.collectSideEffect {
         when (it) {
             is AppSideEffect.NavigateToDeepLink -> intent?.data?.let {
@@ -43,6 +49,7 @@ fun AppScreen(
                     intent
                 )
             }
+            is AppSideEffect.NavigateToMainRoute -> navController.navigateToMain()
             is AppSideEffect.NavigateToAuthActivity -> navController.navigationToAuth()
             is AppSideEffect.ShowSnackBar -> snackbarMessage = it.message
             else -> {}

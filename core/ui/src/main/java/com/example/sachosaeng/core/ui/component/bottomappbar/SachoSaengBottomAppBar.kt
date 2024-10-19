@@ -11,6 +11,7 @@ import androidx.compose.material3.BottomAppBarDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -31,6 +32,10 @@ fun SachoSaengBottomAppBar(
     navController: NavController,
 ) {
     val isSelectedIndex = remember { mutableStateOf(0) }
+
+    LaunchedEffect(navController.currentBackStackEntry?.destination?.route) {
+        isSelectedIndex.value = items.invoke().indexOfFirst { it.route == navController.currentBackStackEntry?.destination?.route }
+    }
 
     BottomAppBar(
         containerColor = Gs_G4,
