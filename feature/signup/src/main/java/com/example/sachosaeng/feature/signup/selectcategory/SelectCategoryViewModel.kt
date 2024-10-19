@@ -11,6 +11,7 @@ import com.sachosaeng.app.core.usecase.user.GetUserTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -70,8 +71,8 @@ class SelectCategoryViewModel @Inject constructor(
     }
 
     fun join() = intent {
-        val email = getEmailUseCase().first()
-        val userType = getLocalUserTypeUseCase().first()
+        val email = getEmailUseCase().firstOrNull() ?: ""
+        val userType = getLocalUserTypeUseCase().firstOrNull() ?: ""
         runCatching {
             joinUseCase(email = email, userType = userType).collectLatest {
                 setMyCategoryListUseCase(state.selectedCategoryList).collectLatest {

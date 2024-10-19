@@ -13,6 +13,7 @@ import com.sachosaeng.app.core.domain.constant.OAuthType
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
 import java.time.ZoneOffset
@@ -41,7 +42,7 @@ class AuthDataStoreImpl @Inject constructor(
     }.catch {
         it.printStackTrace()
         emit(-1)
-    }.first()
+    }.firstOrNull() ?: -1
 
     override suspend fun setEmail(email: String, type: OAuthType): Boolean {
         dataStore.edit { preferences ->
@@ -57,7 +58,7 @@ class AuthDataStoreImpl @Inject constructor(
     }.catch {
         it.printStackTrace()
         emit("")
-    }.first()
+    }.firstOrNull() ?: ""
 
     override suspend fun setAccessToken(token: String): Boolean {
         dataStore.edit { preferences ->
@@ -70,14 +71,14 @@ class AuthDataStoreImpl @Inject constructor(
     }.catch {
         it.printStackTrace()
         emit("")
-    }.first()
+    }.firstOrNull() ?: ""
 
     override suspend fun getKakaoAccessToken(): String = context.authDataStore.data.map { preferences ->
         preferences[stringPreferencesKey(USER_KAKAO_TOKEN)] ?: ""
     }.catch {
         it.printStackTrace()
         emit("")
-    }.first()
+    }.firstOrNull() ?: ""
 
     override suspend fun setRefreshToken(token: String): Boolean {
         dataStore.edit { preferences ->
@@ -100,14 +101,14 @@ class AuthDataStoreImpl @Inject constructor(
     }.catch {
         it.printStackTrace()
         emit("")
-    }.first()
+    }.firstOrNull() ?: ""
 
     override suspend fun getRecentOauthType() = context.authDataStore.data.map { preferences ->
         OAuthType.valueOf(preferences[stringPreferencesKey(USER_AUTH_TYPE)] ?: OAuthType.NONE.name)
     }.catch {
         it.printStackTrace()
         emit(OAuthType.NONE)
-    }.first()
+    }.firstOrNull() ?: OAuthType.NONE
 
     override suspend fun setKakaoLoginToken(token: String): Boolean {
         dataStore.edit { preferences ->

@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -32,8 +33,8 @@ class SignUpCompleteViewModel @Inject constructor(
     }
 
     private fun showSignUpCompleteSplash() = intent {
-        val userName = getMyInfoUsecase().first().name
-        val userType = getUserTypeUseCase().first()
+        val userName = getMyInfoUsecase().firstOrNull()?.name ?: ""
+        val userType = getUserTypeUseCase().firstOrNull()?: ""
         reduce {
             state.copy(
                 userName = userName,

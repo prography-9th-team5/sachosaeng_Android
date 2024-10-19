@@ -17,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -45,7 +46,7 @@ class VoteDetailViewModel @Inject constructor(
     }
 
     private fun getVoteContent() = intent {
-        val voteCompleteDescriptionIcon = getVoteCompleteDescriptionImageRes().first()
+        val voteCompleteDescriptionIcon = getVoteCompleteDescriptionImageRes().firstOrNull() ?: -1
         voteDetailId?.let {
             getSingleVoteUsecase(voteDetailId).collectLatest { vote ->
                 reduce {
@@ -62,7 +63,7 @@ class VoteDetailViewModel @Inject constructor(
     }
 
     private fun getVoteCompleteDescriptionImageRes() = flow {
-        val userType = getMyInfoUsecase().first().let {
+        val userType = getMyInfoUsecase().firstOrNull()?.let {
             when (UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) {
                 UserType.NEW_EMPLOYEE -> drawable.ic_vote_complete_newcomer
                 UserType.JOB_SEEKER -> drawable.ic_vote_complete_jobseeker

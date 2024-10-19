@@ -9,6 +9,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -31,5 +32,5 @@ class UserDataStoreImpl @Inject constructor(
     }.catch {
         it.printStackTrace()
         emit("")
-    }.first()
+    }.firstOrNull() ?: ""
 }
