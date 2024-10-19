@@ -78,9 +78,9 @@ private class ApiResultCall<R>(
             }
 
             override fun onFailure(call: Call<R?>, throwable: Throwable) {
-                    ApiResult.Failure.NetworkError(throwable)
-                } else {
-                    ApiResult.Failure.UnknownApiError(throwable)
+                val error = when (throwable) {
+                    is IOException -> ApiResult.Failure.NetworkError(throwable)
+                    else -> ApiResult.Failure.UnknownApiError(throwable)
                 }
                 ErrorNotifier.notifyError(throwable)
                 callback.onResponse(this@ApiResultCall, Response.success(error))
