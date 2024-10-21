@@ -23,7 +23,7 @@ class ArticleRepositoryImpl @Inject constructor(
 
     override fun getArticleDetail(
         informationId: Int,
-        categoryId: Int
+        categoryId: Int?
     ): Flow<SimilarArticleDetail> = flow {
         articleService.getArticleDetail(informationId = informationId, categoryId = categoryId)
             .getOrNull()?.data?.toDomain()

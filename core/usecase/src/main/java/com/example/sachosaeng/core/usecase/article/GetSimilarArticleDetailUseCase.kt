@@ -8,6 +8,6 @@ import javax.inject.Inject
 class GetSimilarArticleDetailUseCase @Inject constructor(
     private val articleRepository: ArticleRepository
 ) {
-    operator fun invoke(articleId: Int, categoryId: Int): Flow<SimilarArticleDetail> =
+    operator fun invoke(articleId: Int, categoryId: Int?): Flow<SimilarArticleDetail> =
         articleRepository.getArticleDetail(categoryId = categoryId, informationId = articleId)
 }
