@@ -36,12 +36,11 @@ class HomeViewModel @Inject constructor(
     init {
         getDailyVote()
         getHotVotes()
-        getUserInfo()
         getCategoryList()
         getMyCategoryListAndVoteList()
     }
 
-    private fun getUserInfo() = intent {
+    fun getUserInfo() = intent {
         getMyInfoUsecase().collectLatest {
             reduce { state.copy(userType = UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) }
         }
