@@ -22,6 +22,6 @@ interface ArticleService {
     @GET("/api/v1/information/{informationId}")
     suspend fun getArticleDetail(
         @Path("informationId") informationId: Int,
-        @Query("category-id") categoryId: Int,
+        @Query("category-id") categoryId: Int?,
     ): ApiResult<BaseResponse<SimilarArticleDetailResponse>>
 }
