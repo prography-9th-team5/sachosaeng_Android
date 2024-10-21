@@ -72,7 +72,7 @@ class HomeViewModel @Inject constructor(
 
     fun onSelectCategory(category: Category) = intent {
         getVoteBySingleCategory(category)
-        getHotVotes()
+        getHotVotes(category)
     }
 
     fun onSelectFavoriteCategory(category: Category) = intent {
@@ -107,8 +107,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getHotVotes() = intent {
-        getHotVoteUsecase(state.selectedCategory.id).collectLatest { list ->
+    private fun getHotVotes(category: Category? = null) = intent {
+        getHotVoteUsecase(category?.id).collectLatest { list ->
             list?.let {
                 reduce {
                     state.copy(
