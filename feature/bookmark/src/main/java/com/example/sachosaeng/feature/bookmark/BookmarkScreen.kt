@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -35,7 +36,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun BookmarkScreen(
     moveToVote: (Int) -> Unit = {},
-    moveToArticle: (Int, Int) -> Unit = { _, _ -> },
+    moveToArticle: (Int, Int?) -> Unit = { _, _ -> },
     moveToMyPage: () -> Unit = {},
     showSnackBar: (String) -> Unit = {},
     viewModel: BookmarkViewModel = hiltViewModel()
@@ -46,6 +47,11 @@ fun BookmarkScreen(
             is BookmarkSideEffect.ShowSnackBar -> showSnackBar(sideEffect.message)
         }
     }
+
+    LaunchedEffect(Unit) {
+        viewModel.getUserInfo()
+    }
+
     BookmarkScreen(
         state = state.value,
         onProfileImageClicked = moveToMyPage,
@@ -56,7 +62,7 @@ fun BookmarkScreen(
         onBookmarkedArticleClick = { bookmark ->
             moveToArticle(
                 bookmark.id,
-                state.value.selectedCategory?.id ?: ALL_CATEGORY_ID
+                state.value.selectedCategory?.id
             )
         },
         onSelectForModifyBookmark = viewModel::selectModifyBookmark,

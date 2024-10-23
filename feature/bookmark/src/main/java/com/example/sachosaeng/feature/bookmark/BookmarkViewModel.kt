@@ -1,17 +1,17 @@
 package com.sachosaeng.app.feature.bookmark
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Bookmark
-import com.sachosaeng.app.core.model.BookmarkType
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.usecase.bookmark.DeleteArticleBookmarksUseCase
 import com.sachosaeng.app.core.usecase.bookmark.DeleteVoteBookmarksUseCase
+import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkListUseCase
 import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkedArticleListUseCase
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
+import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
 import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -25,6 +25,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BookmarkViewModel @Inject constructor(
+    private val getMyInfoUsecase: GetMyInfoUsecase,
     private val stringResourceProvider: ResourceProvider,
     private val getCategoryListUseCase: GetCategoryListUseCase,
     private val getBookmarkListByCategoryUseCase: GetBookmarkListUseCase,
@@ -152,6 +153,12 @@ class BookmarkViewModel @Inject constructor(
                     bookmarkedArticleList = bookmarkList
                 )
             }
+        }
+    }
+
+    fun getUserInfo() = intent {
+        getMyInfoUsecase().collectLatest {
+            reduce { state.copy(userType = UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) }
         }
     }
 }

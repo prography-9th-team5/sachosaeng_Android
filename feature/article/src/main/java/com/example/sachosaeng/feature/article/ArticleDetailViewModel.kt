@@ -24,7 +24,7 @@ class ArticleDetailViewModel @Inject constructor(
     private val deleteBookmarkArticleUseCase: DeleteBookmarkArticleUseCase
 ) : ViewModel(), ContainerHost<ArticleDetailUiState, Unit> {
     private val articleDetailId = savedStateHandle.get<Int>(ARTICLE_DETAIL_ID)
-    private val categoryId = savedStateHandle.get<Int>(ARTICLE_CATEGORY_ID)
+    private val categoryId = savedStateHandle.get<String>(ARTICLE_CATEGORY_ID)
     override val container: Container<ArticleDetailUiState, Unit> =
         container(ArticleDetailUiState())
 
@@ -32,10 +32,10 @@ class ArticleDetailViewModel @Inject constructor(
         fetchArticleDetail(articleId = articleDetailId, categoryId = categoryId)
     }
 
-    private fun fetchArticleDetail(articleId: Int?, categoryId: Int?) = intent {
-        if (articleId != null && categoryId != null) getSimilarArticleDetailUseCase(
+    private fun fetchArticleDetail(articleId: Int?, categoryId: String?) = intent {
+        if (articleId != null) getSimilarArticleDetailUseCase(
             articleId,
-            categoryId
+            categoryId?.toInt()
         ).collectLatest {
             reduce {
                 state.copy(

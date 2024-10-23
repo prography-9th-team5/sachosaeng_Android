@@ -1,5 +1,6 @@
 package com.sachosaeng.app.feature.article.navigation
 
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -16,6 +17,7 @@ const val ARTICLE_CATEGORY_ID = "categoryId"
 internal const val ROUTE_ARTICLE_DETAIL = "$ROUTE_ARTICLE/$ARTICLE_DETAIL_ID"
 
 fun NavController.navigateToArticleDetail(articleId: Int?, categoryId: Int?) {
+    Log.e("1111111111", "articleId: $articleId, categoryId: $categoryId")
     navigate("$ROUTE_ARTICLE_DETAIL?$ARTICLE_DETAIL_ID=$articleId?$ARTICLE_CATEGORY_ID=$categoryId")
 }
 
@@ -35,9 +37,9 @@ fun NavGraphBuilder.addArticleGraph(
                     defaultValue = 1
                 },
                 navArgument(ARTICLE_CATEGORY_ID) {
-                    type = NavType.IntType
-                    nullable = false
-                    defaultValue = 1
+                    type = NavType.StringType
+                    nullable = true
+                    defaultValue = null
                 }
             )
         ) {
