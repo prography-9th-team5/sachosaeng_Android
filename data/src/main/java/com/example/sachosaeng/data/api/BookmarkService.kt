@@ -1,6 +1,7 @@
 package com.sachosaeng.app.data.api
 
 import com.sachosaeng.app.data.model.BaseResponse
+import com.sachosaeng.app.data.model.bookmark.ArticleBookmarkListRequest
 import com.sachosaeng.app.data.model.bookmark.BookmarkListRequest
 import com.sachosaeng.app.data.model.bookmark.BookmarkResponse
 import com.sachosaeng.app.data.model.bookmark.BookmarkedArticleResponse
@@ -18,6 +19,11 @@ interface BookmarkService {
     @POST("/api/v1/bookmarks/votes/delete")
     suspend fun deleteBookmarks(
         @Body bookmarkIds: BookmarkListRequest
+    ): ApiResult<BaseResponse<Unit>>
+
+    @POST("/api/v1/bookmarks/information/delete")
+    suspend fun deleteArticleBookmarks(
+        @Body informationId: ArticleBookmarkListRequest
     ): ApiResult<BaseResponse<Unit>>
 
     @DELETE("/api/v1/bookmarks/votes/{voteId}")

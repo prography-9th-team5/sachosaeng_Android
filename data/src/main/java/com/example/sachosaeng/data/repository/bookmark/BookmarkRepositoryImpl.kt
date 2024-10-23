@@ -4,6 +4,7 @@ import com.sachosaeng.app.core.model.Bookmark
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.data.api.BookmarkService
 import com.sachosaeng.app.data.model.bookmark.SingleArticleBookmarkRequest
+import com.sachosaeng.app.data.repository.bookmark.BookmarkMapper.toArticleRequest
 import com.sachosaeng.app.data.repository.bookmark.BookmarkMapper.toDomain
 import com.sachosaeng.app.data.repository.bookmark.BookmarkMapper.toRequest
 import kotlinx.coroutines.flow.Flow
@@ -23,8 +24,13 @@ class BookmarkRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun deleteBookmarks(bookmarkIds: List<Int>): Flow<Unit> = flow {
+    override fun deleteBookmarks(bookmarkIds: List<Bookmark>): Flow<Unit> = flow {
         bookmarkService.deleteBookmarks(bookmarkIds.toRequest()).getOrNull()?.data?.let {
+            emit(it)
+        }
+    }
+    override fun deleteBookmarkedArticle(bookmarkIds: List<Bookmark>): Flow<Unit> = flow {
+        bookmarkService.deleteArticleBookmarks(bookmarkIds.toArticleRequest()).getOrNull()?.data?.let {
             emit(it)
         }
     }

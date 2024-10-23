@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.core.model.BookmarkType
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.UserType
@@ -50,6 +51,7 @@ fun BookmarkScreen(
         onProfileImageClicked = moveToMyPage,
         onModifyButtonClicked = viewModel::modifyBookmark,
         onCategoryClicked = viewModel::categoryClicked,
+        deleteSelectedArticles = viewModel::deleteSelectedArticles,
         onBookmarkedVoteClicked = { bookmark -> moveToVote(bookmark.id) },
         onBookmarkedArticleClick = { bookmark ->
             moveToArticle(
@@ -71,6 +73,7 @@ internal fun BookmarkScreen(
     onCategoryClicked: (Category) -> Unit = {},
     onBookmarkedVoteClicked: (Bookmark) -> Unit = {},
     onBookmarkedArticleClick: (Bookmark) -> Unit = {},
+    deleteSelectedArticles: () -> Unit = {},
     deleteSelectedBookmarks: () -> Unit = {},
     onSelectForModifyBookmark: (Bookmark) -> Unit = {}
 ) {
@@ -80,7 +83,7 @@ internal fun BookmarkScreen(
 
     Column(
         modifier = modifier
-            .fillMaxSize()
+            .fillMaxSize()  // 무한 크기 문제를 방지하기 위해 fillMaxSize 추가
             .background(Gs_G2)
             .padding(20.dp)
     ) {
@@ -95,6 +98,13 @@ internal fun BookmarkScreen(
             userType = state.userType,
             onProfileImageClicked = onProfileImageClicked
         )
+        CategoryRow(
+            selectedCategory = state.selectedCategory,
+            categories = state.allCategory,
+            onModifyButtonClicked = onModifyButtonClicked,
+            onCategoryClicked = onCategoryClicked,
+            isModifyMode = state.isModifyMode
+        )
         TabRowComponentWithBottomLine(
             screenColor = Gs_G2,
             tabs = tabList,
@@ -102,19 +112,17 @@ internal fun BookmarkScreen(
                 {
                     VoteTabScreen(
                         state = state,
-                        onModifyButtonClicked = onModifyButtonClicked,
-                        onCategoryClicked = onCategoryClicked,
                         onBookmarkedVoteClicked = onBookmarkedVoteClicked,
-                        deleteSelectedBookmarks = deleteSelectedBookmarks,
-                        onSelectForModifyBookmark = onSelectForModifyBookmark
+                        onSelectForModifyBookmark = onSelectForModifyBookmark,
+                        deleteSelectedBookmarks = { deleteSelectedBookmarks() }
                     )
                 },
                 {
                     ArticleTabScreen(
                         state = state,
-                        onModifyButtonClicked = onModifyButtonClicked,
                         onBookmarkedArticleClick = onBookmarkedArticleClick,
-                        onSelectForModifyBookmark = onSelectForModifyBookmark
+                        onSelectForModifyBookmark = onSelectForModifyBookmark,
+                        deleteSelectedBookmarks = { deleteSelectedArticles() },
                     )
                 },
             )
@@ -125,20 +133,11 @@ internal fun BookmarkScreen(
 @Composable
 private fun VoteTabScreen(
     state: BookmarkScreenUiState,
-    onModifyButtonClicked: () -> Unit = {},
-    onCategoryClicked: (Category) -> Unit = {},
+    deleteSelectedBookmarks: (List<Bookmark>) -> Unit = {},
     onBookmarkedVoteClicked: (Bookmark) -> Unit = {},
-    deleteSelectedBookmarks: () -> Unit = {},
     onSelectForModifyBookmark: (Bookmark) -> Unit = {}
 ) {
     Column {
-        CategoryRow(
-            selectedCategory = state.selectedCategory,
-            categories = state.allCategory,
-            onModifyButtonClicked = onModifyButtonClicked,
-            onCategoryClicked = onCategoryClicked,
-            isModifyMode = state.isModifyMode
-        )
         if (state.bookmarkedVoteList.isEmpty()) {
             BookmarkEmptyScreen(emptyLabel = stringResource(id = R.string.bookmarked_vote_is_empty_description))
         }
@@ -150,37 +149,45 @@ private fun VoteTabScreen(
             onSelectForModifyBookmark = onSelectForModifyBookmark
         )
         Spacer(modifier = Modifier.weight(1f))
-        if (state.isModifyMode) SachoSaengButton(
-            enabled = state.selectedForModifyBookmarkList.isNotEmpty(),
-            modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.delete_label),
-            onClick = deleteSelectedBookmarks
-        )
+        if (state.isModifyMode) {
+            SachoSaengButton(
+                enabled = state.selectedForModifyBookmarkList.isNotEmpty(),
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.delete_label),
+                onClick = { deleteSelectedBookmarks(state.selectedForModifyBookmarkList) }
+            )
+        }
     }
 }
 
 @Composable
 fun ArticleTabScreen(
     state: BookmarkScreenUiState,
-    onModifyButtonClicked: () -> Unit = {},
+    deleteSelectedBookmarks: (List<Bookmark>) -> Unit = {},
     onBookmarkedArticleClick: (Bookmark) -> Unit = {},
     onSelectForModifyBookmark: (Bookmark) -> Unit = {}
 ) {
-    CategoryRow(
-        categories = state.allCategory,
-        onModifyButtonClicked = onModifyButtonClicked,
-        isModifyMode = state.isModifyMode,
-    )
-    if (state.bookmarkedArticleList.isEmpty()) {
-        BookmarkEmptyScreen(emptyLabel = stringResource(id = R.string.bookmarked_article_is_empty_description))
+    Column {
+        if (state.bookmarkedArticleList.isEmpty()) {
+            BookmarkEmptyScreen(emptyLabel = stringResource(id = R.string.bookmarked_article_is_empty_description))
+        }
+        BookmarkList(
+            isModifyMode = state.isModifyMode,
+            bookmarks = state.bookmarkedArticleList,
+            onBookmarkClicked = onBookmarkedArticleClick,
+            selectedForModifyBookmarkList = state.selectedForModifyBookmarkList,
+            onSelectForModifyBookmark = onSelectForModifyBookmark,
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        if (state.isModifyMode) {
+            SachoSaengButton(
+                enabled = state.selectedForModifyBookmarkList.isNotEmpty(),
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(id = R.string.delete_label),
+                onClick = { deleteSelectedBookmarks(state.selectedForModifyBookmarkList) }
+            )
+        }
     }
-    BookmarkList(
-        isModifyMode = state.isModifyMode,
-        bookmarks = state.bookmarkedArticleList,
-        onBookmarkClicked = onBookmarkedArticleClick,
-        selectedForModifyBookmarkList = state.selectedForModifyBookmarkList,
-        onSelectForModifyBookmark = onSelectForModifyBookmark
-    )
 }
 
 @Preview
@@ -219,13 +226,15 @@ fun BookmarkScreenPreview() {
                     bookmarkId = 1,
                     id = 1,
                     title = "Bookmark1",
-                    description = "Description1"
+                    description = "Description1",
+                    type = BookmarkType.VOTE
                 ),
                 Bookmark(
                     bookmarkId = 2,
                     id = 2,
                     title = "Bookmark2",
-                    description = "Description2"
+                    description = "Description2",
+                    type = BookmarkType.VOTE
                 ),
             ),
             selectedCategory = Category(
