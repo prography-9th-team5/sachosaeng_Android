@@ -5,10 +5,11 @@ import com.sachosaeng.app.core.model.Vote
 import com.sachosaeng.app.core.model.VoteInfo
 import com.sachosaeng.app.core.model.VoteList
 import com.sachosaeng.app.core.model.VoteOption
+import com.sachosaeng.app.core.util.constant.ColorConstant.GS_BLACK_CODE
 import com.sachosaeng.app.data.model.vote.VoteDetailInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteInfoResponse
+import com.sachosaeng.app.data.model.vote.VoteListInfoByCategoryResponse
 import com.sachosaeng.app.data.model.vote.VoteListInfoResponse
-import com.sachosaeng.app.core.util.constant.ColorConstant.GS_BLACK_CODE
 
 object VoteMapper {
     fun VoteInfoResponse.toDomain() = VoteInfo(
@@ -26,6 +27,22 @@ object VoteMapper {
     )
 
     fun VoteListInfoResponse.toDomain(): VoteList {
+        return this.let {
+            VoteList(
+                category = Category(
+                    id = it.category.categoryId ?: 2,
+                    color = it.category.backgroundColor ?: GS_BLACK_CODE,
+                    textColor = it.category.textColor ?: GS_BLACK_CODE,
+                    name = it.category.name,
+                    imageUrl = it.category.iconUrl,
+                ),
+                description = "",
+                voteInfo = it.votes.map { voteInfoResponse -> voteInfoResponse.toDomain() }
+            )
+        }
+    }
+
+    fun VoteListInfoByCategoryResponse.toDomain(): VoteList {
         return this.let {
             VoteList(
                 category = Category(
