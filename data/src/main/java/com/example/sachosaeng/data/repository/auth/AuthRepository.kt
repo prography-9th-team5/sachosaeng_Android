@@ -7,7 +7,7 @@ interface AuthRepository {
     fun login(email: String): Flow<Boolean>
     fun logout(): Flow<Boolean>
     fun join(email: String, userType: String): Flow<Boolean>
-    fun getEmail(): Flow<String>
+    suspend fun getEmail(): String
     fun getRecentOauthType(): Flow<OAuthType>
     suspend fun setEmail(email: String, type: OAuthType): Boolean
 }

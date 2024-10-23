@@ -1,5 +1,7 @@
 package com.sachosaeng.app.data.remote.util
 
+import android.util.Log
+
 
 sealed interface ApiResult<out T> {
     data class Success<T>(val data: T) : ApiResult<T>
@@ -12,7 +14,7 @@ sealed interface ApiResult<out T> {
         data class UnknownApiError(val throwable: Throwable) : Failure
 
         fun safeThrowable(): Throwable = when (this) {
-            is HttpError -> IllegalStateException("HTTP Error: $code $message")
+            is HttpError -> IllegalStateException("$body")
             is NetworkError -> throwable
             is UnknownApiError -> throwable
         }

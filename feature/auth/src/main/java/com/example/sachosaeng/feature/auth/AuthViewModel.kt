@@ -5,15 +5,15 @@ import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachosaeng.app.core.domain.constant.OAuthType
-import com.sachosaeng.app.core.usecase.auth.GetRecentAuthTypeUseCase
-import com.sachosaeng.app.core.usecase.auth.LoginUsecase
-import com.sachosaeng.app.core.usecase.auth.SetEmailUsecase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kakao.sdk.user.UserApiClient
+import com.sachosaeng.app.core.domain.constant.OAuthType
+import com.sachosaeng.app.core.usecase.auth.GetRecentAuthTypeUseCase
+import com.sachosaeng.app.core.usecase.auth.LoginUsecase
+import com.sachosaeng.app.core.usecase.auth.SetEmailUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -108,7 +108,7 @@ class AuthViewModel @Inject constructor(
     private fun checkLogin(email: String) = intent {
         loginWithEmailUsecase(email).collectLatest {
             if (it) postSideEffect(AuthSideEffect.NavigateToMain)
-            else postSideEffect(AuthSideEffect.NavigateToTermsOfService)
+            else postSideEffect(AuthSideEffect.NavigateToSignUp)
         }
     }
 
@@ -129,7 +129,7 @@ class AuthViewModel @Inject constructor(
 
 sealed class AuthSideEffect {
     data object NavigateToMain : AuthSideEffect()
-    data object NavigateToTermsOfService : AuthSideEffect()
+    data object NavigateToSignUp : AuthSideEffect()
     data class ShowSnackbar(val message: String) : AuthSideEffect()
 }
 

@@ -37,8 +37,7 @@ class AuthRepositoryImpl @Inject constructor(
         emit(authLocalDataSource.clearUserInfo())
     }
 
-    override fun getEmail(): Flow<String> =
-        flow { emit(authLocalDataSource.getEmail()) }
+    override suspend fun getEmail(): String = authLocalDataSource.getEmail()
 
     override fun getRecentOauthType(): Flow<OAuthType> =
         flow { emit(authLocalDataSource.getRecentOauthType()) }
@@ -53,10 +52,8 @@ class AuthRepositoryImpl @Inject constructor(
                     email = email,
                     userType = userType
                 )
-            ).getOrNull()?.data?.let { data ->
-                authLocalDataSource.setAccessToken(data.loginToken)
-            }.also {
-                login(email).collect { emit(it) }
-            }
+            ).getOrThrow()?.data?.let { data ->
+                emit(authLocalDataSource.setAccessToken(data.loginToken))
+            } ?: emit(false)
         }
 }

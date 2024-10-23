@@ -50,11 +50,11 @@ class TermsOfServiceViewModel @Inject constructor() : ViewModel(), ContainerHost
 
     fun onConfirm() = intent {
         if (state.isConsentToAllTerms) {
-            postSideEffect(TermsOfServiceSideEffect.MoveToSocialLogin)
+            postSideEffect(TermsOfServiceSideEffect.MoveToSelectUserType)
         }
     }
 }
 
 sealed class TermsOfServiceSideEffect {
-    data object MoveToSocialLogin : TermsOfServiceSideEffect()
+    data object MoveToSelectUserType : TermsOfServiceSideEffect()
 }
