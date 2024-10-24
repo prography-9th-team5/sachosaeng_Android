@@ -2,9 +2,11 @@ package com.sachosaeng.app.feature.signup.selectcategory
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.sachosaeng.app.core.domain.constant.OAuthType
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.usecase.auth.GetEmailUsecase
 import com.sachosaeng.app.core.usecase.auth.JoinUseCase
+import com.sachosaeng.app.core.usecase.auth.SetEmailUsecase
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
 import com.sachosaeng.app.core.usecase.category.SetMyCategoryListUseCase
 import com.sachosaeng.app.core.usecase.user.GetUserTypeUseCase
@@ -21,6 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
+    val setEmailUsecase: SetEmailUsecase,
     val getEmailUseCase: GetEmailUsecase,
     val getLocalUserTypeUseCase: GetUserTypeUseCase,
     val getAllCategoryListUsecase: GetCategoryListUseCase,
@@ -75,7 +78,8 @@ class SelectCategoryViewModel @Inject constructor(
                if(it) setMyCategoryListUseCase(state.selectedCategoryList).collectLatest {
                     postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
                 } else {
-                     postSideEffect(SelectCategorySideEffect.ShowError("회원가입에 실패했습니다."))
+                   setEmailUsecase("", OAuthType.NONE)
+                   postSideEffect(SelectCategorySideEffect.ShowError("회원가입에 실패했습니다."))
                }
             }
         }.onFailure {

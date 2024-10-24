@@ -17,12 +17,17 @@ class AuthRepositoryImpl @Inject constructor(
     private val authLocalDataSource: AuthDataStore
 ) : AuthRepository {
     override fun login(email: String): Flow<Boolean> = flow {
-        authService.login(LoginRequest(email = email))
-            .onSuccess { response ->
-                response.data?.let { setUserInfo(it) }.run { emit(true) }
-            }.onFailure {
-                emit(false)
+        authService.login(LoginRequest(email = email)).onSuccess {
+            it.data.let { response ->
+                if (response != null) {
+                    setUserInfo(response).run {
+                        emit(true)
+                    }
+                }
             }
+        }.onFailure {
+            emit(false)
+        }
     }
 
     private suspend fun setUserInfo(data: LoginResponse) {

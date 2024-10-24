@@ -55,7 +55,7 @@ class AuthDataStoreImpl @Inject constructor(
     //todo: default 값 지우기
     @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getEmail() = dataStore.data.map { preferences ->
-        preferences[stringPreferencesKey(USER_EMAIL)] ?: "${LocalDateTime.now().toInstant(ZoneOffset.UTC).toEpochMilli()}@naver.com"
+        preferences[stringPreferencesKey(USER_EMAIL)] ?: ""
     }.catch {
         it.printStackTrace()
         emit("")

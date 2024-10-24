@@ -35,7 +35,14 @@ fun NavGraphBuilder.addSignUpNavGraph(
             deepLinks = listOf(navDeepLink { uriPattern = SIGNUP_DEEP_LINK })
         ) {
             TermsOfServiceScreen(
-                navigateToSelectUserType = { navController.navigate(SELECT_USER_TYPE) },
+                navigateToSelectUserType = {
+                    navController.navigate(SELECT_USER_TYPE) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                        launchSingleTop = true 
+                    }
+                },
                 navigateToServiceTermsDetail = { navController.navigateToWebView(TERMS_OF_SERVICE) },
                 navigateToPersonalInformationTerm = { navController.navigateToWebView(PRIVACY_POLICY) })
         }
@@ -47,6 +54,7 @@ fun NavGraphBuilder.addSignUpNavGraph(
                 moveToNextStep = {
                     navController.navigate(SIGNUP_COMPLETE)
                 },
+                navigateToAuth = navigateToAuth,
                 navigateToBackStack = { navController.popBackStack() },
                 snackBarMessage = snackBarMessage
             )
