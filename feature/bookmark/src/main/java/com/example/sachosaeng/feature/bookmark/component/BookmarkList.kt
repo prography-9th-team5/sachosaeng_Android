@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sachosaeng.app.core.model.Bookmark
+import com.sachosaeng.app.core.model.BookmarkType
 import com.sachosaeng.app.core.ui.R.drawable
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black
@@ -36,7 +37,7 @@ fun BookmarkList(
     onBookmarkClicked: (Bookmark) -> Unit = {}
 ) {
     LazyColumn(
-        modifier = modifier,
+        modifier = modifier.padding(top = 20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(bookmarks.size) {
@@ -115,19 +116,22 @@ fun BookmarkListPreview() {
             bookmarkId = 1,
             id = 1,
             title = "title1",
-            description = "description1"
+            description = "description1",
+            type = BookmarkType.VOTE
         ),
         Bookmark(
             bookmarkId = 2,
             id = 2,
             title = "title2",
-            description = "description2"
+            description = "description2",
+            type = BookmarkType.VOTE
         ),
         Bookmark(
             bookmarkId = 3,
             id = 3,
             title = "title3",
-            description = "description3"
+            description = "description3",
+            type = BookmarkType.VOTE
         )
     )
     BookmarkList(bookmarks = bookmarks)

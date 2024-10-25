@@ -83,7 +83,7 @@ class AuthActivitiy : ComponentActivity() {
                         startActivity(intent)
                     }
 
-                    is AuthSideEffect.NavigateToTermsOfService -> {
+                    is AuthSideEffect.NavigateToSignUp -> {
                         val intent = Intent(Intent.ACTION_VIEW).apply {
                             data = Uri.parse(SIGNUP_DEEP_LINK)
                         }

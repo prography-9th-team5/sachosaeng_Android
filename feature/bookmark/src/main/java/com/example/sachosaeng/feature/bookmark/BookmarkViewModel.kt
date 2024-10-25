@@ -1,12 +1,13 @@
 package com.sachosaeng.app.feature.bookmark
 
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Bookmark
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
-import com.example.sachosaeng.core.util.ResourceProvider
+import com.sachosaeng.app.core.usecase.bookmark.DeleteArticleBookmarksUseCase
+import com.sachosaeng.app.core.usecase.bookmark.DeleteVoteBookmarksUseCase
 import com.sachosaeng.app.core.ui.UserType
-import com.sachosaeng.app.core.usecase.bookmark.DeleteBookmarksUseCase
 import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkListUseCase
 import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkedArticleListUseCase
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
@@ -28,8 +29,9 @@ class BookmarkViewModel @Inject constructor(
     private val stringResourceProvider: ResourceProvider,
     private val getCategoryListUseCase: GetCategoryListUseCase,
     private val getBookmarkListByCategoryUseCase: GetBookmarkListUseCase,
-    private val getAllBookmarkedArticleListUseCase: GetBookmarkedArticleListUseCase,
-    private val deleteBookmarkUseCase: DeleteBookmarksUseCase,
+    private val getBookmarkedArticleListUseCase: GetBookmarkedArticleListUseCase,
+    private val deleteBookmarkUseCase: DeleteVoteBookmarksUseCase,
+    private val deleteArticleBookmarksUseCase: DeleteArticleBookmarksUseCase,
     private val resourceProvider: ResourceProvider
 ) : ViewModel(), ContainerHost<BookmarkScreenUiState, BookmarkSideEffect> {
     override val container: Container<BookmarkScreenUiState, BookmarkSideEffect> =
@@ -89,14 +91,27 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
+
+    fun deleteSelectedArticles() = intent {
+        deleteArticleBookmarksUseCase(state.selectedForModifyBookmarkList).collectLatest {
+            postSideEffect(BookmarkSideEffect.ShowSnackBar(resourceProvider.getString(R.string.bookmark_modify_complete)))
+            getBookmarkedArticleListByCategory()
+        }
+    }
+
     fun categoryClicked(category: Category) = intent {
         reduce {
             state.copy(
                 selectedCategory = category
             )
         }.also {
-            if (category.id == ALL_CATEGORY_ID) getAllBookmarkList()
-            else getBookmarkListByCategory()
+            if (category.id == ALL_CATEGORY_ID) {
+                getAllBookmarkList()
+                getAllBookmarkedArticleList()
+            } else {
+                getBookmarkListByCategory()
+                getBookmarkedArticleListByCategory()
+            }
         }
     }
 
@@ -122,7 +137,17 @@ class BookmarkViewModel @Inject constructor(
     }
 
     private fun getAllBookmarkedArticleList() = intent {
-        getAllBookmarkedArticleListUseCase().collectLatest { bookmarkList ->
+        getBookmarkedArticleListUseCase().collectLatest { bookmarkList ->
+            reduce {
+                state.copy(
+                    bookmarkedArticleList = bookmarkList
+                )
+            }
+        }
+    }
+
+    private fun getBookmarkedArticleListByCategory() = intent {
+        getBookmarkedArticleListUseCase(state.selectedCategory).collectLatest { bookmarkList ->
             reduce {
                 state.copy(
                     bookmarkedArticleList = bookmarkList

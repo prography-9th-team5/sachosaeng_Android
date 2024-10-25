@@ -9,10 +9,10 @@ interface AuthDataStore {
     suspend fun clearUserInfo(): Boolean
     suspend fun getEmail(): String
     suspend fun getRecentOauthType(): OAuthType
-    suspend fun setAccessToken(token: String): Boolean
+    suspend fun setAccessToken(token: String?): Boolean
     suspend fun getAccessToken(): String
     suspend fun getKakaoAccessToken(): String
-    suspend fun setRefreshToken(token: String): Boolean
+    suspend fun setRefreshToken(token: String?): Boolean
     suspend fun getRefreshToken(): String
     suspend fun setKakaoLoginToken(token: String): Boolean
 }

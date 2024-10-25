@@ -3,6 +3,7 @@ package com.sachosaeng.app.data.api
 import com.sachosaeng.app.data.model.BaseResponse
 import com.sachosaeng.app.data.model.vote.VoteDetailInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteInfoResponse
+import com.sachosaeng.app.data.model.vote.VoteListInfoByCategoryResponse
 import com.sachosaeng.app.data.model.vote.VoteListInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteOptionRequest
 import com.sachosaeng.app.data.remote.util.ApiResult
@@ -22,7 +23,7 @@ interface VoteService {
     @GET("/api/v1/votes/hot/categories/{categoryId}")
     suspend fun getHotVoteByCategory(
         @Path("categoryId") categoryId: Int
-    ): ApiResult<BaseResponse<VoteListInfoResponse>>
+    ): ApiResult<BaseResponse<VoteListInfoByCategoryResponse>>
 
     @GET("/api/v1/votes/hot/categories/{categoryId}")
     suspend fun getVotesByCategory(

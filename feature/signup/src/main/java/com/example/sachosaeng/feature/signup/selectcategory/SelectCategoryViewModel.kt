@@ -2,15 +2,16 @@ package com.sachosaeng.app.feature.signup.selectcategory
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.sachosaeng.app.core.domain.constant.OAuthType
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.usecase.auth.GetEmailUsecase
 import com.sachosaeng.app.core.usecase.auth.JoinUseCase
+import com.sachosaeng.app.core.usecase.auth.SetEmailUsecase
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
 import com.sachosaeng.app.core.usecase.category.SetMyCategoryListUseCase
 import com.sachosaeng.app.core.usecase.user.GetUserTypeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -22,6 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
+    val setEmailUsecase: SetEmailUsecase,
     val getEmailUseCase: GetEmailUsecase,
     val getLocalUserTypeUseCase: GetUserTypeUseCase,
     val getAllCategoryListUsecase: GetCategoryListUseCase,
@@ -66,21 +68,22 @@ class SelectCategoryViewModel @Inject constructor(
         reduce { state.copy(selectedCategoryList = state.selectedCategoryList - category) }
     }
 
-    fun skipSelectCategory() = intent {
-        postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
-    }
+    fun skipSelectCategory() = join()
 
     fun join() = intent {
-        val email = getEmailUseCase().firstOrNull() ?: ""
+        val email = getEmailUseCase()
         val userType = getLocalUserTypeUseCase().firstOrNull() ?: ""
         runCatching {
             joinUseCase(email = email, userType = userType).collectLatest {
-                setMyCategoryListUseCase(state.selectedCategoryList).collectLatest {
+               if(it) setMyCategoryListUseCase(state.selectedCategoryList).collectLatest {
                     postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
-                }
+                } else {
+                   setEmailUsecase("", OAuthType.NONE)
+                   postSideEffect(SelectCategorySideEffect.ShowError("회원가입에 실패했습니다."))
+               }
             }
         }.onFailure {
-            postSideEffect(SelectCategorySideEffect.ShowError(it.message ?: "unknown"))
+            postSideEffect(SelectCategorySideEffect.ShowError(it.toString()))
         }
     }
 }

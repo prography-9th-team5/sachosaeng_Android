@@ -5,15 +5,16 @@ import android.util.Log
 import androidx.activity.result.ActivityResult
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.sachosaeng.app.core.domain.constant.OAuthType
-import com.sachosaeng.app.core.usecase.auth.GetRecentAuthTypeUseCase
-import com.sachosaeng.app.core.usecase.auth.LoginUsecase
-import com.sachosaeng.app.core.usecase.auth.SetEmailUsecase
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.kakao.sdk.user.UserApiClient
+import com.sachosaeng.app.core.domain.constant.OAuthType
+import com.sachosaeng.app.core.usecase.auth.GetRecentAuthTypeUseCase
+import com.sachosaeng.app.core.usecase.auth.LoginUsecase
+import com.sachosaeng.app.core.usecase.auth.LogoutUsecase
+import com.sachosaeng.app.core.usecase.auth.SetEmailUsecase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -27,6 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
+    val logoutUsecase: LogoutUsecase,
     val setEmailUsecase: SetEmailUsecase,
     val loginWithEmailUsecase: LoginUsecase,
     val getRecentAuthTypeUseCase: GetRecentAuthTypeUseCase
@@ -90,8 +92,7 @@ class AuthViewModel @Inject constructor(
 
     private fun handleGoogleLoginResult() = intent {
         FirebaseAuth.getInstance().currentUser?.email?.let {
-            setEmailUsecase(it, OAuthType.GOOGLE)
-            checkLogin(it)
+            checkLogin(it, OAuthType.GOOGLE)
         }
     }
 
@@ -99,18 +100,37 @@ class AuthViewModel @Inject constructor(
         UserApiClient.instance.me { user, _ ->
             viewModelScope.launch {
                 val email = user?.kakaoAccount?.email ?: ""
-                setEmailUsecase(email, OAuthType.KAKAO)
-                checkLogin(email = email)
+                checkLogin(email = email, type = OAuthType.KAKAO)
             }
         }
     }
 
-    private fun checkLogin(email: String) = intent {
+    private fun checkLogin(email: String, type: OAuthType) = intent {
+        setEmailUsecase(email, type)
         loginWithEmailUsecase(email).collectLatest {
-            if (it) postSideEffect(AuthSideEffect.NavigateToMain)
-            else postSideEffect(AuthSideEffect.NavigateToTermsOfService)
+            if (it) {
+                postSideEffect(AuthSideEffect.NavigateToMain)
+            } else {
+                logout(type)
+                postSideEffect(AuthSideEffect.NavigateToSignUp)
+            }
         }
     }
+
+    private fun logout(type: OAuthType) = intent {
+        logoutUsecase().collectLatest {
+            if (it) {
+                when (type) {
+                    OAuthType.GOOGLE -> FirebaseAuth.getInstance().signOut()
+                    OAuthType.KAKAO -> UserApiClient.instance.logout {
+                        if (it != null) Log.e("KakaoLogout", it.toString())
+                    }
+                    else -> Unit
+                }
+            }
+        }
+    }
+
 
     fun handleKakaoLogin(
         activity: Activity,
@@ -129,7 +149,7 @@ class AuthViewModel @Inject constructor(
 
 sealed class AuthSideEffect {
     data object NavigateToMain : AuthSideEffect()
-    data object NavigateToTermsOfService : AuthSideEffect()
+    data object NavigateToSignUp : AuthSideEffect()
     data class ShowSnackbar(val message: String) : AuthSideEffect()
 }
 

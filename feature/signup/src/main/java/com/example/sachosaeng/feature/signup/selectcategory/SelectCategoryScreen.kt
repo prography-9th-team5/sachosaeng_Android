@@ -34,6 +34,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun SelectCategoryScreen(
     snackBarMessage: (String) -> Unit = {},
     moveToNextStep: () -> Unit,
+    navigateToAuth: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
     viewModel: SelectCategoryViewModel = hiltViewModel()
 ) {
@@ -42,7 +43,10 @@ fun SelectCategoryScreen(
     viewModel.collectSideEffect {
         when (it) {
             is SelectCategorySideEffect.NavigateToNextStep -> moveToNextStep()
-            is SelectCategorySideEffect.ShowError -> snackBarMessage(it.message)
+            is SelectCategorySideEffect.ShowError -> {
+                snackBarMessage(it.message)
+                navigateToAuth()
+            }
         }
     }
 

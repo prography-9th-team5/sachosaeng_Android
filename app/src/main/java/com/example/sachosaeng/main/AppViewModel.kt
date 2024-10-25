@@ -36,10 +36,7 @@ class AppViewModel @Inject constructor(
     }
 
     private fun handleDeeplink() = intent {
-        when (getAccessTokenUsecase().isEmpty()) {
-            true -> postSideEffect(AppSideEffect.NavigateToAuthActivity)
-            false -> postSideEffect(AppSideEffect.NavigateToDeepLink)
-        }
+         postSideEffect(AppSideEffect.NavigateToDeepLink)
     }
 
     private var backPressedTime: Long = 0

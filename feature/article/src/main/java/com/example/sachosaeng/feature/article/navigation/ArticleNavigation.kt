@@ -17,7 +17,6 @@ const val ARTICLE_CATEGORY_ID = "categoryId"
 internal const val ROUTE_ARTICLE_DETAIL = "$ROUTE_ARTICLE/$ARTICLE_DETAIL_ID"
 
 fun NavController.navigateToArticleDetail(articleId: Int?, categoryId: Int?) {
-    Log.e("1111111111", "articleId: $articleId, categoryId: $categoryId")
     navigate("$ROUTE_ARTICLE_DETAIL?$ARTICLE_DETAIL_ID=$articleId?$ARTICLE_CATEGORY_ID=$categoryId")
 }
 

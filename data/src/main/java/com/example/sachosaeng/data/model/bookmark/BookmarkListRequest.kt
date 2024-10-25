@@ -6,3 +6,9 @@ import kotlinx.serialization.Serializable
 data class BookmarkListRequest(
     val voteBookmarkIds: List<Int>
 )
+
+@Serializable
+data class ArticleBookmarkListRequest(
+    val informationBookmarkIds: List<Int>,
+)
+

@@ -33,8 +33,6 @@ import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G3
 import com.sachosaeng.app.core.ui.theme.Gs_G4
 import com.sachosaeng.app.core.ui.theme.Gs_G6
-import com.sachosaeng.app.core.ui.theme.Gs_White
-import com.sachosaeng.app.core.usecase.auth.LoginUsecase
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -42,14 +40,14 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun TermsOfServiceScreen(
     navigateToServiceTermsDetail: () -> Unit,
     navigateToPersonalInformationTerm: () -> Unit,
-    navigateToSocialLogin: () -> Unit,
+    navigateToSelectUserType: () -> Unit,
     viewModel: TermsOfServiceViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
 
     viewModel.collectSideEffect {
         when (it) {
-            is TermsOfServiceSideEffect.MoveToSocialLogin -> navigateToSocialLogin()
+            is TermsOfServiceSideEffect.MoveToSelectUserType -> navigateToSelectUserType()
         }
     }
 

@@ -6,5 +6,5 @@ import javax.inject.Inject
 class SetUserTypeUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    suspend operator fun invoke(type: String) = userRepository.setUserType(type)
+    operator fun invoke(type: String) = userRepository.setUserType(type)
 }

@@ -25,8 +25,7 @@ class OAuthRepositoryImpl @Inject constructor(
         )
             .onSuccess { it.data?.let { it1 -> setToken(it1) } }
             .onFailure {
-                getNewAccessTokenFromEmail()?.let { it1 -> setToken(it1) }
-                    ?: setToken(TokenResponse("", ""))
+                getNewAccessTokenFromEmail().let { it1 -> setToken(it1) }
             }
     }
 
@@ -38,10 +37,10 @@ class OAuthRepositoryImpl @Inject constructor(
         ).getOrNull()?.data
     }
 
-    private suspend fun setToken(data: TokenResponse) {
+    private suspend fun setToken(data: TokenResponse?) {
         with(authDataStore) {
-            setAccessToken(data.accessToken)
-            setRefreshToken(data.refreshToken)
+            setAccessToken(data?.accessToken)
+            setRefreshToken(data?.refreshToken)
         }
     }
 }
