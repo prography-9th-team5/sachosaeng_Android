@@ -2,7 +2,6 @@ package com.example.sachosaeng.feature.home.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
@@ -21,8 +20,10 @@ fun NavController.navigateToMain() {
         launchSingleTop = true
     }
 }
+
 fun NavGraphBuilder.addMainGraph(
     navigateToMyPage: () -> Unit,
+    navigateToAddVote: () -> Unit,
     navigateToVoteDetail: (voteId: Int, isDailyVote: Boolean) -> Unit
 ) {
     navigation(
@@ -35,6 +36,7 @@ fun NavGraphBuilder.addMainGraph(
         ) {
             HomeScreen(
                 moveToMyPage = { navigateToMyPage() },
+                navigateToAddVote = navigateToAddVote,
                 navigateToVoteCard = { voteId, isDailyVote ->
                     navigateToVoteDetail(voteId, isDailyVote)
                 }

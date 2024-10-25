@@ -18,10 +18,8 @@ import com.sachosaeng.app.feature.article.navigation.addArticleGraph
 import com.sachosaeng.app.feature.article.navigation.navigateToArticleDetail
 import com.sachosaeng.app.feature.auth.navigation.navigationToAuth
 import com.sachosaeng.app.feature.bookmark.navigation.addBookmarkGraph
-import com.sachosaeng.app.feature.home.HomeScreen
 import com.sachosaeng.app.feature.mypage.navigation.GRAPH_MY_PAGE
 import com.sachosaeng.app.feature.mypage.navigation.addMyPageNavGraph
-import com.sachosaeng.app.feature.signup.navigation.GRAPH_SIGNUP
 import com.sachosaeng.app.feature.signup.navigation.addSignUpNavGraph
 import com.sachosaeng.app.feature.splash.ROUTE_SPLASH
 import com.sachosaeng.app.feature.splash.addSplashNavGraph
@@ -53,6 +51,7 @@ internal fun NavGraph(
         )
         addMainGraph(
             navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
+            navigateToAddVote = { navController.navigate(GRAPH_MY_PAGE) },
             navigateToVoteDetail = { id, isDailyVote ->
                 navController.navigateToVoteDetail(
                     voteId = id,
