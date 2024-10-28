@@ -117,7 +117,7 @@ fun HomeScreen(
         )
         AddVoteFab(
             modifier = Modifier.align(Alignment.BottomCenter),
-            onClick = viewModel::onAddVoteButtonClicked
+            onClick = navigateToAddVote
         )
     }
     if (isBottomSheetOpen) {

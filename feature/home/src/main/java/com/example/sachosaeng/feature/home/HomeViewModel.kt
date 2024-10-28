@@ -96,10 +96,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onAddVoteButtonClicked() = intent {
-        postSideEffect(HomeSideEffect.NavigateToAddVote)
-    }
-
     private fun getDailyVote() = intent {
         getDailyVoteUsecase().collectLatest {
             reduce {

@@ -21,6 +21,13 @@
     <string name="sort_by_latest">최신순</string>
     <string name="double_click_exit_toast_message">한번 더 누르면 종료됩니다</string>
 
+    <!--add vote-->
+    <string name="add_vote_title">투표 등록</string>
+    <string name="add_vote_description">*사초생이 검토 후 투표에 등록할게요!</string>
+    <string name="vote_title">투표 제목</string>
+    <string name="vote_option">선택지</string>
+    <string name="vote_category">카테고리</string>
+
     <!-- mypage-->
     <string name="mypage_top_bar_label">마이페이지</string>
     <string name="mypage_nickname_field_label">닉네임</string>
