@@ -52,10 +52,6 @@ fun HomeScreen(
     val state = viewModel.collectAsState()
     var isBottomSheetOpen by remember { mutableStateOf(false) }
 
-    LaunchedEffect(Unit) {
-        viewModel.getUserInfo()
-    }
-
     viewModel.collectSideEffect {
         when (it) {
             is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId, it.isDailyVote)

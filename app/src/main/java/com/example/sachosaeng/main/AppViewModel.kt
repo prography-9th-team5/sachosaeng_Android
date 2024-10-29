@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.ErrorNotifier
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.ui.R
-import com.sachosaeng.app.core.usecase.auth.GetAccessTokenUsecase
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
 import com.sachosaeng.app.core.util.manager.DeviceManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,13 +18,11 @@ import javax.inject.Inject
 class AppViewModel @Inject constructor(
     val deviceManager: DeviceManager,
     val resourceProvider: ResourceProvider,
-    val getAccessTokenUsecase: GetAccessTokenUsecase,
 ) : ViewModel(), ContainerHost<AppUiState, AppSideEffect> {
     override val container: Container<AppUiState, AppSideEffect> =
         container(AppUiState())
 
     init {
-        handleDeeplink()
         errorHandling()
     }
 
@@ -33,10 +30,6 @@ class AppViewModel @Inject constructor(
         ErrorNotifier.errorFlow.collect { error ->
             postSideEffect(AppSideEffect.ShowSnackBar(error))
         }
-    }
-
-    private fun handleDeeplink() = intent {
-         postSideEffect(AppSideEffect.NavigateToDeepLink)
     }
 
     private var backPressedTime: Long = 0
@@ -64,6 +57,5 @@ data class AppUiState(
 sealed class AppSideEffect {
     data object NavigateToMainRoute: AppSideEffect()
     data object NavigateToAuthActivity : AppSideEffect()
-    data object NavigateToDeepLink : AppSideEffect()
     data class ShowSnackBar(val message: String) : AppSideEffect()
 }

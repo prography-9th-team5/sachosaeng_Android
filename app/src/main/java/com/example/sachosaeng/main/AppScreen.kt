@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,13 +43,16 @@ fun AppScreen(
         viewModel.backPressed(currentBackStackEntry?.destination?.route)
     }
 
+    LaunchedEffect(Unit) {
+        if (intent?.data != null) {
+            navController.handleDeepLink(
+                intent
+            )
+        }
+    }
+
     viewModel.collectSideEffect {
         when (it) {
-            is AppSideEffect.NavigateToDeepLink -> intent?.data?.let {
-                navController.handleDeepLink(
-                    intent
-                )
-            }
             is AppSideEffect.NavigateToMainRoute -> navController.navigateToMain()
             is AppSideEffect.NavigateToAuthActivity -> navController.navigationToAuth()
             is AppSideEffect.ShowSnackBar -> snackbarMessage = it.message

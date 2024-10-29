@@ -196,7 +196,9 @@ class AuthActivitiy : ComponentActivity() {
                 contentDescription = null
             )
             Spacer(modifier = Modifier.size(10.dp))
-            GuestedLoginButton()
+            GuestedLoginButton(
+                onClick = { authViewModel.guestLogin() }
+            )
             Spacer(modifier = Modifier.size(10.dp))
             KakaoLoginButton(recentAuthType == OAuthType.KAKAO)
             Spacer(modifier = Modifier.size(8.dp))
@@ -206,7 +208,7 @@ class AuthActivitiy : ComponentActivity() {
 
     @Composable
     fun GuestedLoginButton(
-        onClick: () -> Unit = { authViewModel.guestLogin() }
+        onClick: () -> Unit
     ) {
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
             Text(
