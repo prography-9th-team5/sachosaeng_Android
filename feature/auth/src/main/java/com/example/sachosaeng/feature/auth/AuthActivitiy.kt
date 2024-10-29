@@ -12,8 +12,10 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -169,7 +171,6 @@ class AuthActivitiy : ComponentActivity() {
                 .fillMaxSize()
                 .background(Gs_White)
                 .padding(horizontal = 20.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 modifier = Modifier.padding(bottom = 20.dp, top = 70.dp),
@@ -194,9 +195,9 @@ class AuthActivitiy : ComponentActivity() {
                 painter = painterResource(id = R.drawable.image_todays_vote_dialog),
                 contentDescription = null
             )
-            Spacer(modifier = Modifier.size(8.dp))
+            Spacer(modifier = Modifier.size(10.dp))
             GuestedLoginButton()
-            Spacer(modifier = Modifier.size(8.dp))
+            Spacer(modifier = Modifier.size(10.dp))
             KakaoLoginButton(recentAuthType == OAuthType.KAKAO)
             Spacer(modifier = Modifier.size(8.dp))
             GoogleLoginButton(recentAuthType == OAuthType.GOOGLE)
@@ -207,15 +208,17 @@ class AuthActivitiy : ComponentActivity() {
     fun GuestedLoginButton(
         onClick: () -> Unit = { authViewModel.guestLogin() }
     ) {
-        Text(
-            modifier = Modifier
-                .clickable { onClick() },
-            text = "게스트모드로 로그인",
-            textDecoration = TextDecoration.Underline,
-            fontSize = 14.sp,
-            color = Gs_G6,
-            fontWeight = FontWeight.W500,
-        )
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+            Text(
+                modifier = Modifier
+                    .clickable { onClick() },
+                text = "게스트모드로 로그인",
+                textDecoration = TextDecoration.Underline,
+                fontSize = 14.sp,
+                color = Gs_G6,
+                fontWeight = FontWeight.W500,
+            )
+        }
     }
 
     @Composable

@@ -6,7 +6,7 @@ import com.sachosaeng.app.core.ui.UserType
 
 data class BookmarkScreenUiState(
     val userType: UserType = UserType.NEW_EMPLOYEE,
-    val selectedCategory: Category? = Category(),
+    val selectedCategory: Category = Category(),
     val allCategory: List<Category> = emptyList(),
     val bookmarkedVoteList: List<Bookmark> = emptyList(),
     val bookmarkedArticleList: List<Bookmark> = emptyList(),

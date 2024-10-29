@@ -17,6 +17,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -86,20 +87,20 @@ class BookmarkViewModel @Inject constructor(
 
     fun deleteSelectedBookmarks() = intent {
         deleteBookmarkUseCase(state.selectedForModifyBookmarkList).collectLatest {
+            categoryClicked(state.selectedCategory)
             postSideEffect(BookmarkSideEffect.ShowSnackBar(resourceProvider.getString(R.string.bookmark_modify_complete)))
-            getBookmarkListByCategory()
         }
     }
 
 
     fun deleteSelectedArticles() = intent {
         deleteArticleBookmarksUseCase(state.selectedForModifyBookmarkList).collectLatest {
+            categoryClicked(state.selectedCategory)
             postSideEffect(BookmarkSideEffect.ShowSnackBar(resourceProvider.getString(R.string.bookmark_modify_complete)))
-            getBookmarkedArticleListByCategory()
         }
     }
 
-    fun categoryClicked(category: Category) = intent {
+    fun categoryClicked(category: Category) = blockingIntent {
         reduce {
             state.copy(
                 selectedCategory = category

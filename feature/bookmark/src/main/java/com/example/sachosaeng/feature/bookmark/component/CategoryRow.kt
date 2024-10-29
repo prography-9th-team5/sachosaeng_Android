@@ -48,11 +48,13 @@ fun CategoryRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             items(categories.size) {
-                CategoryCard(
-                    isSelected = selectedCategory == categories[it],
-                    category = categories[it],
-                    onCategoryClicked = onCategoryClicked
-                )
+                if (selectedCategory != null) {
+                    CategoryCard(
+                        isSelected = selectedCategory.id == categories[it].id,
+                        category = categories[it],
+                        onCategoryClicked = onCategoryClicked
+                    )
+                }
             }
         }
         Row(
