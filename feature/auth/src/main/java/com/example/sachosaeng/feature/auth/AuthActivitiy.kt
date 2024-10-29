@@ -35,6 +35,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -54,11 +55,13 @@ import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.MAIN_DEEP_L
 import com.sachosaeng.app.core.util.constant.NavigationConstant.SignUp.SIGNUP_DEEP_LINK
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.sachosaeng.app.core.ui.component.dialog.SachosaengOneButtonDialog
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 
+//todo : refactoring
 @AndroidEntryPoint
 class AuthActivitiy : ComponentActivity() {
     private val authViewModel: AuthViewModel by viewModels()
@@ -71,6 +74,7 @@ class AuthActivitiy : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
+            var dialogMessage by remember { mutableStateOf<String?>(null) }
             var snackbarMessage by remember { mutableStateOf<String?>(null) }
             val state by authViewModel.collectAsState()
 
@@ -93,11 +97,23 @@ class AuthActivitiy : ComponentActivity() {
                     is AuthSideEffect.ShowSnackbar -> {
                         snackbarMessage = it.message
                     }
+
+                    is AuthSideEffect.ShowErrorDialog -> {
+                        dialogMessage = it.message
+                    }
                 }
             }
             SachosaengTheme {
                 Surface {
                     AuthScreen(recentAuthType = state.recentAuthType)
+                }
+                dialogMessage?.let {
+                    LoginFailedDialog(
+                        onConfirm = {
+                            authViewModel.navigateToSignUp()
+                        },
+                        errorMessage = it
+                    )
                 }
                 snackbarMessage?.let {
                     SachoSaengSnackbar(
@@ -114,12 +130,46 @@ class AuthActivitiy : ComponentActivity() {
     }
 
     @Composable
+    fun LoginFailedDialog(
+        modifier: Modifier = Modifier,
+        onConfirm: () -> Unit,
+        errorMessage: String
+    ) {
+        SachosaengOneButtonDialog(
+            modifier = modifier,
+            buttonText = stringResource(id = R.string.navigate_to_signup_text),
+            buttonOnClick = { onConfirm() }
+        ) {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = modifier
+                    .padding(vertical = 36.dp)
+                    .fillMaxWidth(0.8f)
+            ) {
+                Image(
+                    painter = painterResource(id = drawable.ic_warning_black_small),
+                    contentDescription = null
+                )
+                Text(
+                    modifier = modifier.padding(top = 12.dp),
+                    textAlign = TextAlign.Center,
+                    text = errorMessage,
+                    color = Gs_Black,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.W600
+                )
+            }
+        }
+    }
+
+    @Composable
     fun AuthScreen(recentAuthType: OAuthType) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Gs_White)
-                .padding(horizontal = 20.dp)
+                .padding(horizontal = 20.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 modifier = Modifier.padding(bottom = 20.dp, top = 70.dp),
@@ -137,17 +187,35 @@ class AuthActivitiy : ComponentActivity() {
             Image(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 30.dp, vertical = 62.dp)
+                    .padding(start = 30.dp, end = 30.dp, top = 62.dp)
                     .size(280.dp)
                     .background(Gs_G3, RoundedCornerShape(4.dp))
                     .padding(55.dp),
                 painter = painterResource(id = R.drawable.image_todays_vote_dialog),
                 contentDescription = null
             )
+            Spacer(modifier = Modifier.size(8.dp))
+            GuestedLoginButton()
+            Spacer(modifier = Modifier.size(8.dp))
             KakaoLoginButton(recentAuthType == OAuthType.KAKAO)
             Spacer(modifier = Modifier.size(8.dp))
             GoogleLoginButton(recentAuthType == OAuthType.GOOGLE)
         }
+    }
+
+    @Composable
+    fun GuestedLoginButton(
+        onClick: () -> Unit = { authViewModel.guestLogin() }
+    ) {
+        Text(
+            modifier = Modifier
+                .clickable { onClick() },
+            text = "게스트모드로 로그인",
+            textDecoration = TextDecoration.Underline,
+            fontSize = 14.sp,
+            color = Gs_G6,
+            fontWeight = FontWeight.W500,
+        )
     }
 
     @Composable
@@ -185,7 +253,7 @@ class AuthActivitiy : ComponentActivity() {
                         .padding(vertical = 18.dp)
                 )
             }
-            if(isRecentLoginType) Image(
+            if (isRecentLoginType) Image(
                 alignment = Alignment.BottomCenter,
                 contentScale = ContentScale.Fit,
                 painter = painterResource(id = drawable.ic_recent_login),
@@ -236,7 +304,7 @@ class AuthActivitiy : ComponentActivity() {
                         .padding(vertical = 18.dp)
                 )
             }
-            if(isRecentLoginType) Image(
+            if (isRecentLoginType) Image(
                 alignment = Alignment.BottomCenter,
                 contentScale = ContentScale.Fit,
                 painter = painterResource(id = drawable.ic_recent_login),

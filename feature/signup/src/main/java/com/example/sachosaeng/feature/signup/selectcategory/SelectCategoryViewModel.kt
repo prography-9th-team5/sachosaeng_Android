@@ -75,20 +75,29 @@ class SelectCategoryViewModel @Inject constructor(
         val userType = getLocalUserTypeUseCase().firstOrNull() ?: ""
         runCatching {
             joinUseCase(email = email, userType = userType).collectLatest {
-               if(it) setMyCategoryListUseCase(state.selectedCategoryList).collectLatest {
+                if (it) setMyCategoryListUseCase(state.selectedCategoryList).collectLatest {
                     postSideEffect(SelectCategorySideEffect.NavigateToNextStep)
                 } else {
-                   setEmailUsecase("", OAuthType.NONE)
-                   postSideEffect(SelectCategorySideEffect.ShowError("회원가입에 실패했습니다."))
-               }
+                    setEmailUsecase("", OAuthType.NONE)
+                    postSideEffect(
+                        SelectCategorySideEffect.ShowErrorDialog(
+                            "회원가입에 실패했습니다."
+                        )
+                    )
+                }
             }
         }.onFailure {
-            postSideEffect(SelectCategorySideEffect.ShowError(it.toString()))
+            postSideEffect(
+                SelectCategorySideEffect.ShowErrorDialog(
+                    it.toString()
+                )
+            )
         }
     }
 }
 
 sealed class SelectCategorySideEffect {
     object NavigateToNextStep : SelectCategorySideEffect()
-    data class ShowError(val message: String) : SelectCategorySideEffect()
+    data object NavigateToAuth : SelectCategorySideEffect()
+    data class ShowErrorDialog(val message: String) : SelectCategorySideEffect()
 }

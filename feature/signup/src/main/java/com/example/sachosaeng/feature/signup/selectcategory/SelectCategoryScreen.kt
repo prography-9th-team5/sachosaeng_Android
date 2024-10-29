@@ -1,6 +1,8 @@
 package com.sachosaeng.app.feature.signup.selectcategory
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,18 +10,26 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.core.ui.component.CategoryListFlowRow
 import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
+import com.sachosaeng.app.core.ui.component.dialog.SachosaengOneButtonDialog
+import com.sachosaeng.app.core.ui.component.dialog.SachosaengTwoButtonDialog
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black
@@ -34,22 +44,29 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun SelectCategoryScreen(
     snackBarMessage: (String) -> Unit = {},
     moveToNextStep: () -> Unit,
-    navigateToAuth: () -> Unit = {},
     navigateToBackStack: () -> Unit = {},
+    navigateToAuth: () -> Unit = {},
     viewModel: SelectCategoryViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
+    var errorMessage by remember {
+        mutableStateOf("")
+    }
 
     viewModel.collectSideEffect {
         when (it) {
             is SelectCategorySideEffect.NavigateToNextStep -> moveToNextStep()
-            is SelectCategorySideEffect.ShowError -> {
-                snackBarMessage(it.message)
-                navigateToAuth()
+            is SelectCategorySideEffect.ShowErrorDialog -> {
+                errorMessage = it.message
             }
+            else -> {}
         }
     }
 
+    if (errorMessage.isNotEmpty()) JoinFailedDialog(
+        onConfirm = navigateToAuth,
+        errorMessage = errorMessage
+    )
     SelectCategoryScreen(
         state = state,
         onClickCategory = viewModel::onClickCategory,
@@ -133,6 +150,34 @@ fun SelectCategoryProgressBar(modifier: Modifier = Modifier) {
             modifier = modifier.padding(end = 10.dp)
         )
         SignUpProgressBar()
+    }
+}
+
+@Composable
+fun JoinFailedDialog(modifier: Modifier = Modifier, onConfirm: () -> Unit, errorMessage: String) {
+    SachosaengOneButtonDialog(
+        modifier = modifier,
+        buttonText = stringResource(id = string.navigate_to_signup_text),
+        buttonOnClick = { onConfirm() }
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = modifier
+                .padding(vertical = 36.dp)
+                .fillMaxWidth(0.8f)
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.ic_warning_black_small),
+                contentDescription = null
+            )
+            Text(
+                modifier = modifier.padding(top = 12.dp),
+                textAlign = TextAlign.Center,
+                text = errorMessage,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.W600
+            )
+        }
     }
 }
 

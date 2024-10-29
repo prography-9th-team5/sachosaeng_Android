@@ -6,6 +6,7 @@ import com.sachosaeng.app.data.datasource.datastore.AuthDataStore
 import com.sachosaeng.app.data.model.auth.JoinRequest
 import com.sachosaeng.app.data.model.auth.LoginRequest
 import com.sachosaeng.app.data.model.auth.LoginResponse
+import com.sachosaeng.app.data.model.auth.TokenResponse
 import com.sachosaeng.app.data.remote.util.onFailure
 import com.sachosaeng.app.data.remote.util.onSuccess
 import kotlinx.coroutines.flow.Flow
@@ -17,17 +18,10 @@ class AuthRepositoryImpl @Inject constructor(
     private val authLocalDataSource: AuthDataStore
 ) : AuthRepository {
     override fun login(email: String): Flow<Boolean> = flow {
-        authService.login(LoginRequest(email = email)).onSuccess {
-            it.data.let { response ->
-                if (response != null) {
-                    setUserInfo(response).run {
-                        emit(true)
-                    }
-                }
-            }
-        }.onFailure {
-            emit(false)
-        }
+        authService.login(LoginRequest(email = email)).getOrThrow().data?.let { data ->
+            setUserInfo(data)
+            emit(true)
+        } ?: emit(false)
     }
 
     private suspend fun setUserInfo(data: LoginResponse) {
@@ -57,7 +51,7 @@ class AuthRepositoryImpl @Inject constructor(
                     email = email,
                     userType = userType
                 )
-            ).getOrThrow()?.data?.let { data ->
+            ).getOrThrow().data?.let { data ->
                 emit(authLocalDataSource.setAccessToken(data.loginToken))
             } ?: emit(false)
         }
