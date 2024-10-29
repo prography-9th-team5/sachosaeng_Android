@@ -16,7 +16,7 @@ const val ARTICLE_DETAIL_ID = "articleDetail"
 const val ARTICLE_CATEGORY_ID = "categoryId"
 internal const val ROUTE_ARTICLE_DETAIL = "$ROUTE_ARTICLE/$ARTICLE_DETAIL_ID"
 
-fun NavController.navigateToArticleDetail(articleId: Int?, categoryId: Int?) {
+fun NavController.navigateToArticleDetail(articleId: Int?, categoryId: Int? = null) {
     navigate("$ROUTE_ARTICLE_DETAIL?$ARTICLE_DETAIL_ID=$articleId?$ARTICLE_CATEGORY_ID=$categoryId")
 }
 

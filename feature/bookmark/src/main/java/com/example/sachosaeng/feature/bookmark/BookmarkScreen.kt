@@ -36,7 +36,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun BookmarkScreen(
     moveToVote: (Int) -> Unit = {},
-    moveToArticle: (Int, Int?) -> Unit = { _, _ -> },
+    moveToArticle: (Int) -> Unit = { _ -> },
     moveToMyPage: () -> Unit = {},
     showSnackBar: (String) -> Unit = {},
     viewModel: BookmarkViewModel = hiltViewModel()
@@ -62,7 +62,6 @@ fun BookmarkScreen(
         onBookmarkedArticleClick = { bookmark ->
             moveToArticle(
                 bookmark.id,
-                state.value.selectedCategory?.id
             )
         },
         onSelectForModifyBookmark = viewModel::selectModifyBookmark,

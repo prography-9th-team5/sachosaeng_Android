@@ -83,10 +83,9 @@ internal fun NavGraph(
                     isDailyVote = false
                 )
             },
-            navigateToArticle = { id, categoryId ->
+            navigateToArticle = { id ->
                 navController.navigateToArticleDetail(
                     articleId = id,
-                    categoryId = categoryId
                 )
             },
             navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
