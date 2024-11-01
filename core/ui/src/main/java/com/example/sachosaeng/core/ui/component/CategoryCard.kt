@@ -28,15 +28,14 @@ import com.sachosaeng.app.core.util.extension.StringExtension.toColorResource
 @Composable
 fun CategoryCard(
     modifier: Modifier = Modifier,
-    isBackgroundColorVisibility: Boolean = true,
     isSelected: Boolean = false,
     category: Category,
     onCategoryClicked: (Category) -> Unit = {}
 ) {
     Card(
         colors = CardDefaults.cardColors().copy(
-            containerColor = if (isBackgroundColorVisibility) Color(category.color.toColorResource()) else Gs_White,
-            contentColor = if (isBackgroundColorVisibility) Color(category.textColor.toColorResource()) else Gs_G4
+            containerColor = Color(category.color.toColorResource()),
+            contentColor = Color(category.textColor.toColorResource())
         ),
         shape = RoundedCornerShape(4.dp),
         modifier = modifier

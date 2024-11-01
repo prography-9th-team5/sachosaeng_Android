@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.example.sachosaeng.core.ui.component.CategoryCard
+import com.example.sachosaeng.core.ui.component.CategoryCardWithoutBorder
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengDetailTopAppBar
@@ -130,10 +131,9 @@ private fun CategoryList(
 ) {
     FlowRow {
         categories.forEach {
-            CategoryCard(
+            CategoryCardWithoutBorder(
                 category = it,
-                onCategoryClicked = onCategorySelected,
-                isBackgroundColorVisibility = false
+                onCategoryClicked = onCategorySelected
             )
         }
     }
