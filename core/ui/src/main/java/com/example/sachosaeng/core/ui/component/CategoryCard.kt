@@ -13,24 +13,30 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.transition.Visibility
 import coil.compose.AsyncImage
 import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G4
+import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.core.util.extension.StringExtension.toColorResource
 
 @Composable
 fun CategoryCard(
     modifier: Modifier = Modifier,
+    isBackgroundColorVisibility: Boolean = true,
     isSelected: Boolean = false,
     category: Category,
     onCategoryClicked: (Category) -> Unit = {}
 ) {
     Card(
         colors = CardDefaults.cardColors().copy(
-            containerColor = Color(category.color.toColorResource()),
-            contentColor = Color(category.textColor.toColorResource())
+            containerColor = if (isBackgroundColorVisibility) Color(category.color.toColorResource()) else Gs_White,
+            contentColor = if (isBackgroundColorVisibility) Color(category.textColor.toColorResource()) else Gs_G4
         ),
         shape = RoundedCornerShape(4.dp),
         modifier = modifier
@@ -52,6 +58,49 @@ fun CategoryCard(
                 AsyncImage(
                     alignment = Alignment.CenterEnd,
                     contentDescription = "", model = category.imageUrl,
+                    modifier = Modifier
+                        .size(18.dp)
+                        .padding(end = 8.dp)
+                )
+            }
+            Text(
+                text = category.name,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.W600
+            )
+        }
+    }
+}
+
+
+@Composable
+fun CategoryCardWithoutBorder(
+    modifier: Modifier = Modifier,
+    isSelected: Boolean = false,
+    category: Category,
+    onCategoryClicked: (Category) -> Unit = {}
+) {
+    Card(
+        colors = CardDefaults.cardColors().copy(
+            containerColor = if (isSelected) Color(category.color.toColorResource()) else Gs_White,
+            contentColor = if (isSelected) Color(category.textColor.toColorResource()) else Gs_G4
+        ),
+        shape = RoundedCornerShape(4.dp),
+        modifier = modifier
+            .clickable {
+                onCategoryClicked(category)
+            },
+    ) {
+        Row(
+            modifier = modifier
+                .padding(10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            if (category.imageUrl?.isNotEmpty() == true) {
+                AsyncImage(
+                    alignment = Alignment.CenterEnd,
+                    contentDescription = "", model = category.imageUrl,
+                    colorFilter = ColorFilter.tint(if (isSelected) Color.Transparent else Gs_G2),
                     modifier = Modifier
                         .size(18.dp)
                         .padding(end = 8.dp)

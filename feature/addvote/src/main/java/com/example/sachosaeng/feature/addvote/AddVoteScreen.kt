@@ -130,7 +130,11 @@ private fun CategoryList(
 ) {
     FlowRow {
         categories.forEach {
-            CategoryCard(category = it, onCategoryClicked = onCategorySelected)
+            CategoryCard(
+                category = it,
+                onCategoryClicked = onCategorySelected,
+                isBackgroundColorVisibility = false
+            )
         }
     }
 }
@@ -211,7 +215,7 @@ fun AddVoteScreenPreview() {
     AddVoteScreen(
         state = AddVoteUiState(
             title = "Title",
-            options = listOf("Option1", "Option2","Option2","Option2",),
+            options = listOf("Option1", "Option2", "Option2", "Option2"),
             category = listOf(Category(1, "Category")),
         ),
         onTitleChange = {},
