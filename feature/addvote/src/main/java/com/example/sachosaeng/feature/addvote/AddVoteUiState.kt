@@ -7,5 +7,6 @@ data class AddVoteUiState(
     val description: String = "",
     val canMultipleCheck: Boolean = false,
     val options: List<String> = listOf("","","",""),
-    val category: List<Category> = emptyList()
+    val category: List<Category> = emptyList(),
+    val selectedCategory: List<Category> = emptyList()
 )

@@ -99,7 +99,7 @@ fun CategoryCardWithoutBorder(
                 AsyncImage(
                     alignment = Alignment.CenterEnd,
                     contentDescription = "", model = category.imageUrl,
-                    colorFilter = ColorFilter.tint(if (isSelected) Color.Transparent else Gs_G2),
+                    colorFilter = ColorFilter.tint(if (isSelected) Color(category.textColor.toColorResource()) else Gs_G2),
                     modifier = Modifier
                         .size(18.dp)
                         .padding(end = 8.dp)

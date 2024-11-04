@@ -3,14 +3,14 @@ package com.example.sachosaeng.feature.addvote
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
@@ -30,9 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import coil.compose.AsyncImage
-import com.example.sachosaeng.core.ui.component.CategoryCard
-import com.example.sachosaeng.core.ui.component.CategoryCardWithoutBorder
+import com.example.sachosaeng.feature.addvote.component.CategoryList
+import com.example.sachosaeng.feature.addvote.component.DefaultSmallTextField
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengDetailTopAppBar
@@ -68,6 +67,7 @@ internal fun AddVoteScreen(
         modifier = Modifier
             .background(Gs_G2)
             .fillMaxSize()
+            .padding(horizontal = 20.dp)
     ) {
         item {
             SachosaengDetailTopAppBar(
@@ -92,48 +92,35 @@ internal fun AddVoteScreen(
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Title(
                     resId = R.string.vote_option
                 )
+                Spacer(modifier = Modifier.weight(1f))
                 Image(
                     painter = painterResource(id = if (state.canMultipleCheck) R.drawable.ic_checked_circle else R.drawable.ic_unchecked_circle),
                     contentDescription = null
                 )
+                Text(
+                    text = stringResource(id = R.string.add_vote_multiple_choice_allowed),
+                    color = Gs_Black,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.W500,
+                )
             }
-            OptionList(state.options)
+        }
+        items(state.options) {
+            DefaultSmallTextField(value = it, onValueChange = {})
         }
         item {
             Title(
                 resId = R.string.vote_category
             )
-            CategoryList(state.category, onCategorySelected)
-        }
-    }
-}
-
-@Composable
-private fun OptionList(
-    options: List<String> = emptyList()
-) {
-    options.forEach {
-        DefaultSmallTextField(value = it, onValueChange = {})
-    }
-}
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun CategoryList(
-    categories: List<Category> = emptyList(),
-    onCategorySelected: (Category) -> Unit
-) {
-    FlowRow {
-        categories.forEach {
-            CategoryCardWithoutBorder(
-                category = it,
-                onCategoryClicked = onCategorySelected
+            CategoryList(
+                selectedCategory = state.selectedCategory,
+                categories = state.category,
+                onCategorySelected = onCategorySelected
             )
         }
     }
@@ -141,9 +128,11 @@ private fun CategoryList(
 
 @Composable
 private fun Title(
+    modifier: Modifier = Modifier,
     resId: Int
 ) {
     Text(
+        modifier = modifier.padding(top = 36.dp, bottom = 14.dp),
         text = stringResource(id = resId),
         color = Gs_Black,
         fontSize = 15.sp,
@@ -180,32 +169,7 @@ private fun DefaultTextField(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
             .fillMaxWidth()
-            .padding(16.dp)
             .defaultMinSize(minHeight = 62.dp)
-    )
-}
-
-
-@Composable
-private fun DefaultSmallTextField(
-    modifier: Modifier = Modifier,
-    placeholder: String = "",
-    value: String,
-    onValueChange: (String) -> Unit
-) {
-    TextField(
-        value = value,
-        onValueChange = onValueChange,
-        placeholder = {
-            Text(
-                text = placeholder,
-                color = Gs_G4,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.W500,
-            )
-        },
-        shape = RoundedCornerShape(8.dp),
-        modifier = modifier.padding(16.dp),
     )
 }
 

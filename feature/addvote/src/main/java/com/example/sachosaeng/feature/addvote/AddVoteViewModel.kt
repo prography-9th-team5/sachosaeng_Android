@@ -1,5 +1,6 @@
 package com.example.sachosaeng.feature.addvote
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
@@ -31,6 +32,7 @@ class AddVoteViewModel @Inject constructor(
             }
         }
     }
+
     fun onTitleChange(title: String) = intent {
         reduce {
             state.copy(title = title)
@@ -45,7 +47,9 @@ class AddVoteViewModel @Inject constructor(
 
     fun onCategorySelected(category: Category) = intent {
         reduce {
-            state.copy(category = state.category + category)
+            if (state.selectedCategory.contains(category)) {
+                state.copy(selectedCategory = state.selectedCategory - category)
+            } else state.copy(selectedCategory = state.selectedCategory + category)
         }
     }
 }
