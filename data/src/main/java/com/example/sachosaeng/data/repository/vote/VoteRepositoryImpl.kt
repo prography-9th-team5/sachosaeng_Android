@@ -1,5 +1,6 @@
 package com.sachosaeng.app.data.repository.vote
 
+import com.example.sachosaeng.data.model.vote.AddVoteRequest
 import com.sachosaeng.app.core.model.Vote
 import com.sachosaeng.app.data.api.VoteService
 import com.sachosaeng.app.data.model.vote.VoteOptionRequest
@@ -34,5 +35,25 @@ class VoteRepositoryImpl @Inject constructor(
     override fun setVote(voteId: Int, optionIds: List<Int?>): Flow<Unit> = flow {
         voteService.setVote(voteId = voteId, VoteOptionRequest(chosenVoteOptionIds = optionIds))
             .getOrNull()?.data?.let { emit(Unit) }
+    }
+
+    override fun addVote(
+        title: String,
+        isMultipleChoiceAllowed: Boolean,
+        options: List<String>,
+        categoryId: Int
+    ): Flow<Unit> = flow {
+        voteService.addVote(
+            AddVoteRequest(
+                title = title,
+                isMultipleChoiceAllowed = isMultipleChoiceAllowed,
+                voteOptions = options,
+                categoryIds = listOf(categoryId)
+            )
+        ).getOrNull()?.data?.let {
+            emit(
+                it
+            )
+        }
     }
 }

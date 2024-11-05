@@ -2,15 +2,14 @@ package com.example.sachosaeng.feature.addvote
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
@@ -34,12 +33,15 @@ import com.example.sachosaeng.feature.addvote.component.CategoryList
 import com.example.sachosaeng.feature.addvote.component.DefaultSmallTextField
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengDetailTopAppBar
+import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G4
 import com.sachosaeng.app.core.ui.theme.Gs_G5
 import com.sachosaeng.app.core.ui.theme.Gs_White
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun AddVoteScreen(
@@ -47,12 +49,20 @@ fun AddVoteScreen(
     viewModel: AddVoteViewModel = hiltViewModel()
 ) {
     val state by viewModel.container.stateFlow.collectAsState()
+    viewModel.collectSideEffect {
+        when(it) {
+            is AddVoteSideEffect.ShowSnackBar -> navigateToBackStack()
+        }
+    }
 
     AddVoteScreen(
         state = state,
         onTitleChange = viewModel::onTitleChange,
+        onOptionChanged = viewModel::onOptionSelected,
         onCategorySelected = viewModel::onCategorySelected,
-        navigateToBackStack = navigateToBackStack
+        navigateToBackStack = navigateToBackStack,
+        onChangeMultipleCheck = viewModel::onChangeMultipleCheck,
+        onAddVoteButtonClicked = viewModel::onAddVoteButtonClicked,
     )
 }
 
@@ -60,14 +70,17 @@ fun AddVoteScreen(
 internal fun AddVoteScreen(
     state: AddVoteUiState,
     onTitleChange: (String) -> Unit = {},
+    onOptionChanged: (String, Int) -> Unit = { _, _ -> },
+    onChangeMultipleCheck: () -> Unit = {},
     onCategorySelected: (Category) -> Unit = {},
+    onAddVoteButtonClicked: () -> Unit = {},
     navigateToBackStack: () -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
             .background(Gs_G2)
             .fillMaxSize()
-            .padding(horizontal = 20.dp)
+            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
     ) {
         item {
             SachosaengDetailTopAppBar(
@@ -90,37 +103,33 @@ internal fun AddVoteScreen(
             DefaultTextField(value = state.title, onValueChange = onTitleChange)
         }
         item {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Title(
-                    resId = R.string.vote_option
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                Image(
-                    painter = painterResource(id = if (state.canMultipleCheck) R.drawable.ic_checked_circle else R.drawable.ic_unchecked_circle),
-                    contentDescription = null
-                )
-                Text(
-                    text = stringResource(id = R.string.add_vote_multiple_choice_allowed),
-                    color = Gs_Black,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.W500,
-                )
-            }
+            AddOptionTitleRow(
+                canMultipleCheck = state.canMultipleCheck,
+                onChangeMultipleCheck = onChangeMultipleCheck
+            )
         }
-        items(state.options) {
-            DefaultSmallTextField(value = it, onValueChange = {})
+        items(4) {
+            DefaultSmallTextField(
+                value = state.options[it],
+                onValueChange = { value -> onOptionChanged(value, it) },
+                placeholder = stringResource(id = R.string.vote_option),
+            )
         }
         item {
             Title(
                 resId = R.string.vote_category
             )
             CategoryList(
-                selectedCategory = state.selectedCategory,
+                selectedCategory = listOf(state.selectedCategory),
                 categories = state.category,
                 onCategorySelected = onCategorySelected
+            )
+            Spacer(modifier = Modifier.padding(top = 40.dp))
+        }
+        item {
+            AddVoteButton(
+                enabled = state.isAddButtonEnabled,
+                onClickButton = onAddVoteButtonClicked
             )
         }
     }
@@ -170,6 +179,51 @@ private fun DefaultTextField(
         modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(minHeight = 62.dp)
+    )
+}
+
+@Composable
+private fun AddOptionTitleRow(
+    canMultipleCheck: Boolean,
+    onChangeMultipleCheck: () -> Unit = {}
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Title(
+            resId = R.string.vote_option
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Image(
+            modifier = Modifier.noRippleClickable {
+                onChangeMultipleCheck()
+            },
+            painter = painterResource(id = if (canMultipleCheck) R.drawable.ic_checked_circle else R.drawable.ic_unchecked_circle),
+            contentDescription = null
+        )
+        Text(
+            text = stringResource(id = R.string.add_vote_multiple_choice_allowed),
+            color = Gs_Black,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.W500,
+            modifier = Modifier.padding(start = 6.dp)
+        )
+    }
+}
+
+@Composable
+private fun AddVoteButton(
+    enabled: Boolean,
+    onClickButton: () -> Unit
+) {
+    SachoSaengButton(
+        modifier = Modifier
+            .fillMaxWidth()
+            .navigationBarsPadding(),
+        text = stringResource(id = R.string.complete_label),
+        enabled = enabled,
+        onClick = onClickButton
     )
 }
 

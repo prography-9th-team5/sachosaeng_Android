@@ -13,7 +13,7 @@ import com.sachosaeng.app.core.model.Category
 @Composable
 internal fun CategoryList(
     modifier: Modifier = Modifier,
-    selectedCategory: List<Category> = emptyList(),
+    selectedCategory: List<Category?> = emptyList(),
     categories: List<Category> = emptyList(),
     onCategorySelected: (Category) -> Unit
 ) {
