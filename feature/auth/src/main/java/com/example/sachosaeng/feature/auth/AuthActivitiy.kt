@@ -196,9 +196,9 @@ class AuthActivitiy : ComponentActivity() {
                 contentDescription = null
             )
             Spacer(modifier = Modifier.size(10.dp))
-            GuestedLoginButton(
-                onClick = { authViewModel.guestLogin() }
-            )
+//            GuestedLoginButton(
+//                onClick = { authViewModel.guestLogin() }
+//            )
             Spacer(modifier = Modifier.size(10.dp))
             KakaoLoginButton(recentAuthType == OAuthType.KAKAO)
             Spacer(modifier = Modifier.size(8.dp))

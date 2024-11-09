@@ -95,6 +95,7 @@ fun DailyVoteTopBar(isVoted: Boolean, navigateToBackStack: () -> Unit) {
 
         false -> {
             SachosaengDetailTopAppBar(
+                modifier = Modifier.padding(20.dp),
                 navigateToBackStack = navigateToBackStack,
                 title = stringResource(id = string.daily_vote),
                 fontWeight = FontWeight.W700,
