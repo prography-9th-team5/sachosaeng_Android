@@ -2,6 +2,7 @@ package com.sachosaeng.app.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +21,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -33,6 +36,8 @@ import com.sachosaeng.app.core.ui.component.SelectCategoryBottomSheet
 import com.sachosaeng.app.core.ui.component.topappbar.TopBarWithProfileImage
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import com.sachosaeng.app.feature.home.component.ListByCategory
 import com.sachosaeng.app.feature.home.component.MainList
@@ -45,6 +50,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun HomeScreen(
     modifier: Modifier = Modifier,
     moveToMyPage: () -> Unit = {},
+    navigateToAddVote: () -> Unit = {},
     navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -106,6 +112,10 @@ fun HomeScreen(
             painter = painterResource(id = drawable.ic_floating_button),
             contentDescription = null
         )
+        AddVoteFab(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            onClick = navigateToAddVote
+        )
     }
     if (isBottomSheetOpen) {
         SelectCategoryBottomSheet(
@@ -123,6 +133,33 @@ fun HomeScreen(
             },
             onSelectFavoriteCategory = viewModel::onSelectFavoriteCategory,
             modifyListVisible = state.value.modifyMyCategoryListVisibility
+        )
+    }
+}
+
+@Composable
+fun AddVoteFab(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+            .clip(RoundedCornerShape(20.dp))
+            .noRippleClickable { onClick() }
+            .background(color = Gs_G6)
+            .padding(horizontal = 20.dp, vertical = 10.dp)
+    ) {
+        Image(
+            modifier = modifier.padding(end = 8.dp),
+            painter = painterResource(id = drawable.ic_add_vote),
+            contentDescription = null
+        )
+        Text(
+            color = Gs_White,
+            text = stringResource(id = string.add_vote_title),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W700
         )
     }
 }

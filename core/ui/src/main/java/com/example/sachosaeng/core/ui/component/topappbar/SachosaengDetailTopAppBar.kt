@@ -26,18 +26,17 @@ fun SachosaengDetailTopAppBar(
         modifier = modifier,
         componentRow = {
             Row(
-                modifier = modifier,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 navigateToBackStack?.let {
                     Image(
-                        modifier = modifier.noRippleClickable { navigateToBackStack() },
+                        modifier = Modifier.noRippleClickable { navigateToBackStack() },
                         painter = painterResource(id = R.drawable.ic_go_back),
                         contentDescription = null
                     )
                 }
                 Text(
-                    modifier = modifier.weight(1f),
+                    modifier = Modifier.weight(1f),
                     text = title,
                     fontSize = fontSize.sp,
                     fontWeight = fontWeight,

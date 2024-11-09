@@ -144,4 +144,5 @@ class HomeViewModel @Inject constructor(
 
 sealed class HomeSideEffect {
     data class NavigateToVoteDetail(val voteId: Int, val isDailyVote: Boolean) : HomeSideEffect()
+    data object NavigateToAddVote : HomeSideEffect()
 }

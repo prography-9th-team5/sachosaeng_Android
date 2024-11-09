@@ -100,6 +100,7 @@ dependencies {
     implementation(libs.navigation.compose)
 
     implementation(libs.javax.inject)
+    implementation(project(":feature:addvote"))
 
     // Hilt
     ksp(libs.hilt.compiler)

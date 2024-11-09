@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.sachosaeng.app.feature.vote"
+    namespace = "com.example.sachosaeng.feature.addvote"
     compileSdk = 34
 
     defaultConfig {

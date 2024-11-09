@@ -83,6 +83,7 @@ internal fun VoteScreen(
     )
     {
         SachosaengDetailTopAppBar(
+            modifier = modifier.padding(20.dp),
             title = vote.category.name,
             navigateToBackStack = navigateToBackStack
         )
@@ -115,7 +116,7 @@ internal fun VoteScreen(
                     enabled = vote.selectedOptionIds.isNotEmpty(),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
+                        .padding(20.dp),
                     text = stringResource(id = if (vote.isVoted) string.more_vote_button_label else string.confirm_label),
                     onClick = { if (vote.isVoted) navigateToBackStack() else onVoteComplete() }
                 )
