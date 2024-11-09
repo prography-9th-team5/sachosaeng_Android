@@ -40,9 +40,12 @@ internal fun ArticleDetailScreen(
     state: ArticleDetailUiState,
     onBookmarkArticle: () -> Unit,
 ) {
-    Column {
+    Column(
+        modifier = Modifier
+            .background(Gs_G2)
+    ) {
         SachosaengDetailTopAppBar(
-            modifier = Modifier.background(Gs_G2),
+            modifier = Modifier.padding(20.dp),
             navigateToBackStack = navigateToBackStack,
             title = stringResource(id = R.string.article_label),
             fontWeight = FontWeight.W700,

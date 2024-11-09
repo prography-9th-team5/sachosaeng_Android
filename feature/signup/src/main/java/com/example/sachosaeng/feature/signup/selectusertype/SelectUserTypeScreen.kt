@@ -69,7 +69,7 @@ internal fun SelectUserTypeScreen(
     Column(
         verticalArrangement = Arrangement.SpaceBetween,
         modifier = modifier
-            .padding(horizontal = 16.dp)
+            .padding(20.dp)
             .fillMaxSize(),
     ) {
         SachosaengDetailTopAppBar(

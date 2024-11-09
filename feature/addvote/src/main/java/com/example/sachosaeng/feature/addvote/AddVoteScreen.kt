@@ -50,7 +50,7 @@ fun AddVoteScreen(
 ) {
     val state by viewModel.container.stateFlow.collectAsState()
     viewModel.collectSideEffect {
-        when(it) {
+        when (it) {
             is AddVoteSideEffect.ShowSnackBar -> navigateToBackStack()
         }
     }
@@ -80,7 +80,7 @@ internal fun AddVoteScreen(
         modifier = Modifier
             .background(Gs_G2)
             .fillMaxSize()
-            .padding(start = 20.dp, end = 20.dp, bottom = 20.dp)
+            .padding(20.dp)
     ) {
         item {
             SachosaengDetailTopAppBar(
@@ -92,6 +92,7 @@ internal fun AddVoteScreen(
         }
         item {
             Text(
+                modifier = Modifier.padding(top = 20.dp),
                 text = stringResource(id = R.string.add_vote_description),
                 color = Gs_G5,
                 fontSize = 12.sp,
@@ -196,9 +197,11 @@ private fun AddOptionTitleRow(
         )
         Spacer(modifier = Modifier.weight(1f))
         Image(
-            modifier = Modifier.noRippleClickable {
-                onChangeMultipleCheck()
-            },
+            modifier = Modifier
+                .noRippleClickable {
+                    onChangeMultipleCheck()
+                }
+                .padding(top = 36.dp, bottom = 14.dp),
             painter = painterResource(id = if (canMultipleCheck) R.drawable.ic_checked_circle else R.drawable.ic_unchecked_circle),
             contentDescription = null
         )
@@ -207,18 +210,19 @@ private fun AddOptionTitleRow(
             color = Gs_Black,
             fontSize = 12.sp,
             fontWeight = FontWeight.W500,
-            modifier = Modifier.padding(start = 6.dp)
+            modifier = Modifier.padding(start = 6.dp, top = 36.dp, bottom = 14.dp)
         )
     }
 }
 
 @Composable
 private fun AddVoteButton(
+    modifier: Modifier = Modifier,
     enabled: Boolean,
     onClickButton: () -> Unit
 ) {
     SachoSaengButton(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .navigationBarsPadding(),
         text = stringResource(id = R.string.complete_label),

@@ -37,6 +37,7 @@ import com.sachosaeng.app.core.ui.component.topappbar.TopBarWithProfileImage
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G6
+import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import com.sachosaeng.app.feature.home.component.ListByCategory
 import com.sachosaeng.app.feature.home.component.MainList
@@ -144,17 +145,25 @@ fun HomeScreen(
 fun AddVoteFab(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
-    ) {
+) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
+            .clip(RoundedCornerShape(20.dp))
             .noRippleClickable { onClick() }
             .background(color = Gs_G6)
-            .clip(RoundedCornerShape(20.dp))
+            .padding(horizontal = 20.dp, vertical = 10.dp)
     ) {
         Image(
-            modifier = modifier.padding(horizontal = 20.dp, vertical = 10.dp),
+            modifier = modifier.padding(end = 8.dp),
             painter = painterResource(id = drawable.ic_add_vote),
             contentDescription = null
+        )
+        Text(
+            color = Gs_White,
+            text = stringResource(id = string.add_vote_title),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.W700
         )
     }
 }
