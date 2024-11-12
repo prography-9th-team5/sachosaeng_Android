@@ -73,10 +73,10 @@ fun AppScreen(
                         snackbarStatus = Pair(message, drawableRes)
                     }
                 )
-                snackbarStatus?.first?.let { it1 ->
-                    SachoSaengSnackbar(
+                snackbarStatus?.first?.let { message ->
+                    if(message.isNotEmpty()) SachoSaengSnackbar(
                         iconResId = snackbarStatus?.second,
-                        message = it1,
+                        message = message,
                         onDismiss = { snackbarStatus = null }
                     )
                 }
