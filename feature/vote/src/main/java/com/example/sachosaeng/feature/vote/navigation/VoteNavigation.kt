@@ -1,5 +1,6 @@
 package com.sachosaeng.app.feature.vote.navigation
 
+import android.graphics.drawable.Drawable
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -7,6 +8,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.sachosaeng.app.feature.vote.VoteDetailSideEffect
 import com.sachosaeng.app.feature.vote.VoteScreen
 
 const val ROUTE_VOTE = "vote"
@@ -20,6 +22,7 @@ fun NavController.navigateToVoteDetail(voteId: Int?, isDailyVote: Boolean) {
 }
 
 fun NavGraphBuilder.addVoteGraph(
+    showSnackBar: (String, Drawable) -> Unit,
     navController: NavHostController,
     navigateToArticleDetail: (Int, Int) -> Unit
 ) {
@@ -43,6 +46,7 @@ fun NavGraphBuilder.addVoteGraph(
             )
         ) {
             VoteScreen(
+                showSnackBar = showSnackBar,
                 navigateToBackStack = { navController.popBackStack() },
                 navigateToArticleDetail = { articleId, categoryId -> navigateToArticleDetail(articleId , categoryId) }
             )

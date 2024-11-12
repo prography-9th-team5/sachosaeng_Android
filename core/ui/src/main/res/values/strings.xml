@@ -94,6 +94,7 @@
     <string name="bookmarked_vote_is_empty_description">북마크한 투표가 없어요</string>
     <string name="bookmarked_article_is_empty_description">북마크한 연관콘텐츠가 없어요</string>
     <string name="bookmark_modify_complete">편집이 완료되었어요!</string>
+    <string name="bookmark_complete">저장 완료!</string>
 
     <!--vote-->
     <string name="vote_label">투표</string>

@@ -1,5 +1,6 @@
 package com.sachosaeng.app.feature.bookmark
 
+import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -37,7 +38,7 @@ fun BookmarkScreen(
     moveToVote: (Int) -> Unit = {},
     moveToArticle: (Int) -> Unit = { _ -> },
     moveToMyPage: () -> Unit = {},
-    showSnackBar: (String) -> Unit = {},
+    showSnackBar: (String, Drawable?) -> Unit,
     viewModel: BookmarkViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()

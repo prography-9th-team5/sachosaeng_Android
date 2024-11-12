@@ -1,7 +1,9 @@
 package com.sachosaeng.app.feature.vote
 
+import android.graphics.drawable.Drawable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Vote
 import com.sachosaeng.app.core.ui.R.drawable
 import com.sachosaeng.app.core.ui.UserType
@@ -11,17 +13,18 @@ import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
 import com.sachosaeng.app.core.usecase.article.BookmarkVoteUsecase
 import com.sachosaeng.app.core.usecase.vote.GetSingleVoteUsecase
 import com.sachosaeng.app.core.usecase.vote.SetVoteUseCase
+import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.feature.vote.navigation.VOTE_DETAIL_ID
 import com.sachosaeng.app.feature.vote.navigation.VOTE_IS_DAILY
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -29,16 +32,17 @@ import javax.inject.Inject
 @HiltViewModel
 class VoteDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    private val resourceProvider: ResourceProvider,
     private val deleteBookmarkUsecase: DeleteBookmarkUseCase,
     private val bookmarkVoteUsecase: BookmarkVoteUsecase,
     private val getSingleVoteUsecase: GetSingleVoteUsecase,
     private val getSimilarArticleUseCase: GetSimilarArticleUseCase,
     private val voteUseCase: SetVoteUseCase,
     private val getMyInfoUsecase: GetMyInfoUsecase
-) : ViewModel(), ContainerHost<VoteDetailUiState, Unit> {
+) : ViewModel(), ContainerHost<VoteDetailUiState, VoteDetailSideEffect> {
     private val voteDetailId = savedStateHandle.get<Int>(VOTE_DETAIL_ID)
     private val isDailyVote = savedStateHandle.get<Boolean>(VOTE_IS_DAILY)
-    override val container: Container<VoteDetailUiState, Unit> =
+    override val container: Container<VoteDetailUiState, VoteDetailSideEffect> =
         container(VoteDetailUiState())
 
     init {
@@ -94,6 +98,14 @@ class VoteDetailViewModel @Inject constructor(
             reduce {
                 state.copy(state.vote.copy(isBookmarked = true))
             }
+            postSideEffect(
+                VoteDetailSideEffect.ShowSnackBar(
+                    resourceProvider.getString(string.bookmark_complete),
+                    resourceProvider.getDrawable(
+                        drawable.ic_bookmark
+                    )
+                )
+            )
         }
     }
 
@@ -136,4 +148,8 @@ class VoteDetailViewModel @Inject constructor(
         delay(2000)
         getVoteContent()
     }
+}
+
+sealed class VoteDetailSideEffect {
+    data class ShowSnackBar(val message: String, val iconRes: Drawable) : VoteDetailSideEffect()
 }

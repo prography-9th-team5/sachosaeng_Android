@@ -1,6 +1,7 @@
 package com.sachosaeng.app.navigation
 
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -28,7 +29,7 @@ import com.sachosaeng.app.feature.webview.navigateToWebView
 @Composable
 internal fun NavGraph(
     navController: NavHostController,
-    snackBarMessage: (String) -> Unit
+    snackBarMessage: (String, Drawable) -> Unit
 ) {
     NavHost(
         navController = navController,
@@ -62,6 +63,7 @@ internal fun NavGraph(
             snackBarMessage = snackBarMessage
         )
         addVoteGraph(
+            showSnackBar = snackBarMessage,
             navController = navController,
             navigateToArticleDetail = { articleId, categoryId ->
                 navController.navigateToArticleDetail(
