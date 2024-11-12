@@ -13,7 +13,7 @@ fun NavGraphBuilder.addBookmarkGraph(
     navigateToVote: (Int) -> Unit,
     navigateToArticle: (Int) -> Unit,
     navigateToMyPage: () -> Unit,
-    showSnackBar: (String, Drawable) -> Unit = { _, _ -> }
+    showSnackBar: (String, Int?) -> Unit = { _, _ -> }
 ) {
     navigation(
         startDestination = ROUTE_BOOKMARK,

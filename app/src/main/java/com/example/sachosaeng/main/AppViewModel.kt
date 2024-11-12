@@ -1,5 +1,6 @@
 package com.sachosaeng.app.main
 
+import android.graphics.drawable.Drawable
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.ErrorNotifier
 import com.example.sachosaeng.core.util.ResourceProvider
@@ -57,5 +58,5 @@ data class AppUiState(
 sealed class AppSideEffect {
     data object NavigateToMainRoute: AppSideEffect()
     data object NavigateToAuthActivity : AppSideEffect()
-    data class ShowSnackBar(val message: String) : AppSideEffect()
+    data class ShowSnackBar(val message: String, val drawableRes: Int? = null) : AppSideEffect()
 }

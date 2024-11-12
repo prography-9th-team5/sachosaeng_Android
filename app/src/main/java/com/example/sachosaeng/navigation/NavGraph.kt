@@ -29,7 +29,7 @@ import com.sachosaeng.app.feature.webview.navigateToWebView
 @Composable
 internal fun NavGraph(
     navController: NavHostController,
-    snackBarMessage: (String, Drawable) -> Unit
+    snackBarMessage: (String, Int?) -> Unit = { _, _ -> }
 ) {
     NavHost(
         navController = navController,
@@ -44,7 +44,7 @@ internal fun NavGraph(
             navController = navController,
             navigateToMain = { navController.navigateToMain() },
             navigateToAuth = { navController.navigationToAuth() },
-            snackBarMessage = snackBarMessage
+            snackBarMessage =  { snackBarMessage(it, null) }
         )
         addMainGraph(
             navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
@@ -60,7 +60,7 @@ internal fun NavGraph(
             navController = navController,
             navigateToWebView = { url -> navController.navigateToWebView(url) },
             navigateToOpenSource = { navController.navigateToOpenSource() },
-            snackBarMessage = snackBarMessage
+            snackBarMessage = { snackBarMessage(it, null) }
         )
         addVoteGraph(
             showSnackBar = snackBarMessage,

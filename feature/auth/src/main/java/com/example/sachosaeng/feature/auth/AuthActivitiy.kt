@@ -118,12 +118,9 @@ class AuthActivitiy : ComponentActivity() {
                 snackbarMessage?.let {
                     SachoSaengSnackbar(
                         Modifier.padding(bottom = 60.dp),
-                        icon = {
-                            Image(
-                                painter = painterResource(id = drawable.ic_warning_black_small),
-                                contentDescription = null
-                            )
-                        }, message = it, onDismiss = { snackbarMessage = null })
+                        iconResId = drawable.ic_warning_black_small,
+                        message = it,
+                        onDismiss = { snackbarMessage = null })
                 }
             }
         }

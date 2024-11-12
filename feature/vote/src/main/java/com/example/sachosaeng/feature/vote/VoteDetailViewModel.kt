@@ -101,9 +101,7 @@ class VoteDetailViewModel @Inject constructor(
             postSideEffect(
                 VoteDetailSideEffect.ShowSnackBar(
                     resourceProvider.getString(string.bookmark_complete),
-                    resourceProvider.getDrawable(
-                        drawable.ic_bookmark
-                    )
+                    drawable.ic_bookmark
                 )
             )
         }
@@ -151,5 +149,5 @@ class VoteDetailViewModel @Inject constructor(
 }
 
 sealed class VoteDetailSideEffect {
-    data class ShowSnackBar(val message: String, val iconRes: Drawable) : VoteDetailSideEffect()
+    data class ShowSnackBar(val message: String, val iconRes: Int) : VoteDetailSideEffect()
 }

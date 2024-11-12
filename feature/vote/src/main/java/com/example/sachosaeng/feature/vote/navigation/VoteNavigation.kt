@@ -22,7 +22,7 @@ fun NavController.navigateToVoteDetail(voteId: Int?, isDailyVote: Boolean) {
 }
 
 fun NavGraphBuilder.addVoteGraph(
-    showSnackBar: (String, Drawable) -> Unit,
+    showSnackBar: (String, Int) -> Unit,
     navController: NavHostController,
     navigateToArticleDetail: (Int, Int) -> Unit
 ) {

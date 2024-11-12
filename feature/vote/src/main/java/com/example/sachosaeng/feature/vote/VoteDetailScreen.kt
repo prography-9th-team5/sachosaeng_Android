@@ -1,6 +1,5 @@
 package com.sachosaeng.app.feature.vote
 
-import android.graphics.drawable.Drawable
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -31,7 +30,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun VoteScreen(
-    showSnackBar: (String, Drawable) -> Unit,
+    showSnackBar: (String, Int) -> Unit,
     navigateToBackStack: () -> Unit,
     navigateToArticleDetail: (Int, Int) -> Unit,
     viewModel: VoteDetailViewModel = hiltViewModel()
