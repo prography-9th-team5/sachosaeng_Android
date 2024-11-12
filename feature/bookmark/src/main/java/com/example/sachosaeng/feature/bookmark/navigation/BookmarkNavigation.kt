@@ -1,5 +1,6 @@
 package com.sachosaeng.app.feature.bookmark.navigation
 
+import android.graphics.drawable.Drawable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
@@ -12,7 +13,7 @@ fun NavGraphBuilder.addBookmarkGraph(
     navigateToVote: (Int) -> Unit,
     navigateToArticle: (Int) -> Unit,
     navigateToMyPage: () -> Unit,
-    showSnackBar: (String) -> Unit
+    showSnackBar: (String, Int?) -> Unit = { _, _ -> }
 ) {
     navigation(
         startDestination = ROUTE_BOOKMARK,

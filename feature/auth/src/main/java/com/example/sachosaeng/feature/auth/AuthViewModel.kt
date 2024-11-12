@@ -137,11 +137,6 @@ class AuthViewModel @Inject constructor(
         postSideEffect(AuthSideEffect.NavigateToSignUp)
     }
 
-    fun guestLogin() = intent {
-        setEmailUsecase("sachosaengtest2@gmail.com", OAuthType.GOOGLE)
-        checkLogin()
-    }
-
 
     fun handleKakaoLogin(
         activity: Activity,

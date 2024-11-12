@@ -1,6 +1,7 @@
 package com.example.sachosaeng.core.util
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
@@ -12,5 +13,9 @@ class ResourceProvider @Inject constructor(
     }
     fun getColor(id: Int): Int {
         return context.resources.getColor(id, null)
+    }
+
+    fun getDrawable(id: Int): Drawable {
+        return context.resources.getDrawable(id, null)
     }
 }

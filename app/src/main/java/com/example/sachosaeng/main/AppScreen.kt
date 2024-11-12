@@ -34,7 +34,7 @@ fun AppScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: AppViewModel = hiltViewModel()
 ) {
-    var snackbarMessage by remember { mutableStateOf<String?>(null) }
+    var snackbarStatus by remember { mutableStateOf<Pair<String?, Int?>?>(Pair("", null)) }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val isBottomBarNeeded =
         currentBackStackEntry?.destination?.route == ROUTE_MAIN || currentBackStackEntry?.destination?.route == ROUTE_BOOKMARK
@@ -55,7 +55,7 @@ fun AppScreen(
         when (it) {
             is AppSideEffect.NavigateToMainRoute -> navController.navigateToMain()
             is AppSideEffect.NavigateToAuthActivity -> navController.navigationToAuth()
-            is AppSideEffect.ShowSnackBar -> snackbarMessage = it.message
+            is AppSideEffect.ShowSnackBar -> snackbarStatus = Pair(it.message, it.drawableRes)
             else -> {}
         }
     }
@@ -67,12 +67,17 @@ fun AppScreen(
                     .fillMaxSize()
                     .padding(it)
             ) {
-                NavGraph(navController = navController, snackBarMessage = {
-                    snackbarMessage = it
-                })
-                snackbarMessage?.let {
-                    SachoSaengSnackbar(
-                        message = it, onDismiss = { snackbarMessage = null }
+                NavGraph(
+                    navController = navController,
+                    snackBarMessage = { message, drawableRes ->
+                        snackbarStatus = Pair(message, drawableRes)
+                    }
+                )
+                snackbarStatus?.first?.let { message ->
+                    if(message.isNotEmpty()) SachoSaengSnackbar(
+                        iconResId = snackbarStatus?.second,
+                        message = message,
+                        onDismiss = { snackbarStatus = null }
                     )
                 }
             }

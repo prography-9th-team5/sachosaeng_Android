@@ -27,6 +27,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -34,7 +35,7 @@ import androidx.compose.ui.unit.sp
 import com.sachosaeng.app.core.ui.theme.Gs_G4
 import com.sachosaeng.app.core.ui.theme.Gs_G6
 import com.sachosaeng.app.core.ui.R.drawable
-import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.core.ui.theme.Gs_G2
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -43,12 +44,7 @@ import kotlinx.coroutines.launch
 fun SachoSaengSnackbar(
     modifier: Modifier = Modifier,
     message: String,
-    icon: @Composable () -> Unit = {
-        Image(
-            painter = painterResource(id = drawable.ic_warning_black_small),
-            contentDescription = null
-        )
-    },
+    iconResId: Int?,
     onDismiss: () -> Unit
 ) {
     var action by remember { mutableStateOf<Job?>(null) }
@@ -89,7 +85,11 @@ fun SachoSaengSnackbar(
                     .wrapContentHeight()
                     .padding(20.dp)
             ) {
-                icon()
+                Image(
+                    painter = painterResource(id = iconResId ?: drawable.ic_unchecked),
+                    colorFilter = ColorFilter.tint(Gs_G6),
+                    contentDescription = null
+                )
                 Text(
                     text = message,
                     color = Gs_G6,

@@ -1,7 +1,7 @@
 package com.sachosaeng.app.feature.signup.selectcategory
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.domain.constant.OAuthType
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.usecase.auth.GetEmailUsecase
@@ -10,6 +10,7 @@ import com.sachosaeng.app.core.usecase.auth.SetEmailUsecase
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
 import com.sachosaeng.app.core.usecase.category.SetMyCategoryListUseCase
 import com.sachosaeng.app.core.usecase.user.GetUserTypeUseCase
+import com.sachosaeng.app.core.ui.R
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
@@ -23,6 +24,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SelectCategoryViewModel @Inject constructor(
+    val resourceProvider: ResourceProvider,
     val setEmailUsecase: SetEmailUsecase,
     val getEmailUseCase: GetEmailUsecase,
     val getLocalUserTypeUseCase: GetUserTypeUseCase,
@@ -81,7 +83,7 @@ class SelectCategoryViewModel @Inject constructor(
                     setEmailUsecase("", OAuthType.NONE)
                     postSideEffect(
                         SelectCategorySideEffect.ShowErrorDialog(
-                            "회원가입에 실패했습니다."
+                            resourceProvider.getString(R.string.signup_failed_text)
                         )
                     )
                 }

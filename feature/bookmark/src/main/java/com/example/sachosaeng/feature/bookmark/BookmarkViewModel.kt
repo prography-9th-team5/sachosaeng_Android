@@ -1,5 +1,6 @@
 package com.sachosaeng.app.feature.bookmark
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Bookmark
@@ -49,7 +50,7 @@ class BookmarkViewModel @Inject constructor(
             val newList =
                 listOf(
                     Category(
-                        id = ALL_CATEGORY_ID,
+                        id = -1,
                         name = stringResourceProvider.getString(R.string.all_category_icon_text)
                     )
                 ) + allCategoryList
@@ -87,7 +88,7 @@ class BookmarkViewModel @Inject constructor(
 
     fun deleteSelectedBookmarks() = intent {
         deleteBookmarkUseCase(state.selectedForModifyBookmarkList).collectLatest {
-            categoryClicked(state.selectedCategory)
+            refreshList()
             postSideEffect(BookmarkSideEffect.ShowSnackBar(resourceProvider.getString(R.string.bookmark_modify_complete)))
         }
     }
@@ -95,7 +96,7 @@ class BookmarkViewModel @Inject constructor(
 
     fun deleteSelectedArticles() = intent {
         deleteArticleBookmarksUseCase(state.selectedForModifyBookmarkList).collectLatest {
-            categoryClicked(state.selectedCategory)
+            refreshList()
             postSideEffect(BookmarkSideEffect.ShowSnackBar(resourceProvider.getString(R.string.bookmark_modify_complete)))
         }
     }
@@ -105,14 +106,16 @@ class BookmarkViewModel @Inject constructor(
             state.copy(
                 selectedCategory = category
             )
-        }.also {
-            if (category.id == ALL_CATEGORY_ID) {
-                getAllBookmarkList()
-                getAllBookmarkedArticleList()
-            } else {
-                getBookmarkListByCategory()
-                getBookmarkedArticleListByCategory()
-            }
+        }.also { refreshList() }
+    }
+
+    private fun refreshList() = intent {
+        if (state.selectedCategory.id == ALL_CATEGORY_ID) {
+            getAllBookmarkList()
+            getAllBookmarkedArticleList()
+        } else {
+            getBookmarkListByCategory()
+            getBookmarkedArticleListByCategory()
         }
     }
 

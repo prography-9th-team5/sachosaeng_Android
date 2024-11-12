@@ -1,5 +1,6 @@
 package com.sachosaeng.app.feature.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.UserType
@@ -10,6 +11,7 @@ import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
 import com.sachosaeng.app.core.usecase.vote.GetDailyVoteUsecase
 import com.sachosaeng.app.core.usecase.vote.GetHotVoteUsecase
 import com.sachosaeng.app.core.usecase.vote.GetVoteByCategoryUsecase
+import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
@@ -98,6 +100,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getDailyVote() = intent {
+        Log.e("HomeViewModel", "getDailyVote")
         getDailyVoteUsecase().collectLatest {
             reduce {
                 state.copy(
@@ -107,8 +110,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getHotVotes(category: Category? = null) = intent {
-        getHotVoteUsecase(category?.id).collectLatest { list ->
+    private fun getHotVotes(category: Category = Category()) = intent {
+        val id = if(category.id != ALL_CATEGORY_ID) category.id else null
+        getHotVoteUsecase(id).collectLatest { list ->
             list?.let {
                 reduce {
                     state.copy(

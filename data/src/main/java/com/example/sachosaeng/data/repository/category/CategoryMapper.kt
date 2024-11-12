@@ -38,5 +38,5 @@ object CategoryMapper {
         this.map { it.id }.let { SetCategoryRequest(it) }
 }
 
-const val ALL_CATEGORY_ID = 1
+const val ALL_CATEGORY_ID = -1
 const val ALL_CATEGORY_NAME = "전체 보기"

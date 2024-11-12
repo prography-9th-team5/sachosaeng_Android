@@ -26,14 +26,23 @@ import com.sachosaeng.app.feature.vote.component.VoteCompleteFooter
 import com.sachosaeng.app.feature.vote.component.VoteCompleteScreen
 import com.sachosaeng.app.feature.vote.component.VoteDetailCard
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun VoteScreen(
+    showSnackBar: (String, Int) -> Unit,
     navigateToBackStack: () -> Unit,
     navigateToArticleDetail: (Int, Int) -> Unit,
     viewModel: VoteDetailViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
+
+    viewModel.collectSideEffect {
+        when (it) {
+            is VoteDetailSideEffect.ShowSnackBar -> showSnackBar(it.message, it.iconRes)
+            else -> {}
+        }
+    }
 
     when (state.value.isCompleteState) {
         true -> VoteCompleteScreen()
@@ -108,7 +117,12 @@ internal fun VoteScreen(
                     completeDescription = vote.description,
                     completeDescriptionIconRes = completeDescriptionIconRes,
                     similarArticleList = similarArticle,
-                    navigateToArticleDetail = { id -> navigateToArticleDetail(id, vote.category.id) }
+                    navigateToArticleDetail = { id ->
+                        navigateToArticleDetail(
+                            id,
+                            vote.category.id
+                        )
+                    }
                 )
             }
             item {

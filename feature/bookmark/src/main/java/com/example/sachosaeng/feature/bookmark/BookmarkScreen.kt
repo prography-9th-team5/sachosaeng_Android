@@ -37,13 +37,14 @@ fun BookmarkScreen(
     moveToVote: (Int) -> Unit = {},
     moveToArticle: (Int) -> Unit = { _ -> },
     moveToMyPage: () -> Unit = {},
-    showSnackBar: (String) -> Unit = {},
+    showSnackBar: (String, Int?) -> Unit = { _, _ -> },
     viewModel: BookmarkViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
     viewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is BookmarkSideEffect.ShowSnackBar -> showSnackBar(sideEffect.message)
+            is BookmarkSideEffect.ShowSnackBar -> showSnackBar(sideEffect.message, null)
+            else -> {}
         }
     }
 

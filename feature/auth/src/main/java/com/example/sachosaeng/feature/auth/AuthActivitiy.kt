@@ -12,15 +12,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -37,13 +36,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.sachosaeng.app.core.domain.constant.OAuthType
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.R.drawable
+import com.sachosaeng.app.core.ui.component.dialog.SachosaengOneButtonDialog
 import com.sachosaeng.app.core.ui.component.snackbar.SachoSaengSnackbar
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G1
@@ -55,9 +56,6 @@ import com.sachosaeng.app.core.ui.theme.Kakao_Yellow
 import com.sachosaeng.app.core.ui.theme.SachosaengTheme
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.MAIN_DEEP_LINK
 import com.sachosaeng.app.core.util.constant.NavigationConstant.SignUp.SIGNUP_DEEP_LINK
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.sachosaeng.app.core.ui.component.dialog.SachosaengOneButtonDialog
 import dagger.hilt.android.AndroidEntryPoint
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -120,12 +118,9 @@ class AuthActivitiy : ComponentActivity() {
                 snackbarMessage?.let {
                     SachoSaengSnackbar(
                         Modifier.padding(bottom = 60.dp),
-                        icon = {
-                            Image(
-                                painter = painterResource(id = drawable.ic_warning_black_small),
-                                contentDescription = null
-                            )
-                        }, message = it, onDismiss = { snackbarMessage = null })
+                        iconResId = drawable.ic_warning_black_small,
+                        message = it,
+                        onDismiss = { snackbarMessage = null })
                 }
             }
         }
@@ -166,60 +161,47 @@ class AuthActivitiy : ComponentActivity() {
 
     @Composable
     fun AuthScreen(recentAuthType: OAuthType) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .background(Gs_White)
                 .padding(horizontal = 20.dp),
         ) {
-            Text(
-                modifier = Modifier.padding(bottom = 20.dp, top = 70.dp),
-                text = stringResource(id = R.string.select_account_platform_screen_title),
-                fontSize = 26.sp,
-                fontWeight = FontWeight.W700,
-                color = Gs_Black
-            )
-            Text(
-                text = stringResource(id = R.string.select_account_platform_screen_description),
-                fontSize = 16.sp,
-                color = Gs_G6,
-                fontWeight = FontWeight.W500,
-            )
-            Image(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 30.dp, end = 30.dp, top = 62.dp)
-                    .size(280.dp)
-                    .background(Gs_G3, RoundedCornerShape(4.dp))
-                    .padding(55.dp),
-                painter = painterResource(id = R.drawable.image_todays_vote_dialog),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.size(10.dp))
-//            GuestedLoginButton(
-//                onClick = { authViewModel.guestLogin() }
-//            )
-            Spacer(modifier = Modifier.size(10.dp))
-            KakaoLoginButton(recentAuthType == OAuthType.KAKAO)
-            Spacer(modifier = Modifier.size(8.dp))
-            GoogleLoginButton(recentAuthType == OAuthType.GOOGLE)
-        }
-    }
-
-    @Composable
-    fun GuestedLoginButton(
-        onClick: () -> Unit
-    ) {
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
-            Text(
-                modifier = Modifier
-                    .clickable { onClick() },
-                text = "게스트모드로 로그인",
-                textDecoration = TextDecoration.Underline,
-                fontSize = 14.sp,
-                color = Gs_G6,
-                fontWeight = FontWeight.W500,
-            )
+            item {
+                Text(
+                    modifier = Modifier.padding(bottom = 20.dp, top = 70.dp),
+                    text = stringResource(id = R.string.select_account_platform_screen_title),
+                    fontSize = 26.sp,
+                    fontWeight = FontWeight.W700,
+                    color = Gs_Black
+                )
+            }
+            item {
+                Text(
+                    text = stringResource(id = R.string.select_account_platform_screen_description),
+                    fontSize = 16.sp,
+                    color = Gs_G6,
+                    fontWeight = FontWeight.W500,
+                )
+            }
+            item {
+                Image(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 30.dp, end = 30.dp, top = 62.dp)
+                        .size(280.dp)
+                        .background(Gs_G3, RoundedCornerShape(4.dp))
+                        .padding(55.dp),
+                    painter = painterResource(id = R.drawable.image_todays_vote_dialog),
+                    contentDescription = null
+                )
+            }
+            item {
+                Spacer(modifier = Modifier.size(62.dp))
+                KakaoLoginButton(recentAuthType == OAuthType.KAKAO)
+                Spacer(modifier = Modifier.size(8.dp))
+                GoogleLoginButton(recentAuthType == OAuthType.GOOGLE)
+            }
         }
     }
 

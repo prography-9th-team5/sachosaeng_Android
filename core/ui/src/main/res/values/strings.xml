@@ -72,6 +72,7 @@
     <string name="skip_button">SKIP</string>
     <string name="welcome_text">%s 님!\n사초생에 오신 걸 환영해요</string>
     <string name="signup_complete_text">회원가입 완료</string>
+    <string name="signup_failed_text">회원가입에 실패했습니다.</string>
     <string name="navigate_to_signup_text">회원가입 화면으로 돌아가기</string>
 
     <!--withdraw-->
@@ -94,6 +95,7 @@
     <string name="bookmarked_vote_is_empty_description">북마크한 투표가 없어요</string>
     <string name="bookmarked_article_is_empty_description">북마크한 연관콘텐츠가 없어요</string>
     <string name="bookmark_modify_complete">편집이 완료되었어요!</string>
+    <string name="bookmark_complete">저장 완료!</string>
 
     <!--vote-->
     <string name="vote_label">투표</string>
