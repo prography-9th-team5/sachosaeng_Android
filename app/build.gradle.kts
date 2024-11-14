@@ -1,23 +1,51 @@
+import java.util.Properties
+
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.google.dagger.hilt.android)
+    alias(libs.plugins.google.gms)
+    alias(libs.plugins.google.ksp)
+    id(libs.plugins.oss.licenses.plugin.get().pluginId)
+    id(libs.plugins.crashlytics.get().pluginId)
+}
+
+fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
+    val properties = Properties()
+    val localPropertiesFile = File(rootDir, "local.properties")
+    if (localPropertiesFile.exists()) {
+        properties.load(localPropertiesFile.inputStream())
+    }
+    return properties
+}
+
+fun Project.getApiKey(propertyKey: String): String {
+    val localProperties = gradleLocalProperties(providers, rootDir)
+    return localProperties.getProperty(propertyKey, "")
 }
 
 android {
-    namespace = "com.example.sachosaeng"
+    namespace = "com.sachosaeng.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.sachosaeng"
+        applicationId = "com.sachosaeng.app"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 100017
+        versionName = "1.0.17"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        manifestPlaceholders["APP_URL"] = getApiKey("app.url")
+        manifestPlaceholders["KAKAO_NATIVE_KEY"] = getApiKey("kakao.key.native")
+        manifestPlaceholders["KAKAO_API_KEY"] = getApiKey("kakao.key.api")
+        manifestPlaceholders["KAKAO_ADMIN_KEY"] = getApiKey("kakao.key.admin")
+        buildConfigField("String", "KAKAO_NATIVE_KEY",  "\"${getApiKey("kakao.key.native")}\"")
+        buildConfigField("String", "GOOGLE_OAUTH_KEY", getApiKey("google.key"))
     }
 
     buildTypes {
@@ -27,21 +55,24 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = libs.versions.kotlinComposeCompiler.get()
     }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -50,20 +81,63 @@ android {
 }
 
 dependencies {
+    implementation(libs.core.ktx.v1120)
 
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2023.08.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    //compose
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+
+    //orbit
+    implementation(libs.orbit.compose)
+    implementation(libs.orbit.viewmodel)
+    implementation(libs.orbit.core)
+
+    //navigation
+    implementation(libs.navigation.compose)
+
+    implementation(libs.javax.inject)
+    implementation(project(":feature:addvote"))
+
+    // Hilt
+    ksp(libs.hilt.compiler)
+    ksp(libs.androidx.hilt.complier)
+    implementation(libs.hilt.android)
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    //auth
+    implementation(libs.kakao.sdk)
+    implementation(libs.google.gms)
+    implementation(libs.firebase.auth)
+    implementation(libs.gms.auth)
+    implementation(platform(libs.firebase.bom))
+
+    //test
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
+    debugImplementation(libs.ui.tooling)
+
+    //google-services
+    implementation(libs.oss.licenses)
+
+    //crashlytics
+    implementation(libs.crashlytics)
+
+    //module
+    implementation(project(":core:ui"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:mypage"))
+    implementation(project(":feature:webview"))
+    implementation(project(":feature:signup"))
+    implementation(project(":feature:splash"))
+    implementation(project(":feature:vote"))
+    implementation(project(":feature:bookmark"))
+    implementation(project(":feature:article"))
+    implementation(project(":feature:auth"))
+    implementation(project(":core:usecase"))
+    implementation(project(":core:util"))
 }

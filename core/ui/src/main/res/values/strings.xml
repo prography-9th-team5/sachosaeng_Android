@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="next">다음</string>
+
+    <string name="home_all_category">전체</string>
+    <string name="category">카테고리</string>
+    <string name="my_category">내 카테고리</string>
+    <string name="all_category_icon_text">ALL</string>
+    <string name="all_category">전체 카테고리</string>
+    <string name="category_change">카테고리 변경</string>
+    <string name="change">변경</string>
+    <string name="confirm_label">확인</string>
+    <string name="complete_label">완료</string>
+    <string name="cancel_label">취소</string>
+    <string name="save_label">저장</string>
+    <string name="delete_label">삭제</string>
+    <string name="modify_label">편집</string>
+
+    <!-- home -->
+    <string name="daily_vote">오늘의 투표</string>
+    <string name="sort_by_latest">최신순</string>
+    <string name="double_click_exit_toast_message">한번 더 누르면 종료됩니다</string>
+
+    <!--add vote-->
+    <string name="add_vote_title">투표 등록</string>
+    <string name="add_vote_description">*사초생이 검토 후 투표에 등록할게요!</string>
+    <string name="add_vote_multiple_choice_allowed">복수 선택 가능</string>
+
+    <string name="vote_title">투표 제목</string>
+    <string name="vote_option">선택지</string>
+    <string name="vote_category">카테고리</string>
+
+    <!-- mypage-->
+    <string name="mypage_top_bar_label">마이페이지</string>
+    <string name="mypage_nickname_field_label">닉네임</string>
+    <string name="mypage_usertype_field_label">사초생 유형 변경</string>
+    <string name="mypage_menu_change_nickname">닉네임 변경</string>
+    <string name="mypage_modify_userinfo">내 정보 수정</string>
+    <string name="mypage_withdraw_label">탈퇴하기</string>
+    <string name="mypage_logout_label">로그아웃</string>
+    <string name="mypage_menu_change_category">관심사 설정</string>
+    <string name="mypage_menu_suggest_vote">1:1 문의</string>
+    <string name="mypage_menu_setting">설정</string>
+    <string name="mypage_menu_version_info">버전안내</string>
+    <string name="mypage_latest_version">최신버전</string>
+    <string name="mypage_menu_open_source">오픈소스 라이브러리</string>
+    <string name="mypage_menu_privacy_policy">개인정보 처리방침</string>
+    <string name="mypage_menu_terms_of_service">서비스 이용약관</string>
+    <string name="mypage_menu_faq">FAQ</string>
+    <string name="start_button">시작</string>
+    <string name="modify_category_title">관심사 설정</string>
+
+    <!-- signup -->
+    <string name="login_with_kakao">카카오로 로그인</string>
+    <string name="login_with_google">Google로 로그인</string>
+    <string name="select_account_platform_screen_description">사회초년생 집단지성 투표 서비스, 사초생</string>
+    <string name="select_account_platform_screen_title">궁금했던 사회생활\n사초생이 모두 알려줄게요</string>
+    <string name="terms_of_service_screen_title">서비스이용에\n동의해주세요</string>
+    <string name="agree_all_required_terms">필수 약관 모두 동의</string>
+    <string name="agree_personal_information">개인정보 수집 및 이용 동의 (필수)</string>
+    <string name="agree_service_terms">서비스 이용약관 동의 (필수)</string>
+    <string name="select_user_type_screen_title">사초생 유형 선택</string>
+    <string name="select_category_screen_top_bar">카테고리 선택</string>
+    <string name="select_user_type_label">어떤 사회초년생에\n해당하나요?</string>
+    <string name="select_user_type_desc">*선택한 유형에 맞는 정보를 제공해 드려요</string>
+    <string name="user_type_student">학생</string>
+    <string name="user_type_jobseeker">취업준비생</string>
+    <string name="user_type_newcomer">1~3년차 직장인</string>
+    <string name="user_type_etc">기타</string>
+    <string name="select_initial_category_label">관심 있는 카테고리를\n모두 선택해 주세요</string>
+    <string name="select_initial_category_desc">*복수 선택이 가능해요</string>
+    <string name="skip_button">SKIP</string>
+    <string name="welcome_text">%s 님!\n사초생에 오신 걸 환영해요</string>
+    <string name="signup_complete_text">회원가입 완료</string>
+    <string name="signup_failed_text">회원가입에 실패했습니다.</string>
+    <string name="navigate_to_signup_text">회원가입 화면으로 돌아가기</string>
+
+    <!--withdraw-->
+    <string name="withdraw_dialog_content">탈퇴 시 동일한 계정으로\n재가입이 불가능해요\n그래도 탈퇴할까요?</string>
+    <string name="logout_dialog_content">정말 로그아웃하시겠습니까?</string>
+    <string name="withdraw_screen_title">%s님\n떠난다니 아쉬워요..</string>
+    <string name="withdraw_screen_description">사초생 탈퇴 사유를 알려주세요</string>
+    <string name="withdraw_reason_hint">사유를 작성해주세요</string>
+    <string name="reason_for_withdraw_1">서비스 불만족</string>
+    <string name="reason_for_withdraw_2">콘텐츠 부족</string>
+    <string name="reason_for_withdraw_3">더 이상 사용하지 않음</string>
+    <string name="reason_for_withdraw_4">기타 (직접 입력)</string>
+    <string name="withdraw_complete_toast_message">탈퇴가 완료되었어요</string>
+    <string name="withdraw_reason_required">사유를 선택해주세요</string>
+    <string name="withdraw_reason_detail_required">사유를 작성해주세요</string>
+
+    <!--bookmark-->
+    <string name="bookmark_screen_title">북마크</string>
+    <string name="bookmark_tab_article">연관콘텐츠</string>
+    <string name="bookmarked_vote_is_empty_description">북마크한 투표가 없어요</string>
+    <string name="bookmarked_article_is_empty_description">북마크한 연관콘텐츠가 없어요</string>
+    <string name="bookmark_modify_complete">편집이 완료되었어요!</string>
+    <string name="bookmark_complete">저장 완료!</string>
+
+    <!--vote-->
+    <string name="vote_label">투표</string>
+    <string name="vote_complete_description">사용자 데이터를 기반으로 제공되는 결과이며,\n판단에 도움을 주기 위한 참고 자료로 활용해 주세요</string>
+    <string name="more_vote_button_label">다른 투표 보러 가기</string>
+    <string name="todays_vote_dialog_description">오늘의 투표가 도착했어요!</string>
+    <string name="todays_vote_complete_label">선택 완료</string>
+
+    <!--article-->
+    <string name="article_label">연관 콘텐츠</string>
+
+    <string name="saved_snackbar">저장되었습니다</string>
+</resources>
