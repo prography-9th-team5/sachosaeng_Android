@@ -14,7 +14,9 @@ fun NavController.navigateToAddVote() {
 }
 
 fun NavGraphBuilder.addAddVoteGraph(
-    navController: NavHostController
+    showSnackBar: (String) -> Unit,
+    navController: NavHostController,
+    navigateToSuggestedVoteHistory: () -> Unit
 ) {
     navigation(
         startDestination = ROUTE_ADD_VOTE,
@@ -24,7 +26,9 @@ fun NavGraphBuilder.addAddVoteGraph(
             route = ROUTE_ADD_VOTE
         ) {
             AddVoteScreen(
-                navigateToBackStack = { navController.popBackStack() }
+                navigateToSuggestedVoteHistory = { navigateToSuggestedVoteHistory() },
+                navigateToBackStack = { navController.popBackStack() },
+                showSnackBar = showSnackBar
             )
         }
     }

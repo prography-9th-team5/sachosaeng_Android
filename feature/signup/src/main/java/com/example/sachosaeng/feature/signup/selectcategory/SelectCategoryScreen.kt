@@ -29,7 +29,6 @@ import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.core.ui.component.CategoryListFlowRow
 import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
 import com.sachosaeng.app.core.ui.component.dialog.SachosaengOneButtonDialog
-import com.sachosaeng.app.core.ui.component.dialog.SachosaengTwoButtonDialog
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black

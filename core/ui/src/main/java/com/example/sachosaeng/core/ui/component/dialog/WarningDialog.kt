@@ -1,4 +1,4 @@
-package com.sachosaeng.app.feature.mypage.component
+package com.example.sachosaeng.core.ui.component.dialog
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -9,28 +9,25 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sachosaeng.app.core.ui.component.dialog.SachosaengTwoButtonDialog
-import com.sachosaeng.app.core.ui.theme.SachosaengTheme
 import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.component.dialog.SachosaengOneButtonDialog
+import com.sachosaeng.app.core.ui.theme.Gs_Black
 
 @Composable
-fun WithdrawDialog(
+fun WarningDialog(
+    confirmLabel: String,
+    onConfirm: () -> Unit,
+    errorMessage: String,
     modifier: Modifier = Modifier,
-    onWithdraw: () -> Unit = {},
-    onCancel: () -> Unit = {}
 ) {
-    SachosaengTwoButtonDialog(
+    SachosaengOneButtonDialog(
         modifier = modifier,
-        leftButtonText = stringResource(id = R.string.confirm_label),
-        leftButtonOnClick = { onWithdraw() },
-        rightButtonText = stringResource(id = R.string.cancel_label),
-        rightButtonOnClick = { onCancel() }
+        buttonText = confirmLabel,
+        buttonOnClick = { onConfirm() }
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -45,18 +42,11 @@ fun WithdrawDialog(
             Text(
                 modifier = modifier.padding(top = 12.dp),
                 textAlign = TextAlign.Center,
-                text = stringResource(id = R.string.withdraw_dialog_content),
+                text = errorMessage,
+                color = Gs_Black,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.W600
             )
         }
-    }
-}
-
-@Composable
-@Preview
-fun WithdrawDialogPreview() {
-    SachosaengTheme {
-        WithdrawDialog()
     }
 }

@@ -1,6 +1,7 @@
 package com.sachosaeng.app.data.api
 
 import com.example.sachosaeng.data.model.vote.AddVoteRequest
+import com.example.sachosaeng.data.model.vote.GetSuggestedVoteHistoryResponse
 import com.sachosaeng.app.data.model.BaseResponse
 import com.sachosaeng.app.data.model.vote.VoteDetailInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteInfoResponse
@@ -48,4 +49,10 @@ interface VoteService {
     suspend fun addVote(
         @Body vote: AddVoteRequest
     ): ApiResult<BaseResponse<Unit>>
+
+    @GET("/api/v1/votes/my")
+    suspend fun getHistoryOfSuggestedVote(
+        @Query("cursor") cursor: Int?,
+        @Query("size") size: Int
+    ): ApiResult<BaseResponse<GetSuggestedVoteHistoryResponse>>
 }

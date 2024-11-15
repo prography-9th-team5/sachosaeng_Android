@@ -7,6 +7,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.sachosaeng.feature.mypage.historyOfSuggestedVote.HistoryOfSuggestedVoteScreen
 import com.sachosaeng.app.core.util.extension.StringExtension.urlEncode
 import com.sachosaeng.app.feature.mypage.modifyCategory.ModifyCategoryScreen
 import com.sachosaeng.app.feature.mypage.main.MyPageScreen
@@ -23,10 +24,15 @@ private const val ROUTE_WITHDRAW = "withdraw"
 const val USER_NAME = "userName"
 private const val MODIFY_USER_INFO = "modifyUserInfo"
 private const val MODIFY_CATEGORY = "modifyCategory"
+private const val SUGGEST_VOTE_HISTORY = "suggestVoteHistory"
 
 private fun NavController.navigateToWithdraw(userName: String) {
     val encodedUrl = userName.urlEncode()
     navigate("$ROUTE_WITHDRAW?$USER_NAME=$encodedUrl")
+}
+
+fun NavController.navigateToHistoryOfSuggestedVote() {
+    navigate(SUGGEST_VOTE_HISTORY)
 }
 
 fun NavGraphBuilder.addMyPageNavGraph(
@@ -49,6 +55,7 @@ fun NavGraphBuilder.addMyPageNavGraph(
                 navigateToFaq = { navigateToWebView(FAQ) },
                 navigateToRequestToAdmin = { navigateToWebView(REQUEST_TO_ADMIN) },
                 navigateToOpenSource = { navigateToOpenSource() },
+                navigateToSuggestVoteHistory = { navController.navigate(SUGGEST_VOTE_HISTORY) },
             )
         }
         composable(
@@ -75,6 +82,11 @@ fun NavGraphBuilder.addMyPageNavGraph(
         composable(MODIFY_CATEGORY) {
             ModifyCategoryScreen(
                 showSnackBar = snackBarMessage,
+                navigateToBackStack = { navController.popBackStack() }
+            )
+        }
+        composable(SUGGEST_VOTE_HISTORY) {
+            HistoryOfSuggestedVoteScreen(
                 navigateToBackStack = { navController.popBackStack() }
             )
         }

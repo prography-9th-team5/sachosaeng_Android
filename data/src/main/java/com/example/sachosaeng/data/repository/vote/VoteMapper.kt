@@ -1,6 +1,9 @@
 package com.sachosaeng.app.data.repository.vote
 
+import com.example.sachosaeng.data.model.vote.GetSuggestedVoteHistoryResponse
 import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.model.RegisterStatus
+import com.sachosaeng.app.core.model.SuggestedVoteInfo
 import com.sachosaeng.app.core.model.Vote
 import com.sachosaeng.app.core.model.VoteInfo
 import com.sachosaeng.app.core.model.VoteList
@@ -83,5 +86,15 @@ object VoteMapper {
             selectedOptionIds = chosenVoteOptionId,
             description = description,
         )
+    }
+
+    fun GetSuggestedVoteHistoryResponse.toDomain(): List<SuggestedVoteInfo> {
+        return this.votes.map { suggestedVote ->
+            SuggestedVoteInfo(
+                id = suggestedVote.voteId,
+                title = suggestedVote.title,
+                registerStatus = RegisterStatus.fromName(suggestedVote.status),
+            )
+        }
     }
 }

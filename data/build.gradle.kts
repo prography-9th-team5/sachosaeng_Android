@@ -71,6 +71,7 @@ dependencies {
     implementation(libs.androidx.datastore.core.android)
     implementation(libs.androidx.datastore.preferences)
     implementation(libs.androidx.datastore.preferences.core.jvm)
+    implementation(libs.androidx.paging.common.android)
 
     // Hilt
     ksp(libs.hilt.compiler)

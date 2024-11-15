@@ -45,13 +45,16 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun AddVoteScreen(
+    showSnackBar: (String) -> Unit,
     navigateToBackStack: () -> Unit,
+    navigateToSuggestedVoteHistory: () -> Unit,
     viewModel: AddVoteViewModel = hiltViewModel()
 ) {
     val state by viewModel.container.stateFlow.collectAsState()
     viewModel.collectSideEffect {
         when (it) {
-            is AddVoteSideEffect.ShowSnackBar -> navigateToBackStack()
+            is AddVoteSideEffect.NavigateToSuggestedVoteHistory -> navigateToSuggestedVoteHistory()
+            is AddVoteSideEffect.ShowSnackBar -> showSnackBar(it.message)
         }
     }
 

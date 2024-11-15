@@ -65,7 +65,8 @@ class AddVoteViewModel @Inject constructor(
             categoryId = state.selectedCategory!!.id,
             isMultipleChoiceAllowed = state.canMultipleCheck
         ).collectLatest {
-            postSideEffect(AddVoteSideEffect.ShowSnackBar)
+            postSideEffect(AddVoteSideEffect.ShowSnackBar("등록한 투표는 관리자 검토 후 업로드 돼요"))
+            postSideEffect(AddVoteSideEffect.NavigateToSuggestedVoteHistory)
         }
     }
 
@@ -88,6 +89,7 @@ class AddVoteViewModel @Inject constructor(
 }
 
 sealed class AddVoteSideEffect {
-    data object ShowSnackBar : AddVoteSideEffect()
+    data object NavigateToSuggestedVoteHistory : AddVoteSideEffect()
+    data class ShowSnackBar(val message: String) : AddVoteSideEffect()
 }
 

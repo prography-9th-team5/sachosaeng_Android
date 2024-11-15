@@ -26,9 +26,9 @@ import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
 import com.sachosaeng.app.core.ui.component.topappbar.TopBarWithProfileImage
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_White
-import com.sachosaeng.app.feature.bookmark.component.BookmarkEmptyScreen
 import com.sachosaeng.app.feature.bookmark.component.BookmarkList
 import com.sachosaeng.app.feature.bookmark.component.CategoryRow
+import com.sachosaeng.app.feature.bookmark.component.EmptyScreen
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -88,7 +88,7 @@ internal fun BookmarkScreen(
 
     Column(
         modifier = modifier
-            .fillMaxSize()  // 무한 크기 문제를 방지하기 위해 fillMaxSize 추가
+            .fillMaxSize()
             .background(Gs_G2)
             .padding(20.dp)
     ) {
@@ -144,7 +144,7 @@ private fun VoteTabScreen(
 ) {
     Column {
         if (state.bookmarkedVoteList.isEmpty()) {
-            BookmarkEmptyScreen(emptyLabel = stringResource(id = R.string.bookmarked_vote_is_empty_description))
+            EmptyScreen(emptyLabel = stringResource(id = R.string.bookmarked_vote_is_empty_description))
         }
         BookmarkList(
             isModifyMode = state.isModifyMode,
@@ -174,7 +174,7 @@ fun ArticleTabScreen(
 ) {
     Column {
         if (state.bookmarkedArticleList.isEmpty()) {
-            BookmarkEmptyScreen(emptyLabel = stringResource(id = R.string.bookmarked_article_is_empty_description))
+            EmptyScreen(emptyLabel = stringResource(id = R.string.bookmarked_article_is_empty_description))
         }
         BookmarkList(
             isModifyMode = state.isModifyMode,

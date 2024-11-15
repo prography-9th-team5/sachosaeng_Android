@@ -21,6 +21,7 @@ import com.sachosaeng.app.core.ui.component.button.SachoSaengButton
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_G5
 import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.feature.bookmark.component.EmptyScreen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -63,11 +64,16 @@ fun SelectCategoryBottomSheet(
                             onClickButton = onModifyComplete
                         )
 
-                        false -> CategoryListFlowRow(
-                            myCategoryList,
-                            onCategoryList = myCategoryList,
-                            onClickCategory = onSelectCategory
-                        )
+                        false -> {
+                            if (myCategoryList.isEmpty()) EmptyScreen(emptyLabel = stringResource(id = R.string.my_category_is_empty))
+                            else {
+                                CategoryListFlowRow(
+                                    myCategoryList,
+                                    onCategoryList = myCategoryList,
+                                    onClickCategory = onSelectCategory
+                                )
+                            }
+                        }
                     }
                 },
                 {

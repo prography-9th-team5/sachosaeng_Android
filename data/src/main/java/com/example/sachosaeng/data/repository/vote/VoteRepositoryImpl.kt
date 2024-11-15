@@ -1,12 +1,20 @@
 package com.sachosaeng.app.data.repository.vote
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.example.sachosaeng.data.model.vote.AddVoteRequest
+import com.example.sachosaeng.data.model.vote.SuggestedVote
+import com.example.sachosaeng.data.repository.vote.VoteHistoryPagingSource
+import com.sachosaeng.app.core.model.SuggestedVoteInfo
 import com.sachosaeng.app.core.model.Vote
 import com.sachosaeng.app.data.api.VoteService
 import com.sachosaeng.app.data.model.vote.VoteOptionRequest
 import com.sachosaeng.app.data.repository.vote.VoteMapper.toDomain
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class VoteRepositoryImpl @Inject constructor(
@@ -55,5 +63,22 @@ class VoteRepositoryImpl @Inject constructor(
                 it
             )
         }
+    }
+
+    override fun getHistoryOfSuggestedVote(): Flow<PagingData<SuggestedVoteInfo>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = PAGE_SIZE
+            ),
+            pagingSourceFactory = {
+                VoteHistoryPagingSource(
+                    voteService = voteService
+                )
+            }
+        ).flow.flowOn(Dispatchers.IO)
+    }
+
+    companion object {
+        private const val PAGE_SIZE = 10
     }
 }

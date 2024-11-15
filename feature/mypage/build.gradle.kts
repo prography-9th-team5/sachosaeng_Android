@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.material)
     implementation(project(":feature:webview"))
     implementation(project(":core:usecase"))
+    implementation(libs.androidx.paging.common.android)
 
     //test
     testImplementation(libs.junit)
@@ -69,6 +70,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.constraintlayout)
+
+    //paging
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.common)
 
     // Hilt
     ksp(libs.hilt.compiler)

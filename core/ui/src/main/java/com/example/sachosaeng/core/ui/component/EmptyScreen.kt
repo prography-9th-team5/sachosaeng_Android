@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sachosaeng.app.core.ui.IntConstant.BOTTOM_BAR_HEIGHT
@@ -20,7 +21,7 @@ import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.theme.Gs_G6
 
 @Composable
-fun BookmarkEmptyScreen(
+fun EmptyScreen(
     modifier: Modifier = Modifier,
     emptyLabel: String = ""
 ) {
@@ -36,6 +37,7 @@ fun BookmarkEmptyScreen(
             contentDescription = null
         )
         Text(
+            textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 16.dp),
             text = emptyLabel,
             color = Gs_G6,

@@ -25,10 +25,19 @@
     <string name="add_vote_title">투표 등록</string>
     <string name="add_vote_description">*사초생이 검토 후 투표에 등록할게요!</string>
     <string name="add_vote_multiple_choice_allowed">복수 선택 가능</string>
+    <string name="add_vote_dialog_description">투표 주제는 모든 사용자가 참여할 수 있도록\n적절하고 건전한 내용을 작성해 주세요.\n등록된 내용은 관리자 검토 후 업로드 됩니다.</string>
+
+    <string name="suggested_vote_is_empty_description">등록한 투표가 없어요</string>
 
     <string name="vote_title">투표 제목</string>
     <string name="vote_option">선택지</string>
     <string name="vote_category">카테고리</string>
+
+    <string name="vote_status_pending">사초생 검토 중</string>
+    <string name="vote_status_approved">투표 등록 완료</string>
+    <string name="vote_status_failed">투표 등록 실패</string>
+
+    <string name="vote_history_title">투표 등록 히스토리</string>
 
     <!-- mypage-->
     <string name="mypage_top_bar_label">마이페이지</string>
@@ -40,6 +49,7 @@
     <string name="mypage_logout_label">로그아웃</string>
     <string name="mypage_menu_change_category">관심사 설정</string>
     <string name="mypage_menu_suggest_vote">1:1 문의</string>
+    <string name="mypage_menu_history_of_suggested_vote">투표 등록 히스토리</string>
     <string name="mypage_menu_setting">설정</string>
     <string name="mypage_menu_version_info">버전안내</string>
     <string name="mypage_latest_version">최신버전</string>
@@ -49,6 +59,7 @@
     <string name="mypage_menu_faq">FAQ</string>
     <string name="start_button">시작</string>
     <string name="modify_category_title">관심사 설정</string>
+    <string name="my_category_is_empty">관심 카테고리가 없어요!\n편집을 눌러 카테고리를 추가해 보세요</string>
 
     <!-- signup -->
     <string name="login_with_kakao">카카오로 로그인</string>
