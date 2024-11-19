@@ -39,7 +39,7 @@ import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G4
-import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.theme.Gs_G6
 import com.sachosaeng.app.core.ui.theme.Gs_White
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -97,7 +97,7 @@ internal fun AddVoteScreen(
             Text(
                 modifier = Modifier.padding(top = 20.dp),
                 text = stringResource(id = R.string.add_vote_description),
-                color = Gs_G5,
+                color = Gs_G6,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
             )

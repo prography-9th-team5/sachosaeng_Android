@@ -23,7 +23,7 @@
 
     <!--add vote-->
     <string name="add_vote_title">투표 등록</string>
-    <string name="add_vote_description">*사초생이 검토 후 투표에 등록할게요!</string>
+    <string name="add_vote_description">*등록한 투표 삭제는 1:1 문의에서 요청할 수 있어요!</string>
     <string name="add_vote_multiple_choice_allowed">복수 선택 가능</string>
     <string name="add_vote_dialog_description">투표 주제는 모든 사용자가 참여할 수 있도록\n적절하고 건전한 내용을 작성해 주세요.\n등록된 내용은 관리자 검토 후 업로드 됩니다.</string>
 
