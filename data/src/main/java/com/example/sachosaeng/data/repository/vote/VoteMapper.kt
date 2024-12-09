@@ -70,6 +70,7 @@ object VoteMapper {
                 color = category.backgroundColor ?: GS_BLACK_CODE,
                 name = category.name,
                 imageUrl = category.iconUrl,
+                textColor = category.textColor ?: GS_BLACK_CODE,
             ),
             isBookmarked = isBookmarked,
             isVoted = isVoted,

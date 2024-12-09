@@ -1,6 +1,5 @@
 package com.sachosaeng.app.feature.vote.navigation
 
-import androidx.compose.runtime.internal.composableLambda
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -29,7 +28,8 @@ fun NavController.navigateToVotePreviewDetail(voteId: Int?) {
 fun NavGraphBuilder.addVoteGraph(
     showSnackBar: (String, Int) -> Unit,
     navController: NavHostController,
-    navigateToArticleDetail: (Int, Int) -> Unit
+    navigateToArticleDetail: (Int, Int) -> Unit,
+    navigateToHome: () -> Unit
 ) {
     navigation(
         startDestination = ROUTE_VOTE_DETAIL,
@@ -67,7 +67,7 @@ fun NavGraphBuilder.addVoteGraph(
             )
         ) {
             VotePreviewScreen(
-                navigateToBackStack = { navController.popBackStack() }
+                navigateToBackStack = { navigateToHome() }
             )
         }
     }

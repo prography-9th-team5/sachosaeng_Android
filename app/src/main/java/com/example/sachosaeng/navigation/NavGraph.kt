@@ -72,6 +72,7 @@ internal fun NavGraph(
                     categoryId = categoryId
                 )
             },
+            navigateToHome = { navController.navigateToMain() }
         )
         addArticleGraph(navController = navController)
         addBookmarkGraph(
