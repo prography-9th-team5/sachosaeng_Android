@@ -6,7 +6,7 @@ import javax.inject.Inject
 class AddVoteUseCase @Inject constructor(
     private val voteRepository: VoteRepository
 ) {
-    suspend operator fun invoke(
+    operator fun invoke(
         title: String,
         options: List<String>,
         categoryId: Int,

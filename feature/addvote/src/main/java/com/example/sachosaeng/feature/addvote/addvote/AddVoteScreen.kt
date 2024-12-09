@@ -1,10 +1,9 @@
-package com.example.sachosaeng.feature.addvote
+package com.example.sachosaeng.feature.addvote.addvote
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -29,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.sachosaeng.feature.addvote.component.CategoryList
+import com.example.sachosaeng.core.ui.component.CategoryList
 import com.example.sachosaeng.feature.addvote.component.DefaultSmallTextField
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
@@ -39,19 +38,22 @@ import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G4
-import com.sachosaeng.app.core.ui.theme.Gs_G5
+import com.sachosaeng.app.core.ui.theme.Gs_G6
 import com.sachosaeng.app.core.ui.theme.Gs_White
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun AddVoteScreen(
+    showSnackBar: (String) -> Unit,
     navigateToBackStack: () -> Unit,
+    navigateToVotePreview: (Int) -> Unit,
     viewModel: AddVoteViewModel = hiltViewModel()
 ) {
     val state by viewModel.container.stateFlow.collectAsState()
     viewModel.collectSideEffect {
         when (it) {
-            is AddVoteSideEffect.ShowSnackBar -> navigateToBackStack()
+            is AddVoteSideEffect.NavigateToVotePreview -> navigateToVotePreview(it.voteId)
+            is AddVoteSideEffect.ShowSnackBar -> showSnackBar(it.message)
         }
     }
 
@@ -94,7 +96,7 @@ internal fun AddVoteScreen(
             Text(
                 modifier = Modifier.padding(top = 20.dp),
                 text = stringResource(id = R.string.add_vote_description),
-                color = Gs_G5,
+                color = Gs_G6,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W500,
             )
@@ -179,7 +181,6 @@ private fun DefaultTextField(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
             .fillMaxWidth()
-            .defaultMinSize(minHeight = 62.dp)
     )
 }
 

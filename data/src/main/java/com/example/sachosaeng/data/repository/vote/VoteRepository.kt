@@ -1,5 +1,7 @@
 package com.sachosaeng.app.data.repository.vote
 
+import androidx.paging.PagingData
+import com.sachosaeng.app.core.model.SuggestedVoteInfo
 import com.sachosaeng.app.core.model.Vote
 import com.sachosaeng.app.core.model.VoteInfo
 import com.sachosaeng.app.core.model.VoteList
@@ -16,5 +18,6 @@ interface VoteRepository {
         isMultipleChoiceAllowed: Boolean,
         options: List<String>,
         categoryId: Int
-    ): Flow<Unit>
+    ): Flow<Int>
+    fun getHistoryOfSuggestedVote(): Flow<PagingData<SuggestedVoteInfo>>
 }

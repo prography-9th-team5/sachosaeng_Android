@@ -14,7 +14,7 @@ const val GRAPH_MAIN = "mainGraph"
 
 fun NavController.navigateToMain() {
     navigate(GRAPH_MAIN) {
-        popUpTo(currentBackStackEntry?.destination?.route.orEmpty()) {
+        popUpTo(0) {
             inclusive = true
         }
         launchSingleTop = true

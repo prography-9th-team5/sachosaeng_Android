@@ -50,6 +50,7 @@ fun MyPageScreen(
     navigateToFaq: () -> Unit = {},
     navigateToRequestToAdmin: () -> Unit = {},
     navigateToOpenSource: () -> Unit = {},
+    navigateToSuggestVoteHistory: () -> Unit = {},
     viewModel: MyPageViewModel = hiltViewModel()
 ) {
     val state by viewModel.collectAsState()
@@ -73,7 +74,8 @@ fun MyPageScreen(
         navigateToTermsOfService = navigateToTermsOfService,
         navigateToFaq = navigateToFaq,
         navigateToRequestToAdmin = navigateToRequestToAdmin,
-        navigateToOpenSource = navigateToOpenSource
+        navigateToOpenSource = navigateToOpenSource,
+        navigateToSuggestVoteHistory = navigateToSuggestVoteHistory
     )
 }
 
@@ -88,7 +90,8 @@ internal fun MyPageScreen(
     navigateToTermsOfService: () -> Unit = {},
     navigateToFaq: () -> Unit = {},
     navigateToRequestToAdmin: () -> Unit = {},
-    navigateToOpenSource: () -> Unit = {}
+    navigateToOpenSource: () -> Unit = {},
+    navigateToSuggestVoteHistory: () -> Unit = {}
 ) {
     LazyColumn(
         modifier = Modifier
@@ -122,6 +125,12 @@ internal fun MyPageScreen(
                         MyPageMenuCard(
                             menuName = stringResource(id = string.mypage_menu_suggest_vote),
                             onClick = navigateToRequestToAdmin
+                        )
+                    },
+                    {
+                        MyPageMenuCard(
+                            menuName = stringResource(id = string.mypage_menu_history_of_suggested_vote),
+                            onClick = navigateToSuggestVoteHistory
                         )
                     }
                 )

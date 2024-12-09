@@ -1,7 +1,6 @@
 package com.sachosaeng.app.navigation
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -18,11 +17,13 @@ import com.sachosaeng.app.feature.auth.navigation.navigationToAuth
 import com.sachosaeng.app.feature.bookmark.navigation.addBookmarkGraph
 import com.sachosaeng.app.feature.mypage.navigation.GRAPH_MY_PAGE
 import com.sachosaeng.app.feature.mypage.navigation.addMyPageNavGraph
+import com.sachosaeng.app.feature.mypage.navigation.navigateToHistoryOfSuggestedVote
 import com.sachosaeng.app.feature.signup.navigation.addSignUpNavGraph
 import com.sachosaeng.app.feature.splash.ROUTE_SPLASH
 import com.sachosaeng.app.feature.splash.addSplashNavGraph
 import com.sachosaeng.app.feature.vote.navigation.addVoteGraph
 import com.sachosaeng.app.feature.vote.navigation.navigateToVoteDetail
+import com.sachosaeng.app.feature.vote.navigation.navigateToVotePreviewDetail
 import com.sachosaeng.app.feature.webview.addWebViewScreen
 import com.sachosaeng.app.feature.webview.navigateToWebView
 
@@ -44,7 +45,7 @@ internal fun NavGraph(
             navController = navController,
             navigateToMain = { navController.navigateToMain() },
             navigateToAuth = { navController.navigationToAuth() },
-            snackBarMessage =  { snackBarMessage(it, null) }
+            snackBarMessage = { snackBarMessage(it, null) }
         )
         addMainGraph(
             navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
@@ -71,6 +72,7 @@ internal fun NavGraph(
                     categoryId = categoryId
                 )
             },
+            navigateToHome = { navController.navigateToMain() }
         )
         addArticleGraph(navController = navController)
         addBookmarkGraph(
@@ -88,7 +90,11 @@ internal fun NavGraph(
             navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
             showSnackBar = snackBarMessage
         )
-        addAddVoteGraph(navController = navController)
+        addAddVoteGraph(
+            navigateToVotePreview = { id -> navController.navigateToVotePreviewDetail(id) },
+            navController = navController,
+            showSnackBar = { snackBarMessage(it, null) }
+        )
     }
 }
 

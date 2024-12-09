@@ -1,4 +1,4 @@
-package com.example.sachosaeng.feature.addvote
+package com.example.sachosaeng.feature.addvote.addvote
 
 import com.sachosaeng.app.core.model.Category
 

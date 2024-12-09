@@ -23,6 +23,7 @@ fun SplashScreen(
         when (it) {
             is SplashSideEffect.NavigateToLogin -> navigateToLogin()
             is SplashSideEffect.NavigateToHome -> navigateToMain()
+            else -> {}
         }
     }
 

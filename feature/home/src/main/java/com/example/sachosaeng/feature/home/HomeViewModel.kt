@@ -2,6 +2,7 @@ package com.sachosaeng.app.feature.home
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.usecase.category.GetCategoryListWithAllIconUseCase
@@ -21,9 +22,11 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
+import com.sachosaeng.app.core.ui.R
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val resourceProvider: ResourceProvider,
     private val getDailyVoteUsecase: GetDailyVoteUsecase,
     private val getHotVoteUsecase: GetHotVoteUsecase,
     private val getVoteByCategoryUsecase: GetVoteByCategoryUsecase,
@@ -100,7 +103,6 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getDailyVote() = intent {
-        Log.e("HomeViewModel", "getDailyVote")
         getDailyVoteUsecase().collectLatest {
             reduce {
                 state.copy(
@@ -111,7 +113,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getHotVotes(category: Category = Category()) = intent {
-        val id = if(category.id != ALL_CATEGORY_ID) category.id else null
+        val id = if (category.id != ALL_CATEGORY_ID) category.id else null
         getHotVoteUsecase(id).collectLatest { list ->
             list?.let {
                 reduce {
@@ -144,9 +146,14 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun onAddVoteButtonClicked() = intent {
+        postSideEffect(HomeSideEffect.ShowDialog(resourceProvider.getString(R.string.add_vote_dialog_description)))
+    }
 }
 
 sealed class HomeSideEffect {
+    data class ShowDialog(val message: String) : HomeSideEffect()
     data class NavigateToVoteDetail(val voteId: Int, val isDailyVote: Boolean) : HomeSideEffect()
     data object NavigateToAddVote : HomeSideEffect()
 }

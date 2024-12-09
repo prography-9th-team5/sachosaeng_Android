@@ -6,7 +6,7 @@ import com.sachosaeng.app.data.model.bookmark.ArticleBookmarkListRequest
 import com.sachosaeng.app.data.model.bookmark.BookmarkListRequest
 import com.sachosaeng.app.data.model.bookmark.BookmarkResponse
 import com.sachosaeng.app.data.model.bookmark.BookmarkedArticleResponse
-import com.sachosaeng.app.data.model.bookmark.SingleVoteBookmarkRequest
+import com.sachosaeng.app.data.model.bookmark.VoteIdModel
 
 object BookmarkMapper {
     fun List<Bookmark>.toRequest(): BookmarkListRequest {
@@ -21,8 +21,8 @@ object BookmarkMapper {
         )
     }
 
-    fun Int.toRequest(): SingleVoteBookmarkRequest {
-        return SingleVoteBookmarkRequest(this)
+    fun Int.toRequest(): VoteIdModel {
+        return VoteIdModel(this)
     }
 
     fun BookmarkResponse.toDomain(): List<Bookmark> {

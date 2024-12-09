@@ -41,6 +41,8 @@ ossLicensesPlugin = "0.10.6"
 ossLicenses = "17.0.0"
 
 crashlytics = "3.0.2"
+pagingCommonAndroid = "3.3.4"
+
 
 
 [libraries]
@@ -101,6 +103,12 @@ oss_licenses = { group = "com.google.android.gms", name = "play-services-oss-lic
 
 crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "crashlytics" }
 analytics = { group = "com.google.firebase", name = "firebase-analytics" }
+androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "pagingCommonAndroid" }
+
+#paging
+androidx-paging-runtime-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "pagingCommonAndroid" }
+androidx-paging-common = { group = "androidx.paging", name = "paging-common", version.ref = "pagingCommonAndroid" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "pagingCommonAndroid" }
 
 [plugins]
 oss_licenses_plugin = { id = "com.google.android.gms.oss-licenses-plugin", version.ref = "ossLicensesPlugin" }

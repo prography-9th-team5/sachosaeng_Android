@@ -2,6 +2,7 @@ package com.sachosaeng.app.main
 
 import android.content.Intent
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -22,6 +23,7 @@ import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.component.bottomappbar.BottomAppbarItem
 import com.sachosaeng.app.core.ui.component.bottomappbar.SachoSaengBottomAppBar
 import com.sachosaeng.app.core.ui.component.snackbar.SachoSaengSnackbar
+import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
 import com.sachosaeng.app.feature.auth.navigation.navigationToAuth
 import com.sachosaeng.app.feature.bookmark.navigation.ROUTE_BOOKMARK
@@ -66,6 +68,7 @@ fun AppScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it)
+                    .background(Gs_G2)
             ) {
                 NavGraph(
                     navController = navController,

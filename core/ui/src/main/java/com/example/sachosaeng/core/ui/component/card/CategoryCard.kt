@@ -1,4 +1,4 @@
-package com.example.sachosaeng.core.ui.component
+package com.example.sachosaeng.core.ui.component.card
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.transition.Visibility
 import coil.compose.AsyncImage
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.theme.Gs_G2

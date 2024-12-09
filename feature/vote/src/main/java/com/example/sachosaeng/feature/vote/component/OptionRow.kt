@@ -44,8 +44,8 @@ fun OptionRow(
     text: String,
     isSeleceted: Boolean,
     isVoted: Boolean,
-    optionPercentage: Float,
-    onSelected: (String) -> Unit
+    optionPercentage: Float = 0f,
+    onSelected: (String) -> Unit = {}
 ) {
     var largestSize by remember { mutableStateOf(IntSize.Zero) }
     val normalizedPercentage = (optionPercentage / 100f).coerceIn(0f, 1f)

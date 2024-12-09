@@ -49,5 +49,9 @@ val InactiveTextColor = Color(0xFF98A2B3)
 //ButtonColor
 val Kakao_Yellow = Color(0xFFFEE500)
 
+//ETC
+val BLUE_0BA5EC = Color(0xFF0BA5EC)
+val RED_F04438 = Color(0xFFF04438)
+
 
 
