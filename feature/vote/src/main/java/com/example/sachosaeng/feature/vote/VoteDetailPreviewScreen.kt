@@ -45,12 +45,12 @@ fun VoteDetailPreviewScreen(
     }
 
     VoteDetailPreviewScreen(
-        vote = state.vote,
-        similarArticle = state.similarArticle,
-        completeDescriptionIconRes = state.completeDescriptionIconRes,
-        onSelectOption = { viewModel.selectOption(it) },
-        onBookmarkVote = { viewModel.bookmarkVote() },
-        onVoteComplete = { viewModel.voteComplete() },
+        vote = state.value.vote,
+        similarArticle = state.value.similarArticle,
+        completeDescriptionIconRes = state.value.completeIconImageRes,
+        onSelectOption = { viewModel.onSelectOption(it) },
+        onBookmarkVote = { viewModel.bookmarkButtonClick() },
+        onVoteComplete = { viewModel.vote() },
         navigateToBackStack = navigateToBackStack,
         navigateToArticleDetail = navigateToArticleDetail
     )
