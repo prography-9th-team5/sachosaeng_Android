@@ -4,21 +4,17 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.paging.LoadState
-import com.sachosaeng.app.core.model.RegisterStatus
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.sachosaeng.app.core.model.SuggestedVoteInfo
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengDetailTopAppBar
 import com.sachosaeng.app.feature.bookmark.component.EmptyScreen
-import kotlinx.coroutines.flow.flowOf
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -27,13 +23,14 @@ fun HistoryOfSuggestedVoteScreen(
     viewModel: HistoryOfSuggestedVoteViewModel = hiltViewModel()
 ) {
     val state = viewModel.collectAsState()
-    HistoryOfSuggestedVoteScreen(state = state.value, navigateToBackStack = navigateToBackStack)
+    HistoryOfSuggestedVoteScreen(state = state.value, navigateToBackStack = navigateToBackStack, onVoteItemClick = viewModel::onVoteItemClick)
 }
 
 @Composable
 internal fun HistoryOfSuggestedVoteScreen(
     modifier: Modifier = Modifier,
     navigateToBackStack: () -> Unit = {},
+    onVoteItemClick: (SuggestedVoteInfo) -> Unit = {},
     state: HistoryOfSuggestedVoteUiState
 ) {
     val voteList = state.voteList.collectAsLazyPagingItems()
@@ -60,7 +57,7 @@ internal fun HistoryOfSuggestedVoteScreen(
                 )
             }
             items(voteList.itemCount) { index ->
-                voteList[index]?.let { HistoryOfSuggestedVoteItem(voteInfo = it) }
+                voteList[index]?.let { HistoryOfSuggestedVoteItem(voteInfo = it, onVoteItemClick = onVoteItemClick ) }
             }
         }
     }

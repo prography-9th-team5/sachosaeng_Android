@@ -50,7 +50,7 @@ class VoteRepositoryImpl @Inject constructor(
         isMultipleChoiceAllowed: Boolean,
         options: List<String>,
         categoryId: Int
-    ): Flow<Unit> = flow {
+    ): Flow<Int> = flow {
         voteService.addVote(
             AddVoteRequest(
                 title = title,
@@ -60,7 +60,7 @@ class VoteRepositoryImpl @Inject constructor(
             )
         ).getOrNull()?.data?.let {
             emit(
-                it
+                it.voteId
             )
         }
     }

@@ -6,18 +6,13 @@ import android.webkit.WebViewClient
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.sachosaeng.core.ui.component.topappbar.SachosaengTopAppBarWithCloseButton
 
 @Composable
 fun WebViewScreen(
@@ -29,7 +24,7 @@ fun WebViewScreen(
             .fillMaxSize()
             .background(Color.White),
     ) {
-        WebViewTopAppBar(
+        SachosaengTopAppBarWithCloseButton(
             onCloseClick = onCloseClick
         )
         WebViewContent(url = url)
@@ -57,16 +52,4 @@ internal fun WebViewContent(url: String) {
     }, update = {
         it.loadUrl(url)
     })
-}
-
-@Composable
-internal fun WebViewTopAppBar(
-    onCloseClick: () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Column(modifier = modifier.fillMaxWidth(), horizontalAlignment = Alignment.End) {
-        IconButton(onClick = { onCloseClick() }) {
-            Icon(imageVector = Icons.Default.Close, contentDescription = null)
-        }
-    }
 }

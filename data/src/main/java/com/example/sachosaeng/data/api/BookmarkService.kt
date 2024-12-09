@@ -6,12 +6,11 @@ import com.sachosaeng.app.data.model.bookmark.BookmarkListRequest
 import com.sachosaeng.app.data.model.bookmark.BookmarkResponse
 import com.sachosaeng.app.data.model.bookmark.BookmarkedArticleResponse
 import com.sachosaeng.app.data.model.bookmark.SingleArticleBookmarkRequest
-import com.sachosaeng.app.data.model.bookmark.SingleVoteBookmarkRequest
+import com.sachosaeng.app.data.model.bookmark.VoteIdModel
 import com.sachosaeng.app.data.remote.util.ApiResult
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
-import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -38,7 +37,7 @@ interface BookmarkService {
 
     @POST("/api/v1/bookmarks/votes")
     suspend fun voteBookmark(
-        @Body voteId: SingleVoteBookmarkRequest
+        @Body voteId: VoteIdModel
     ): ApiResult<BaseResponse<Unit>>
 
     @GET("/api/v1/bookmarks/votes/categories/{categoryId}")

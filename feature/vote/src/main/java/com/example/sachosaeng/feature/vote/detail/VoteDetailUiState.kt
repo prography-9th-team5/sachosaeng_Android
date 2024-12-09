@@ -1,4 +1,4 @@
-package com.sachosaeng.app.feature.vote
+package com.example.sachosaeng.feature.vote.detail
 
 import com.sachosaeng.app.core.model.SimilarArticle
 import com.sachosaeng.app.core.model.Vote

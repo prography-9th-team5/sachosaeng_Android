@@ -2,8 +2,8 @@ package com.example.sachosaeng.feature.mypage.historyOfSuggestedVote
 
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.usecase.vote.GetHistoryOfSuggestedVoteUseCase
+import com.sachosaeng.app.core.model.SuggestedVoteInfo
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -30,8 +30,12 @@ class HistoryOfSuggestedVoteViewModel @Inject constructor(
             )
         }
     }
+
+    fun onVoteItemClick(voteInfo: SuggestedVoteInfo) = intent {
+    }
 }
 
 sealed class HistoryOfSuggestedVoteSideEffect {
     data class ShowToast(val message: String) : HistoryOfSuggestedVoteSideEffect()
+    data class NavigateToVotePreviewDetail(val voteId: Int) : HistoryOfSuggestedVoteSideEffect()
 }

@@ -1,13 +1,16 @@
-package com.example.sachosaeng.feature.addvote
+package com.example.sachosaeng.feature.addvote.addvote
 
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.usecase.vote.AddVoteUseCase
+import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
+import org.orbitmvi.orbit.syntax.simple.blockingIntent
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
@@ -17,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddVoteViewModel @Inject constructor(
     val getCategoryListUseCase: GetCategoryListUseCase,
-    val addVoteUseCase: AddVoteUseCase
+    val addVoteUseCase: AddVoteUseCase,
+    val resourceProvider: ResourceProvider
 ) : ViewModel(),
     ContainerHost<AddVoteUiState, AddVoteSideEffect> {
     override val container: Container<AddVoteUiState, AddVoteSideEffect> =
@@ -35,14 +39,14 @@ class AddVoteViewModel @Inject constructor(
         }
     }
 
-    fun onTitleChange(title: String) = intent {
+    fun onTitleChange(title: String) = blockingIntent {
         reduce {
             state.copy(title = title)
         }
         checkIsButtonEnabled()
     }
 
-    fun onOptionSelected(option: String, index: Int) = intent {
+    fun onOptionSelected(option: String, index: Int) = blockingIntent {
         reduce {
             val newOptionList = state.options.toMutableList()
             newOptionList[index] = option
@@ -64,9 +68,9 @@ class AddVoteViewModel @Inject constructor(
             options = state.options,
             categoryId = state.selectedCategory!!.id,
             isMultipleChoiceAllowed = state.canMultipleCheck
-        ).collectLatest {
-            postSideEffect(AddVoteSideEffect.ShowSnackBar("등록한 투표는 관리자 검토 후 업로드 돼요"))
-            postSideEffect(AddVoteSideEffect.NavigateToSuggestedVoteHistory)
+        ).collectLatest { voteId ->
+            postSideEffect(AddVoteSideEffect.ShowSnackBar(resourceProvider.getString(string.add_vote_toast_message)))
+            postSideEffect(AddVoteSideEffect.NavigateToVotePreview(voteId))
         }
     }
 
@@ -89,7 +93,7 @@ class AddVoteViewModel @Inject constructor(
 }
 
 sealed class AddVoteSideEffect {
-    data object NavigateToSuggestedVoteHistory : AddVoteSideEffect()
+    data class NavigateToVotePreview(val voteId: Int) : AddVoteSideEffect()
     data class ShowSnackBar(val message: String) : AddVoteSideEffect()
 }
 

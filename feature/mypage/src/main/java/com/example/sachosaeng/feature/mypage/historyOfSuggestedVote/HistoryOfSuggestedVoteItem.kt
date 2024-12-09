@@ -2,6 +2,7 @@ package com.example.sachosaeng.feature.mypage.historyOfSuggestedVote
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,6 +29,7 @@ import com.sachosaeng.app.core.ui.theme.Gs_White
 @Composable
 fun HistoryOfSuggestedVoteItem(
     voteInfo: SuggestedVoteInfo,
+    onVoteItemClick: (SuggestedVoteInfo) -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -37,6 +39,7 @@ fun HistoryOfSuggestedVoteItem(
             .background(Gs_White)
             .fillMaxWidth()
             .padding(16.dp)
+            .clickable { onVoteItemClick(voteInfo) }
     ) {
         Text(
             text = voteInfo.title,

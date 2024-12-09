@@ -1,9 +1,9 @@
 package com.sachosaeng.app.feature.vote
 
-import android.graphics.drawable.Drawable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.ResourceProvider
+import com.example.sachosaeng.feature.vote.detail.VoteDetailUiState
 import com.sachosaeng.app.core.model.Vote
 import com.sachosaeng.app.core.ui.R.drawable
 import com.sachosaeng.app.core.ui.UserType

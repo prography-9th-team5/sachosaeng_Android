@@ -5,7 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.sachosaeng.feature.addvote.AddVoteScreen
+import com.example.sachosaeng.feature.addvote.addvote.AddVoteScreen
 
 const val ROUTE_ADD_VOTE = "addVote"
 const val GRAPH_ADD_VOTE = "addVote_graph"
@@ -16,7 +16,7 @@ fun NavController.navigateToAddVote() {
 fun NavGraphBuilder.addAddVoteGraph(
     showSnackBar: (String) -> Unit,
     navController: NavHostController,
-    navigateToSuggestedVoteHistory: () -> Unit
+    navigateToVotePreview: (Int) -> Unit
 ) {
     navigation(
         startDestination = ROUTE_ADD_VOTE,
@@ -26,7 +26,7 @@ fun NavGraphBuilder.addAddVoteGraph(
             route = ROUTE_ADD_VOTE
         ) {
             AddVoteScreen(
-                navigateToSuggestedVoteHistory = { navigateToSuggestedVoteHistory() },
+                navigateToVotePreview = { voteId -> navigateToVotePreview(voteId) },
                 navigateToBackStack = { navController.popBackStack() },
                 showSnackBar = showSnackBar
             )

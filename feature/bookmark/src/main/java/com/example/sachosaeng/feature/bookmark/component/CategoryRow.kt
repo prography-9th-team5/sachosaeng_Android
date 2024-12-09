@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.sachosaeng.core.ui.component.CategoryCard
+import com.example.sachosaeng.core.ui.component.card.CategoryCard
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.noRippleClickable

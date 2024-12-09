@@ -23,6 +23,7 @@ import com.sachosaeng.app.feature.splash.ROUTE_SPLASH
 import com.sachosaeng.app.feature.splash.addSplashNavGraph
 import com.sachosaeng.app.feature.vote.navigation.addVoteGraph
 import com.sachosaeng.app.feature.vote.navigation.navigateToVoteDetail
+import com.sachosaeng.app.feature.vote.navigation.navigateToVotePreviewDetail
 import com.sachosaeng.app.feature.webview.addWebViewScreen
 import com.sachosaeng.app.feature.webview.navigateToWebView
 
@@ -89,7 +90,7 @@ internal fun NavGraph(
             showSnackBar = snackBarMessage
         )
         addAddVoteGraph(
-            navigateToSuggestedVoteHistory = { navController.navigateToHistoryOfSuggestedVote() },
+            navigateToVotePreview = { id -> navController.navigateToVotePreviewDetail(id) },
             navController = navController,
             showSnackBar = { snackBarMessage(it, null) }
         )

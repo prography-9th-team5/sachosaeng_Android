@@ -3,6 +3,7 @@ package com.sachosaeng.app.data.api
 import com.example.sachosaeng.data.model.vote.AddVoteRequest
 import com.example.sachosaeng.data.model.vote.GetSuggestedVoteHistoryResponse
 import com.sachosaeng.app.data.model.BaseResponse
+import com.sachosaeng.app.data.model.bookmark.VoteIdModel
 import com.sachosaeng.app.data.model.vote.VoteDetailInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteListInfoByCategoryResponse
@@ -43,12 +44,12 @@ interface VoteService {
     suspend fun setVote(
         @Path("voteId") voteId: Int,
         @Body chosenVoteOptionIds: VoteOptionRequest
-    ): ApiResult<BaseResponse<Unit>>
+    ): ApiResult<BaseResponse<VoteIdModel>>
 
     @POST("/api/v1/votes")
     suspend fun addVote(
         @Body vote: AddVoteRequest
-    ): ApiResult<BaseResponse<Unit>>
+    ): ApiResult<BaseResponse<VoteIdModel>>
 
     @GET("/api/v1/votes/my")
     suspend fun getHistoryOfSuggestedVote(
