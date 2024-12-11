@@ -6,12 +6,15 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sachosaeng.core.util.FirebaseUtil
+import com.example.sachosaeng.core.util.FirebaseUtil.SCREEN_NAME_ARTICLE
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.component.button.BookmarkButton
@@ -25,6 +28,9 @@ fun ArticleDetailScreen(
     navigateToBackStack: () -> Unit,
     viewModel: ArticleDetailViewModel = hiltViewModel()
 ) {
+    LaunchedEffect(Unit) {
+        FirebaseUtil.setScreenView(SCREEN_NAME_ARTICLE)
+    }
     val state = viewModel.collectAsState()
 
     ArticleDetailScreen(

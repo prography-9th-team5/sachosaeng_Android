@@ -1,7 +1,7 @@
 package com.sachosaeng.app.feature.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.UserType
@@ -48,6 +48,7 @@ class HomeViewModel @Inject constructor(
 
     private fun getUserInfo() = intent {
         getMyInfoUsecase().collectLatest {
+            FirebaseUtil.setUser(it.email)
             reduce { state.copy(userType = UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) }
         }
     }
@@ -81,6 +82,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onSelectFavoriteCategory(category: Category) = intent {
+
         val currentMyCategory = state.myCategory
         reduce {
             if (currentMyCategory.contains(category)) state.copy(

@@ -44,7 +44,7 @@ interface VoteService {
     suspend fun setVote(
         @Path("voteId") voteId: Int,
         @Body chosenVoteOptionIds: VoteOptionRequest
-    ): ApiResult<BaseResponse<VoteIdModel>>
+    ): ApiResult<BaseResponse<Unit>>
 
     @POST("/api/v1/votes")
     suspend fun addVote(

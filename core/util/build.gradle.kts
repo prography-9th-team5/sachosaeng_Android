@@ -67,4 +67,9 @@ dependencies {
     ksp(libs.androidx.hilt.complier)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    //ga
+    implementation(libs.firebase.messaging)
+    implementation(libs.analytics)
+    implementation(platform(libs.firebase.bom))
 }

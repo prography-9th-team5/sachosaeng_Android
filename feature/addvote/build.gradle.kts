@@ -86,6 +86,10 @@ dependencies {
     //lottie
     implementation(libs.lottie)
 
+    //ga
+    implementation(libs.analytics)
+    implementation(platform(libs.firebase.bom))
+
     implementation(project(":core:usecase"))
     implementation(project(":core:model"))
     implementation(project(":core:ui"))

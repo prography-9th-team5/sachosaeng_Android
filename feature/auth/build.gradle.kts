@@ -115,6 +115,9 @@ dependencies {
     //coil
     implementation(libs.coil)
 
+    //ga
+    implementation(libs.analytics)
+
     implementation(project(":core:ui"))
     implementation(project(":core:util"))
     implementation(project(":core:usecase"))

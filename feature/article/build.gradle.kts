@@ -84,6 +84,10 @@ dependencies {
     //coil
     implementation(libs.coil)
 
+    //ga
+    implementation(libs.analytics)
+    implementation(platform(libs.firebase.bom))
+
     //module
     implementation(project(":core:model"))
     implementation(project(":core:util"))

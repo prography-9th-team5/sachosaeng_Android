@@ -33,6 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.component.dialog.WarningDialog
+import com.example.sachosaeng.core.util.FirebaseUtil
+import com.example.sachosaeng.core.util.FirebaseUtil.SCREEN_NAME_HOME
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R.drawable
 import com.sachosaeng.app.core.ui.R.string
@@ -61,6 +63,10 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     //todo: dialog 상태가 uistate인지, 아래와 같이 sideEffect인지 생각해보기
+
+    LaunchedEffect(Unit) {
+        FirebaseUtil.setScreenView(SCREEN_NAME_HOME)
+    }
 
     val listState = rememberLazyListState()
     val state = viewModel.collectAsState()
