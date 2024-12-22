@@ -9,10 +9,14 @@ import com.sachosaeng.app.core.model.VoteInfo
 import com.sachosaeng.app.core.model.VoteList
 import com.sachosaeng.app.core.model.VoteOption
 import com.sachosaeng.app.core.util.constant.ColorConstant.GS_BLACK_CODE
+import com.sachosaeng.app.data.model.vote.MultipleCategoryVoteListInfoResponse
+import com.sachosaeng.app.data.model.vote.SingleCategoryVoteResponse
 import com.sachosaeng.app.data.model.vote.VoteDetailInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteListInfoByCategoryResponse
 import com.sachosaeng.app.data.model.vote.VoteListInfoResponse
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 
 object VoteMapper {
     fun VoteInfoResponse.toDomain() = VoteInfo(
@@ -61,6 +65,16 @@ object VoteMapper {
         }
     }
 
+    fun SingleCategoryVoteResponse.toDomain(): VoteList {
+        return this.let {
+            VoteList(
+                category = Category(),
+                description = "",
+                voteInfo = it.votes.map { voteInfoResponse -> voteInfoResponse.toDomain() }
+            )
+        }
+    }
+
     fun VoteDetailInfoResponse.toDomain(): Vote {
         return Vote(
             id = voteId,
@@ -97,5 +111,9 @@ object VoteMapper {
                 registerStatus = RegisterStatus.fromName(suggestedVote.status),
             )
         }
+    }
+
+    fun MultipleCategoryVoteListInfoResponse.toDomain(): List<VoteList> {
+        return this.categories.map { voteList -> voteList.toDomain() }
     }
 }

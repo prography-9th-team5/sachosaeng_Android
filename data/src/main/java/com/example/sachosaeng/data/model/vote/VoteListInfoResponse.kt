@@ -10,8 +10,14 @@ data class VoteListInfoResponse(
 )
 
 @Serializable
+data class MultipleCategoryVoteListInfoResponse(
+    val categories: List<VoteListInfoResponse>,
+)
+
+@Serializable
 data class VoteListInfoByCategoryResponse(
     val description: String,
     val category: CategoryResponse,
     val votes: List<VoteInfoResponse>
 )
+
