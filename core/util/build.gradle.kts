@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.google.ksp)
+    alias(libs.plugins.serialization)
 }
 
 fun Project.gradleLocalProperties(providers: ProviderFactory, rootDir: File): Properties {
@@ -67,6 +68,9 @@ dependencies {
     ksp(libs.androidx.hilt.complier)
     implementation(libs.hilt.android)
     implementation(libs.androidx.hilt.navigation.compose)
+
+    //serialization
+    implementation(libs.kotlinx.serialization.json)
 
     //ga
     implementation(libs.firebase.messaging)

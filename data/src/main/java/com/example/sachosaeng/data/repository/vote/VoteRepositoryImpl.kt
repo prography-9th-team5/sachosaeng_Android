@@ -1,13 +1,15 @@
 package com.sachosaeng.app.data.repository.vote
 
+import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.sachosaeng.data.model.vote.AddVoteRequest
-import com.example.sachosaeng.data.model.vote.SuggestedVote
 import com.example.sachosaeng.data.repository.vote.VoteHistoryPagingSource
 import com.sachosaeng.app.core.model.SuggestedVoteInfo
 import com.sachosaeng.app.core.model.Vote
+import com.sachosaeng.app.core.model.VoteList
+import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import com.sachosaeng.app.data.api.VoteService
 import com.sachosaeng.app.data.model.vote.VoteOptionRequest
 import com.sachosaeng.app.data.repository.vote.VoteMapper.toDomain
@@ -17,6 +19,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+
+//todo: di로 dispathcer 도 주입받도록 수정
 class VoteRepositoryImpl @Inject constructor(
     private val voteService: VoteService
 ) : VoteRepository {
@@ -44,6 +48,19 @@ class VoteRepositoryImpl @Inject constructor(
         voteService.setVote(voteId = voteId, VoteOptionRequest(chosenVoteOptionIds = optionIds))
             .getOrNull()?.data?.let { emit(Unit) }
     }
+
+    override fun getMySuggestedVotes(): Flow<List<VoteList?>> = flow {
+        voteService.getMySuggestedVotes().getOrNull()?.data?.let {
+            emit(it.toDomain())
+        }
+    }.flowOn(Dispatchers.IO)
+
+    override fun getVoteSuggestions(): Flow<List<VoteList?>> = flow {
+        Log.e("11111111", "getVoteSuggestions")
+        voteService.getVoteSuggestions().getOrNull()?.data?.let {
+            emit(it.toDomain())
+        }
+    }.flowOn(Dispatchers.IO)
 
     override fun addVote(
         title: String,

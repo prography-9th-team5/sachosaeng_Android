@@ -1,8 +1,9 @@
 package com.sachosaeng.app.core.usecase.vote
 
 import com.sachosaeng.app.data.repository.vote.VoteRepository
+import javax.inject.Inject
 
 
-class GetMyVoteListUsecase(private val repository: VoteRepository) {
-    operator fun invoke() = repository.getVote(3)
+class GetMyVoteListUsecase @Inject constructor(private val repository: VoteRepository) {
+    operator fun invoke() = repository.getMySuggestedVotes()
 }

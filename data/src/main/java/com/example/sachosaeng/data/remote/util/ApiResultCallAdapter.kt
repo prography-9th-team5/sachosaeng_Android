@@ -1,5 +1,6 @@
 package com.sachosaeng.app.data.remote.util
 
+import android.util.Log
 import com.example.sachosaeng.core.util.ErrorNotifier
 import okhttp3.Request
 import okio.Timeout

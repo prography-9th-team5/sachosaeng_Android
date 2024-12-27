@@ -4,6 +4,8 @@ import com.example.sachosaeng.data.model.vote.AddVoteRequest
 import com.example.sachosaeng.data.model.vote.GetSuggestedVoteHistoryResponse
 import com.sachosaeng.app.data.model.BaseResponse
 import com.sachosaeng.app.data.model.bookmark.VoteIdModel
+import com.sachosaeng.app.data.model.vote.MultipleCategoryVoteListInfoResponse
+import com.sachosaeng.app.data.model.vote.SingleCategoryVoteResponse
 import com.sachosaeng.app.data.model.vote.VoteDetailInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteInfoResponse
 import com.sachosaeng.app.data.model.vote.VoteListInfoByCategoryResponse
@@ -29,10 +31,16 @@ interface VoteService {
         @Path("categoryId") categoryId: Int
     ): ApiResult<BaseResponse<VoteListInfoByCategoryResponse>>
 
-    @GET("/api/v1/votes/hot/categories/{categoryId}")
+    @GET("/api/v1/votes/categories/{categoryId}")
     suspend fun getVotesByCategory(
         @Path("categoryId") categoryId: Int
-    ): ApiResult<BaseResponse<VoteListInfoResponse>>
+    ): ApiResult<BaseResponse<SingleCategoryVoteResponse>>
+
+    @GET("/api/v1/votes/suggestions/my")
+    suspend fun getMySuggestedVotes(): ApiResult<BaseResponse<MultipleCategoryVoteListInfoResponse>>
+
+    @GET("/api/v1/votes/suggestions/all")
+    suspend fun getVoteSuggestions(): ApiResult<BaseResponse<MultipleCategoryVoteListInfoResponse>>
 
     @GET("/api/v1/votes/{voteId}")
     suspend fun getVote(

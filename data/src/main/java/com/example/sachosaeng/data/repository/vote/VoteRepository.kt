@@ -11,6 +11,8 @@ interface VoteRepository {
     fun getDailyVote(): Flow<VoteInfo?>
     fun getHotVotes(categoryId: Int? = null): Flow<VoteList?>
     fun getVotesByCategory(categoryId: Int): Flow<VoteList?>
+    fun getMySuggestedVotes(): Flow<List<VoteList?>>
+    fun getVoteSuggestions(): Flow<List<VoteList?>>
     fun getVote(voteId: Int): Flow<Vote?>
     fun setVote(voteId: Int, optionIds: List<Int?>): Flow<Unit>
     fun addVote(
@@ -19,5 +21,6 @@ interface VoteRepository {
         options: List<String>,
         categoryId: Int
     ): Flow<Int>
+
     fun getHistoryOfSuggestedVote(): Flow<PagingData<SuggestedVoteInfo>>
 }

@@ -23,6 +23,8 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.usecase.vote.GetMyVoteListUsecase
+import com.sachosaeng.app.core.usecase.vote.GetVoteSuggestionsUsecase
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -30,6 +32,8 @@ class HomeViewModel @Inject constructor(
     private val getDailyVoteUsecase: GetDailyVoteUsecase,
     private val getHotVoteUsecase: GetHotVoteUsecase,
     private val getVoteByCategoryUsecase: GetVoteByCategoryUsecase,
+    private val getMyVoteListUsecase: GetMyVoteListUsecase,
+    private val getVoteSuggestionsUsecase: GetVoteSuggestionsUsecase,
     private val getMyInfoUsecase: GetMyInfoUsecase,
     private val getCategoryListWithAllIconUseCase: GetCategoryListWithAllIconUseCase,
     private val getMyCategoryListUsecase: GetMyCategoryListUsecase,
@@ -43,7 +47,8 @@ class HomeViewModel @Inject constructor(
         getCategoryList()
         getDailyVote()
         getHotVotes()
-        getMyCategoryListAndVoteList()
+        getVoteByMyCategory()
+        getMyCategoryList()
     }
 
     private fun getUserInfo() = intent {
@@ -54,13 +59,21 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getVoteByMyCategory() = intent {
-        state.myCategory.forEach {
-            getVoteByCategoryUsecase(it.id).collectLatest {
-                reduce {
-                    state.copy(
-                        mainVoteList = state.mainVoteList.plus(it)
-                    )
-                }
+        getMyVoteListUsecase().collectLatest {
+            reduce {
+                state.copy(
+                    mainVoteList = state.mainVoteList.plus(it)
+                )
+            }
+        }
+    }
+
+    private fun getVoteSuggestions() = intent {
+        getVoteSuggestionsUsecase().collectLatest {
+            reduce {
+                state.copy(
+                    mainVoteList = state.mainVoteList.plus(it)
+                )
             }
         }
     }
@@ -77,12 +90,15 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onSelectCategory(category: Category) = intent {
-        getVoteBySingleCategory(category)
-        getHotVotes(category)
+        if(category.id == ALL_CATEGORY_ID) {
+            getVoteSuggestions()
+        } else {
+            getVoteBySingleCategory(category)
+            getHotVotes(category)
+        }
     }
 
     fun onSelectFavoriteCategory(category: Category) = intent {
-
         val currentMyCategory = state.myCategory
         reduce {
             if (currentMyCategory.contains(category)) state.copy(
@@ -100,7 +116,7 @@ class HomeViewModel @Inject constructor(
 
     fun onModifyComplete() = intent {
         setMyCategoryListUseCase(state.myCategory).collectLatest {
-            getMyCategoryListAndVoteList()
+            getVoteByMyCategory()
         }
     }
 
@@ -115,8 +131,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getHotVotes(category: Category = Category()) = intent {
-        val id = if (category.id != ALL_CATEGORY_ID) category.id else null
-        getHotVoteUsecase(id).collectLatest { list ->
+        getHotVoteUsecase(category.id).collectLatest { list ->
             list?.let {
                 reduce {
                     state.copy(
@@ -133,11 +148,9 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getMyCategoryListAndVoteList() = intent {
+    private fun getMyCategoryList() = intent {
         getMyCategoryListUsecase().collectLatest {
             reduce { state.copy(myCategory = it, modifyMyCategoryListVisibility = false) }
-        }.also {
-            getVoteByMyCategory()
         }
     }
 
