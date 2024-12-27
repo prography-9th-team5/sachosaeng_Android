@@ -1,6 +1,5 @@
 package com.sachosaeng.app.feature.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.ResourceProvider
@@ -132,8 +131,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getHotVotes(category: Category = Category()) = intent {
-        val id = if (category.id != ALL_CATEGORY_ID) category.id else null
-        getHotVoteUsecase(id).collectLatest { list ->
+        getHotVoteUsecase(category.id).collectLatest { list ->
             list?.let {
                 reduce {
                     state.copy(
