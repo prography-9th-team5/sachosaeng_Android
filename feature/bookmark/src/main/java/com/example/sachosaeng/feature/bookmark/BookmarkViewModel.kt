@@ -1,14 +1,13 @@
 package com.sachosaeng.app.feature.bookmark
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Bookmark
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.usecase.bookmark.DeleteArticleBookmarksUseCase
 import com.sachosaeng.app.core.usecase.bookmark.DeleteVoteBookmarksUseCase
-import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkListUseCase
 import com.sachosaeng.app.core.usecase.bookmark.GetBookmarkedArticleListUseCase
 import com.sachosaeng.app.core.usecase.category.GetCategoryListUseCase
@@ -41,8 +40,6 @@ class BookmarkViewModel @Inject constructor(
 
     init {
         getAllCategoryList()
-        getAllBookmarkList()
-        getAllBookmarkedArticleList()
     }
 
     private fun getAllCategoryList() = intent {
@@ -130,7 +127,7 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-    private fun getAllBookmarkList() = intent {
+    fun getAllBookmarkList() = intent {
         getBookmarkListByCategoryUseCase().collectLatest { bookmarkList ->
             reduce {
                 state.copy(
@@ -140,7 +137,7 @@ class BookmarkViewModel @Inject constructor(
         }
     }
 
-    private fun getAllBookmarkedArticleList() = intent {
+    fun getAllBookmarkedArticleList() = intent {
         getBookmarkedArticleListUseCase().collectLatest { bookmarkList ->
             reduce {
                 state.copy(
