@@ -83,7 +83,6 @@ private class ApiResultCall<R>(
                     is IOException -> ApiResult.Failure.NetworkError(throwable)
                     else -> ApiResult.Failure.UnknownApiError(throwable)
                 }
-                Log.e("1111111", throwable.toString())
                 ErrorNotifier.notifyError(throwable)
                 callback.onResponse(this@ApiResultCall, Response.success(error))
             }

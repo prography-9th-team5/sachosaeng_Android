@@ -38,7 +38,7 @@ fun ListByCategory(
         item {
             state.voteListWithCategory?.category.let {
                 CategoryTitleCard(
-                    category = state.voteListWithCategory!!.category,
+                    category = state.hotVotes.category,
                     date = state.hotVotes.description
                 )
             }
