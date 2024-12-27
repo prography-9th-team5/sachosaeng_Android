@@ -50,6 +50,8 @@ fun BookmarkScreen(
 
     LaunchedEffect(Unit) {
         viewModel.getUserInfo()
+        viewModel.getAllBookmarkList()
+        viewModel.getAllBookmarkedArticleList()
     }
 
     BookmarkScreen(
