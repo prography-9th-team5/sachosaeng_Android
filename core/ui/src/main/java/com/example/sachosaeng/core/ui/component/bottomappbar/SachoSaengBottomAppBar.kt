@@ -1,25 +1,31 @@
 package com.sachosaeng.app.core.ui.component.bottomappbar
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sachosaeng.app.core.ui.IntConstant.BOTTOM_BAR_HEIGHT
+import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G4
@@ -34,7 +40,8 @@ fun SachoSaengBottomAppBar(
     val isSelectedIndex = remember { mutableStateOf(0) }
 
     LaunchedEffect(navController.currentBackStackEntry?.destination?.route) {
-        isSelectedIndex.value = items.invoke().indexOfFirst { it.route == navController.currentBackStackEntry?.destination?.route }
+        isSelectedIndex.value = items.invoke()
+            .indexOfFirst { it.route == navController.currentBackStackEntry?.destination?.route }
     }
 
     BottomAppBar(
@@ -44,21 +51,34 @@ fun SachoSaengBottomAppBar(
             .height(BOTTOM_BAR_HEIGHT.dp)
             .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp)),
     ) {
-        Row(horizontalArrangement = Arrangement.SpaceEvenly, modifier = modifier.fillMaxWidth()) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceEvenly,
+            modifier = modifier.fillMaxWidth()
+        ) {
             items.invoke().forEachIndexed { index, it ->
-                IconButton(onClick = {
-                    isSelectedIndex.value = index
-                    navController.navigate(it.route) {
-                        popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
-                            inclusive = true
-                        }
-                        launchSingleTop = true
-                    }
-                }) {
-                    Icon(
-                        painter = painterResource(id = it.icon),
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                ) {
+                    Image(
+                        modifier = Modifier
+                            .size(28.dp)
+                            .noRippleClickable {
+                                isSelectedIndex.value = index
+                                navController.navigate(it.route) {
+                                    popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
+                                        inclusive = true
+                                    }
+                                    launchSingleTop = true
+                                }
+                            },
+                        painter = painterResource(id = if (isSelectedIndex.value == index) it.onIcon else it.offIcon),
                         contentDescription = null,
-                        tint = if (isSelectedIndex.value == index) Gs_Black else Gs_G5
+                    )
+                    Text(
+                        text = stringResource(id = it.label),
+                        color = if (isSelectedIndex.value == index) Gs_Black else Gs_G5,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
                     )
                 }
             }

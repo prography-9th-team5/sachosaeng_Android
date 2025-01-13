@@ -35,6 +35,7 @@ import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R.drawable
 import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.core.ui.component.SelectCategoryBottomSheet
+import com.sachosaeng.app.core.ui.component.topappbar.SachosaengTopAppBar
 import com.sachosaeng.app.core.ui.component.topappbar.TopBarWithProfileImage
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_G2
@@ -98,17 +99,13 @@ fun HomeScreen(
     ) {
         val scope = rememberCoroutineScope()
         Column {
-            TopBarWithProfileImage(
+            SachosaengTopAppBar(
                 modifier = modifier,
-                topBarContent = {
+                componentRow = {
                     CategorySelectButton(
                         selectedCategory = state.value.selectedCategory,
                         onSelectCategory = { isBottomSheetOpen = true }
                     )
-                },
-                userType = state.value.userType,
-                onProfileImageClicked = {
-                    moveToMyPage()
                 }
             )
             if (state.value.selectedCategory.id == ALL_CATEGORY_ID) MainList(
@@ -193,7 +190,9 @@ fun CategorySelectButton(
     Row(
         horizontalArrangement = Arrangement.spacedBy(7.dp),
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.noRippleClickable { onSelectCategory() }
+        modifier = modifier
+            .noRippleClickable { onSelectCategory() }
+            .padding(bottom = 20.dp)
     ) {
         Text(
             text = selectedCategory?.name ?: stringResource(id = string.home_all_category),

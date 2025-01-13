@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -27,6 +29,7 @@ import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
 import com.sachosaeng.app.feature.auth.navigation.navigationToAuth
 import com.sachosaeng.app.feature.bookmark.navigation.ROUTE_BOOKMARK
+import com.sachosaeng.app.feature.mypage.navigation.ROUTE_MY_PAGE
 import com.sachosaeng.app.navigation.NavGraph
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -39,7 +42,7 @@ fun AppScreen(
     var snackbarStatus by remember { mutableStateOf<Pair<String?, Int?>?>(Pair("", null)) }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val isBottomBarNeeded =
-        currentBackStackEntry?.destination?.route == ROUTE_MAIN || currentBackStackEntry?.destination?.route == ROUTE_BOOKMARK
+        currentBackStackEntry?.destination?.route == ROUTE_MAIN || currentBackStackEntry?.destination?.route == ROUTE_BOOKMARK || currentBackStackEntry?.destination?.route == ROUTE_MY_PAGE
 
     BackHandler {
         viewModel.backPressed(currentBackStackEntry?.destination?.route)
@@ -77,7 +80,7 @@ fun AppScreen(
                     }
                 )
                 snackbarStatus?.first?.let { message ->
-                    if(message.isNotEmpty()) SachoSaengSnackbar(
+                    if (message.isNotEmpty()) SachoSaengSnackbar(
                         iconResId = snackbarStatus?.second,
                         message = message,
                         onDismiss = { snackbarStatus = null }
@@ -89,8 +92,24 @@ fun AppScreen(
             if (isBottomBarNeeded) SachoSaengBottomAppBar(
                 items = {
                     listOf(
-                        BottomAppbarItem(ROUTE_MAIN, R.drawable.ic_home),
-                        BottomAppbarItem(ROUTE_BOOKMARK, R.drawable.ic_bookmark)
+                        BottomAppbarItem(
+                            ROUTE_MAIN,
+                            onIcon = R.drawable.ic_home_on,
+                            offIcon = R.drawable.ic_home,
+                            label = R.string.home
+                        ),
+                        BottomAppbarItem(
+                            ROUTE_BOOKMARK,
+                            onIcon = R.drawable.ic_bookmark_on,
+                            offIcon = R.drawable.ic_bookmark,
+                            label = R.string.bookmark
+                        ),
+                        BottomAppbarItem(
+                            ROUTE_MY_PAGE,
+                            onIcon = R.drawable.ic_gnb_profile_on,
+                            offIcon = R.drawable.ic_gnb_profile_off,
+                            label = R.string.my_info
+                        ),
                     )
                 },
                 navController = navController
