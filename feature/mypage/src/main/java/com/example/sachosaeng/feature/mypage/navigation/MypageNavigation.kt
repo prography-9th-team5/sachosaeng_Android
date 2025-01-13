@@ -48,7 +48,6 @@ fun NavGraphBuilder.addMyPageNavGraph(
         composable(ROUTE_MY_PAGE) {
             MyPageScreen(
                 navigateToModifyCategory = { navController.navigate(MODIFY_CATEGORY) },
-                navigateToBackStack = { navController.popBackStack() },
                 navigateToPrivacyPolicy = { navigateToWebView(PRIVACY_POLICY) },
                 navigateToTermsOfService = { navigateToWebView(TERMS_OF_SERVICE) },
                 navigateToUserInfoModify = { navController.navigate(MODIFY_USER_INFO) },

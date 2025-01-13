@@ -43,7 +43,6 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun MyPageScreen(
     navigateToModifyCategory: () -> Unit = {},
-    navigateToBackStack: () -> Unit = {},
     navigateToUserInfoModify: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
     navigateToTermsOfService: () -> Unit = {},
@@ -69,7 +68,6 @@ fun MyPageScreen(
         onLogout = viewModel::showLogoutDialog,
         onModifyUserInfo = navigateToUserInfoModify,
         navigateToModifyCategory = navigateToModifyCategory,
-        navigateToBackStack = navigateToBackStack,
         navigateToPrivacyPolicy = navigateToPrivacyPolicy,
         navigateToTermsOfService = navigateToTermsOfService,
         navigateToFaq = navigateToFaq,
@@ -85,7 +83,6 @@ internal fun MyPageScreen(
     onLogout: () -> Unit = {},
     navigateToModifyCategory: () -> Unit = {},
     onModifyUserInfo: () -> Unit = {},
-    navigateToBackStack: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
     navigateToTermsOfService: () -> Unit = {},
     navigateToFaq: () -> Unit = {},
@@ -97,13 +94,8 @@ internal fun MyPageScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(color = Gs_G2)
-            .padding(horizontal = 20.dp),
+            .padding(20.dp),
     ) {
-        item {
-            DetailScreenTopbar(
-                pageLabel = stringResource(id = string.mypage_top_bar_label),
-                navigateToBackStack = { navigateToBackStack() })
-        }
         item {
             UserInfoCard(
                 userName = myPageUiState.userName,
