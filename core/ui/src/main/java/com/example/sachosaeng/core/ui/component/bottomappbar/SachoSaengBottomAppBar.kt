@@ -63,7 +63,6 @@ fun SachoSaengBottomAppBar(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     IconButton(
-                        modifier = Modifier.size(44.dp),
                         onClick = {
                             isSelectedIndex.value = index
                             navController.navigate(it.route) {
@@ -74,6 +73,7 @@ fun SachoSaengBottomAppBar(
                             }
                         }) {
                         Image(
+                            modifier = Modifier.size(28.dp),
                             painter = painterResource(id = if (isSelectedIndex.value == index) it.onIcon else it.offIcon),
                             contentDescription = null,
                         )
