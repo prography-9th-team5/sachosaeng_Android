@@ -10,9 +10,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.BottomAppBarDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,7 +18,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sachosaeng.app.core.ui.IntConstant.BOTTOM_BAR_HEIGHT
+import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G4
@@ -62,22 +59,21 @@ fun SachoSaengBottomAppBar(
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    IconButton(
-                        onClick = {
-                            isSelectedIndex.value = index
-                            navController.navigate(it.route) {
-                                popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
-                                    inclusive = true
+                    Image(
+                        modifier = Modifier
+                            .size(28.dp)
+                            .noRippleClickable {
+                                isSelectedIndex.value = index
+                                navController.navigate(it.route) {
+                                    popUpTo(navController.currentBackStackEntry?.destination?.route.orEmpty()) {
+                                        inclusive = true
+                                    }
+                                    launchSingleTop = true
                                 }
-                                launchSingleTop = true
-                            }
-                        }) {
-                        Image(
-                            modifier = Modifier.size(28.dp),
-                            painter = painterResource(id = if (isSelectedIndex.value == index) it.onIcon else it.offIcon),
-                            contentDescription = null,
-                        )
-                    }
+                            },
+                        painter = painterResource(id = if (isSelectedIndex.value == index) it.onIcon else it.offIcon),
+                        contentDescription = null,
+                    )
                     Text(
                         text = stringResource(id = it.label),
                         color = if (isSelectedIndex.value == index) Gs_Black else Gs_G5,

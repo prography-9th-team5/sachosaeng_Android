@@ -42,7 +42,7 @@ fun AppScreen(
     var snackbarStatus by remember { mutableStateOf<Pair<String?, Int?>?>(Pair("", null)) }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val isBottomBarNeeded =
-        currentBackStackEntry?.destination?.route == ROUTE_MAIN || currentBackStackEntry?.destination?.route == ROUTE_BOOKMARK
+        currentBackStackEntry?.destination?.route == ROUTE_MAIN || currentBackStackEntry?.destination?.route == ROUTE_BOOKMARK || currentBackStackEntry?.destination?.route == ROUTE_MY_PAGE
 
     BackHandler {
         viewModel.backPressed(currentBackStackEntry?.destination?.route)

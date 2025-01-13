@@ -42,10 +42,10 @@ fun NavGraphBuilder.addMyPageNavGraph(
     snackBarMessage: (String) -> Unit = {}
 ) {
     navigation(
-        route = ROUTE_MY_PAGE,
-        startDestination = GRAPH_MY_PAGE
+        route = GRAPH_MY_PAGE,
+        startDestination = ROUTE_MY_PAGE
     ) {
-        composable(GRAPH_MY_PAGE) {
+        composable(ROUTE_MY_PAGE) {
             MyPageScreen(
                 navigateToModifyCategory = { navController.navigate(MODIFY_CATEGORY) },
                 navigateToBackStack = { navController.popBackStack() },
