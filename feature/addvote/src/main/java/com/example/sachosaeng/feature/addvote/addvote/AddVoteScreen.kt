@@ -2,6 +2,7 @@ package com.example.sachosaeng.feature.addvote.addvote
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -76,6 +77,7 @@ fun AddVoteScreen(
 
 @Composable
 internal fun AddVoteScreen(
+    modifier: Modifier = Modifier,
     state: AddVoteUiState,
     onTitleChange: (String) -> Unit = {},
     onOptionChanged: (String, Int) -> Unit = { _, _ -> },
@@ -85,7 +87,7 @@ internal fun AddVoteScreen(
     navigateToBackStack: () -> Unit = {}
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .background(Gs_G2)
             .fillMaxSize()
             .padding(20.dp)
@@ -99,17 +101,15 @@ internal fun AddVoteScreen(
             )
         }
         item {
-            Text(
-                modifier = Modifier.padding(top = 20.dp),
-                text = stringResource(id = R.string.add_vote_description),
-                color = Gs_G6,
-                fontSize = 12.sp,
-                fontWeight = FontWeight.W500,
-            )
+            Description(description = R.string.add_vote_description)
         }
         item {
             Title(resId = R.string.vote_title)
-            DefaultTextField(value = state.title, onValueChange = onTitleChange)
+            DefaultTextField(
+                value = state.title,
+                onValueChange = onTitleChange,
+                placeholder = stringResource(id = R.string.vote_title_place_holder)
+            )
         }
         item {
             AddOptionTitleRow(
@@ -121,13 +121,20 @@ internal fun AddVoteScreen(
             DefaultSmallTextField(
                 value = state.options[it],
                 onValueChange = { value -> onOptionChanged(value, it) },
-                placeholder = stringResource(id = R.string.vote_option),
+                placeholder = stringResource(id = R.string.vote_option_place_holder),
             )
         }
         item {
-            Title(
-                resId = R.string.vote_category
-            )
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Title(
+                    resId = R.string.vote_category
+                )
+                Description(description = R.string.add_vote_option_required)
+            }
             CategoryList(
                 selectedCategory = listOf(state.selectedCategory),
                 categories = state.category,
@@ -155,6 +162,19 @@ private fun Title(
         color = Gs_Black,
         fontSize = 15.sp,
         fontWeight = FontWeight.W700,
+    )
+}
+
+@Composable
+private fun Description(
+    description: Int
+) {
+    Text(
+        modifier = Modifier.padding(top = 20.dp),
+        text = stringResource(id = description),
+        color = Gs_G6,
+        fontSize = 12.sp,
+        fontWeight = FontWeight.W500,
     )
 }
 
@@ -243,8 +263,8 @@ private fun AddVoteButton(
 fun AddVoteScreenPreview() {
     AddVoteScreen(
         state = AddVoteUiState(
-            title = "Title",
-            options = listOf("Option1", "Option2", "Option2", "Option2"),
+            title = "",
+            options = listOf("", "Option2", "Option2", "Option2"),
             category = listOf(Category(1, "Category")),
         ),
         onTitleChange = {},
