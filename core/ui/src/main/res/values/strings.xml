@@ -7,12 +7,13 @@
 
     <string name="next">다음</string>
 
-    <string name="home_all_category">전체</string>
-    <string name="category">카테고리</string>
-    <string name="my_category">내 카테고리</string>
+    <string name="home_my_all_category">관심 주제</string>
+    <string name="home_all_category">전체 주제</string>
+    <string name="category">주제</string>
+    <string name="my_category">내 주제</string>
     <string name="all_category_icon_text">ALL</string>
-    <string name="all_category">전체 카테고리</string>
-    <string name="category_change">카테고리 변경</string>
+    <string name="all_category">전체 주제</string>
+    <string name="category_change">주제 변경</string>
     <string name="change">변경</string>
     <string name="confirm_label">확인</string>
     <string name="complete_label">완료</string>
@@ -41,7 +42,7 @@
     <string name="vote_preview">투표 미리보기</string>
     <string name="vote_option">선택지</string>
     <string name="vote_option_place_holder">투표 선택 항목을 입력해주세요.</string>
-    <string name="vote_category">카테고리</string>
+    <string name="vote_category">주제</string>
     <string name="vote_title_place_holder">투표 제목을 작성해주세요\n예시:사회초년생 첫 차로 좋은 차는?</string>
 
     <string name="vote_status_pending">사초생 검토 중</string>
@@ -70,7 +71,7 @@
     <string name="mypage_menu_faq">FAQ</string>
     <string name="start_button">시작</string>
     <string name="modify_category_title">관심사 설정</string>
-    <string name="my_category_is_empty">관심 카테고리가 없어요!\n편집을 눌러 카테고리를 추가해 보세요</string>
+    <string name="my_category_is_empty">관심 주제가 없어요!\n편집을 눌러 주제를 추가해 보세요</string>
 
     <!-- signup -->
     <string name="login_with_kakao">카카오로 로그인</string>
@@ -82,14 +83,14 @@
     <string name="agree_personal_information">개인정보 수집 및 이용 동의 (필수)</string>
     <string name="agree_service_terms">서비스 이용약관 동의 (필수)</string>
     <string name="select_user_type_screen_title">사초생 유형 선택</string>
-    <string name="select_category_screen_top_bar">카테고리 선택</string>
+    <string name="select_category_screen_top_bar">주제 선택</string>
     <string name="select_user_type_label">어떤 사회초년생에\n해당하나요?</string>
     <string name="select_user_type_desc">*선택한 유형에 맞는 정보를 제공해 드려요</string>
     <string name="user_type_student">학생</string>
     <string name="user_type_jobseeker">취업준비생</string>
     <string name="user_type_newcomer">1~3년차 직장인</string>
     <string name="user_type_etc">기타</string>
-    <string name="select_initial_category_label">관심 있는 카테고리를\n모두 선택해 주세요</string>
+    <string name="select_initial_category_label">관심 있는 주제를\n모두 선택해 주세요</string>
     <string name="select_initial_category_desc">*복수 선택이 가능해요</string>
     <string name="skip_button">SKIP</string>
     <string name="welcome_text">%s 님!\n사초생에 오신 걸 환영해요</string>

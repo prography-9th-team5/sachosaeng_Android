@@ -226,11 +226,15 @@ fun CategorySelectButton(
             .noRippleClickable { onSelectCategory() }
             .padding(bottom = 20.dp)
     ) {
-        Text(
-            text = selectedCategory?.name ?: stringResource(id = string.home_all_category),
-            fontSize = 26.sp,
-            fontWeight = FontWeight.W700
-        )
+        (if (selectedCategory?.name?.isNotEmpty() == true) selectedCategory.name else stringResource(
+            id = string.home_my_all_category
+        )).let {
+            Text(
+                text = it,
+                fontSize = 26.sp,
+                fontWeight = FontWeight.W700
+            )
+        }
         Image(painter = painterResource(id = R.drawable.ic_category), contentDescription = null)
     }
 }
