@@ -52,6 +52,7 @@ fun DailyVoteDetailCard(
         ) {
             CategoryIcon(imageUrl = vote.category.imageUrl)
             BookmarkButton(
+                modifier = Modifier.size(68.dp),
                 isBookmarked = isBookmarked,
                 onBookmarkButtonClicked = onBookmarkButtonClicked
             )

@@ -2,5 +2,6 @@ package com.sachosaeng.app.core.model
 
 data class SimilarArticle (
     val articleId: Int,
-    val title: String
+    val title: String,
+    val bookmarkCount: Int
 )

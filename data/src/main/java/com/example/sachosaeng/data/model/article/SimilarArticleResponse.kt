@@ -10,5 +10,6 @@ data class SimilarArticleResponse (
 @Serializable
 data class SimilarArticleInfo (
     val informationId: Int,
-    val title: String
+    val title: String,
+    val bookmarkCount: Int
 )
