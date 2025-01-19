@@ -12,7 +12,8 @@ object ArticleMapper {
         return information.map {
             SimilarArticle(
                 articleId = it.informationId,
-                title = it.title
+                title = it.title,
+                bookmarkCount = it.bookmarkCount
             )
         }
     }

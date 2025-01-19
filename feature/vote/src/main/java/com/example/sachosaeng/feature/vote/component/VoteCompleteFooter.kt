@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sachosaeng.app.core.model.SimilarArticle
@@ -63,8 +64,38 @@ fun VoteCompleteFooter(
                 fontSize = 18.sp
             )
             similarArticleList.forEach {
-                ArticleRow(similarArticle = it, onClickArticle = navigateToArticleDetail)
+                ArticleRow(
+                    similarArticle = it,
+                    onClickArticle = navigateToArticleDetail
+                )
             }
         }
     }
+}
+
+@Composable
+@Preview(showBackground = true)
+fun VoteCompleteFooterPreview() {
+    VoteCompleteFooter(
+        similarArticleList = listOf(
+            SimilarArticle(
+                articleId = 1,
+                title = "아이폰13, 5G 모델이 2022년 출시 예정",
+                10,
+            ),
+            SimilarArticle(
+                articleId = 2,
+                title = "아이폰13, 5G 모델이 2022년 출시 예정",
+                10,
+            ),
+            SimilarArticle(
+                articleId = 3,
+                title = "아이폰13, 5G 모델이 2022년 출시 예정",
+                10,
+            ),
+        ),
+        completeDescription = "투표가 완료되었습니다.",
+        completeDescriptionIconRes = R.drawable.ic_vote_complete_etc,
+        navigateToArticleDetail = {}
+    )
 }
