@@ -35,7 +35,6 @@ fun NavGraphBuilder.addMainGraph(
             deepLinks = listOf(navDeepLink { uriPattern = NavigationConstant.Main.MAIN_DEEP_LINK })
         ) {
             HomeScreen(
-                moveToMyPage = { navigateToMyPage() },
                 navigateToAddVote = navigateToAddVote,
                 navigateToVoteCard = { voteId, isDailyVote ->
                     navigateToVoteDetail(voteId, isDailyVote)

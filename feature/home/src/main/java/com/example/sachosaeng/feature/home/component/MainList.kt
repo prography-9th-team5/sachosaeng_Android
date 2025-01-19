@@ -1,6 +1,7 @@
 package com.sachosaeng.app.feature.home.component
 
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import com.sachosaeng.app.core.ui.component.CategoryTitleText
 import com.sachosaeng.app.core.ui.component.VoteColumnByCategory
@@ -9,7 +10,7 @@ import com.sachosaeng.app.feature.home.HomeScreenUiState
 @Composable
 fun MainList(
     state: HomeScreenUiState,
-    listState: androidx.compose.foundation.lazy.LazyListState,
+    listState: LazyListState,
     navigateToVoteCard: (Int, Boolean) -> Unit
 ) {
     LazyColumn(

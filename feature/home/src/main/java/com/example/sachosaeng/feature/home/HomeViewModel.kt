@@ -1,5 +1,6 @@
 package com.sachosaeng.app.feature.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.ResourceProvider
@@ -72,6 +73,7 @@ class HomeViewModel @Inject constructor(
         getVoteSuggestionsUsecase().collectLatest {
             reduce {
                 state.copy(
+                    selectedCategory = state.allCategory.first { it.id == ALL_CATEGORY_ID },
                     mainVoteList = state.mainVoteList.plus(it)
                 )
             }
