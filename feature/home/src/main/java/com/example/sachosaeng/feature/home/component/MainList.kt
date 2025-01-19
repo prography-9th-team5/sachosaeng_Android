@@ -4,6 +4,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
 import com.sachosaeng.app.core.ui.component.CategoryTitleText
+import com.sachosaeng.app.core.ui.component.VoteCardByCategory
 import com.sachosaeng.app.core.ui.component.VoteColumnByCategory
 import com.sachosaeng.app.feature.home.HomeScreenUiState
 
@@ -26,7 +27,7 @@ fun MainList(
         }
         item {
             CategoryTitleText(category = state.hotVotes.category)
-            VoteColumnByCategory(
+            VoteCardByCategory(
                 rankinTextVisibility = true,
                 voteList = state.hotVotes.voteInfo,
                 onVoteClick = { navigateToVoteCard(it, false) }
