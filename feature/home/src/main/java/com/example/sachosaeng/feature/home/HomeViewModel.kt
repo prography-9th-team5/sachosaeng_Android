@@ -72,7 +72,8 @@ class HomeViewModel @Inject constructor(
         getVoteSuggestionsUsecase().collectLatest {
             reduce {
                 state.copy(
-                    selectedCategory = state.allCategory.first { it.id == ALL_CATEGORY_ID },
+                    selectedCategory = state.allCategory.first { it.id == ALL_CATEGORY_ID }
+                        .copy(name = resourceProvider.getString(R.string.home_all_category)),
                     mainVoteList = state.mainVoteList.plus(it)
                 )
             }
@@ -91,7 +92,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onSelectCategory(category: Category) = intent {
-        if(category.id == ALL_CATEGORY_ID) {
+        if (category.id == ALL_CATEGORY_ID) {
             getVoteSuggestions()
             getHotVotes()
         } else {
