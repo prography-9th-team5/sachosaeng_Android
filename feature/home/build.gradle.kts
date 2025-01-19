@@ -52,7 +52,6 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(project(":core:usecase"))
 
     //test
     testImplementation(libs.junit)
@@ -90,4 +89,5 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":core:model"))
     implementation(project(":core:util"))
+    implementation(project(":core:usecase"))
 }

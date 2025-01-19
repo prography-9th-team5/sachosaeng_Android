@@ -1,5 +1,6 @@
 package com.sachosaeng.app.feature.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,7 +37,6 @@ import com.sachosaeng.app.core.ui.R.drawable
 import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.core.ui.component.SelectCategoryBottomSheet
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengTopAppBar
-import com.sachosaeng.app.core.ui.component.topappbar.TopBarWithProfileImage
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G6
@@ -51,22 +51,17 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun HomeScreen(
-    modifier: Modifier = Modifier,
-    moveToMyPage: () -> Unit = {},
     navigateToAddVote: () -> Unit = {},
     navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-    //todo: dialog 상태가 uistate인지, 아래와 같이 sideEffect인지 생각해보기
+    var isWarningDialogMessage by remember { mutableStateOf("") }
 
     LaunchedEffect(Unit) {
         FirebaseUtil.setScreenView(SCREEN_NAME_HOME)
     }
 
-    val listState = rememberLazyListState()
     val state = viewModel.collectAsState()
-    var isBottomSheetOpen by remember { mutableStateOf(false) }
-    var isWarningDialogMessage by remember { mutableStateOf("") }
 
     viewModel.collectSideEffect {
         when (it) {
@@ -77,15 +72,48 @@ fun HomeScreen(
         }
     }
 
-    if (state.value.isDailyVoteDialogOpen) TodaysVoteDialog(
+    HomeScreen(
+        state = state.value,
+        deleteWarningDialogMessage = { isWarningDialogMessage = "" },
+        isWarningDialogMessage = isWarningDialogMessage,
+        onSelectFavoriteCategory = viewModel::onSelectFavoriteCategory,
+        onSelectCategory = viewModel::onSelectCategory,
+        onModifyComplete = viewModel::onModifyComplete,
+        onModifyMyCategory = viewModel::onModifyMyCategory,
+        onAddVoteButtonClicked = viewModel::onAddVoteButtonClicked,
+        navigateToVoteCard = { voteId, isDailyVote -> navigateToVoteCard(voteId, isDailyVote) },
+        navigateToAddVote = navigateToAddVote,
+        onDailyVoteDialogConfirmClicked = viewModel::onDailyVoteDialogConfirmClicked
+    )
+}
+
+@Composable
+internal fun HomeScreen(
+    modifier: Modifier = Modifier,
+    state: HomeScreenUiState,
+    deleteWarningDialogMessage: () -> Unit,
+    isWarningDialogMessage: String = "",
+    onSelectFavoriteCategory: (Category) -> Unit,
+    onSelectCategory: (Category) -> Unit,
+    onModifyComplete: () -> Unit,
+    onModifyMyCategory: () -> Unit,
+    onAddVoteButtonClicked: () -> Unit,
+    navigateToVoteCard: (Int, Boolean) -> Unit,
+    navigateToAddVote: () -> Unit,
+    onDailyVoteDialogConfirmClicked: () -> Unit,
+) {
+    val listState = rememberLazyListState()
+    var isBottomSheetOpen by remember { mutableStateOf(false) }
+
+    if (state.isDailyVoteDialogOpen) TodaysVoteDialog(
         onClick = {
-            viewModel.onDailyVoteDialogConfirmClicked()
+            onDailyVoteDialogConfirmClicked()
         }
     )
     if (isWarningDialogMessage.isNotEmpty()) WarningDialog(
         onConfirm = {
             navigateToAddVote()
-            isWarningDialogMessage = ""
+            deleteWarningDialogMessage()
         },
         errorMessage = isWarningDialogMessage,
         confirmLabel = stringResource(id = string.confirm_label)
@@ -98,23 +126,27 @@ fun HomeScreen(
             .padding(20.dp)
     ) {
         val scope = rememberCoroutineScope()
+
+        Log.d("HomeScreen", "HomeScreen: ${state.allCategory}")
+        Log.d("HomeScreen", "HomeScreen: ${state.selectedCategory}")
+
         Column {
             SachosaengTopAppBar(
                 modifier = modifier,
                 componentRow = {
                     CategorySelectButton(
-                        selectedCategory = state.value.selectedCategory,
+                        selectedCategory = state.selectedCategory,
                         onSelectCategory = { isBottomSheetOpen = true }
                     )
                 }
             )
-            if (state.value.selectedCategory.id == ALL_CATEGORY_ID) MainList(
-                state = state.value,
+            if (state.selectedCategory.id == ALL_CATEGORY_ID) MainList(
+                state = state,
                 listState = listState,
                 navigateToVoteCard = navigateToVoteCard
             )
             else ListByCategory(
-                state = state.value,
+                state = state,
                 navigateToVoteCard = navigateToVoteCard
             )
         }
@@ -131,25 +163,25 @@ fun HomeScreen(
         )
         AddVoteFab(
             modifier = Modifier.align(Alignment.BottomCenter),
-            onClick = viewModel::onAddVoteButtonClicked
+            onClick = onAddVoteButtonClicked
         )
     }
     if (isBottomSheetOpen) {
         SelectCategoryBottomSheet(
-            allCategoryList = state.value.allCategory,
-            myCategoryList = state.value.myCategory,
-            onModifyMyCategoryButtonClicked = viewModel::onModifyMyCategory,
+            allCategoryList = state.allCategory,
+            myCategoryList = state.myCategory,
+            onModifyMyCategoryButtonClicked = onModifyMyCategory,
             onModifyComplete = {
-                viewModel.onModifyComplete()
+                onModifyComplete()
                 isBottomSheetOpen = false
             },
             onDismissRequest = { isBottomSheetOpen = false },
             onSelectCategory = {
-                viewModel.onSelectCategory(it)
+                onSelectCategory(it)
                 isBottomSheetOpen = false
             },
-            onSelectFavoriteCategory = viewModel::onSelectFavoriteCategory,
-            modifyListVisible = state.value.modifyMyCategoryListVisibility
+            onSelectFavoriteCategory = onSelectFavoriteCategory,
+            modifyListVisible = state.modifyMyCategoryListVisibility
         )
     }
 }
@@ -207,5 +239,30 @@ fun CategorySelectButton(
 @Preview
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(
+        state = HomeScreenUiState(
+            allCategory = listOf(
+                Category(1, "category1"),
+                Category(2, "category2"),
+                Category(3, "category3"),
+            ),
+            myCategory = listOf(
+                Category(1, "category1"),
+                Category(2, "category2"),
+                Category(3, "category3"),
+            ),
+            selectedCategory = Category(1, "category1"),
+            modifyMyCategoryListVisibility = false,
+            isDailyVoteDialogOpen = false,
+        ),
+        deleteWarningDialogMessage = {},
+        onSelectFavoriteCategory = {},
+        onSelectCategory = {},
+        onModifyComplete = {},
+        onModifyMyCategory = {},
+        onAddVoteButtonClicked = {},
+        navigateToVoteCard = { _, _ -> },
+        navigateToAddVote = {},
+    ) {
+    }
 }
