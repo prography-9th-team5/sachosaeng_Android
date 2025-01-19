@@ -125,6 +125,7 @@
     <string name="more_vote_button_label">다른 투표 보러 가기</string>
     <string name="todays_vote_dialog_description">오늘의 투표가 도착했어요!</string>
     <string name="todays_vote_complete_label">선택 완료</string>
+    <string name="vote_completed">투표 참여 완료</string>
 
     <!--article-->
     <string name="article_label">연관 콘텐츠</string>

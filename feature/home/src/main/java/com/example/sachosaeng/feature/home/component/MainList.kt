@@ -20,7 +20,7 @@ fun MainList(
         item {
             state.dailyVote?.title?.let {
                 TodaysVoteCard(
-                    voteTitle = state.dailyVote.title,
+                    vote = state.dailyVote,
                     onClick = { state.dailyVote.id.let { navigateToVoteCard(it, true) } }
                 )
             }

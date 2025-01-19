@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.component.CategoryList
+import com.example.sachosaeng.core.ui.component.card.OptionRow
 import com.example.sachosaeng.core.ui.component.topappbar.SachosaengTopAppBarWithCloseButton
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R
@@ -28,7 +29,6 @@ import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G5
 import com.sachosaeng.app.core.ui.theme.Gs_G6
 import com.sachosaeng.app.core.ui.theme.Gs_White
-import com.sachosaeng.app.feature.vote.component.OptionRow
 
 @Composable
 fun VotePreviewScreen(

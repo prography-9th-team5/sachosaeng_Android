@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.example.sachosaeng.core.ui.component.card.OptionRow
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.model.Vote
 import com.sachosaeng.app.core.model.VoteOption

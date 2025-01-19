@@ -123,7 +123,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getDailyVote() = intent {
-        getDailyVoteUsecase().collectLatest {
+        getDailyVoteUsecase().let {
             reduce {
                 state.copy(
                     dailyVote = it, isDailyVoteDialogOpen = it?.isVoted == false
