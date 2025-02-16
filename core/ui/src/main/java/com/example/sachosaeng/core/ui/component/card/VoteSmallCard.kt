@@ -1,5 +1,6 @@
 package com.sachosaeng.app.core.ui.component
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,7 +18,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -25,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G3
 import com.sachosaeng.app.core.ui.theme.Gs_G6
@@ -39,8 +43,6 @@ fun VoteSmallCard(
     backgroundColorCode: String,
     iconUrl: String? = null,
     voteCount: Int? = null,
-    ranking: Int,
-    rankingTextVisibility: Boolean = false
 ) {
     val backgroundColorCode = if (isVoted) Gs_G3 else Color(backgroundColorCode.toColorResource())
 
@@ -50,17 +52,33 @@ fun VoteSmallCard(
         ),
         modifier = modifier.size(width = 156.dp, height = 176.dp)
     ) {
-        Box (modifier = modifier.padding(16.dp).fillMaxSize()) {
+        Box(
+            modifier = modifier
+                .padding(16.dp)
+                .fillMaxSize()
+        ) {
             Column {
                 Row {
-                    Column(verticalArrangement = Arrangement.Center, modifier = modifier.width(176.dp)) {
+                    Column(
+                        verticalArrangement = Arrangement.Center,
+                        modifier = modifier.width(176.dp)
+                    ) {
                         voteCount?.let {
-                            Text(
-                                text = voteCount.toNumberOfPeople(),
-                                color = Gs_G6,
-                                fontSize = 12.sp,
-                                fontWeight = FontWeight.W500
-                            )
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                               if(isVoted) Image(
+                                    painter = painterResource(R.drawable.ic_circle_check_gs_g6),
+                                    contentDescription = null,
+                                )
+                                Text(
+                                    text = voteCount.toNumberOfPeople(),
+                                    color = Gs_G6,
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.W500
+                                )
+                            }
                         }
                         Text(
                             text = text,
@@ -91,8 +109,6 @@ fun VoteSmallCardPreview() {
         text = "투표 제목투표 제목투표 제목투표 ",
         iconUrl = "https://picsum.photos/200/300",
         voteCount = 20,
-        ranking = 1,
-        rankingTextVisibility = true,
         backgroundColorCode = "#000000",
         isVoted = true
     )

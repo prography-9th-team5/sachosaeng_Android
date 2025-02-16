@@ -17,11 +17,11 @@ fun VoteCardByCategory(
     rankinTextVisibility: Boolean = false,
     onVoteClick: (Int) -> Unit = {}
 ) {
-    LazyRow (
+    LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-         items(count = voteList.size) { index ->
+        items(count = voteList.size) { index ->
             VoteSmallCard(
                 modifier = Modifier
                     .clickable {
@@ -32,8 +32,6 @@ fun VoteCardByCategory(
                 backgroundColorCode = voteList[index].category.color,
                 iconUrl = voteList[index].category.imageUrl,
                 voteCount = voteList[index].voteCount,
-                ranking = index + 1,
-                rankingTextVisibility = rankinTextVisibility
             )
         }
     }
