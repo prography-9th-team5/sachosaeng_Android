@@ -126,10 +126,6 @@ internal fun HomeScreen(
             .padding(20.dp)
     ) {
         val scope = rememberCoroutineScope()
-
-        Log.d("HomeScreen", "HomeScreen: ${state.allCategory}")
-        Log.d("HomeScreen", "HomeScreen: ${state.selectedCategory}")
-
         Column {
             SachosaengTopAppBar(
                 modifier = modifier,
