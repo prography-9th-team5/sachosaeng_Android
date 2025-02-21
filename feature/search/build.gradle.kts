@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.sachosaeng.app.feature.mypage"
+    namespace = "com.sachosaeng.app.feature.search"
     compileSdk = 34
 
     defaultConfig {
@@ -24,10 +24,9 @@ android {
             )
         }
     }
-
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -51,14 +50,7 @@ dependencies {
     //android core
     implementation(libs.core.ktx)
     implementation(libs.appcompat)
-    implementation(libs.material)
     implementation(libs.androidx.paging.common.android)
-
-    //test
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    debugImplementation(libs.ui.tooling)
 
     //compose
     implementation(libs.androidx.activity.compose)
@@ -68,10 +60,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.constraintlayout)
-
-    //paging
-    implementation(libs.androidx.paging.compose)
-    implementation(libs.androidx.paging.common)
 
     // Hilt
     ksp(libs.hilt.compiler)
@@ -84,16 +72,10 @@ dependencies {
     implementation(libs.orbit.viewmodel)
     implementation(libs.orbit.core)
 
-    //coil
-    implementation(libs.coil)
-
-    //ga
-    implementation(libs.analytics)
-    implementation(platform(libs.firebase.bom))
-
-    implementation(project(":core:ui"))
-    implementation(project(":core:util"))
-    implementation(project(":core:model"))
-    implementation(project(":feature:webview"))
-    implementation(project(":core:usecase"))
+    implementation(libs.core.ktx.v1120)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.ext.junit)
+    androidTestImplementation(libs.espresso.core)
 }

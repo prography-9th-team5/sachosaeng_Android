@@ -48,14 +48,14 @@ internal fun NavGraph(
             snackBarMessage = { snackBarMessage(it, null) }
         )
         addMainGraph(
-            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
             navigateToAddVote = { navController.navigateToAddVote() },
             navigateToVoteDetail = { id, isDailyVote ->
                 navController.navigateToVoteDetail(
                     voteId = id,
                     isDailyVote = isDailyVote
                 )
-            }
+            },
+            navigateToSearch = { navController.navigateToWebView("https://www.google.com") }
         )
         addMyPageNavGraph(
             navController = navController,

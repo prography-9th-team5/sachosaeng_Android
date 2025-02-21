@@ -1,6 +1,5 @@
 package com.sachosaeng.app.feature.home
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.component.dialog.WarningDialog
+import com.example.sachosaeng.core.ui.component.searchbar.ExpandableSearchButton
 import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.FirebaseUtil.SCREEN_NAME_HOME
 import com.sachosaeng.app.core.model.Category
@@ -51,6 +51,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun HomeScreen(
+    navigateToSearch: () -> Unit = {},
     navigateToAddVote: () -> Unit = {},
     navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
     viewModel: HomeViewModel = hiltViewModel()
@@ -83,6 +84,7 @@ fun HomeScreen(
         onAddVoteButtonClicked = viewModel::onAddVoteButtonClicked,
         navigateToVoteCard = { voteId, isDailyVote -> navigateToVoteCard(voteId, isDailyVote) },
         navigateToAddVote = navigateToAddVote,
+        navigateToSearch = navigateToSearch,
         onDailyVoteDialogConfirmClicked = viewModel::onDailyVoteDialogConfirmClicked
     )
 }
@@ -99,6 +101,7 @@ internal fun HomeScreen(
     onModifyMyCategory: () -> Unit,
     onAddVoteButtonClicked: () -> Unit,
     navigateToVoteCard: (Int, Boolean) -> Unit,
+    navigateToSearch: () -> Unit,
     navigateToAddVote: () -> Unit,
     onDailyVoteDialogConfirmClicked: () -> Unit,
 ) {
@@ -127,16 +130,15 @@ internal fun HomeScreen(
     ) {
         val scope = rememberCoroutineScope()
 
-        Log.d("HomeScreen", "HomeScreen: ${state.allCategory}")
-        Log.d("HomeScreen", "HomeScreen: ${state.selectedCategory}")
-
         Column {
             SachosaengTopAppBar(
-                modifier = modifier,
                 componentRow = {
                     CategorySelectButton(
                         selectedCategory = state.selectedCategory,
                         onSelectCategory = { isBottomSheetOpen = true }
+                    )
+                    ExpandableSearchButton(
+                        onClick = navigateToSearch
                     )
                 }
             )
@@ -239,7 +241,6 @@ fun CategorySelectButton(
     }
 }
 
-
 @Preview
 @Composable
 fun HomeScreenPreview() {
@@ -259,6 +260,7 @@ fun HomeScreenPreview() {
             modifyMyCategoryListVisibility = false,
             isDailyVoteDialogOpen = false,
         ),
+        navigateToSearch = {},
         deleteWarningDialogMessage = {},
         onSelectFavoriteCategory = {},
         onSelectCategory = {},

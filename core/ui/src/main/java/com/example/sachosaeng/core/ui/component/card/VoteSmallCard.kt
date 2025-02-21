@@ -39,8 +39,6 @@ fun VoteSmallCard(
     backgroundColorCode: String,
     iconUrl: String? = null,
     voteCount: Int? = null,
-    ranking: Int,
-    rankingTextVisibility: Boolean = false
 ) {
     val backgroundColorCode = if (isVoted) Gs_G3 else Color(backgroundColorCode.toColorResource())
 
@@ -91,8 +89,6 @@ fun VoteSmallCardPreview() {
         text = "투표 제목투표 제목투표 제목투표 ",
         iconUrl = "https://picsum.photos/200/300",
         voteCount = 20,
-        ranking = 1,
-        rankingTextVisibility = true,
         backgroundColorCode = "#000000",
         isVoted = true
     )
