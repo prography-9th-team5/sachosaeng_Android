@@ -3,6 +3,7 @@ package com.sachosaeng.app.feature.home.component
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import com.sachosaeng.app.core.ui.component.CategoryTitleText
 import com.sachosaeng.app.core.ui.component.VoteCardByCategory
 import com.sachosaeng.app.core.ui.component.VoteColumnByCategory
@@ -10,6 +11,7 @@ import com.sachosaeng.app.feature.home.HomeScreenUiState
 
 @Composable
 fun MainList(
+    modifier: Modifier = Modifier,
     state: HomeScreenUiState,
     listState: LazyListState,
     navigateToVoteCard: (Int, Boolean) -> Unit

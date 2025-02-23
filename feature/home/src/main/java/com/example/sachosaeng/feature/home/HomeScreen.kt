@@ -4,12 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.component.dialog.WarningDialog
-import com.example.sachosaeng.core.ui.component.searchbar.ExpandableSearchButton
 import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.FirebaseUtil.SCREEN_NAME_HOME
 import com.sachosaeng.app.core.model.Category
@@ -39,6 +39,7 @@ import com.sachosaeng.app.core.ui.component.SelectCategoryBottomSheet
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengTopAppBar
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G5
 import com.sachosaeng.app.core.ui.theme.Gs_G6
 import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
@@ -121,69 +122,109 @@ internal fun HomeScreen(
         errorMessage = isWarningDialogMessage,
         confirmLabel = stringResource(id = string.confirm_label)
     )
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Gs_G2)
-            .padding(20.dp)
-    ) {
-        val scope = rememberCoroutineScope()
-
-        Column {
+    Scaffold(
+        topBar = {
             SachosaengTopAppBar(
+                modifier = modifier
+                    .background(Gs_G2)
+                    .padding(20.dp),
                 componentRow = {
                     CategorySelectButton(
                         selectedCategory = state.selectedCategory,
                         onSelectCategory = { isBottomSheetOpen = true }
                     )
-                    ExpandableSearchButton(
-                        onClick = navigateToSearch
+                    SearchButton(
+                        modifier = modifier,
+                        onClick = {
+                            navigateToSearch()
+                        }
                     )
                 }
             )
-            if (state.selectedCategory.id == ALL_CATEGORY_ID) MainList(
-                state = state,
-                listState = listState,
-                navigateToVoteCard = navigateToVoteCard
-            )
-            else ListByCategory(
-                state = state,
-                navigateToVoteCard = navigateToVoteCard
-            )
+        },
+        content = { padding ->
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(Gs_G2)
+                    .padding(horizontal = 20.dp)
+            ) {
+                val scope = rememberCoroutineScope()
+                if (state.selectedCategory.id == ALL_CATEGORY_ID) MainList(
+                    modifier = modifier.padding(20.dp),
+                    state = state,
+                    listState = listState,
+                    navigateToVoteCard = navigateToVoteCard
+                )
+                else ListByCategory(
+                    modifier = modifier.padding(20.dp),
+                    state = state,
+                    navigateToVoteCard = navigateToVoteCard
+                )
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .noRippleClickable {
+                            scope.launch {
+                                listState.animateScrollToItem(0)
+                            }
+                        },
+                    painter = painterResource(id = drawable.ic_floating_button),
+                    contentDescription = null
+                )
+                AddVoteFab(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    onClick = onAddVoteButtonClicked
+                )
+            }
+            if (isBottomSheetOpen) {
+                SelectCategoryBottomSheet(
+                    allCategoryList = state.allCategory,
+                    myCategoryList = state.myCategory,
+                    onModifyMyCategoryButtonClicked = onModifyMyCategory,
+                    onModifyComplete = {
+                        onModifyComplete()
+                        isBottomSheetOpen = false
+                    },
+                    onDismissRequest = { isBottomSheetOpen = false },
+                    onSelectCategory = {
+                        onSelectCategory(it)
+                        isBottomSheetOpen = false
+                    },
+                    onSelectFavoriteCategory = onSelectFavoriteCategory,
+                    modifyListVisible = state.modifyMyCategoryListVisibility
+                )
+            }
         }
+    )
+}
+
+@Composable
+private fun SearchButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(color = White)
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .noRippleClickable {
+                onClick()
+            }
+    ) {
+        Text(
+            color = Gs_G5,
+            text = stringResource(id = string.search_button_label),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
+        )
         Image(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .noRippleClickable {
-                    scope.launch {
-                        listState.animateScrollToItem(0)
-                    }
-                },
-            painter = painterResource(id = drawable.ic_floating_button),
-            contentDescription = null
-        )
-        AddVoteFab(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            onClick = onAddVoteButtonClicked
-        )
-    }
-    if (isBottomSheetOpen) {
-        SelectCategoryBottomSheet(
-            allCategoryList = state.allCategory,
-            myCategoryList = state.myCategory,
-            onModifyMyCategoryButtonClicked = onModifyMyCategory,
-            onModifyComplete = {
-                onModifyComplete()
-                isBottomSheetOpen = false
-            },
-            onDismissRequest = { isBottomSheetOpen = false },
-            onSelectCategory = {
-                onSelectCategory(it)
-                isBottomSheetOpen = false
-            },
-            onSelectFavoriteCategory = onSelectFavoriteCategory,
-            modifyListVisible = state.modifyMyCategoryListVisibility
+            painter = painterResource(id = drawable.ic_search),
+            contentDescription = null,
+            modifier = modifier.noRippleClickable { onClick() }
         )
     }
 }
@@ -226,7 +267,6 @@ fun CategorySelectButton(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .noRippleClickable { onSelectCategory() }
-            .padding(bottom = 20.dp)
     ) {
         (if (selectedCategory?.name?.isNotEmpty() == true) selectedCategory.name else stringResource(
             id = string.home_my_all_category
