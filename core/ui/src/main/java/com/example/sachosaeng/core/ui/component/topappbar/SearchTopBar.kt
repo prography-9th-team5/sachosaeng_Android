@@ -82,7 +82,7 @@ fun SearchTopBar(
             }
             .fillMaxWidth()
             .padding(20.dp),
-        horizontalArrangement = Arrangement.Start,
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
