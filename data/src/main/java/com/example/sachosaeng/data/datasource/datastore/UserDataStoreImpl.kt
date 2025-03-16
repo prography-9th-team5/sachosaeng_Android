@@ -7,12 +7,14 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
+private const val RECENT_SEARCH = "recent_search"
+private val DELIMITER = ","
 private const val USER_TYPE = "user_type"
 private val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "sachosaeng_user")
 
@@ -21,16 +23,40 @@ class UserDataStoreImpl @Inject constructor(
 ) : UserDataStore {
     private val dataStore = context.userDataStore
 
-    override suspend fun setUserType(userType: String): Boolean {
+    override suspend fun setUserType(type: String): Boolean {
         dataStore.edit { preferences ->
-            preferences[stringPreferencesKey(USER_TYPE)] = userType
+            preferences[stringPreferencesKey(USER_TYPE)] = type
         }.run { return true }
     }
 
-    override suspend fun getUserType() = context.userDataStore.data.map { preferences ->
+    override suspend fun getUserType() = dataStore.data.map { preferences ->
         preferences[stringPreferencesKey(USER_TYPE)] ?: ""
     }.catch {
         it.printStackTrace()
         emit("")
     }.firstOrNull() ?: ""
+
+    override suspend fun setRecentSearches(search: String) {
+        dataStore.edit { preferences ->
+            val currentList = getSearchHistorySync(preferences)
+            val newList = (listOf(search) + currentList).distinct().take(10)
+            preferences[stringPreferencesKey(RECENT_SEARCH)] = newList.joinToString(DELIMITER)
+        }
+    }
+
+    override fun getRecentSearch(): Flow<List<String>> {
+        return dataStore.data.map { preferences ->
+            println("getRecentSearch")
+            getSearchHistorySync(preferences)
+        }
+    }
+
+    override suspend fun clearSearchHistory() {
+        dataStore.edit { it.remove(stringPreferencesKey(RECENT_SEARCH)) }
+    }
+
+    private fun getSearchHistorySync(preferences: Preferences): List<String> {
+        return preferences[stringPreferencesKey(RECENT_SEARCH)]?.split(DELIMITER)
+            ?.filter { it.isNotBlank() } ?: emptyList()
+    }
 }

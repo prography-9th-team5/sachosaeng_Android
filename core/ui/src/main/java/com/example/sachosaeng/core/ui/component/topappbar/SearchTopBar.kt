@@ -33,7 +33,11 @@ import kotlin.math.roundToInt
 @Composable
 fun SearchTopBar(
     modifier: Modifier = Modifier,
+    value: String = "",
     placeholder: String = "",
+    onClear: () -> Unit = {},
+    onValueChange: (String) -> Unit = {},
+    onSearch: (String) -> Unit = {},
     navigateToBackStack: () -> Unit
 ) {
     var maxWidth = remember { 0 }
@@ -92,6 +96,10 @@ fun SearchTopBar(
                 modifier = Modifier
                     .fillMaxWidth(widthAnim.value)
                     .alpha(alphaAnim.value),
+                onClear = onClear,
+                value = value,
+                onValueChange = onValueChange,
+                onSearch = onSearch,
                 placeholder = placeholder,
             )
         }

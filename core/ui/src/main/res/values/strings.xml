@@ -30,6 +30,8 @@
 
     <!--search-->
     <string name="search_placeholder">궁금한 투표 주제를 검색해 보세요</string>
+    <string name="recent_query">최근 검색</string>
+    <string name="recommended_vote">오늘의 추천 투표</string>
 
     <!--add vote-->
     <string name="add_vote_title">투표 등록</string>

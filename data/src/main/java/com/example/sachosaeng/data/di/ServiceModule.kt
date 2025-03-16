@@ -5,6 +5,7 @@ import com.sachosaeng.app.data.api.AuthService
 import com.sachosaeng.app.data.api.BookmarkService
 import com.sachosaeng.app.data.api.CategoryService
 import com.sachosaeng.app.data.api.OAuthService
+import com.sachosaeng.app.data.api.SearchService
 import com.sachosaeng.app.data.api.UserService
 import com.sachosaeng.app.data.api.VoteService
 import dagger.Module
@@ -50,4 +51,9 @@ internal class ServiceModule {
     internal fun provideBookmarkService(
         @NetworkModule.SachoSaeng retrofit: Retrofit
     ): BookmarkService = retrofit.create(BookmarkService::class.java)
+
+    @Provides
+    internal fun provideSearchService(
+        @NetworkModule.SachoSaeng retrofit: Retrofit
+    ): SearchService = retrofit.create(SearchService::class.java)
 }

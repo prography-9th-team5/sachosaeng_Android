@@ -1,4 +1,4 @@
-package com.sachosaeng.app.feature.bookmark.component
+package com.sachosaeng.core.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,16 +24,17 @@ import com.sachosaeng.app.core.ui.theme.Gs_G5
 
 @Composable
 fun CategoryRow(
+    modifier: Modifier = Modifier,
     selectedCategory: Category? = null,
     categories: List<Category>,
-    modifier: Modifier = Modifier,
     onCategoryClicked: (Category) -> Unit = {},
     onModifyButtonClicked: () -> Unit = {},
+    modifyButtonVisibility: Boolean = true,
     isModifyMode: Boolean = false
 ) {
     Box {
         LazyRow(
-            modifier = modifier.padding(top = 16.dp, bottom = 16.dp, end = 60.dp),
+            modifier = modifier.padding(top = 16.dp, bottom = 16.dp, end = if(modifyButtonVisibility) 60.dp else 0.dp),
             horizontalArrangement = Arrangement.spacedBy(10.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -47,7 +48,7 @@ fun CategoryRow(
                 }
             }
         }
-        Row(
+        if(modifyButtonVisibility) Row(
             modifier = Modifier
                 .background(Gs_G2)
                 .padding(16.dp)

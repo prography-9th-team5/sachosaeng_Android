@@ -151,13 +151,13 @@ internal fun HomeScreen(
             ) {
                 val scope = rememberCoroutineScope()
                 if (state.selectedCategory.id == ALL_CATEGORY_ID) MainList(
-                    modifier = modifier.padding(20.dp),
+                    modifier = modifier.padding(padding),
                     state = state,
                     listState = listState,
                     navigateToVoteCard = navigateToVoteCard
                 )
                 else ListByCategory(
-                    modifier = modifier.padding(20.dp),
+                    modifier = modifier.padding(padding),
                     state = state,
                     navigateToVoteCard = navigateToVoteCard
                 )
@@ -173,7 +173,8 @@ internal fun HomeScreen(
                     contentDescription = null
                 )
                 AddVoteFab(
-                    modifier = Modifier.align(Alignment.BottomCenter),
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter),
                     onClick = onAddVoteButtonClicked
                 )
             }
@@ -237,6 +238,7 @@ fun AddVoteFab(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
+            .padding(20.dp)
             .clip(RoundedCornerShape(20.dp))
             .noRippleClickable { onClick() }
             .background(color = Gs_G6)

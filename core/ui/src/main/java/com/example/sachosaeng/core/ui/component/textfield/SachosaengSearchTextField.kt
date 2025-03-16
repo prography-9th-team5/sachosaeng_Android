@@ -35,10 +35,10 @@ fun SachosaengSearchTextField(
     modifier: Modifier = Modifier,
     value: String = "",
     placeholder: String = "",
+    onClear: () -> Unit = {},
+    onValueChange: (String) -> Unit = {},
     onSearch: (String) -> Unit = {}
 ) {
-    val valueState = remember { mutableStateOf(value) }
-    val innerValue by valueState
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -47,18 +47,21 @@ fun SachosaengSearchTextField(
             .padding(horizontal = 16.dp, vertical = 10.dp),
     ) {
         BasicTextField(
-            value = innerValue,
+            value = value,
             onValueChange = {
-                valueState.value = it
+                onValueChange(it)
             },
             maxLines = 1,
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
-                onDone = { onSearch(innerValue) },
+                onDone = {
+                    println("KeyboardActions")
+                    onSearch(value)
+                },
             ),
             decorationBox = { innerTextField ->
                 Box(modifier = modifier.fillMaxWidth()) {
-                    if (innerValue.isEmpty()) Text(
+                    if (value.isEmpty()) Text(
                         overflow = TextOverflow.Clip,
                         maxLines = 1,
                         text = placeholder,
@@ -72,7 +75,7 @@ fun SachosaengSearchTextField(
         if (value.isNotEmpty()) Image(
             modifier = Modifier
                 .noRippleClickable {
-                    valueState.value = ""
+                    onClear()
                 }
                 .align(Alignment.CenterEnd),
             painter = painterResource(id = R.drawable.ic_clear_circle),
@@ -85,6 +88,6 @@ fun SachosaengSearchTextField(
 @Preview()
 fun SachosaengSearchTextFieldPreview() {
     SachosaengSearchTextField(
-        value = "",
+        value = "sds",
     )
 }

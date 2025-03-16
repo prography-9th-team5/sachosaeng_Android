@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.sachosaeng.app.feature.search.SearchScreen
 
 private const val SEARCH = "search"
 const val GRAPH_SEARCH = "searchGraph"
@@ -15,7 +16,7 @@ fun NavController.navigateToSearch() {
 
 fun NavGraphBuilder.addSearchNavGraph(
     navController: NavHostController,
-    navigateToOpenSource: () -> Unit = {},
+    navigateToVoteDetail: (Int, Boolean) -> Unit = { _, _ -> },
     snackBarMessage: (String) -> Unit = {}
 ) {
     navigation(
@@ -25,7 +26,11 @@ fun NavGraphBuilder.addSearchNavGraph(
         composable(
             route = SEARCH
         ) {
-            SearchScreen()
+            SearchScreen(
+                navigateToVoteCard = { voteId, isDailyVote ->
+                    navigateToVoteDetail(voteId, isDailyVote)
+                }
+            )
         }
     }
 }

@@ -99,7 +99,13 @@ internal fun NavGraph(
         )
         addSearchNavGraph(
             navController = navController,
-            snackBarMessage = { snackBarMessage(it, null) }
+            snackBarMessage = { snackBarMessage(it, null) },
+            navigateToVoteDetail = { id, isDailyVote ->
+                navController.navigateToVoteDetail(
+                    voteId = id,
+                    isDailyVote = isDailyVote
+                )
+            },
         )
     }
 }

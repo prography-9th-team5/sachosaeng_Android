@@ -61,6 +61,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.androidx.compose.constraintlayout)
     implementation(project(":core:ui"))
+    implementation(project(":core:model"))
+    implementation(project(":core:usecase"))
+    implementation(project(":core:util"))
 
     // Hilt
     ksp(libs.hilt.compiler)

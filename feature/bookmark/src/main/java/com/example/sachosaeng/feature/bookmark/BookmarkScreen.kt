@@ -27,8 +27,8 @@ import com.sachosaeng.app.core.ui.component.topappbar.TopBarWithProfileImage
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.feature.bookmark.component.BookmarkList
-import com.sachosaeng.app.feature.bookmark.component.CategoryRow
 import com.sachosaeng.app.feature.bookmark.component.EmptyScreen
+import com.sachosaeng.core.ui.component.CategoryRow
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
