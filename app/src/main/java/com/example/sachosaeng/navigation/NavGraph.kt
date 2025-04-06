@@ -18,6 +18,8 @@ import com.sachosaeng.app.feature.bookmark.navigation.addBookmarkGraph
 import com.sachosaeng.app.feature.mypage.navigation.GRAPH_MY_PAGE
 import com.sachosaeng.app.feature.mypage.navigation.addMyPageNavGraph
 import com.sachosaeng.app.feature.mypage.navigation.navigateToHistoryOfSuggestedVote
+import com.sachosaeng.app.feature.search.navigation.addSearchNavGraph
+import com.sachosaeng.app.feature.search.navigation.navigateToSearch
 import com.sachosaeng.app.feature.signup.navigation.addSignUpNavGraph
 import com.sachosaeng.app.feature.splash.ROUTE_SPLASH
 import com.sachosaeng.app.feature.splash.addSplashNavGraph
@@ -48,14 +50,14 @@ internal fun NavGraph(
             snackBarMessage = { snackBarMessage(it, null) }
         )
         addMainGraph(
-            navigateToMyPage = { navController.navigate(GRAPH_MY_PAGE) },
             navigateToAddVote = { navController.navigateToAddVote() },
             navigateToVoteDetail = { id, isDailyVote ->
                 navController.navigateToVoteDetail(
                     voteId = id,
                     isDailyVote = isDailyVote
                 )
-            }
+            },
+            navigateToSearch = { navController.navigateToSearch() }
         )
         addMyPageNavGraph(
             navController = navController,
@@ -94,6 +96,16 @@ internal fun NavGraph(
             navigateToVotePreview = { id -> navController.navigateToVotePreviewDetail(id) },
             navController = navController,
             showSnackBar = { snackBarMessage(it, null) }
+        )
+        addSearchNavGraph(
+            navController = navController,
+            snackBarMessage = { snackBarMessage(it, null) },
+            navigateToVoteDetail = { id, isDailyVote ->
+                navController.navigateToVoteDetail(
+                    voteId = id,
+                    isDailyVote = isDailyVote
+                )
+            },
         )
     }
 }

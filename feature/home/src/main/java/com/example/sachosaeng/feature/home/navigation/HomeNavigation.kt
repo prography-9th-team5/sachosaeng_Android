@@ -9,7 +9,6 @@ import com.sachosaeng.app.core.util.constant.NavigationConstant
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
 import com.sachosaeng.app.feature.home.HomeScreen
 
-
 const val GRAPH_MAIN = "mainGraph"
 
 fun NavController.navigateToMain() {
@@ -22,7 +21,7 @@ fun NavController.navigateToMain() {
 }
 
 fun NavGraphBuilder.addMainGraph(
-    navigateToMyPage: () -> Unit,
+    navigateToSearch: () -> Unit,
     navigateToAddVote: () -> Unit,
     navigateToVoteDetail: (voteId: Int, isDailyVote: Boolean) -> Unit
 ) {
@@ -35,6 +34,7 @@ fun NavGraphBuilder.addMainGraph(
             deepLinks = listOf(navDeepLink { uriPattern = NavigationConstant.Main.MAIN_DEEP_LINK })
         ) {
             HomeScreen(
+                navigateToSearch = navigateToSearch,
                 navigateToAddVote = navigateToAddVote,
                 navigateToVoteCard = { voteId, isDailyVote ->
                     navigateToVoteDetail(voteId, isDailyVote)
