@@ -29,7 +29,10 @@ fun NavGraphBuilder.addSearchNavGraph(
             SearchScreen(
                 navigateToVoteCard = { voteId, isDailyVote ->
                     navigateToVoteDetail(voteId, isDailyVote)
-                }
+                },
+                navigateToMain = {
+                    navController.popBackStack()
+                },
             )
         }
     }

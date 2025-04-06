@@ -26,6 +26,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun SearchScreen(
     modifier: Modifier = Modifier,
     navigateToVoteCard: (Int, Boolean) -> Unit,
+    navigateToMain: () -> Unit,
     viewModel: SearchViewModel = hiltViewModel(),
 ) {
     val state = viewModel.collectAsState()
@@ -42,7 +43,7 @@ fun SearchScreen(
             onValueChange = viewModel::onSearchQueryChanged,
             onSearch = viewModel::getSearchResults,
             onClear = viewModel::clearSearchQuery,
-            navigateToBackStack = { }
+            navigateToBackStack = navigateToMain,
         )
         if (state.value.searchQuery.isEmpty()) {
             RecentSearchesScreen(
