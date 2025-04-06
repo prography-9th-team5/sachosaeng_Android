@@ -7,5 +7,6 @@ interface UserDataStore {
     suspend fun getUserType(): String
     fun getRecentSearch(): Flow<List<String>>
     suspend fun setRecentSearches(search: String)
+    suspend fun removeRecentSearch(search: String)
     suspend fun clearSearchHistory()
 }

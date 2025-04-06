@@ -17,4 +17,5 @@ class SearchRepositoryImpl @Inject constructor(
     }
     override fun getRecentSearch(): Flow<List<String?>> = userDataStore.getRecentSearch()
     override suspend fun setRecentSearch(query: String) = userDataStore.setRecentSearches(query)
+    override suspend fun removeRecentSearch(query: String) = userDataStore.removeRecentSearch(query)
 }

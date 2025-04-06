@@ -44,6 +44,14 @@ class UserDataStoreImpl @Inject constructor(
         }
     }
 
+    override suspend fun removeRecentSearch(search: String) {
+        dataStore.edit { preferences ->
+            val currentList = getSearchHistorySync(preferences)
+            val newList = (currentList - setOf(search)).distinct().take(10)
+            preferences[stringPreferencesKey(RECENT_SEARCH)] = newList.joinToString(DELIMITER)
+        }
+    }
+
     override fun getRecentSearch(): Flow<List<String>> {
         return dataStore.data.map { preferences ->
             println("getRecentSearch")

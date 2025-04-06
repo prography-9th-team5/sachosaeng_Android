@@ -7,4 +7,5 @@ interface SearchRepository {
     fun getSearchResult(query: String): Flow<List<VoteList?>>?
     fun getRecentSearch(): Flow<List<String?>>?
     suspend fun setRecentSearch(query: String)
+    suspend fun removeRecentSearch(query: String)
 }

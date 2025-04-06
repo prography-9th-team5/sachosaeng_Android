@@ -49,7 +49,8 @@ fun SearchScreen(
             RecentSearchesScreen(
                 modifier = modifier.padding(top = 60.dp),
                 state = state.value,
-                navigateToVoteCard = navigateToVoteCard
+                navigateToVoteCard = navigateToVoteCard,
+                onDeleteRecentSearches = viewModel::onDeleteRecentSearches,
             )
         }
         else {

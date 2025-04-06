@@ -3,6 +3,7 @@ package com.sachosaeng.app.feature.search
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.usecase.search.GetRecentSearchesUseCase
 import com.example.sachosaeng.core.usecase.search.GetSearchResultUseCase
+import com.example.sachosaeng.core.usecase.search.RemoveRecentSearchesUseCase
 import com.example.sachosaeng.core.usecase.search.SetRecentSearchesUseCase
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Category
@@ -22,9 +23,10 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val stringResourceProvider: ResourceProvider,
-    val getSearchResultsUseCase: GetSearchResultUseCase,
-    val getRecentSearchesUseCase: GetRecentSearchesUseCase,
-    val setRecentSearchesUseCase: SetRecentSearchesUseCase,
+    private val getSearchResultsUseCase: GetSearchResultUseCase,
+    private val getRecentSearchesUseCase: GetRecentSearchesUseCase,
+    private val setRecentSearchesUseCase: SetRecentSearchesUseCase,
+    private val removeRecentSearchesUseCase: RemoveRecentSearchesUseCase,
     private val getCategoryListUseCase: GetCategoryListUseCase,
 ) : ViewModel(), ContainerHost<SearchUiState, Unit> {
     override val container: Container<SearchUiState, Unit> =
@@ -81,6 +83,10 @@ class SearchViewModel @Inject constructor(
                 selectedCategory = category,
                 searchResults = state.searchResults.filter { it?.category == category })
         }
+    }
+
+    fun onDeleteRecentSearches(recentSearch: String) = intent {
+        removeRecentSearchesUseCase(recentSearch)
     }
 
     private fun getRecentSearches() = intent {
