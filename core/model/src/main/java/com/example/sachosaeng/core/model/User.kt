@@ -8,4 +8,5 @@ data class User(
     val email: String,
     val oAuthType: OAuthType = OAuthType.KAKAO,
     val userType: String,
+    val level: Int = 1,
 )

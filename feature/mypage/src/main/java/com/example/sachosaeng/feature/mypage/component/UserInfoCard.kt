@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sachosaeng.app.core.ui.UserType
@@ -26,7 +27,12 @@ import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.feature.mypage.R
 
 @Composable
-fun UserInfoCard(userName: String, userType: UserType, userInfoModifyButtonClick: () -> Unit = {}) {
+fun UserInfoCard(
+    userName: String,
+    userType: UserType,
+    userLevel: Int,
+    userInfoModifyButtonClick: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +46,7 @@ fun UserInfoCard(userName: String, userType: UserType, userInfoModifyButtonClick
                 modifier = Modifier
                     .width(width = 52.dp),
                 contentDescription = "",
-                painter = painterResource(id = userType.userTypeIconImageRes),
+                painter = painterResource(id = userLevel),
             )
             Column(
                 modifier = Modifier.padding(top = 23.dp, start = 20.dp, bottom = 23.dp),
@@ -70,4 +76,14 @@ fun UserInfoCard(userName: String, userType: UserType, userInfoModifyButtonClick
             contentDescription = null
         )
     }
+}
+
+@Composable
+@Preview
+fun UserInfoCardPreview() {
+    UserInfoCard(
+        userName = "이상호",
+        userType = UserType.STUDENT,
+        userLevel = 1,
+    )
 }
