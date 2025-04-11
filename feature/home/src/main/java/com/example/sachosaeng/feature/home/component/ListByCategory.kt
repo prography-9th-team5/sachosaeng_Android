@@ -31,6 +31,7 @@ import com.sachosaeng.app.feature.home.HomeScreenUiState
 
 @Composable
 fun ListByCategory(
+    modifier: Modifier = Modifier,
     state: HomeScreenUiState,
     navigateToVoteCard: (Int, Boolean) -> Unit
 ) {

@@ -16,7 +16,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.util.FirebaseUtil
-import com.example.sachosaeng.core.util.FirebaseUtil.SCREEN_NAME_DAILY_VOTE
 import com.example.sachosaeng.core.util.FirebaseUtil.SCREEN_NAME_VOTE
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.model.SimilarArticle

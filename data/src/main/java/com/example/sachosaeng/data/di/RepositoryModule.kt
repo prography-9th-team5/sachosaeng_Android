@@ -1,5 +1,7 @@
 package com.sachosaeng.app.data.di
 
+import com.example.sachosaeng.data.repository.search.SearchRepository
+import com.example.sachosaeng.data.repository.search.SearchRepositoryImpl
 import com.sachosaeng.app.data.remote.oauth.OAuthRepository
 import com.sachosaeng.app.data.remote.oauth.OAuthRepositoryImpl
 import com.sachosaeng.app.data.repository.article.ArticleRepository
@@ -64,4 +66,10 @@ internal abstract class RepositoryModule {
     abstract fun bindArticleRepository(
         articleRepositoryImpl: ArticleRepositoryImpl
     ): ArticleRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindSearchRepository(
+        searchRepository: SearchRepositoryImpl
+    ): SearchRepository
 }

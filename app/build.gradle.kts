@@ -101,6 +101,7 @@ dependencies {
 
     implementation(libs.javax.inject)
     implementation(project(":feature:addvote"))
+    implementation(project(":feature:search"))
 
     // Hilt
     ksp(libs.hilt.compiler)
