@@ -17,10 +17,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    val logoutUsecase: LogoutUsecase,
+    val logoutUseCase: LogoutUsecase,
     val getMyInfoUseCase: GetMyInfoUsecase,
-    val packageManager: PackageManager,
-    val deviceManager: DeviceManager
+    private val packageManager: PackageManager,
+    private val deviceManager: DeviceManager
 ) : ViewModel(), ContainerHost<MyPageUiState, Unit> {
     override val container: Container<MyPageUiState, Unit> = container(MyPageUiState())
 
@@ -28,7 +28,7 @@ class MyPageViewModel @Inject constructor(
         getMyInfoUseCase().collectLatest { userInfo ->
             reduce {
                 state.copy(
-                    levelText = "레벨 1",
+                    userScore = userInfo.level,
                     userName = userInfo.name,
                     userType = UserType.getType(userInfo.userType) ?: UserType.OTHER,
                     versionInfo = packageManager.getVersionName()
@@ -46,7 +46,7 @@ class MyPageViewModel @Inject constructor(
     }
 
     fun logout() = intent {
-        logoutUsecase().collectLatest {
+        logoutUseCase().collectLatest {
             hideLogoutDialog()
             deviceManager.finishApp()
         }

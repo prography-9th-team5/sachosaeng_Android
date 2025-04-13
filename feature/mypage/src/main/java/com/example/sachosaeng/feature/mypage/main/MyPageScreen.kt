@@ -100,7 +100,8 @@ internal fun MyPageScreen(
             UserInfoCard(
                 userName = myPageUiState.userName,
                 userInfoModifyButtonClick = onModifyUserInfo,
-                userType = myPageUiState.userType
+                userType = myPageUiState.userType,
+                userLevel = myPageUiState.userScore
             )
         }
         item {

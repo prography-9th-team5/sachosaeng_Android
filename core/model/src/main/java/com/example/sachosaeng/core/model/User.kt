@@ -9,4 +9,5 @@ data class User(
     val oAuthType: OAuthType = OAuthType.KAKAO,
     val userType: String,
     val level: Int = 1,
+    val score: Int = 0,
 )
