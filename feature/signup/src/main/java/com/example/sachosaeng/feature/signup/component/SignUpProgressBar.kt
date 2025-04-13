@@ -40,7 +40,7 @@ fun SignUpProgressBar(modifier: Modifier = Modifier) {
                 animateFloat.animateTo(
                     targetValue = 1f,
                     animationSpec = tween(
-                        durationMillis = 1200, // Increase the duration for slower animation
+                        durationMillis = 1200,
                         easing = LinearEasing
                     )
                 )

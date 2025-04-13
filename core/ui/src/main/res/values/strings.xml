@@ -26,6 +26,12 @@
     <string name="daily_vote">오늘의 투표</string>
     <string name="sort_by_latest">최신순</string>
     <string name="double_click_exit_toast_message">한번 더 누르면 종료됩니다</string>
+    <string name="search_button_label">투표 검색하기</string>
+
+    <!--search-->
+    <string name="search_placeholder">궁금한 투표 주제를 검색해 보세요</string>
+    <string name="recent_query">최근 검색</string>
+    <string name="recommended_vote">오늘의 추천 투표</string>
 
     <!--add vote-->
     <string name="add_vote_title">투표 등록</string>

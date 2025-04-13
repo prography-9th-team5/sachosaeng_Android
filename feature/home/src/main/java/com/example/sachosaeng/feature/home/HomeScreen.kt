@@ -1,16 +1,15 @@
 package com.sachosaeng.app.feature.home
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,6 +39,7 @@ import com.sachosaeng.app.core.ui.component.SelectCategoryBottomSheet
 import com.sachosaeng.app.core.ui.component.topappbar.SachosaengTopAppBar
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_G2
+import com.sachosaeng.app.core.ui.theme.Gs_G5
 import com.sachosaeng.app.core.ui.theme.Gs_G6
 import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
@@ -51,6 +52,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun HomeScreen(
+    navigateToSearch: () -> Unit = {},
     navigateToAddVote: () -> Unit = {},
     navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
     viewModel: HomeViewModel = hiltViewModel()
@@ -83,6 +85,7 @@ fun HomeScreen(
         onAddVoteButtonClicked = viewModel::onAddVoteButtonClicked,
         navigateToVoteCard = { voteId, isDailyVote -> navigateToVoteCard(voteId, isDailyVote) },
         navigateToAddVote = navigateToAddVote,
+        navigateToSearch = navigateToSearch,
         onDailyVoteDialogConfirmClicked = viewModel::onDailyVoteDialogConfirmClicked
     )
 }
@@ -99,6 +102,7 @@ internal fun HomeScreen(
     onModifyMyCategory: () -> Unit,
     onAddVoteButtonClicked: () -> Unit,
     navigateToVoteCard: (Int, Boolean) -> Unit,
+    navigateToSearch: () -> Unit,
     navigateToAddVote: () -> Unit,
     onDailyVoteDialogConfirmClicked: () -> Unit,
 ) {
@@ -118,70 +122,110 @@ internal fun HomeScreen(
         errorMessage = isWarningDialogMessage,
         confirmLabel = stringResource(id = string.confirm_label)
     )
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Gs_G2)
-            .padding(20.dp)
-    ) {
-        val scope = rememberCoroutineScope()
-
-        Log.d("HomeScreen", "HomeScreen: ${state.allCategory}")
-        Log.d("HomeScreen", "HomeScreen: ${state.selectedCategory}")
-
-        Column {
+    Scaffold(
+        topBar = {
             SachosaengTopAppBar(
-                modifier = modifier,
+                modifier = modifier
+                    .background(Gs_G2)
+                    .padding(20.dp),
                 componentRow = {
                     CategorySelectButton(
                         selectedCategory = state.selectedCategory,
                         onSelectCategory = { isBottomSheetOpen = true }
                     )
+                    SearchButton(
+                        modifier = modifier,
+                        onClick = {
+                            navigateToSearch()
+                        }
+                    )
                 }
             )
-            if (state.selectedCategory.id == ALL_CATEGORY_ID) MainList(
-                state = state,
-                listState = listState,
-                navigateToVoteCard = navigateToVoteCard
-            )
-            else ListByCategory(
-                state = state,
-                navigateToVoteCard = navigateToVoteCard
-            )
+        },
+        content = { padding ->
+            Box(
+                modifier = modifier
+                    .fillMaxSize()
+                    .background(Gs_G2)
+                    .padding(horizontal = 20.dp)
+            ) {
+                val scope = rememberCoroutineScope()
+                if (state.selectedCategory.id == ALL_CATEGORY_ID) MainList(
+                    modifier = modifier.padding(padding),
+                    state = state,
+                    listState = listState,
+                    navigateToVoteCard = navigateToVoteCard
+                )
+                else ListByCategory(
+                    modifier = modifier.padding(padding),
+                    state = state,
+                    navigateToVoteCard = navigateToVoteCard
+                )
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.BottomEnd)
+                        .noRippleClickable {
+                            scope.launch {
+                                listState.animateScrollToItem(0)
+                            }
+                        },
+                    painter = painterResource(id = drawable.ic_floating_button),
+                    contentDescription = null
+                )
+                AddVoteFab(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter),
+                    onClick = onAddVoteButtonClicked
+                )
+            }
+            if (isBottomSheetOpen) {
+                SelectCategoryBottomSheet(
+                    allCategoryList = state.allCategory,
+                    myCategoryList = state.myCategory,
+                    onModifyMyCategoryButtonClicked = onModifyMyCategory,
+                    onModifyComplete = {
+                        onModifyComplete()
+                        isBottomSheetOpen = false
+                    },
+                    onDismissRequest = { isBottomSheetOpen = false },
+                    onSelectCategory = {
+                        onSelectCategory(it)
+                        isBottomSheetOpen = false
+                    },
+                    onSelectFavoriteCategory = onSelectFavoriteCategory,
+                    modifyListVisible = state.modifyMyCategoryListVisibility
+                )
+            }
         }
+    )
+}
+
+@Composable
+private fun SearchButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = modifier
+            .clip(RoundedCornerShape(20.dp))
+            .background(color = White)
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .noRippleClickable {
+                onClick()
+            }
+    ) {
+        Text(
+            color = Gs_G5,
+            text = stringResource(id = string.search_button_label),
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
+        )
         Image(
-            modifier = Modifier
-                .align(Alignment.BottomEnd)
-                .noRippleClickable {
-                    scope.launch {
-                        listState.animateScrollToItem(0)
-                    }
-                },
-            painter = painterResource(id = drawable.ic_floating_button),
-            contentDescription = null
-        )
-        AddVoteFab(
-            modifier = Modifier.align(Alignment.BottomCenter),
-            onClick = onAddVoteButtonClicked
-        )
-    }
-    if (isBottomSheetOpen) {
-        SelectCategoryBottomSheet(
-            allCategoryList = state.allCategory,
-            myCategoryList = state.myCategory,
-            onModifyMyCategoryButtonClicked = onModifyMyCategory,
-            onModifyComplete = {
-                onModifyComplete()
-                isBottomSheetOpen = false
-            },
-            onDismissRequest = { isBottomSheetOpen = false },
-            onSelectCategory = {
-                onSelectCategory(it)
-                isBottomSheetOpen = false
-            },
-            onSelectFavoriteCategory = onSelectFavoriteCategory,
-            modifyListVisible = state.modifyMyCategoryListVisibility
+            painter = painterResource(id = drawable.ic_search),
+            contentDescription = null,
+            modifier = modifier.noRippleClickable { onClick() }
         )
     }
 }
@@ -194,6 +238,7 @@ fun AddVoteFab(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
+            .padding(20.dp)
             .clip(RoundedCornerShape(20.dp))
             .noRippleClickable { onClick() }
             .background(color = Gs_G6)
@@ -224,7 +269,6 @@ fun CategorySelectButton(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .noRippleClickable { onSelectCategory() }
-            .padding(bottom = 20.dp)
     ) {
         (if (selectedCategory?.name?.isNotEmpty() == true) selectedCategory.name else stringResource(
             id = string.home_my_all_category
@@ -238,7 +282,6 @@ fun CategorySelectButton(
         Image(painter = painterResource(id = R.drawable.ic_category), contentDescription = null)
     }
 }
-
 
 @Preview
 @Composable
@@ -259,6 +302,7 @@ fun HomeScreenPreview() {
             modifyMyCategoryListVisibility = false,
             isDailyVoteDialogOpen = false,
         ),
+        navigateToSearch = {},
         deleteWarningDialogMessage = {},
         onSelectFavoriteCategory = {},
         onSelectCategory = {},

@@ -32,8 +32,6 @@ fun VoteCardByCategory(
                 backgroundColorCode = voteList[index].category.color,
                 iconUrl = voteList[index].category.imageUrl,
                 voteCount = voteList[index].voteCount,
-                ranking = index + 1,
-                rankingTextVisibility = rankinTextVisibility
             )
         }
     }
@@ -59,6 +57,5 @@ fun VoteCardByCategoryPreview() {
             )
         ),
         onVoteClick = {},
-        rankinTextVisibility = true,
     )
 }
