@@ -28,9 +28,7 @@ class MyPageViewModel @Inject constructor(
         getMyInfoUseCase().collectLatest { userInfo ->
             reduce {
                 state.copy(
-                    userScore = userInfo.level,
-                    userName = userInfo.name,
-                    userType = UserType.getType(userInfo.userType) ?: UserType.OTHER,
+                    userInfo = userInfo,
                     versionInfo = packageManager.getVersionName()
                 )
             }

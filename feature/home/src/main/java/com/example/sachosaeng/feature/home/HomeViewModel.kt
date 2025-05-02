@@ -54,7 +54,7 @@ class HomeViewModel @Inject constructor(
     private fun getUserInfo() = intent {
         getMyInfoUsecase().collectLatest {
             FirebaseUtil.setUser(it.email)
-            reduce { state.copy(userType = UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) }
+            reduce { state.copy(userType = UserType.getType(it.userTypeName) ?: UserType.NEW_EMPLOYEE) }
         }
     }
 

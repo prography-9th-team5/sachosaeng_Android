@@ -27,6 +27,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sachosaeng.app.core.model.User
+import com.sachosaeng.app.core.model.UserScore
 import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.ui.component.DetailScreenTopbar
@@ -98,10 +100,8 @@ internal fun MyPageScreen(
     ) {
         item {
             UserInfoCard(
-                userName = myPageUiState.userName,
+                userInfo = myPageUiState.userInfo,
                 userInfoModifyButtonClick = onModifyUserInfo,
-                userType = myPageUiState.userType,
-                userLevel = myPageUiState.userScore
             )
         }
         item {
@@ -267,8 +267,15 @@ fun LogoutButton(onClick: () -> Unit = {}) {
 fun MyPageScreenPreview() {
     MyPageScreen(
         MyPageUiState(
-            userName = "이름을길게한번써보자",
-            userType = UserType.OTHER,
+            userInfo = User(
+                name = "홍길동",
+                userTypeName = "일반회원",
+                level = 1,
+                voteScore = UserScore(count = 10, score = 100),
+                registerVoteScore = UserScore(count = 5, score = 50),
+                readArticleScore = UserScore(count = 20, score = 200),
+                score = 350
+            ),
             versionInfo = "1.0.0",
             logoutDialogState = true
         )

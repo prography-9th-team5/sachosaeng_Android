@@ -159,7 +159,7 @@ class BookmarkViewModel @Inject constructor(
 
     fun getUserInfo() = intent {
         getMyInfoUsecase().collectLatest {
-            reduce { state.copy(userType = UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) }
+            reduce { state.copy(userType = UserType.getType(it.userTypeName) ?: UserType.NEW_EMPLOYEE) }
         }
     }
 }

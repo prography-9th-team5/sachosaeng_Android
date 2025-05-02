@@ -1,4 +1,4 @@
-package com.sachosaeng.app.feature.signup.component
+package com.sachosaeng.app.feature.signup.component.com.example.sachosaeng.core.ui.component
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -25,11 +25,11 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G3
-import com.sachosaeng.app.feature.signup.R.drawable
+import com.sachosaeng.app.core.ui.R.drawable
 import kotlinx.coroutines.launch
 
 @Composable
-fun SignUpProgressBar(modifier: Modifier = Modifier) {
+fun SachosaengIconProgressbar (modifier: Modifier = Modifier) {
     val boxWidthPx = remember { mutableFloatStateOf(0f) }
     val animateFloat = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()

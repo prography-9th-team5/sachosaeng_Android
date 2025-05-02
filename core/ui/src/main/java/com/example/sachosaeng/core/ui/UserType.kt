@@ -39,6 +39,14 @@ enum class UserType(
         userTypeLabelRes = string.user_type_etc
     );
 
+    fun getLargeImageRes(level: Int): Int {
+        return when (level) {
+            1 -> userTypeLargeLv1ImageRes
+            2 -> userTypeLargeLv2ImageRes
+            else -> drawable.image_other_lv1 // 기본 fallback
+        }
+    }
+
     companion object {
         fun getType(typeName: String): UserType? {
             return enumValues<UserType>().firstOrNull { it.name == typeName }

@@ -42,7 +42,7 @@ class ModifyUserInfoViewModel @Inject constructor(
             reduce {
                 state.copy(
                     userName = userInfo.name,
-                    userType = UserType.getType(userInfo.userType) ?: UserType.OTHER
+                    userType = UserType.getType(userInfo.userTypeName) ?: UserType.OTHER
                 )
             }
         }
@@ -67,7 +67,7 @@ class ModifyUserInfoViewModel @Inject constructor(
             if (userInfo.name != state.userName) {
                 setUserNickNameUseCase(state.userName)
             }
-            if (UserType.getType(userInfo.userType) != state.userType) {
+            if (UserType.getType(userInfo.userTypeName) != state.userType) {
                 setUserTypetoRemoteUseCase(state.userType.name)
             }
         }.also {
