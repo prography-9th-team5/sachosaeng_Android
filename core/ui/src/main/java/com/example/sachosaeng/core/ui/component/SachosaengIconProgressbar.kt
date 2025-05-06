@@ -18,6 +18,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.res.painterResource
@@ -29,16 +30,20 @@ import com.sachosaeng.app.core.ui.R.drawable
 import kotlinx.coroutines.launch
 
 @Composable
-fun SachosaengIconProgressbar (modifier: Modifier = Modifier) {
+fun SachosaengIconProgressbar(
+    lineColor: Color = Gs_Black,
+    targetValue: Float = 1f,
+    modifier: Modifier = Modifier
+) {
     val boxWidthPx = remember { mutableFloatStateOf(0f) }
     val animateFloat = remember { Animatable(0f) }
     val scope = rememberCoroutineScope()
 
-    LaunchedEffect(boxWidthPx.value) {
-        if (boxWidthPx.value > 0) {
+    LaunchedEffect(boxWidthPx.floatValue) {
+        if (boxWidthPx.floatValue > 0) {
             scope.launch {
                 animateFloat.animateTo(
-                    targetValue = 1f,
+                    targetValue = targetValue,
                     animationSpec = tween(
                         durationMillis = 1200,
                         easing = LinearEasing
@@ -51,7 +56,7 @@ fun SachosaengIconProgressbar (modifier: Modifier = Modifier) {
         modifier = modifier
             .height(60.dp)
             .onSizeChanged { size ->
-                boxWidthPx.value = size.width.toFloat()
+                boxWidthPx.floatValue = size.width.toFloat()
             }
     ) {
         Canvas(
@@ -59,7 +64,7 @@ fun SachosaengIconProgressbar (modifier: Modifier = Modifier) {
                 .fillMaxWidth()
                 .height(30.dp)
         ) {
-            val lineEndPx = animateFloat.value * boxWidthPx.value
+            val lineEndPx = animateFloat.value * boxWidthPx.floatValue
             drawLine(
                 color = Gs_G3,
                 start = Offset(0f, size.height),
@@ -68,7 +73,7 @@ fun SachosaengIconProgressbar (modifier: Modifier = Modifier) {
                 cap = StrokeCap.Round
             )
             drawLine(
-                color = Gs_Black,
+                color = lineColor,
                 start = Offset(0f, size.height),
                 end = Offset(lineEndPx, size.height),
                 strokeWidth = 8.dp.toPx(),

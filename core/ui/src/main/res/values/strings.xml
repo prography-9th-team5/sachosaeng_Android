@@ -82,8 +82,8 @@
     <string name="article_count">연관 콘텐츠 열람 %d회</string>
     <string name="register_vote_count">투표 등록 %d회</string>
     <string name="score">%d점</string>
-    <string name="mypage_score_by_max_score">%d/%d</string>
-    <string name="mypage_level_text">Lv %d %s</string>
+    <string name="mypage_score_by_max_score">%d/</string>
+    <string name="mypage_level_text">Lv %d</string>
 
     <!-- signup -->
     <string name="login_with_kakao">카카오로 로그인</string>

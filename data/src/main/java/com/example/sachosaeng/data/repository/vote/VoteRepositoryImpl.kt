@@ -56,7 +56,6 @@ class VoteRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
     override fun getVoteSuggestions(): Flow<List<VoteList?>> = flow {
-        Log.e("11111111", "getVoteSuggestions")
         voteService.getVoteSuggestions().getOrNull()?.data?.let {
             emit(it.toDomain())
         }

@@ -62,9 +62,7 @@ class AuthViewModel @Inject constructor(
                     if (task.isSuccessful) handleGoogleLoginResult()
                     else loginFail(task.exception!!)
                 }
-        } catch (e: Exception) {
-            println("11111111 $e")
-        }
+        } catch (e: Exception) { }
     }
 
     private fun loginWithKakaoTalk(

@@ -15,7 +15,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,6 +26,8 @@ import com.sachosaeng.app.core.model.User
 import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.ui.theme.Gs_Black
+import com.sachosaeng.app.core.ui.theme.Gs_G4
+import com.sachosaeng.app.core.ui.theme.Gs_G5
 import com.sachosaeng.app.core.ui.theme.Gs_G6
 import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.feature.signup.component.com.example.sachosaeng.core.ui.component.SachosaengIconProgressbar
@@ -95,21 +100,41 @@ private fun ScoreTextColumn(
     countText: String,
     score: Int,
 ) {
+    val styledText = buildAnnotatedString {
+        val textLength = countText.length
+        val normalText = countText.take(textLength - 2)
+        val highlightedText = countText.takeLast(2)
+
+        withStyle(
+            style = SpanStyle(
+                fontSize = 12.sp,
+                fontWeight = FontWeight.W400,
+                color = Gs_G4
+            )
+        ) {
+            append(normalText)
+        }
+
+        withStyle(
+            style = SpanStyle(
+                fontSize = 12.sp,
+                color = Gs_G4,
+                fontWeight = FontWeight.W700,
+            )
+        ) {
+            append(highlightedText)
+        }
+    }
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
         modifier = modifier.padding(top = 32.dp)
     ) {
-        Text(
-            text = countText,
-            fontSize = 12.sp,
-            fontWeight = FontWeight.W500,
-            color = Gs_White
-        )
+        Text(text = styledText)
         Text(
             text = stringResource(string.score, score),
             color = Gs_White,
-            fontSize = 18.sp,
+            fontSize = 16.sp,
             fontWeight = FontWeight.W700
         )
     }
@@ -120,11 +145,13 @@ private fun UserScoreCard(
     userLevel: Int,
     userType: String,
     userScore: Int,
-    maxScore: Int
+    maxScore: Int,
+    modifier: Modifier = Modifier,
 ) {
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(16.dp)
             .background(color = Gs_White, shape = RoundedCornerShape(8.dp))
     ) {
         Column(
@@ -132,27 +159,59 @@ private fun UserScoreCard(
             verticalArrangement = Arrangement.Center,
             modifier = Modifier.padding(16.dp)
         ) {
-            Row {
+            Row(
+                modifier = modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 UserType.getType(userType)?.let { userType ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = stringResource(
+                                id = string.mypage_level_text,
+                                userLevel
+                            ),
+                            fontSize = 18.sp,
+                            color = Gs_Black,
+                            fontWeight = FontWeight.W700,
+                        )
+                        Text(
+                            modifier = modifier.padding(start = 4.dp),
+                            text = stringResource(userType.userTypeLabelRes),
+                            fontSize = 18.sp,
+                            color = Gs_Black,
+                            fontWeight = FontWeight.W500,
+                        )
+                    }
+                }
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = stringResource(
-                            id = string.mypage_level_text,
-                            userLevel,
-                            stringResource(userType.userTypeLabelRes),
+                            id = string.mypage_score_by_max_score,
+                            userScore,
                         ),
                         fontSize = 18.sp,
                         color = Gs_Black,
-                        fontWeight = FontWeight.W700,
+                        fontWeight = FontWeight.W500,
+                    )
+                    Text(
+                        text = stringResource(string.score, maxScore),
+                        fontSize = 18.sp,
+                        color = Gs_G5,
+                        fontWeight = FontWeight.W500,
                     )
                 }
-                Text(
-                    text = stringResource(id = string.mypage_score_by_max_score, userScore, maxScore),
-                    fontSize = 18.sp,
-                    color = Gs_Black,
-                    fontWeight = FontWeight.W700,
+            }
+            if (maxScore != 0) {
+                SachosaengIconProgressbar(
+                    targetValue = (userScore.toFloat() / maxScore),
+                    lineColor = Gs_G6,
                 )
             }
-            SachosaengIconProgressbar()
         }
     }
 }
