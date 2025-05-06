@@ -68,7 +68,7 @@ class VoteDetailViewModel @Inject constructor(
 
     private fun getVoteCompleteDescriptionImageRes() = flow {
         val userType = getMyInfoUsecase().firstOrNull()?.let {
-            when (UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) {
+            when (UserType.getType(it.userTypeName) ?: UserType.NEW_EMPLOYEE) {
                 UserType.NEW_EMPLOYEE -> drawable.ic_vote_complete_newcomer
                 UserType.JOB_SEEKER -> drawable.ic_vote_complete_jobseeker
                 UserType.STUDENT -> drawable.ic_vote_complete_student

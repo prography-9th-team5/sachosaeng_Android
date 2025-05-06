@@ -34,8 +34,8 @@ import com.sachosaeng.app.core.ui.theme.Gs_G3
 import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.feature.signup.R.drawable
 import com.sachosaeng.app.feature.signup.component.SelectScreenDescription
-import com.sachosaeng.app.feature.signup.component.SignUpProgressBar
 import com.sachosaeng.app.feature.signup.component.SignUpProgressbarWithColor
+import com.sachosaeng.app.feature.signup.component.com.example.sachosaeng.core.ui.component.SachosaengIconProgressbar
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -104,7 +104,7 @@ internal fun SelectUserTypeScreen(
 @Composable
 private fun SelectUserTypeProgressbar() {
     Row(modifier = Modifier.fillMaxWidth()) {
-        SignUpProgressBar(
+        SachosaengIconProgressbar(
             modifier = Modifier.weight(0.5f)
         )
         SignUpProgressbarWithColor(color = Gs_G3, modifier = Modifier.padding(start = 20.dp))

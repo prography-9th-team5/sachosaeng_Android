@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
     private val getVoteByCategoryUsecase: GetVoteByCategoryUsecase,
     private val getMyVoteListUsecase: GetMyVoteListUsecase,
     private val getVoteSuggestionsUsecase: GetVoteSuggestionsUsecase,
-    private val getMyInfoUsecase: GetMyInfoUsecase,
+    private val getMyInfoUseCase: GetMyInfoUsecase,
     private val getCategoryListWithAllIconUseCase: GetCategoryListWithAllIconUseCase,
     private val getMyCategoryListUsecase: GetMyCategoryListUsecase,
     private val setMyCategoryListUseCase: SetMyCategoryListUseCase
@@ -52,9 +52,9 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getUserInfo() = intent {
-        getMyInfoUsecase().collectLatest {
+        getMyInfoUseCase().collectLatest {
             FirebaseUtil.setUser(it.email)
-            reduce { state.copy(userType = UserType.getType(it.userType) ?: UserType.NEW_EMPLOYEE) }
+            reduce { state.copy(userType = UserType.getType(it.userTypeName) ?: UserType.NEW_EMPLOYEE) }
         }
     }
 

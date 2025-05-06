@@ -78,6 +78,12 @@
     <string name="start_button">시작</string>
     <string name="modify_category_title">관심사 설정</string>
     <string name="my_category_is_empty">관심 주제가 없어요!\n편집을 눌러 주제를 추가해 보세요</string>
+    <string name="vote_count">투표 참여 %d회</string>
+    <string name="article_count">연관 콘텐츠 열람 %d회</string>
+    <string name="register_vote_count">투표 등록 %d회</string>
+    <string name="score">%d점</string>
+    <string name="mypage_score_by_max_score">%d/</string>
+    <string name="mypage_level_text">Lv %d</string>
 
     <!-- signup -->
     <string name="login_with_kakao">카카오로 로그인</string>
