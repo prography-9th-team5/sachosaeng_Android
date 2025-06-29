@@ -7,7 +7,7 @@ import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.sachosaeng.app.core.util.constant.NavigationConstant
 import com.sachosaeng.app.core.util.constant.NavigationConstant.Main.ROUTE_MAIN
-import com.sachosaeng.app.feature.home.HomeScreen
+import com.example.sachosaeng.feature.home.HomeScreen
 
 const val GRAPH_MAIN = "mainGraph"
 
@@ -23,7 +23,8 @@ fun NavController.navigateToMain() {
 fun NavGraphBuilder.addMainGraph(
     navigateToSearch: () -> Unit,
     navigateToAddVote: () -> Unit,
-    navigateToVoteDetail: (voteId: Int, isDailyVote: Boolean) -> Unit
+    navigateToVoteDetail: (voteId: Int, isDailyVote: Boolean) -> Unit,
+    navigateToMyPage: () -> Unit,
 ) {
     navigation(
         startDestination = ROUTE_MAIN,
@@ -38,7 +39,8 @@ fun NavGraphBuilder.addMainGraph(
                 navigateToAddVote = navigateToAddVote,
                 navigateToVoteCard = { voteId, isDailyVote ->
                     navigateToVoteDetail(voteId, isDailyVote)
-                }
+                },
+                navigateToMyPage = navigateToMyPage
             )
         }
     }

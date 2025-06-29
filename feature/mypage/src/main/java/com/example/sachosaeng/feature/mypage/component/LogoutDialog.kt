@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sachosaeng.app.core.ui.component.dialog.SachosaengTwoButtonDialog
+import com.example.sachosaeng.core.ui.component.dialog.SachosaengTwoButtonDialog
 import com.sachosaeng.app.core.ui.theme.SachosaengTheme
 import com.sachosaeng.app.core.ui.R
 

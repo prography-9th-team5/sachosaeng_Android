@@ -21,6 +21,7 @@ fun SachoSaengButton(
     buttonColors: ButtonColors = ButtonDefaults.buttonColors().copy(containerColor = Gs_Black),
     enabled: Boolean = true,
     text: String = "",
+    fontSize: Int? = 16,
     onClick: () -> Unit
 ) {
     Button(
@@ -33,9 +34,8 @@ fun SachoSaengButton(
         shape = RoundedCornerShape(4.dp),
         onClick = { onClick() }) {
         Text(
-            modifier = Modifier.padding(horizontal = 18.dp),
             text = text,
-            fontSize = 16.sp,
+            fontSize = fontSize!!.sp,
             color = buttonColors.contentColor,
             lineHeight = 24.sp,
             fontWeight = FontWeight.W600

@@ -35,6 +35,10 @@ fun NavController.navigateToHistoryOfSuggestedVote() {
     navigate(SUGGEST_VOTE_HISTORY)
 }
 
+fun NavController.navigateToMyPage() {
+    navigate(ROUTE_MY_PAGE)
+}
+
 fun NavGraphBuilder.addMyPageNavGraph(
     navController: NavHostController,
     navigateToWebView: (String) -> Unit,

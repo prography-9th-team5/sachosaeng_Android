@@ -55,7 +55,6 @@ fun SachosaengSearchTextField(
             keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
                 onDone = {
-                    println("KeyboardActions")
                     onSearch(value)
                 },
             ),
