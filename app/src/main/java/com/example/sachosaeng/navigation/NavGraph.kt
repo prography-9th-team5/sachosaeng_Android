@@ -18,6 +18,7 @@ import com.sachosaeng.app.feature.bookmark.navigation.addBookmarkGraph
 import com.sachosaeng.app.feature.mypage.navigation.GRAPH_MY_PAGE
 import com.sachosaeng.app.feature.mypage.navigation.addMyPageNavGraph
 import com.sachosaeng.app.feature.mypage.navigation.navigateToHistoryOfSuggestedVote
+import com.sachosaeng.app.feature.mypage.navigation.navigateToMyPage
 import com.sachosaeng.app.feature.search.navigation.addSearchNavGraph
 import com.sachosaeng.app.feature.search.navigation.navigateToSearch
 import com.sachosaeng.app.feature.signup.navigation.addSignUpNavGraph
@@ -57,7 +58,8 @@ internal fun NavGraph(
                     isDailyVote = isDailyVote
                 )
             },
-            navigateToSearch = { navController.navigateToSearch() }
+            navigateToSearch = { navController.navigateToSearch() },
+            navigateToMyPage = { navController.navigateToMyPage() }
         )
         addMyPageNavGraph(
             navController = navController,

@@ -23,6 +23,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 import com.sachosaeng.app.core.ui.R
+import com.sachosaeng.app.core.usecase.user.SetGrowthSystemConfirmUseCase
 import com.sachosaeng.app.core.usecase.vote.GetMyVoteListUsecase
 import com.sachosaeng.app.core.usecase.vote.GetVoteSuggestionsUsecase
 
@@ -37,7 +38,8 @@ class HomeViewModel @Inject constructor(
     private val getMyInfoUseCase: GetMyInfoUsecase,
     private val getCategoryListWithAllIconUseCase: GetCategoryListWithAllIconUseCase,
     private val getMyCategoryListUsecase: GetMyCategoryListUsecase,
-    private val setMyCategoryListUseCase: SetMyCategoryListUseCase
+    private val setMyCategoryListUseCase: SetMyCategoryListUseCase,
+    private val setGrowthSystemConfirmedUseCase: SetGrowthSystemConfirmUseCase,
 ) : ViewModel(), ContainerHost<HomeScreenUiState, HomeSideEffect> {
     override val container: Container<HomeScreenUiState, HomeSideEffect> =
         container(HomeScreenUiState())
@@ -54,7 +56,12 @@ class HomeViewModel @Inject constructor(
     private fun getUserInfo() = intent {
         getMyInfoUseCase().collectLatest {
             FirebaseUtil.setUser(it.email)
-            reduce { state.copy(userType = UserType.getType(it.userTypeName) ?: UserType.NEW_EMPLOYEE) }
+            reduce {
+                state.copy(
+                    userType = UserType.getType(it.userTypeName) ?: UserType.NEW_EMPLOYEE,
+                    isGrowthSystemConfirmed = it.userGrowthSystemConfirmed
+                )
+            }
         }
     }
 
@@ -165,6 +172,19 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun onGrowthSystemConfirmClicked() = intent {
+        setGrowthSystemConfirmedUseCase(true).collectLatest {
+            getUserInfo()
+            postSideEffect(HomeSideEffect.NavigateToMyPage)
+        }
+    }
+
+    fun dismissGrowthSystemConfirm() = intent {
+        reduce {
+            state.copy(isGrowthSystemConfirmed = true)
+        }
+    }
+
     fun onAddVoteButtonClicked() = intent {
         postSideEffect(HomeSideEffect.ShowDialog(resourceProvider.getString(R.string.add_vote_dialog_description)))
     }
@@ -174,4 +194,5 @@ sealed class HomeSideEffect {
     data class ShowDialog(val message: String) : HomeSideEffect()
     data class NavigateToVoteDetail(val voteId: Int, val isDailyVote: Boolean) : HomeSideEffect()
     data object NavigateToAddVote : HomeSideEffect()
+    data object NavigateToMyPage : HomeSideEffect()
 }

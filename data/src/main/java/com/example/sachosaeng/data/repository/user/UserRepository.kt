@@ -13,4 +13,6 @@ interface UserRepository {
     fun signIn(user: User)
     fun updateMyInfo(user: User)
     fun withdraw(reason: String): Flow<Unit>
+    fun getGrowthSystemConfirmed(): Flow<Boolean>
+    fun setGrowthSystemConfirmed(growthSystemConfirmed: Boolean): Flow<Unit>
 }
