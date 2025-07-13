@@ -16,6 +16,7 @@ import javax.inject.Inject
 private const val RECENT_SEARCH = "recent_search"
 private val DELIMITER = ","
 private const val USER_TYPE = "user_type"
+private const val USER_NAME = "user_name"
 private val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "sachosaeng_user")
 
 class UserDataStoreImpl @Inject constructor(
@@ -67,4 +68,17 @@ class UserDataStoreImpl @Inject constructor(
         return preferences[stringPreferencesKey(RECENT_SEARCH)]?.split(DELIMITER)
             ?.filter { it.isNotBlank() } ?: emptyList()
     }
+
+    override suspend fun setUserNickName(name: String) {
+        dataStore.edit { preferences ->
+            preferences[stringPreferencesKey(USER_NAME)] = name
+        }
+    }
+
+    override suspend fun getUserNickName() : String  = dataStore.data.map { preferences ->
+        preferences[stringPreferencesKey(USER_NAME)] ?: ""
+    }.catch {
+        it.printStackTrace()
+        System.currentTimeMillis().toString()
+    }.firstOrNull() ?: System.currentTimeMillis().toString()
 }

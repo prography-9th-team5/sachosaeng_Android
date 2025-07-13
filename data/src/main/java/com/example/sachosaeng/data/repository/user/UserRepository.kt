@@ -1,5 +1,6 @@
 package com.sachosaeng.app.data.repository.user
 
+import android.graphics.Bitmap
 import com.sachosaeng.app.core.model.User
 import kotlinx.coroutines.flow.Flow
 
@@ -13,4 +14,5 @@ interface UserRepository {
     fun signIn(user: User)
     fun updateMyInfo(user: User)
     fun withdraw(reason: String): Flow<Unit>
+    fun downloadProfileImage(bitmap: Bitmap): Flow<Boolean>
 }

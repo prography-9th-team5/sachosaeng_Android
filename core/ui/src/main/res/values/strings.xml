@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<!--    bottom bar-->
+    <!--    bottom bar-->
     <string name="home">홈</string>
     <string name="bookmark">북마크</string>
     <string name="my_info">내정보</string>
@@ -84,7 +84,36 @@
     <string name="score">%d점</string>
     <string name="mypage_score_by_max_score">%d/</string>
     <string name="mypage_level_text">Lv %d</string>
-
+    <string name="mypage_download_profile_image_description">이미지 저장 완료!\n앨범을 확인해 주세요.</string>
+    <string name="mypage_download_profile_image_error">이미지 저장 실패</string>
+    <string name="mypage_levelup_notification_title">캐릭터 레벨업 안내</string>
+    <string name="mypage_levelup_notification_content">
+    <![CDATA[
+        <b>🐣 캐릭터 레벨업 안내</b>사초생 앱에서는 활동에 따라 ‘초롱이’가 함께 성장해요!\n
+        투표도 하고, 콘텐츠도 둘러보다 보면 병아리에서 멋진 닭으로 변신\n\n
+        <b>어떻게 성장하나요?</b>\n
+        투표에 참여하면 10점!\n
+        투표에 달린 콘텐츠를 보면 10점!\n
+        직접 투표를 등록하면 15점!\n\n
+        <b>이렇게 모은 점수로 캐릭터가 성장해요.</b>\n
+        100점을 모으면 레벨업!\n
+        (예: 45/100 처럼 점수는 숫자로 표시돼요)\n\n
+        <b>🐣 어떤 캐릭터가 있나요?</b>\n
+        처음에 여러분이 고른 사회초년생 유형에 따라 병아리 캐릭터가 달라져요!\n
+        학생 병아리 → 학생 닭\n
+        취준생 병아리 → 취준생 닭\n
+        직장인 병아리 → 직장인 닭\n
+        기타 병아리 → 기타 닭\n\n
+        <b> 🔁 유형을 바꾸면 어떻게 되나요?</b>\n
+        사초생 유형을 변경할 경우, 레벨 1로 초기화돼요.\n
+        (기존 점수는 사라지고, 새 캐릭터로 새롭게 시작!)\n\n
+        <b>🏁 레벨업은 어디까지 가능해요?</b>\n
+        각 캐릭터는 레벨 2가 끝!\n\n
+        <b>💾 캐릭터 이미지도 저장 가능!</b>\n
+        레벨업한 초롱이 병아리는 이미지로 저장할 수 있어요.\n
+        예쁜 캐릭터 성장 과정, 꼭 저장해서 간직하세요 💛
+    ]]>
+</string>
     <!-- signup -->
     <string name="login_with_kakao">카카오로 로그인</string>
     <string name="login_with_google">Google로 로그인</string>

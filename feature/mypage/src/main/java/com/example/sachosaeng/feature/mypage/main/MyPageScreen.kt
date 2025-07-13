@@ -1,5 +1,8 @@
 package com.sachosaeng.app.feature.mypage.main
 
+import android.app.Activity
+import android.content.ContextWrapper
+import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,8 +20,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,11 +33,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.sachosaeng.core.ui.extension.captureComposableAsBitmap
+import com.example.sachosaeng.feature.mypage.component.DownloadCompleteDialog
+import com.example.sachosaeng.feature.mypage.notification.NotificationScreen
+import com.example.sachosaeng.feature.mypage.notification.NotificationType
 import com.sachosaeng.app.core.model.User
 import com.sachosaeng.app.core.model.UserScore
 import com.sachosaeng.app.core.ui.R.string
-import com.sachosaeng.app.core.ui.UserType
-import com.sachosaeng.app.core.ui.component.DetailScreenTopbar
 import com.sachosaeng.app.core.ui.theme.Gs_Black
 import com.sachosaeng.app.core.ui.theme.Gs_G2
 import com.sachosaeng.app.core.ui.theme.Gs_G5
@@ -39,11 +47,13 @@ import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.feature.mypage.R.drawable
 import com.sachosaeng.app.feature.mypage.component.LogoutDialog
 import com.sachosaeng.app.feature.mypage.component.UserInfoCard
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyPageScreen(
+    navigateToAlertPage: (NotificationType) -> Unit = { _ ->},
     navigateToModifyCategory: () -> Unit = {},
     navigateToUserInfoModify: () -> Unit = {},
     navigateToPrivacyPolicy: () -> Unit = {},
@@ -59,12 +69,23 @@ fun MyPageScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.getUserInfo()
     }
+
+    viewModel.collectSideEffect {
+        when (it) {
+            is MyPageSideEffect.NavigateToAlertPage -> navigateToAlertPage(NotificationType.LEVEL_UP)
+            else -> {}
+        }
+    }
+    if (state.downloadCompleteDialogState) DownloadCompleteDialog(
+        onClick = { viewModel.hideDownloadDialog() }
+    )
     if (state.logoutDialogState) {
         LogoutDialog(
             onLogout = { viewModel.logout() },
             onCancel = { viewModel.hideLogoutDialog() }
         )
     }
+
     MyPageScreen(
         myPageUiState = state,
         onLogout = viewModel::showLogoutDialog,
@@ -75,7 +96,9 @@ fun MyPageScreen(
         navigateToFaq = navigateToFaq,
         navigateToRequestToAdmin = navigateToRequestToAdmin,
         navigateToOpenSource = navigateToOpenSource,
-        navigateToSuggestVoteHistory = navigateToSuggestVoteHistory
+        navigateToSuggestVoteHistory = navigateToSuggestVoteHistory,
+        onDownloadImage = viewModel::downloadImage,
+        onShowAlert = viewModel::onShowAlert
     )
 }
 
@@ -90,8 +113,19 @@ internal fun MyPageScreen(
     navigateToFaq: () -> Unit = {},
     navigateToRequestToAdmin: () -> Unit = {},
     navigateToOpenSource: () -> Unit = {},
-    navigateToSuggestVoteHistory: () -> Unit = {}
+    navigateToSuggestVoteHistory: () -> Unit = {},
+    onShowAlert: () -> Unit = {},
+    onDownloadImage: (bitmap: Bitmap) -> Unit = {}
 ) {
+    val context = LocalContext.current
+    val activity = remember {
+        generateSequence(context) { (it as? ContextWrapper)?.baseContext }
+            .filterIsInstance<Activity>()
+            .firstOrNull()
+    }
+
+    val scope = rememberCoroutineScope()
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -102,6 +136,26 @@ internal fun MyPageScreen(
             UserInfoCard(
                 userInfo = myPageUiState.userInfo,
                 userInfoModifyButtonClick = onModifyUserInfo,
+                onDownloadImage = {
+                    activity?.let {
+                        scope.launch {
+                            val bitmap = activity.captureComposableAsBitmap(
+                                widthDp = 300.dp,
+                                heightDp = 300.dp,
+                                content = {
+                                    UserInfoCard(
+                                        userInfo = myPageUiState.userInfo,
+                                        userInfoModifyButtonClick = onModifyUserInfo,
+                                        onDownloadImage = {},
+                                        onShowAlert = onShowAlert
+                                    )
+                                },
+                            )
+                            onDownloadImage(bitmap)
+                        }
+                    }
+                },
+                onShowAlert = onShowAlert
             )
         }
         item {
@@ -269,7 +323,7 @@ fun MyPageScreenPreview() {
         MyPageUiState(
             userInfo = User(
                 name = "홍길동",
-                userTypeName = "일반회원",
+                userTypeName = "STUDENT",
                 level = 1,
                 voteScore = UserScore(count = 10, score = 100),
                 registerVoteScore = UserScore(count = 5, score = 50),
@@ -277,7 +331,8 @@ fun MyPageScreenPreview() {
                 score = 350
             ),
             versionInfo = "1.0.0",
-            logoutDialogState = true
+            logoutDialogState = true,
+            downloadCompleteDialogState = true
         )
     )
 }

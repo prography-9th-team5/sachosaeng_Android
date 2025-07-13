@@ -1,5 +1,7 @@
 package com.sachosaeng.app.data.repository.user
 
+import android.graphics.Bitmap
+import com.example.sachosaeng.data.local.manager.FileManager
 import com.sachosaeng.app.core.model.User
 import com.sachosaeng.app.data.api.UserService
 import com.sachosaeng.app.data.datasource.datastore.UserDataStore
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userDataStore: UserDataStore,
-    private val userService: UserService
+    private val userService: UserService,
+    private val fileManager: FileManager
 ) : UserRepository {
     override fun setUserType(type: String) = flow { emit(userDataStore.setUserType(type)) }
     override fun getUserType() = flow { emit(userDataStore.getUserType()) }
@@ -37,7 +40,9 @@ class UserRepositoryImpl @Inject constructor(
             nickname = NicknameRequest(
                 nickname = nickname
             )
-        )
+        ).also {
+            userDataStore.setUserNickName(name = nickname)
+        }
     }
 
     override suspend fun setUserTypeToRemote(type: String) {
@@ -48,11 +53,16 @@ class UserRepositoryImpl @Inject constructor(
         )
     }
 
-    override fun withdraw(reason: String) = flow<Unit> {
+    override fun withdraw(reason: String) = flow {
         userService.withdraw(
             reason = WithdrawRequest(
                 reason = reason
             )
         ).getOrNull()?.data?.let { emit(it) }
+    }
+
+    override fun downloadProfileImage(bitmap: Bitmap): Flow<Boolean> = flow {
+        val fileName = userDataStore.getUserNickName()
+        emit(fileManager.downloadImage(bitmap = bitmap, fileName = fileName).isSuccess)
     }
 }
