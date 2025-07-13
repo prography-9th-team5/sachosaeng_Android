@@ -14,5 +14,10 @@ data class MyPageUiState(
         score = 0
     ),
     val versionInfo: String = "1.0.0",
-    val logoutDialogState: Boolean = false
+    val logoutDialogState: Boolean = false,
+    val downloadCompleteDialogState: Boolean = false,
 )
+
+sealed class MyPageSideEffect {
+    data object NavigateToAlertPage : MyPageSideEffect()
+}

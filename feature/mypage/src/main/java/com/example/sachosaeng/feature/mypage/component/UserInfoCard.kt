@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,12 +31,15 @@ import com.sachosaeng.app.core.ui.theme.Gs_G4
 import com.sachosaeng.app.core.ui.theme.Gs_G5
 import com.sachosaeng.app.core.ui.theme.Gs_G6
 import com.sachosaeng.app.core.ui.theme.Gs_White
+import com.sachosaeng.app.feature.mypage.R.drawable
 import com.sachosaeng.app.feature.signup.component.com.example.sachosaeng.core.ui.component.SachosaengIconProgressbar
 
 @Composable
 fun UserInfoCard(
     userInfo: User,
     modifier: Modifier = Modifier,
+    onDownloadImage: () -> Unit = {},
+    onShowAlert: () -> Unit = {},
     userInfoModifyButtonClick: () -> Unit = {}
 ) {
     Box(
@@ -83,6 +87,29 @@ fun UserInfoCard(
                         id = userType.getLargeImageRes(userInfo.level)
                     ),
                 )
+            }
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(end = 12.dp)
+            ) {
+                IconButton(
+                    onClick = onShowAlert
+                ) {
+                    Image(
+                        painterResource(id = drawable.ic_alert),
+                        contentDescription = "",
+                    )
+                }
+                IconButton(
+                    onClick = onDownloadImage
+                ) {
+                    Image(
+                        painterResource(id = drawable.ic_download),
+                        contentDescription = "",
+                    )
+                }
             }
             UserScoreCard(
                 userType = userInfo.userTypeName,

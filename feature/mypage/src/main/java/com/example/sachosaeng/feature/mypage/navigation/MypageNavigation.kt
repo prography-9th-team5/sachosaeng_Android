@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.sachosaeng.feature.mypage.historyOfSuggestedVote.HistoryOfSuggestedVoteScreen
+import com.example.sachosaeng.feature.mypage.notification.NotificationScreen
+import com.example.sachosaeng.feature.mypage.notification.NotificationType
 import com.sachosaeng.app.core.util.extension.StringExtension.urlEncode
 import com.sachosaeng.app.feature.mypage.modifyCategory.ModifyCategoryScreen
 import com.sachosaeng.app.feature.mypage.main.MyPageScreen
@@ -25,6 +27,8 @@ const val USER_NAME = "userName"
 private const val MODIFY_USER_INFO = "modifyUserInfo"
 private const val MODIFY_CATEGORY = "modifyCategory"
 private const val SUGGEST_VOTE_HISTORY = "suggestVoteHistory"
+private const val NOTIFICATION = "notification"
+const val NOTIFICATION_TYPE = "notificationType"
 
 private fun NavController.navigateToWithdraw(userName: String) {
     val encodedUrl = userName.urlEncode()
@@ -33,6 +37,10 @@ private fun NavController.navigateToWithdraw(userName: String) {
 
 fun NavController.navigateToHistoryOfSuggestedVote() {
     navigate(SUGGEST_VOTE_HISTORY)
+}
+
+fun NavController.navigateToNotification(notificationType: NotificationType) {
+    navigate("$NOTIFICATION?$NOTIFICATION_TYPE=${notificationType.ordinal}")
 }
 
 fun NavController.navigateToMyPage() {
@@ -51,6 +59,7 @@ fun NavGraphBuilder.addMyPageNavGraph(
     ) {
         composable(ROUTE_MY_PAGE) {
             MyPageScreen(
+                navigateToAlertPage = { navController.navigateToNotification(it)},
                 navigateToModifyCategory = { navController.navigate(MODIFY_CATEGORY) },
                 navigateToPrivacyPolicy = { navigateToWebView(PRIVACY_POLICY) },
                 navigateToTermsOfService = { navigateToWebView(TERMS_OF_SERVICE) },
@@ -91,6 +100,19 @@ fun NavGraphBuilder.addMyPageNavGraph(
         composable(SUGGEST_VOTE_HISTORY) {
             HistoryOfSuggestedVoteScreen(
                 navigateToBackStack = { navController.popBackStack() }
+            )
+        }
+        composable(
+            route = "$NOTIFICATION?$NOTIFICATION_TYPE={$NOTIFICATION_TYPE}",
+            arguments = listOf(
+                navArgument(NOTIFICATION_TYPE) {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+           println("Navigating to Notification Screen with arguments: ${it.arguments?.getInt(NOTIFICATION_TYPE)}")
+            NotificationScreen(
+                onClose = { navController.popBackStack() },
             )
         }
     }

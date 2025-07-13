@@ -11,4 +11,6 @@ interface UserDataStore {
     suspend fun setRecentSearches(search: String)
     suspend fun removeRecentSearch(search: String)
     suspend fun clearSearchHistory()
+    suspend fun setUserNickName(name: String)
+    suspend fun getUserNickName(): String
 }
