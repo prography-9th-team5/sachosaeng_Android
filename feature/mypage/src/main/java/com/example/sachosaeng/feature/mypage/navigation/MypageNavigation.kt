@@ -43,6 +43,10 @@ fun NavController.navigateToNotification(notificationType: NotificationType) {
     navigate("$NOTIFICATION?$NOTIFICATION_TYPE=${notificationType.ordinal}")
 }
 
+fun NavController.navigateToMyPage() {
+    navigate(ROUTE_MY_PAGE)
+}
+
 fun NavGraphBuilder.addMyPageNavGraph(
     navController: NavHostController,
     navigateToWebView: (String) -> Unit,

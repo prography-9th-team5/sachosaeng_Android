@@ -1,4 +1,4 @@
-package com.sachosaeng.app.data.repository.user
+package com.example.sachosaeng.data.repository.user
 
 import android.graphics.Bitmap
 import com.example.sachosaeng.data.local.manager.FileManager
@@ -9,6 +9,7 @@ import com.sachosaeng.app.data.model.user.NicknameRequest
 import com.sachosaeng.app.data.model.user.UserTypeRequest
 import com.sachosaeng.app.data.model.user.WithdrawRequest
 import com.sachosaeng.app.data.repository.user.UserMapper.toDomain
+import com.sachosaeng.app.data.repository.user.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -34,6 +35,14 @@ class UserRepositoryImpl @Inject constructor(
     override fun updateMyInfo(user: User) {
         TODO("Not yet implemented")
     }
+
+    override fun getGrowthSystemConfirmed(): Flow<Boolean> =
+        flow { emit(userDataStore.getUserGrowthSystemConfirmed()) }
+
+    override fun setGrowthSystemConfirmed(growthSystemConfirmed: Boolean): Flow<Unit> =
+        flow {
+            emit(userDataStore.setUserGrowthSystemConfirmed(growthSystemConfirmed))
+        }
 
     override suspend fun setUserNickname(nickname: String) {
         userService.updateUserNickname(

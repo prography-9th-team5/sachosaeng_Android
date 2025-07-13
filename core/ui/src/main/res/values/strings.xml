@@ -27,6 +27,9 @@
     <string name="sort_by_latest">최신순</string>
     <string name="double_click_exit_toast_message">한번 더 누르면 종료됩니다</string>
     <string name="search_button_label">투표 검색하기</string>
+    <string name="tutorial_dialog_content_for_the_growth_system">초롱이 닭으로 성장시키자!\n초롱이 키우기 게임을 시작해 보세요!</string>
+    <string name="tutorial_dialog_left_butotn_text">다음에 할래요</string>
+    <string name="tutorial_dialog_right_button_text">시작하기</string>
 
     <!--search-->
     <string name="search_placeholder">궁금한 투표 주제를 검색해 보세요</string>

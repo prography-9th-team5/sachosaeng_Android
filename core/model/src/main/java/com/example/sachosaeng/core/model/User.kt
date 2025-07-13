@@ -14,6 +14,7 @@ data class User(
     val readArticleScore: UserScore = UserScore(),
     val maxScore: Int = 0,
     val score: Int = 0,
+    val userGrowthSystemConfirmed: Boolean = false
 )
 
 data class UserScore(

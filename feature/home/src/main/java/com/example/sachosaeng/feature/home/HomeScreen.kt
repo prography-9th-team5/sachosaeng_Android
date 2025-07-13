@@ -1,4 +1,4 @@
-package com.sachosaeng.app.feature.home
+package com.example.sachosaeng.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,6 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.component.dialog.WarningDialog
 import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.FirebaseUtil.SCREEN_NAME_HOME
+import com.example.sachosaeng.feature.home.component.GrowthSystemDialog
 import com.sachosaeng.app.core.model.Category
 import com.sachosaeng.app.core.ui.R.drawable
 import com.sachosaeng.app.core.ui.R.string
@@ -45,7 +46,11 @@ import com.sachosaeng.app.core.ui.theme.Gs_White
 import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import com.sachosaeng.app.feature.home.component.ListByCategory
 import com.sachosaeng.app.feature.home.component.MainList
-import com.sachosaeng.app.feature.home.component.TodaysVoteDialog
+import com.example.sachosaeng.feature.home.component.TodaysVoteDialog
+import com.sachosaeng.app.feature.home.HomeScreenUiState
+import com.sachosaeng.app.feature.home.HomeSideEffect
+import com.sachosaeng.app.feature.home.HomeViewModel
+import com.sachosaeng.app.feature.home.R
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -55,6 +60,7 @@ fun HomeScreen(
     navigateToSearch: () -> Unit = {},
     navigateToAddVote: () -> Unit = {},
     navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
+    navigateToMyPage: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     var isWarningDialogMessage by remember { mutableStateOf("") }
@@ -70,6 +76,7 @@ fun HomeScreen(
             is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId, it.isDailyVote)
             is HomeSideEffect.NavigateToAddVote -> navigateToAddVote()
             is HomeSideEffect.ShowDialog -> isWarningDialogMessage = it.message
+            is HomeSideEffect.NavigateToMyPage -> navigateToMyPage()
             else -> {}
         }
     }
@@ -86,7 +93,9 @@ fun HomeScreen(
         navigateToVoteCard = { voteId, isDailyVote -> navigateToVoteCard(voteId, isDailyVote) },
         navigateToAddVote = navigateToAddVote,
         navigateToSearch = navigateToSearch,
-        onDailyVoteDialogConfirmClicked = viewModel::onDailyVoteDialogConfirmClicked
+        onDailyVoteDialogConfirmClicked = viewModel::onDailyVoteDialogConfirmClicked,
+        onGrowthSystemConfirmClicked = viewModel::onGrowthSystemConfirmClicked,
+        dismissGrowthSystem = viewModel::dismissGrowthSystemConfirm
     )
 }
 
@@ -105,6 +114,8 @@ internal fun HomeScreen(
     navigateToSearch: () -> Unit,
     navigateToAddVote: () -> Unit,
     onDailyVoteDialogConfirmClicked: () -> Unit,
+    onGrowthSystemConfirmClicked: () -> Unit,
+    dismissGrowthSystem: () -> Unit,
 ) {
     val listState = rememberLazyListState()
     var isBottomSheetOpen by remember { mutableStateOf(false) }
@@ -112,6 +123,14 @@ internal fun HomeScreen(
     if (state.isDailyVoteDialogOpen) TodaysVoteDialog(
         onClick = {
             onDailyVoteDialogConfirmClicked()
+        }
+    )
+    if (!state.isGrowthSystemConfirmed) GrowthSystemDialog(
+        onStartClick = {
+            onGrowthSystemConfirmClicked()
+        },
+        onDismissClick = {
+            dismissGrowthSystem()
         }
     )
     if (isWarningDialogMessage.isNotEmpty()) WarningDialog(
@@ -301,6 +320,7 @@ fun HomeScreenPreview() {
             selectedCategory = Category(1, "category1"),
             modifyMyCategoryListVisibility = false,
             isDailyVoteDialogOpen = false,
+            isGrowthSystemConfirmed = false
         ),
         navigateToSearch = {},
         deleteWarningDialogMessage = {},
@@ -311,6 +331,8 @@ fun HomeScreenPreview() {
         onAddVoteButtonClicked = {},
         navigateToVoteCard = { _, _ -> },
         navigateToAddVote = {},
-    ) {
-    }
+        onGrowthSystemConfirmClicked = {},
+        dismissGrowthSystem = {},
+        onDailyVoteDialogConfirmClicked = {}
+    )
 }

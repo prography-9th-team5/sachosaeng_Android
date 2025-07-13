@@ -3,6 +3,7 @@ package com.sachosaeng.app.data.datasource.datastore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -17,6 +18,8 @@ private const val RECENT_SEARCH = "recent_search"
 private val DELIMITER = ","
 private const val USER_TYPE = "user_type"
 private const val USER_NAME = "user_name"
+private const val USER_GROWTH_SYSTEM_CONFIRMED = "user_growth_system_confirmed"
+
 private val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "sachosaeng_user")
 
 class UserDataStoreImpl @Inject constructor(
@@ -37,6 +40,19 @@ class UserDataStoreImpl @Inject constructor(
         emit("")
     }.firstOrNull() ?: ""
 
+    override suspend fun getUserGrowthSystemConfirmed(): Boolean = dataStore.data.map { preferences ->
+        preferences[booleanPreferencesKey(USER_GROWTH_SYSTEM_CONFIRMED)] ?: false
+    }.catch {
+        it.printStackTrace()
+        emit(false)
+    }.firstOrNull() ?: false
+
+    override suspend fun setUserGrowthSystemConfirmed(confirmed: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[booleanPreferencesKey(USER_GROWTH_SYSTEM_CONFIRMED)] = confirmed
+        }.run { return }
+    }
+
     override suspend fun setRecentSearches(search: String) {
         dataStore.edit { preferences ->
             val currentList = getSearchHistorySync(preferences)
@@ -55,7 +71,6 @@ class UserDataStoreImpl @Inject constructor(
 
     override fun getRecentSearch(): Flow<List<String>> {
         return dataStore.data.map { preferences ->
-            println("getRecentSearch")
             getSearchHistorySync(preferences)
         }
     }

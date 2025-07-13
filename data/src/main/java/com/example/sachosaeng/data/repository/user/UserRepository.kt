@@ -15,4 +15,6 @@ interface UserRepository {
     fun updateMyInfo(user: User)
     fun withdraw(reason: String): Flow<Unit>
     fun downloadProfileImage(bitmap: Bitmap): Flow<Boolean>
+    fun getGrowthSystemConfirmed(): Flow<Boolean>
+    fun setGrowthSystemConfirmed(growthSystemConfirmed: Boolean): Flow<Unit>
 }
