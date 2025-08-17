@@ -1,6 +1,7 @@
 package com.sachosaeng.app.feature.home
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Category
@@ -26,6 +27,8 @@ import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.usecase.user.SetGrowthSystemConfirmUseCase
 import com.sachosaeng.app.core.usecase.vote.GetMyVoteListUsecase
 import com.sachosaeng.app.core.usecase.vote.GetVoteSuggestionsUsecase
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -45,7 +48,6 @@ class HomeViewModel @Inject constructor(
         container(HomeScreenUiState())
 
     init {
-        getUserInfo()
         getCategoryList()
         getDailyVote()
         getHotVotes()
@@ -53,7 +55,7 @@ class HomeViewModel @Inject constructor(
         getMyCategoryList()
     }
 
-    private fun getUserInfo() = intent {
+    fun getUserInfo() = intent {
         getMyInfoUseCase().collectLatest { it ->
             FirebaseUtil.setUser(it.email)
             reduce {
