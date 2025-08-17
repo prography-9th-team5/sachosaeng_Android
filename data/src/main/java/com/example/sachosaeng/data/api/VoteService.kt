@@ -1,5 +1,6 @@
 package com.sachosaeng.app.data.api
 
+import com.example.sachosaeng.data.model.user.UserLevelUpResponse
 import com.example.sachosaeng.data.model.vote.AddVoteRequest
 import com.example.sachosaeng.data.model.vote.GetSuggestedVoteHistoryResponse
 import com.sachosaeng.app.data.model.BaseResponse
@@ -52,7 +53,7 @@ interface VoteService {
     suspend fun setVote(
         @Path("voteId") voteId: Int,
         @Body chosenVoteOptionIds: VoteOptionRequest
-    ): ApiResult<BaseResponse<Unit>>
+    ): ApiResult<BaseResponse<UserLevelUpResponse>>
 
     @POST("/api/v1/votes")
     suspend fun addVote(

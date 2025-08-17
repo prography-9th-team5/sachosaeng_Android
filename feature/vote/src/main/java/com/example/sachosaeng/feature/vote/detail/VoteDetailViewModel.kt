@@ -12,7 +12,7 @@ import com.sachosaeng.app.core.usecase.bookmark.DeleteBookmarkUseCase
 import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
 import com.sachosaeng.app.core.usecase.article.BookmarkVoteUsecase
 import com.sachosaeng.app.core.usecase.vote.GetSingleVoteUsecase
-import com.sachosaeng.app.core.usecase.vote.SetVoteUseCase
+import com.example.sachosaeng.core.usecase.vote.SetVoteUseCase
 import com.sachosaeng.app.core.ui.R.string
 import com.sachosaeng.app.feature.vote.navigation.VOTE_DETAIL_ID
 import com.sachosaeng.app.feature.vote.navigation.VOTE_IS_DAILY

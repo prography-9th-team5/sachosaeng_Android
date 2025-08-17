@@ -1,4 +1,4 @@
-package com.sachosaeng.app.data.repository.user
+package com.example.sachosaeng.data.repository.user
 
 import android.graphics.Bitmap
 import com.sachosaeng.app.core.model.User
@@ -17,4 +17,6 @@ interface UserRepository {
     fun downloadProfileImage(bitmap: Bitmap): Flow<Boolean>
     fun getGrowthSystemConfirmed(): Flow<Boolean>
     fun setGrowthSystemConfirmed(growthSystemConfirmed: Boolean): Flow<Unit>
+    fun setLevelUpNotification(isNeeded: Boolean): Flow<Unit>
+    fun getLevelUpNotification(): Flow<Boolean>
 }

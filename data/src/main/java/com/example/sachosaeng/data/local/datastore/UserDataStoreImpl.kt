@@ -10,6 +10,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -18,6 +19,7 @@ private const val RECENT_SEARCH = "recent_search"
 private val DELIMITER = ","
 private const val USER_TYPE = "user_type"
 private const val USER_NAME = "user_name"
+private const val USER_LEVEL_UP_NOTIFICATION = "user_level_up_notification"
 private const val USER_GROWTH_SYSTEM_CONFIRMED = "user_growth_system_confirmed"
 
 private val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "sachosaeng_user")
@@ -90,10 +92,27 @@ class UserDataStoreImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserNickName() : String  = dataStore.data.map { preferences ->
+    override suspend fun getUserNickName() : String = dataStore.data.map { preferences ->
         preferences[stringPreferencesKey(USER_NAME)] ?: ""
     }.catch {
         it.printStackTrace()
         System.currentTimeMillis().toString()
     }.firstOrNull() ?: System.currentTimeMillis().toString()
+
+    override suspend fun setLevelUpNotification(isNeeded: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[booleanPreferencesKey(USER_LEVEL_UP_NOTIFICATION)] = isNeeded
+        }
+    }
+
+    override suspend fun getLevelUpNotification(): Boolean =
+        dataStore.data
+            .map { preferences ->
+                preferences[booleanPreferencesKey(USER_LEVEL_UP_NOTIFICATION)] ?: false
+            }
+            .catch {
+                it.printStackTrace()
+                emit(false)
+            }
+            .first()
 }

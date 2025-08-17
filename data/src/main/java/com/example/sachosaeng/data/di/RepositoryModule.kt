@@ -12,7 +12,7 @@ import com.sachosaeng.app.data.repository.bookmark.BookmarkRepository
 import com.sachosaeng.app.data.repository.bookmark.BookmarkRepositoryImpl
 import com.sachosaeng.app.data.repository.category.CategoryRepository
 import com.sachosaeng.app.data.repository.category.CategoryRepositoryImpl
-import com.sachosaeng.app.data.repository.user.UserRepository
+import com.example.sachosaeng.data.repository.user.UserRepository
 import com.example.sachosaeng.data.repository.user.UserRepositoryImpl
 import com.sachosaeng.app.data.repository.vote.VoteRepository
 import com.sachosaeng.app.data.repository.vote.VoteRepositoryImpl

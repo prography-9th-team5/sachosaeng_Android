@@ -54,13 +54,16 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getUserInfo() = intent {
-        getMyInfoUseCase().collectLatest {
+        getMyInfoUseCase().collectLatest { it ->
             FirebaseUtil.setUser(it.email)
             reduce {
                 state.copy(
                     userType = UserType.getType(it.userTypeName) ?: UserType.NEW_EMPLOYEE,
                     isGrowthSystemConfirmed = it.userGrowthSystemConfirmed
                 )
+            }
+            it.levelUpNotification.takeIf { it }?.let {
+                postSideEffect(HomeSideEffect.ShowLevelUpTooltip)
             }
         }
     }
@@ -195,4 +198,5 @@ sealed class HomeSideEffect {
     data class NavigateToVoteDetail(val voteId: Int, val isDailyVote: Boolean) : HomeSideEffect()
     data object NavigateToAddVote : HomeSideEffect()
     data object NavigateToMyPage : HomeSideEffect()
+    data object ShowLevelUpTooltip : HomeSideEffect()
 }

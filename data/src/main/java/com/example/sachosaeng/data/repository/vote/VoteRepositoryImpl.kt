@@ -44,9 +44,9 @@ class VoteRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun setVote(voteId: Int, optionIds: List<Int?>): Flow<Unit> = flow {
+    override fun setVote(voteId: Int, optionIds: List<Int?>): Flow<Boolean> = flow {
         voteService.setVote(voteId = voteId, VoteOptionRequest(chosenVoteOptionIds = optionIds))
-            .getOrNull()?.data?.let { emit(Unit) }
+            .getOrNull()?.data?.let { emit(it.isLevelUp) }
     }
 
     override fun getMySuggestedVotes(): Flow<List<VoteList?>> = flow {

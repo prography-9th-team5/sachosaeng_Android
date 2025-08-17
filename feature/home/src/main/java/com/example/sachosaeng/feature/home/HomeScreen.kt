@@ -61,6 +61,7 @@ fun HomeScreen(
     navigateToAddVote: () -> Unit = {},
     navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
     navigateToMyPage: () -> Unit = {},
+    showLevelUpTooltip: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     var isWarningDialogMessage by remember { mutableStateOf("") }
@@ -77,6 +78,7 @@ fun HomeScreen(
             is HomeSideEffect.NavigateToAddVote -> navigateToAddVote()
             is HomeSideEffect.ShowDialog -> isWarningDialogMessage = it.message
             is HomeSideEffect.NavigateToMyPage -> navigateToMyPage()
+            is HomeSideEffect.ShowLevelUpTooltip -> showLevelUpTooltip()
             else -> {}
         }
     }

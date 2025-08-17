@@ -9,7 +9,6 @@ import com.sachosaeng.app.data.model.user.NicknameRequest
 import com.sachosaeng.app.data.model.user.UserTypeRequest
 import com.sachosaeng.app.data.model.user.WithdrawRequest
 import com.sachosaeng.app.data.repository.user.UserMapper.toDomain
-import com.sachosaeng.app.data.repository.user.UserRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -42,6 +41,16 @@ class UserRepositoryImpl @Inject constructor(
     override fun setGrowthSystemConfirmed(growthSystemConfirmed: Boolean): Flow<Unit> =
         flow {
             emit(userDataStore.setUserGrowthSystemConfirmed(growthSystemConfirmed))
+        }
+
+    override fun setLevelUpNotification(isNeeded: Boolean): Flow<Unit> =
+        flow {
+            emit(userDataStore.setLevelUpNotification(isNeeded))
+        }
+
+    override fun getLevelUpNotification(): Flow<Boolean> =
+        flow {
+            emit(userDataStore.getLevelUpNotification())
         }
 
     override suspend fun setUserNickname(nickname: String) {
