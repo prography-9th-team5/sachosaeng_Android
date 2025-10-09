@@ -1,6 +1,6 @@
 package com.sachosaeng.app.core.usecase.auth
 
-import com.sachosaeng.app.data.repository.user.UserRepository
+import com.example.sachosaeng.data.repository.user.UserRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

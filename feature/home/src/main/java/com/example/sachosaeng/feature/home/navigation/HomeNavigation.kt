@@ -24,7 +24,8 @@ fun NavGraphBuilder.addMainGraph(
     navigateToSearch: () -> Unit,
     navigateToAddVote: () -> Unit,
     navigateToVoteDetail: (voteId: Int, isDailyVote: Boolean) -> Unit,
-    navigateToMyPage: () -> Unit,
+    navigateToMyPage: (isLevelUp: Boolean) -> Unit,
+    showLevelUpTooltip: () -> Unit
 ) {
     navigation(
         startDestination = ROUTE_MAIN,
@@ -40,7 +41,10 @@ fun NavGraphBuilder.addMainGraph(
                 navigateToVoteCard = { voteId, isDailyVote ->
                     navigateToVoteDetail(voteId, isDailyVote)
                 },
-                navigateToMyPage = navigateToMyPage
+                navigateToMyPage = { isLevelUp ->
+                    navigateToMyPage(isLevelUp)
+                },
+                showLevelUpTooltip = showLevelUpTooltip
             )
         }
     }

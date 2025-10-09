@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.extension.captureComposableAsBitmap
 import com.example.sachosaeng.feature.mypage.component.DownloadCompleteDialog
+import com.example.sachosaeng.feature.mypage.component.LevelUpDialog
 import com.example.sachosaeng.feature.mypage.notification.NotificationScreen
 import com.example.sachosaeng.feature.mypage.notification.NotificationType
 import com.sachosaeng.app.core.model.User
@@ -84,6 +85,9 @@ fun MyPageScreen(
             onLogout = { viewModel.logout() },
             onCancel = { viewModel.hideLogoutDialog() }
         )
+    }
+    if (state.levelUpDialogState) {
+        LevelUpDialog()
     }
 
     MyPageScreen(

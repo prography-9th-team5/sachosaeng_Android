@@ -14,13 +14,12 @@ interface VoteRepository {
     fun getMySuggestedVotes(): Flow<List<VoteList?>>
     fun getVoteSuggestions(): Flow<List<VoteList?>>
     fun getVote(voteId: Int): Flow<Vote?>
-    fun setVote(voteId: Int, optionIds: List<Int?>): Flow<Unit>
+    fun setVote(voteId: Int, optionIds: List<Int?>): Flow<Boolean>
     fun addVote(
         title: String,
         isMultipleChoiceAllowed: Boolean,
         options: List<String>,
         categoryId: Int
     ): Flow<Int>
-
     fun getHistoryOfSuggestedVote(): Flow<PagingData<SuggestedVoteInfo>>
 }

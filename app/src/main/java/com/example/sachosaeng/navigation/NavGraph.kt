@@ -33,7 +33,8 @@ import com.sachosaeng.app.feature.webview.navigateToWebView
 @Composable
 internal fun NavGraph(
     navController: NavHostController,
-    snackBarMessage: (String, Int?) -> Unit = { _, _ -> }
+    snackBarMessage: (String, Int?) -> Unit = { _, _ -> },
+    showLevelUpTooltip: () -> Unit = { }
 ) {
     NavHost(
         navController = navController,
@@ -59,7 +60,8 @@ internal fun NavGraph(
                 )
             },
             navigateToSearch = { navController.navigateToSearch() },
-            navigateToMyPage = { navController.navigateToMyPage() }
+            navigateToMyPage = { isLevelUp ->  navController.navigateToMyPage(isLevelUp) },
+            showLevelUpTooltip = { showLevelUpTooltip() },
         )
         addMyPageNavGraph(
             navController = navController,

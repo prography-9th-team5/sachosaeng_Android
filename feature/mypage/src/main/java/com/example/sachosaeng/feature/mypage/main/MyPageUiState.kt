@@ -16,6 +16,7 @@ data class MyPageUiState(
     val versionInfo: String = "1.0.0",
     val logoutDialogState: Boolean = false,
     val downloadCompleteDialogState: Boolean = false,
+    val levelUpDialogState: Boolean = false,
 )
 
 sealed class MyPageSideEffect {

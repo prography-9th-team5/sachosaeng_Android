@@ -13,4 +13,6 @@ interface UserDataStore {
     suspend fun clearSearchHistory()
     suspend fun setUserNickName(name: String)
     suspend fun getUserNickName(): String
+    suspend fun setLevelUpNotification(isNeeded: Boolean): Unit
+    suspend fun getLevelUpNotification(): Boolean
 }

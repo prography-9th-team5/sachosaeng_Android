@@ -21,6 +21,8 @@
     <string name="save_label">저장</string>
     <string name="delete_label">삭제</string>
     <string name="modify_label">편집</string>
+    
+    <string name="levelup_tooltip">Level UP!\n확인하러 오세요!</string>
 
     <!-- home -->
     <string name="daily_vote">오늘의 투표</string>

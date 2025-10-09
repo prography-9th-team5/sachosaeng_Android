@@ -1,6 +1,8 @@
 package com.sachosaeng.app.main
 
 import android.graphics.drawable.Drawable
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.ErrorNotifier
 import com.example.sachosaeng.core.util.ResourceProvider
@@ -12,6 +14,7 @@ import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
@@ -49,10 +52,28 @@ class AppViewModel @Inject constructor(
         }
     }
 
+    fun showLevelUpTooltip() = intent {
+        reduce {
+            println("Showing level up tooltip")
+            state.copy(
+                tooltipState = state.tooltipState.copy(
+                    isVisible = true,
+                    tooltipMessage = resourceProvider.getString(R.string.levelup_tooltip),
+                ),
+            )
+        }
+    }
 }
 
-data class AppUiState(
-    val snackBarMessage: String? = null
+data class AppUiState (
+    val snackBarMessage: String? = null,
+    val tooltipState: TooltipState = TooltipState(),
+    val snackBarDrawable: Drawable? = null,
+)
+
+data class TooltipState (
+    val isVisible: Boolean = false,
+    val tooltipMessage: String = "",
 )
 
 sealed class AppSideEffect {

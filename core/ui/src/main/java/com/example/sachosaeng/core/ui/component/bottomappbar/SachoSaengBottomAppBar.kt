@@ -24,6 +24,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.sachosaeng.core.ui.component.bottomappbar.BottomAppbarItem
 import com.sachosaeng.app.core.ui.IntConstant.BOTTOM_BAR_HEIGHT
 import com.sachosaeng.app.core.ui.noRippleClickable
 import com.sachosaeng.app.core.ui.theme.Gs_Black

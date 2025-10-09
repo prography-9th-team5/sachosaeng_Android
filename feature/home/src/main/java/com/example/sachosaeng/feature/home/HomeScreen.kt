@@ -12,7 +12,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +32,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.navigation.NavController
 import com.example.sachosaeng.core.ui.component.dialog.WarningDialog
 import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.FirebaseUtil.SCREEN_NAME_HOME
@@ -60,23 +66,35 @@ fun HomeScreen(
     navigateToSearch: () -> Unit = {},
     navigateToAddVote: () -> Unit = {},
     navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
-    navigateToMyPage: () -> Unit = {},
+    navigateToMyPage: (Boolean) -> Unit = { _ ->},
+    showLevelUpTooltip: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     var isWarningDialogMessage by remember { mutableStateOf("") }
+    val state = viewModel.collectAsState()
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(Unit) {
         FirebaseUtil.setScreenView(SCREEN_NAME_HOME)
     }
 
-    val state = viewModel.collectAsState()
+    DisposableEffect(lifecycleOwner) {
+        val observer = LifecycleEventObserver { _, event ->
+            if (event == Lifecycle.Event.ON_RESUME) {
+                viewModel.getUserInfo()
+            }
+        }
+        lifecycleOwner.lifecycle.addObserver(observer)
+        onDispose { lifecycleOwner.lifecycle.removeObserver(observer) }
+    }
 
     viewModel.collectSideEffect {
         when (it) {
             is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId, it.isDailyVote)
             is HomeSideEffect.NavigateToAddVote -> navigateToAddVote()
             is HomeSideEffect.ShowDialog -> isWarningDialogMessage = it.message
-            is HomeSideEffect.NavigateToMyPage -> navigateToMyPage()
+            is HomeSideEffect.NavigateToMyPage -> navigateToMyPage(state.value.isLevelUpNotification)
+            is HomeSideEffect.ShowLevelUpTooltip -> showLevelUpTooltip()
             else -> {}
         }
     }

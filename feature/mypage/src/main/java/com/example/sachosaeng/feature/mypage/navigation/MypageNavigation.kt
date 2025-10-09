@@ -28,6 +28,7 @@ private const val MODIFY_USER_INFO = "modifyUserInfo"
 private const val MODIFY_CATEGORY = "modifyCategory"
 private const val SUGGEST_VOTE_HISTORY = "suggestVoteHistory"
 private const val NOTIFICATION = "notification"
+const val IS_LEVEL_UP = "isLevelUp"
 const val NOTIFICATION_TYPE = "notificationType"
 
 private fun NavController.navigateToWithdraw(userName: String) {
@@ -43,8 +44,8 @@ fun NavController.navigateToNotification(notificationType: NotificationType) {
     navigate("$NOTIFICATION?$NOTIFICATION_TYPE=${notificationType.ordinal}")
 }
 
-fun NavController.navigateToMyPage() {
-    navigate(ROUTE_MY_PAGE)
+fun NavController.navigateToMyPage(isLevelUp: Boolean) {
+    navigate("$ROUTE_MY_PAGE?$IS_LEVEL_UP=$isLevelUp")
 }
 
 fun NavGraphBuilder.addMyPageNavGraph(
@@ -57,7 +58,16 @@ fun NavGraphBuilder.addMyPageNavGraph(
         route = GRAPH_MY_PAGE,
         startDestination = ROUTE_MY_PAGE
     ) {
-        composable(ROUTE_MY_PAGE) {
+        composable(
+            route = "$ROUTE_MY_PAGE?$IS_LEVEL_UP={$IS_LEVEL_UP}",
+            arguments = listOf(
+                navArgument(IS_LEVEL_UP) {
+                    type = NavType.BoolType
+                    nullable = false
+                    defaultValue = false
+                }
+            )
+        ) {
             MyPageScreen(
                 navigateToAlertPage = { navController.navigateToNotification(it)},
                 navigateToModifyCategory = { navController.navigate(MODIFY_CATEGORY) },
@@ -110,7 +120,6 @@ fun NavGraphBuilder.addMyPageNavGraph(
                 }
             )
         ) {
-           println("Navigating to Notification Screen with arguments: ${it.arguments?.getInt(NOTIFICATION_TYPE)}")
             NotificationScreen(
                 onClose = { navController.popBackStack() },
             )

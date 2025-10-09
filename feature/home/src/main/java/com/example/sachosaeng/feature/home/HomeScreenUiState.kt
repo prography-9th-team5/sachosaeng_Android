@@ -16,5 +16,6 @@ data class HomeScreenUiState(
     val modifyMyCategoryListVisibility: Boolean = false,
     val selectedCategory: Category = Category(),
     val isDailyVoteDialogOpen: Boolean = false,
-    val isGrowthSystemConfirmed: Boolean = true
+    val isGrowthSystemConfirmed: Boolean = true,
+    val isLevelUpNotification: Boolean = false
 )

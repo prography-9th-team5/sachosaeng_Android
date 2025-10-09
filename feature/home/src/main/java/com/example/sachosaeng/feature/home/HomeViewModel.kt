@@ -4,14 +4,18 @@ import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.FirebaseUtil
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.model.Category
+import com.sachosaeng.app.core.ui.R
 import com.sachosaeng.app.core.ui.UserType
 import com.sachosaeng.app.core.usecase.category.GetCategoryListWithAllIconUseCase
 import com.sachosaeng.app.core.usecase.category.GetMyCategoryListUsecase
 import com.sachosaeng.app.core.usecase.category.SetMyCategoryListUseCase
 import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
+import com.sachosaeng.app.core.usecase.user.SetGrowthSystemConfirmUseCase
 import com.sachosaeng.app.core.usecase.vote.GetDailyVoteUsecase
 import com.sachosaeng.app.core.usecase.vote.GetHotVoteUsecase
+import com.sachosaeng.app.core.usecase.vote.GetMyVoteListUsecase
 import com.sachosaeng.app.core.usecase.vote.GetVoteByCategoryUsecase
+import com.sachosaeng.app.core.usecase.vote.GetVoteSuggestionsUsecase
 import com.sachosaeng.app.core.util.constant.IntConstant.ALL_CATEGORY_ID
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
@@ -22,10 +26,6 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
-import com.sachosaeng.app.core.ui.R
-import com.sachosaeng.app.core.usecase.user.SetGrowthSystemConfirmUseCase
-import com.sachosaeng.app.core.usecase.vote.GetMyVoteListUsecase
-import com.sachosaeng.app.core.usecase.vote.GetVoteSuggestionsUsecase
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -45,7 +45,6 @@ class HomeViewModel @Inject constructor(
         container(HomeScreenUiState())
 
     init {
-        getUserInfo()
         getCategoryList()
         getDailyVote()
         getHotVotes()
@@ -53,14 +52,18 @@ class HomeViewModel @Inject constructor(
         getMyCategoryList()
     }
 
-    private fun getUserInfo() = intent {
-        getMyInfoUseCase().collectLatest {
+    fun getUserInfo() = intent {
+        getMyInfoUseCase().collectLatest { it ->
             FirebaseUtil.setUser(it.email)
             reduce {
                 state.copy(
                     userType = UserType.getType(it.userTypeName) ?: UserType.NEW_EMPLOYEE,
-                    isGrowthSystemConfirmed = it.userGrowthSystemConfirmed
+                    isGrowthSystemConfirmed = it.userGrowthSystemConfirmed,
+                    isLevelUpNotification = it.levelUpNotification
                 )
+            }
+            it.levelUpNotification.takeIf { it }?.let {
+                postSideEffect(HomeSideEffect.ShowLevelUpTooltip)
             }
         }
     }
@@ -195,4 +198,5 @@ sealed class HomeSideEffect {
     data class NavigateToVoteDetail(val voteId: Int, val isDailyVote: Boolean) : HomeSideEffect()
     data object NavigateToAddVote : HomeSideEffect()
     data object NavigateToMyPage : HomeSideEffect()
+    data object ShowLevelUpTooltip : HomeSideEffect()
 }
