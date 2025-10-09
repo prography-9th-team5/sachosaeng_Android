@@ -66,7 +66,7 @@ fun HomeScreen(
     navigateToSearch: () -> Unit = {},
     navigateToAddVote: () -> Unit = {},
     navigateToVoteCard: (Int, Boolean) -> Unit = { _, _ -> },
-    navigateToMyPage: () -> Unit = {},
+    navigateToMyPage: (Boolean) -> Unit = { _ ->},
     showLevelUpTooltip: () -> Unit = {},
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -93,7 +93,7 @@ fun HomeScreen(
             is HomeSideEffect.NavigateToVoteDetail -> navigateToVoteCard(it.voteId, it.isDailyVote)
             is HomeSideEffect.NavigateToAddVote -> navigateToAddVote()
             is HomeSideEffect.ShowDialog -> isWarningDialogMessage = it.message
-            is HomeSideEffect.NavigateToMyPage -> navigateToMyPage()
+            is HomeSideEffect.NavigateToMyPage -> navigateToMyPage(state.value.isLevelUpNotification)
             is HomeSideEffect.ShowLevelUpTooltip -> showLevelUpTooltip()
             else -> {}
         }

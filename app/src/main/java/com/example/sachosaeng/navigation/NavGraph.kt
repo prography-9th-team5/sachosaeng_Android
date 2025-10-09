@@ -60,7 +60,7 @@ internal fun NavGraph(
                 )
             },
             navigateToSearch = { navController.navigateToSearch() },
-            navigateToMyPage = { navController.navigateToMyPage() },
+            navigateToMyPage = { isLevelUp ->  navController.navigateToMyPage(isLevelUp) },
             showLevelUpTooltip = { showLevelUpTooltip() },
         )
         addMyPageNavGraph(

@@ -1,6 +1,7 @@
 package com.sachosaeng.app.feature.mypage.main
 
 import android.graphics.Bitmap
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.sachosaeng.core.util.ResourceProvider
 import com.sachosaeng.app.core.usecase.auth.LogoutUsecase
@@ -9,6 +10,7 @@ import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
 import com.sachosaeng.app.core.util.manager.DeviceManager
 import com.sachosaeng.app.core.util.manager.PackageManager
 import com.sachosaeng.app.core.ui.R.string
+import com.sachosaeng.app.feature.mypage.navigation.IS_LEVEL_UP
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import org.orbitmvi.orbit.Container
@@ -27,8 +29,22 @@ class MyPageViewModel @Inject constructor(
     private val packageManager: PackageManager,
     private val deviceManager: DeviceManager,
     val resourceProvider: ResourceProvider,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel(), ContainerHost<MyPageUiState, MyPageSideEffect> {
     override val container: Container<MyPageUiState, MyPageSideEffect> = container(MyPageUiState())
+    private val isLevelUp = savedStateHandle.get<Boolean>(IS_LEVEL_UP)
+
+    init {
+        if(isLevelUp == true) showLevelUpDialog()
+    }
+
+    private fun showLevelUpDialog() = intent {
+        reduce {
+            state.copy(
+                levelUpDialogState = true
+            )
+        }
+    }
 
     fun getUserInfo() = intent {
         getMyInfoUseCase().collectLatest { userInfo ->

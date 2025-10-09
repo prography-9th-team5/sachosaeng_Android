@@ -76,7 +76,6 @@ fun AppScreen(
        if(state.tooltipState.isVisible) tooltipState.show()
     }
 
-
     BackHandler {
         viewModel.backPressed(currentBackStackEntry?.destination?.route)
     }
