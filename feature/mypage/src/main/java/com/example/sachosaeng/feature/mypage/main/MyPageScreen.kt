@@ -34,6 +34,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.extension.captureComposableAsBitmap
+import com.example.sachosaeng.core.util.LocalPushNotificationManager
+import com.example.sachosaeng.core.util.NotificationPermissionManager
+import com.example.sachosaeng.feature.mypage.component.DebugTestMenu
 import com.example.sachosaeng.feature.mypage.component.DownloadCompleteDialog
 import com.example.sachosaeng.feature.mypage.component.LevelUpDialog
 import com.example.sachosaeng.feature.mypage.notification.NotificationScreen
@@ -129,6 +132,8 @@ internal fun MyPageScreen(
     }
 
     val scope = rememberCoroutineScope()
+    
+    val notificationPermissionManager = NotificationPermissionManager(context)
 
     LazyColumn(
         modifier = Modifier
@@ -186,6 +191,9 @@ internal fun MyPageScreen(
                     }
                 )
             )
+        }
+        item {
+            DebugTestMenu(notificationPermissionManager = notificationPermissionManager)
         }
         item {
             MenuTitle(title = stringResource(id = string.mypage_menu_setting))
@@ -324,7 +332,7 @@ fun LogoutButton(onClick: () -> Unit = {}) {
 @Composable
 fun MyPageScreenPreview() {
     MyPageScreen(
-        MyPageUiState(
+        myPageUiState = MyPageUiState(
             userInfo = User(
                 name = "홍길동",
                 userTypeName = "STUDENT",

@@ -6,7 +6,7 @@ import java.util.Locale
 
 class DateManager {
     fun getWeekDateRange(): String {
-        val locale = Locale("ko", "KR")  // 한국어 로케일 설정
+        val locale = Locale("ko", "KR")
         val dateFormat = SimpleDateFormat("M월 d일", locale)
 
         val calendar = Calendar.getInstance()

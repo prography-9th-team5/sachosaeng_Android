@@ -37,7 +37,7 @@ class AppViewModel @Inject constructor(
     }
 
     private var backPressedTime: Long = 0
-    private val backPressInterval: Long = 2000 // 2초
+    private val backPressInterval: Long = 2000
     fun backPressed(currentRoute: String?) = intent {
        if(currentRoute == ROUTE_MAIN) mainBackHandler()
        else postSideEffect(AppSideEffect.NavigateToMainRoute)
@@ -62,6 +62,10 @@ class AppViewModel @Inject constructor(
                 ),
             )
         }
+    }
+
+    fun showSnackBar(message: String, drawableRes: Int? = null) = intent {
+        postSideEffect(AppSideEffect.ShowSnackBar(message, drawableRes))
     }
 }
 

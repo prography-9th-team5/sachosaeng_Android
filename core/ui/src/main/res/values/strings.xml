@@ -178,4 +178,14 @@
     <string name="article_label">연관 콘텐츠</string>
 
     <string name="saved_snackbar">저장되었습니다</string>
+
+    <!-- Notification Permission -->
+    <string name="notification_permission_granted">알림 권한이 허용되었습니다.</string>
+    <string name="notification_permission_denied">알림 권한이 거부되었습니다.</string>
+    <string name="notification_permission_disabled">시스템 설정에서 알림이 꺼져있습니다. 설정으로 이동하세요.</string>
+
+    <!-- Notification Channel -->
+    <string name="notification_channel_id">daily_vote_channel</string>
+    <string name="notification_channel_name">오늘의 투표 알림</string>
+    <string name="notification_channel_description">매일 투표 참여를 위한 알림</string>
 </resources>
