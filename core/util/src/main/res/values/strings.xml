@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Notification Channel -->
+    <string name="notification_channel_name">오늘의 투표 알림</string>
+    <string name="notification_channel_description">매일 투표 참여를 위한 알림</string>
+    
+    <!-- Push Notification Messages -->
+    <string name="push_morning_title">오늘의 투표가 시작되었어요!</string>
+    <string name="push_morning_message">새로운 하루의 첫 번째 투표에 참여해보세요. 여러분의 의견이 중요합니다!</string>
+    <string name="push_morning_image_url">https://example.com/morning-vote-image.jpg</string>
+    
+    <string name="push_afternoon_title">점심시간 투표 참여하세요!</string>
+    <string name="push_afternoon_message">아직 투표에 참여하지 않으셨네요. 지금 바로 참여해보세요!</string>
+    <string name="push_afternoon_image_url">https://example.com/afternoon-vote-image.jpg</string>
+    
+    <string name="push_evening_title">오늘의 마지막 투표 기회!</string>
+    <string name="push_evening_message">하루가 끝나가기 전에 마지막 투표에 참여해보세요. 내일은 또 다른 주제가 기다려요!</string>
+    <string name="push_evening_image_url">https://example.com/evening-vote-image.jpg</string>
+</resources>

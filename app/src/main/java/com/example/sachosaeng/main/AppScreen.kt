@@ -1,7 +1,12 @@
 package com.sachosaeng.app.main
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -16,19 +21,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntRect
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.PopupPositionProvider
+import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.sachosaeng.core.ui.component.bottomappbar.BottomAppbarItem
-import com.example.sachosaeng.core.ui.component.tooltip.SachosaengTextTooltip
 import com.example.sachosaeng.core.ui.component.tooltip.SachosaengTooltipWrapper
 import com.example.sachosaeng.feature.home.navigation.navigateToMain
 import com.sachosaeng.app.core.ui.R
@@ -50,12 +54,24 @@ fun AppScreen(
     navController: NavHostController = rememberNavController(),
     viewModel: AppViewModel = hiltViewModel()
 ) {
-    var snackbarStatus by remember { mutableStateOf<Pair<String?, Int?>?>(Pair("", null)) }
+    val context = LocalContext.current
+    var snackbarStatus by remember { mutableStateOf<AppSideEffect.ShowSnackBar?>(null) }
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val isBottomBarNeeded =
         currentBackStackEntry?.destination?.route == ROUTE_MAIN || currentBackStackEntry?.destination?.route == ROUTE_BOOKMARK || currentBackStackEntry?.destination?.route == ROUTE_MY_PAGE
     val state by viewModel.collectAsState()
     val tooltipState = rememberTooltipState(isPersistent = true, initialIsVisible = false)
+    
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        val message = if (isGranted) {
+            context.getString(R.string.notification_permission_granted)
+        } else {
+            context.getString(R.string.notification_permission_denied)
+        }
+        viewModel.showSnackBar(message)
+    }
 
     val popupPositionProvider = remember {
         object : PopupPositionProvider {
@@ -86,13 +102,17 @@ fun AppScreen(
                 intent
             )
         }
+        
+        checkAndRequestNotificationPermission(context, requestPermissionLauncher) { message ->
+            viewModel.showSnackBar(message)
+        }
     }
 
     viewModel.collectSideEffect {
         when (it) {
             is AppSideEffect.NavigateToMainRoute -> navController.navigateToMain()
             is AppSideEffect.NavigateToAuthActivity -> navController.navigationToAuth()
-            is AppSideEffect.ShowSnackBar -> snackbarStatus = Pair(it.message, it.drawableRes)
+            is AppSideEffect.ShowSnackBar -> snackbarStatus = it
             else -> {}
         }
     }
@@ -108,19 +128,19 @@ fun AppScreen(
                 NavGraph(
                     navController = navController,
                     snackBarMessage = { message, drawableRes ->
-                        snackbarStatus = Pair(message, drawableRes)
+                        snackbarStatus = AppSideEffect.ShowSnackBar(message, drawableRes)
                     },
                     showLevelUpTooltip = {
                         viewModel.showLevelUpTooltip()
                     }
                 )
-                snackbarStatus?.first?.let { message ->
-                    if (message.isNotEmpty()) SachoSaengSnackbar(
-                        iconResId = snackbarStatus?.second,
-                        message = message,
-                        onDismiss = { snackbarStatus = null }
-                    )
-                }
+                       snackbarStatus?.let { snackBar ->
+                           if (snackBar.message.isNotEmpty()) SachoSaengSnackbar(
+                               iconResId = snackBar.drawableRes,
+                               message = snackBar.message,
+                               onDismiss = { snackbarStatus = null }
+                           )
+                       }
             }
         },
         bottomBar = {
@@ -158,4 +178,21 @@ fun AppScreen(
                 }
         }
     )
+}
+
+private fun checkAndRequestNotificationPermission(
+    context: android.content.Context,
+    requestPermissionLauncher: androidx.activity.result.ActivityResultLauncher<String>,
+    onMessage: (String) -> Unit
+) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        when {
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED -> {
+                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
 }
