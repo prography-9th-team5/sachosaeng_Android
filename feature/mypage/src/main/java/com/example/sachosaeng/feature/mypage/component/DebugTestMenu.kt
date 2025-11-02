@@ -26,33 +26,35 @@ import kotlinx.coroutines.launch
 @Composable
 fun DebugTestMenu(
     modifier: Modifier = Modifier,
-    notificationPermissionManager: NotificationPermissionManager
+    notificationPermissionManager: NotificationPermissionManager,
+    testPushByUser: (String, String) -> Unit = { _, _ -> },
+    testPushByToken: (String, String) -> Unit = { _, _ -> }
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    
+
     if (context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE != 0) {
         MenuTitle(title = "푸시 알림 테스트 (디버그)")
-        
+
         val isPermissionGranted = notificationPermissionManager.isNotificationPermissionGranted()
         val isNotificationDisabled = notificationPermissionManager.areNotificationsDisabled()
-        
+
         if (!isPermissionGranted || isNotificationDisabled) {
             MyPageMenuCard(
                 menuName = if (isNotificationDisabled) "알림 설정으로 이동" else "알림 권한 요청",
-                onClick = { 
+                onClick = {
                     context.startActivity(notificationPermissionManager.getNotificationSettingsIntent())
                 }
             )
         }
-        
+
         Column(
             modifier = modifier.padding(bottom = 28.dp),
             verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             MyPageMenuCard(
                 menuName = "오전 푸시 테스트",
-                onClick = { 
+                onClick = {
                     val pushManager = LocalPushNotificationManager(context)
                     scope.launch {
                         pushManager.sendImagePushNotification(
@@ -64,10 +66,10 @@ fun DebugTestMenu(
                     }
                 }
             )
-            
+
             MyPageMenuCard(
                 menuName = "오후 푸시 테스트",
-                onClick = { 
+                onClick = {
                     val pushManager = LocalPushNotificationManager(context)
                     scope.launch {
                         pushManager.sendImagePushNotification(
@@ -79,10 +81,10 @@ fun DebugTestMenu(
                     }
                 }
             )
-            
+
             MyPageMenuCard(
                 menuName = "저녁 푸시 테스트",
-                onClick = { 
+                onClick = {
                     val pushManager = LocalPushNotificationManager(context)
                     scope.launch {
                         pushManager.sendImagePushNotification(
@@ -94,10 +96,10 @@ fun DebugTestMenu(
                     }
                 }
             )
-            
+
             MyPageMenuCard(
                 menuName = "기본 푸시 테스트",
-                onClick = { 
+                onClick = {
                     val pushManager = LocalPushNotificationManager(context)
                     scope.launch {
                         pushManager.sendBasicPushNotification(
@@ -105,6 +107,23 @@ fun DebugTestMenu(
                             message = "이미지 없이 발송되는 기본 푸시 알림입니다.",
                             pushType = PushNotificationConstants.PushType.TEST
                         )
+                    }
+                }
+            )
+
+            MyPageMenuCard(
+                menuName = "서버 푸시 테스트 (유저)",
+                onClick = {
+                    scope.launch {
+                        testPushByUser("서버 푸시 테스트(유저)", "서버를 통해 발송되는 테스트 푸시 알림입니다.")
+                    }
+                }
+            )
+            MyPageMenuCard(
+                menuName = "서버 푸시 테스트 (토큰)",
+                onClick = {
+                    scope.launch {
+                        testPushByToken("서버 푸시 테스트(토큰)", "토큰을 통해 발송되는 테스트 푸시 알림입니다.")
                     }
                 }
             )

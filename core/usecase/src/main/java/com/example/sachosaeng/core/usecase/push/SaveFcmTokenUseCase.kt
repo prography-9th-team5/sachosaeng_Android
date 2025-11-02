@@ -24,3 +24,40 @@ class SaveFcmTokenUseCase @Inject constructor(
         private const val TAG = "SaveFcmTokenUseCase"
     }
 }
+
+class TestPushByUserUseCase @Inject constructor(
+    private val repository: UserRepository
+) {
+    suspend operator fun invoke(title: String, message: String) {
+        try {
+            repository.testPushByUser(title = title, message = message)
+        } catch (e: Exception) {
+            Log.e(TAG, e.toString())
+            throw e
+        }
+    }
+
+    companion object {
+        private const val TAG = "TestPushByUserUseCase"
+    }
+}
+
+class TestPushByTokenUseCase @Inject constructor(
+    private val repository: UserRepository
+) {
+    suspend operator fun invoke(title: String, message: String) {
+        try {
+            repository.testPushByToken(
+                title = title,
+                message = message
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, e.toString())
+            throw e
+        }
+    }
+
+    companion object {
+        private const val TAG = "TestPushByTokenUseCase"
+    }
+}

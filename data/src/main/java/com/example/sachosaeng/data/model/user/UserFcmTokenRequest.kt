@@ -8,3 +8,16 @@ data class UserFcmTokenRequest (
     val token: String,
     val platform: String
 )
+
+@Serializable
+data class PushMessageTestRequest (
+    val title: String,
+    val body: String
+)
+
+@Serializable
+data class PushMessageTestByTokenRequest (
+    val token: String,
+    val title: String,
+    val body: String
+)

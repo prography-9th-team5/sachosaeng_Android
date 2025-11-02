@@ -3,6 +3,8 @@ package com.example.sachosaeng.data.repository.user
 import android.graphics.Bitmap
 import com.example.sachosaeng.core.util.FirebaseUtil.PLATFORM
 import com.example.sachosaeng.data.local.manager.FileManager
+import com.example.sachosaeng.data.model.user.PushMessageTestByTokenRequest
+import com.example.sachosaeng.data.model.user.PushMessageTestRequest
 import com.example.sachosaeng.data.model.user.UserFcmTokenRequest
 import com.sachosaeng.app.core.model.User
 import com.sachosaeng.app.core.util.manager.DeviceManager
@@ -98,6 +100,27 @@ class UserRepositoryImpl @Inject constructor(
             platform = PLATFORM,
             device = device
         )
+        userDataStore.saveFcmToken(token)
         userService.setFcmToken(tokenRequest = tokenRequest).getOrThrow()
+    }
+
+    override suspend fun testPushByUser(title: String, message: String) {
+        val tokenMessageTestRequest = PushMessageTestRequest(
+            title = title,
+            body = message
+        )
+        userService.sendTestPushByUser(
+            tokenMessageTestRequest = tokenMessageTestRequest
+        ).getOrNull()
+    }
+
+    override suspend fun testPushByToken(title: String, message: String) {
+        val token = userDataStore.getFcmToken()
+        val tokenMessageTestRequest = PushMessageTestByTokenRequest(
+            token = token,
+            title = title,
+            body = message
+        )
+        userService.sendTestPushByToken(tokenMessageTestRequest).getOrThrow()
     }
 }

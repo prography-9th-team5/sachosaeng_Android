@@ -3,7 +3,9 @@ package com.sachosaeng.app.feature.mypage.main
 import android.graphics.Bitmap
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import com.example.sachosaeng.core.usecase.push.TestPushByTokenUseCase
 import com.example.sachosaeng.core.util.ResourceProvider
+import com.example.sachosaeng.core.usecase.push.TestPushByUserUseCase
 import com.sachosaeng.app.core.usecase.auth.LogoutUsecase
 import com.sachosaeng.app.core.usecase.user.DownloadProfileImageUseCase
 import com.sachosaeng.app.core.usecase.user.GetMyInfoUsecase
@@ -26,6 +28,8 @@ class MyPageViewModel @Inject constructor(
     val logoutUseCase: LogoutUsecase,
     val getMyInfoUseCase: GetMyInfoUsecase,
     val downloadProfileImageUseCase: DownloadProfileImageUseCase,
+    val testPushByUserUseCase: TestPushByUserUseCase,
+    val testPushByTokenUseCase: TestPushByTokenUseCase,
     private val packageManager: PackageManager,
     private val deviceManager: DeviceManager,
     val resourceProvider: ResourceProvider,
@@ -98,5 +102,13 @@ class MyPageViewModel @Inject constructor(
 
     fun onShowAlert() = intent {
         postSideEffect(MyPageSideEffect.NavigateToAlertPage)
+    }
+
+    fun testPushByUser(title: String, message: String) = intent {
+        testPushByUserUseCase(title = title, message = message)
+    }
+
+    fun testByToken(title: String, message: String) = intent {
+        testPushByTokenUseCase(title = title, message = message)
     }
 }
