@@ -1,8 +1,11 @@
 package com.example.sachosaeng.data.repository.user
 
 import android.graphics.Bitmap
+import com.example.sachosaeng.core.util.FirebaseUtil.PLATFORM
 import com.example.sachosaeng.data.local.manager.FileManager
+import com.example.sachosaeng.data.model.user.UserFcmTokenRequest
 import com.sachosaeng.app.core.model.User
+import com.sachosaeng.app.core.util.manager.DeviceManager
 import com.sachosaeng.app.data.api.UserService
 import com.sachosaeng.app.data.datasource.datastore.UserDataStore
 import com.sachosaeng.app.data.model.user.NicknameRequest
@@ -16,7 +19,8 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userDataStore: UserDataStore,
     private val userService: UserService,
-    private val fileManager: FileManager
+    private val fileManager: FileManager,
+    private val deviceManager: DeviceManager
 ) : UserRepository {
     override fun setUserType(type: String) = flow { emit(userDataStore.setUserType(type)) }
     override fun getUserType() = flow { emit(userDataStore.getUserType()) }
@@ -82,5 +86,18 @@ class UserRepositoryImpl @Inject constructor(
     override fun downloadProfileImage(bitmap: Bitmap): Flow<Boolean> = flow {
         val fileName = userDataStore.getUserNickName()
         emit(fileManager.downloadImage(bitmap = bitmap, fileName = fileName).isSuccess)
+    }
+
+    private val device = deviceManager.getDeviceId()
+    
+    override suspend fun setFcmToken(token: String) {
+        if (token.isBlank()) return
+        
+        val tokenRequest = UserFcmTokenRequest(
+            token = token,
+            platform = PLATFORM,
+            device = device
+        )
+        userService.setFcmToken(tokenRequest = tokenRequest).getOrThrow()
     }
 }

@@ -64,7 +64,6 @@
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
             android:theme="@style/Theme.AppCompat"/>
-
         <activity
             android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
             android:theme="@style/Theme.AppCompat" />
@@ -73,6 +72,13 @@
             android:name="com.example.sachosaeng.core.util.PushNotificationReceiver"
             android:enabled="true"
             android:exported="true" />
+        <service
+            android:name="com.example.sachosaeng.SachoSaengFcmService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

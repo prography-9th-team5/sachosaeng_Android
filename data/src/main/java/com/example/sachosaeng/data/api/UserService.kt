@@ -1,5 +1,6 @@
 package com.sachosaeng.app.data.api
 
+import com.example.sachosaeng.data.model.user.UserFcmTokenRequest
 import com.sachosaeng.app.data.model.BaseResponse
 import com.sachosaeng.app.data.model.user.NicknameRequest
 import com.sachosaeng.app.data.model.user.UserInfoResponse
@@ -28,5 +29,10 @@ interface UserService {
     @PUT("/api/v1/users/user-type")
     suspend fun updateUserType(
         @Body nickname: UserTypeRequest
+    ): ApiResult<BaseResponse<Unit>>
+
+    @POST("/api/v1/push/token")
+    suspend fun setFcmToken(
+        @Body tokenRequest: UserFcmTokenRequest,
     ): ApiResult<BaseResponse<Unit>>
 }
