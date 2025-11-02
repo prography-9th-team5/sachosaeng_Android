@@ -76,4 +76,7 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.analytics)
     implementation(platform(libs.firebase.bom))
+    
+    //coroutines for firebase tasks
+    implementation(libs.coroutine.play.services)
 }

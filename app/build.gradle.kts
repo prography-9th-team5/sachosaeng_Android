@@ -32,8 +32,8 @@ android {
         applicationId = "com.sachosaeng.app"
         minSdk = 24
         targetSdk = 35
-        versionCode = 101001
-        versionName = "1.1.0"
+        versionCode = 102004
+        versionName = "1.2.4"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -119,6 +119,9 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.gms.auth)
     implementation(platform(libs.firebase.bom))
+
+    //fcm
+    implementation(libs.firebase.messaging)
 
     //test
     testImplementation(libs.junit)

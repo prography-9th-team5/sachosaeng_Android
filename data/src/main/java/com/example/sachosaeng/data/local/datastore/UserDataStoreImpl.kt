@@ -21,6 +21,7 @@ private const val USER_TYPE = "user_type"
 private const val USER_NAME = "user_name"
 private const val USER_LEVEL_UP_NOTIFICATION = "user_level_up_notification"
 private const val USER_GROWTH_SYSTEM_CONFIRMED = "user_growth_system_confirmed"
+private const val USER_FCM_TOKEN = "user_fcm_token"
 
 private val Context.userDataStore: DataStore<Preferences> by preferencesDataStore(name = "sachosaeng_user")
 
@@ -115,4 +116,22 @@ class UserDataStoreImpl @Inject constructor(
                 emit(false)
             }
             .first()
+
+    override suspend fun saveFcmToken(token: String) {
+        dataStore.edit { preferences ->
+            preferences[stringPreferencesKey(USER_FCM_TOKEN)] = token
+        }
+    }
+
+    override suspend fun getFcmToken(): String {
+        return dataStore.data
+            .map { preferences ->
+                preferences[stringPreferencesKey(USER_FCM_TOKEN)] ?: ""
+            }
+            .catch {
+                it.printStackTrace()
+                emit("")
+            }
+            .first()
+    }
 }

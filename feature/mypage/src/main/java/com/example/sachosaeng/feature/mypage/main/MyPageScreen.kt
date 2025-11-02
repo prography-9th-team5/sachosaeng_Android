@@ -34,12 +34,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sachosaeng.core.ui.extension.captureComposableAsBitmap
-import com.example.sachosaeng.core.util.LocalPushNotificationManager
 import com.example.sachosaeng.core.util.NotificationPermissionManager
 import com.example.sachosaeng.feature.mypage.component.DebugTestMenu
 import com.example.sachosaeng.feature.mypage.component.DownloadCompleteDialog
 import com.example.sachosaeng.feature.mypage.component.LevelUpDialog
-import com.example.sachosaeng.feature.mypage.notification.NotificationScreen
 import com.example.sachosaeng.feature.mypage.notification.NotificationType
 import com.sachosaeng.app.core.model.User
 import com.sachosaeng.app.core.model.UserScore
@@ -105,7 +103,9 @@ fun MyPageScreen(
         navigateToOpenSource = navigateToOpenSource,
         navigateToSuggestVoteHistory = navigateToSuggestVoteHistory,
         onDownloadImage = viewModel::downloadImage,
-        onShowAlert = viewModel::onShowAlert
+        onShowAlert = viewModel::onShowAlert,
+        onPushTestPushByUser = viewModel::testPushByUser,
+        onPushTestPushByToken = viewModel::testByToken
     )
 }
 
@@ -122,7 +122,9 @@ internal fun MyPageScreen(
     navigateToOpenSource: () -> Unit = {},
     navigateToSuggestVoteHistory: () -> Unit = {},
     onShowAlert: () -> Unit = {},
-    onDownloadImage: (bitmap: Bitmap) -> Unit = {}
+    onDownloadImage: (bitmap: Bitmap) -> Unit = {},
+    onPushTestPushByUser: (String, String) -> Unit = { _, _ -> },
+    onPushTestPushByToken: (String, String) -> Unit = { _, _ -> }
 ) {
     val context = LocalContext.current
     val activity = remember {
@@ -193,7 +195,14 @@ internal fun MyPageScreen(
             )
         }
         item {
-            DebugTestMenu(notificationPermissionManager = notificationPermissionManager)
+            DebugTestMenu(
+                notificationPermissionManager = notificationPermissionManager,
+                testPushByUser = onPushTestPushByUser
+            )
+            DebugTestMenu(
+                notificationPermissionManager = notificationPermissionManager,
+                testPushByToken = onPushTestPushByToken
+            )
         }
         item {
             MenuTitle(title = stringResource(id = string.mypage_menu_setting))
@@ -344,7 +353,8 @@ fun MyPageScreenPreview() {
             ),
             versionInfo = "1.0.0",
             logoutDialogState = true,
-            downloadCompleteDialogState = true
+            downloadCompleteDialogState = true,
+            levelUpDialogState = true,
         )
     )
 }

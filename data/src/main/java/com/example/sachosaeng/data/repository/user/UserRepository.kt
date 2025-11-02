@@ -19,4 +19,7 @@ interface UserRepository {
     fun setGrowthSystemConfirmed(growthSystemConfirmed: Boolean): Flow<Unit>
     fun setLevelUpNotification(isNeeded: Boolean): Flow<Unit>
     fun getLevelUpNotification(): Flow<Boolean>
+    suspend fun setFcmToken(token: String)
+    suspend fun testPushByUser(title: String, message: String)
+    suspend fun testPushByToken(title: String, message: String)
 }

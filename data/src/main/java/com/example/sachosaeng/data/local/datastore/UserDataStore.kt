@@ -15,4 +15,6 @@ interface UserDataStore {
     suspend fun getUserNickName(): String
     suspend fun setLevelUpNotification(isNeeded: Boolean): Unit
     suspend fun getLevelUpNotification(): Boolean
+    suspend fun saveFcmToken(token: String)
+    suspend fun getFcmToken(): String
 }

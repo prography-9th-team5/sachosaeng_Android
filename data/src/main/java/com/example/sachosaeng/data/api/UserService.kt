@@ -1,5 +1,8 @@
 package com.sachosaeng.app.data.api
 
+import com.example.sachosaeng.data.model.user.PushMessageTestByTokenRequest
+import com.example.sachosaeng.data.model.user.PushMessageTestRequest
+import com.example.sachosaeng.data.model.user.UserFcmTokenRequest
 import com.sachosaeng.app.data.model.BaseResponse
 import com.sachosaeng.app.data.model.user.NicknameRequest
 import com.sachosaeng.app.data.model.user.UserInfoResponse
@@ -28,5 +31,20 @@ interface UserService {
     @PUT("/api/v1/users/user-type")
     suspend fun updateUserType(
         @Body nickname: UserTypeRequest
+    ): ApiResult<BaseResponse<Unit>>
+
+    @POST("/api/v1/push/token")
+    suspend fun setFcmToken(
+        @Body tokenRequest: UserFcmTokenRequest,
+    ): ApiResult<BaseResponse<Unit>>
+
+    @POST("/api/v1/push/test-by-user")
+    suspend fun sendTestPushByUser(
+        @Body tokenMessageTestRequest: PushMessageTestRequest
+    ): ApiResult<BaseResponse<Unit>>
+
+    @POST("/api/v1/push/test-by-token")
+    suspend fun sendTestPushByToken(
+        @Body tokenMessageTestRequest: PushMessageTestByTokenRequest
     ): ApiResult<BaseResponse<Unit>>
 }
